@@ -19,6 +19,6 @@ Features:
 Later Planned Additions:
 
 - Image as a Background
-- Elements that are in SkyHanni and not this mod, like Quiver, Power, ...
+- Elements that are in SkyHanni and not this mod, like Power, ...
 
 Using /customscoreboard, or /cs for short, you can open the config and start customizing your Custom Scoreboard experience!
