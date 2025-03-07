@@ -11,7 +11,7 @@ object ElementParty : Element() {
         add("§9Party (${list.size})")
         if (LinesConfig.showPartyLeader) {
             PartyAPI.leader?.let {
-                add("§7- §f${it.name} §e♚")
+                add("§7- §f${it.name ?: "§cUnknown"} §e♚")
             }
         }
 
@@ -19,8 +19,12 @@ object ElementParty : Element() {
             .take(LinesConfig.maxPartyMembers)
             .filter { LinesConfig.showPartyLeader && it != PartyAPI.leader }
             .forEach {
-                add("§7- §f${it.name}")
+                add("§7- §f${it.name ?: "§cUnknown"}")
             }
+
+        if (list.any { it.name == null }) {
+            add("§fRun §7/pl §fto fix your party")
+        }
     }
 
     override fun showWhen() = PartyAPI.size > 0 && when {
