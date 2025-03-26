@@ -1,7 +1,7 @@
 package gay.j10a1n15.customscoreboard.utils.rendering
 
 import com.mojang.blaze3d.vertex.PoseStack
-import earth.terrarium.olympus.client.shader.builtin.RoundedRectShader
+import earth.terrarium.olympus.client.pipelines.RoundedRectanage
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.TextAlignment
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
@@ -34,7 +34,7 @@ object RenderUtils {
         val yOffset = this.pose().last().pose().m31()
         pushPop {
             translate(-xOffset, -yOffset, 0f)
-            RoundedRectShader.fill(
+            RoundedRectanage.draw(
                 this@fillRect, (x + xOffset).toInt(), (y + yOffset).toInt(), width, height,
                 backgroundColor, borderColor, radius.toFloat(), borderSize,
             )
