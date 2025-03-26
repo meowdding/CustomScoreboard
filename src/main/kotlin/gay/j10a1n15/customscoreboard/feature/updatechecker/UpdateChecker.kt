@@ -5,6 +5,7 @@ import gay.j10a1n15.customscoreboard.config.MainConfig
 import gay.j10a1n15.customscoreboard.utils.ChatUtils
 import kotlinx.coroutines.runBlocking
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
+import net.minecraft.SharedConstants
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientPacketListener
 import tech.thatgravyboat.skyblockapi.utils.http.Http
@@ -12,8 +13,8 @@ import tech.thatgravyboat.skyblockapi.utils.http.Http
 const val SLUG = "skyblock-custom-scoreboard"
 const val URL = "https://api.modrinth.com/v2/project/$SLUG/version"
 const val LOADER = "fabric"
-const val GAME_VERSION = "1.21.4"
-const val QUERIES = "?loaders=%5B%22$LOADER%22%5D&game_versions=%5B%22$GAME_VERSION%22%5D"
+val GAME_VERSION: String = SharedConstants.getCurrentVersion().name
+val QUERIES = "?loaders=%5B%22$LOADER%22%5D&game_versions=%5B%22$GAME_VERSION%22%5D"
 
 object UpdateChecker {
 
