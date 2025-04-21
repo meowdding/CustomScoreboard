@@ -6,10 +6,12 @@ import gay.j10a1n15.customscoreboard.config.categories.LinesConfig
 import gay.j10a1n15.customscoreboard.utils.TextUtils.isBlank
 import gay.j10a1n15.customscoreboard.utils.rendering.AlignedText
 import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.drawAlignedTexts
-import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.fillRect
+import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.drawRec
+import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.HudElement
@@ -20,6 +22,8 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 
 object CustomScoreboardRenderer {
+
+    private val textureLocation = ResourceLocation.fromNamespaceAndPath("customscoreboard", "scoreboard.png")
 
     private var display: List<AlignedText>? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
@@ -82,12 +86,22 @@ object CustomScoreboardRenderer {
         if (!BackgroundConfig.enabled) return
         val padding = BackgroundConfig.padding
 
-        event.graphics.fillRect(
-            position.first - padding, position.second - padding,
-            dimensions.first + padding * 2, dimensions.second + padding * 2,
-            BackgroundConfig.backgroundColor,
-            radius = BackgroundConfig.radius,
-        )
+        if (BackgroundConfig.imageBackground) {
+            event.graphics.drawTexture(
+                position.first - padding, position.second - padding,
+                dimensions.first + padding * 2, dimensions.second + padding * 2,
+                textureLocation,
+                radius = BackgroundConfig.radius,
+                alpha = (BackgroundConfig.imageBackgroundTransparency / 100).toFloat(),
+            )
+        } else {
+            event.graphics.drawRec(
+                position.first - padding, position.second - padding,
+                dimensions.first + padding * 2, dimensions.second + padding * 2,
+                BackgroundConfig.backgroundColor,
+                radius = BackgroundConfig.radius,
+            )
+        }
     }
 
     fun updateIslandCache() {

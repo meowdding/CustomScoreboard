@@ -1,10 +1,13 @@
 package gay.j10a1n15.customscoreboard.utils.rendering
 
+import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import earth.terrarium.olympus.client.pipelines.RoundedRectanage
+import earth.terrarium.olympus.client.pipelines.RoundedTexture
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.TextAlignment
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 
 typealias AlignedText = Pair<Component, TextAlignment>
@@ -25,7 +28,7 @@ object RenderUtils {
         }
     }
 
-    fun GuiGraphics.fillRect(
+    fun GuiGraphics.drawRec(
         x: Int, y: Int, width: Int, height: Int,
         backgroundColor: Int, borderColor: Int = backgroundColor,
         borderSize: Int = 0, radius: Int = 0,
@@ -35,9 +38,27 @@ object RenderUtils {
         pushPop {
             translate(-xOffset, -yOffset, 0f)
             RoundedRectanage.draw(
-                this@fillRect, (x + xOffset).toInt(), (y + yOffset).toInt(), width, height,
+                this@drawRec, (x + xOffset).toInt(), (y + yOffset).toInt(), width, height,
                 backgroundColor, borderColor, radius.toFloat(), borderSize,
             )
+        }
+    }
+
+    fun GuiGraphics.drawTexture(
+        x: Int, y: Int, width: Int, height: Int,
+        texture: ResourceLocation, radius: Int = 0,
+        alpha: Float = 1f,
+    ) {
+        val xOffset = this.pose().last().pose().m30()
+        val yOffset = this.pose().last().pose().m31()
+        pushPop {
+            translate(-xOffset, -yOffset, 0f)
+            RenderSystem.setShaderColor(1f, 1f, 1f, alpha)
+            RoundedTexture.draw(
+                this@drawTexture, (x + xOffset).toInt(), (y + yOffset).toInt(), width, height,
+                texture, 0f, 0f, 1f, 1f, radius.toFloat(),
+            )
+            RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         }
     }
 
