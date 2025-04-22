@@ -52,7 +52,7 @@
     "config.cs.background.separator": "Background Options",
     "config.cs.background.separator.desc": "Edit the background options.",
     "config.cs.background.website": "Image Creator Website",
-    "config.cs.background.website.desc": "UClick to open a website that helps you generate your own background texturepack. Make sure to enable the 'Modern CustomScoreboard' option.",
+    "config.cs.background.website.desc": "Click to open a website that helps you generate your own background texturepack. Make sure to enable the 'Modern CustomScoreboard' option.",
     "config.cs.background.editor": "Custom Background Image",
     "config.cs.background.editor.desc": "Click to open the custom background image editor.",
     "_comment": "Line Config",
