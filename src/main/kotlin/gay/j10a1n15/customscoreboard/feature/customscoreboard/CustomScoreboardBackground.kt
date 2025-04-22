@@ -6,10 +6,12 @@ import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import java.io.File
+import kotlin.jvm.optionals.getOrNull
 
 object CustomScoreboardBackground {
 
     private val texturepackTexture = ResourceLocation.fromNamespaceAndPath("customscoreboard", "scoreboard.png")
+    private val skyhanniTexture = ResourceLocation.fromNamespaceAndPath("skyhanni", "scoreboard.png")
     private val dynamicTexture = ResourceLocation.fromNamespaceAndPath("customscoreboard", "dynamic/scoreboard")
 
     private var dynamic = false
@@ -32,5 +34,11 @@ object CustomScoreboardBackground {
         }.onFailure(Throwable::printStackTrace)
     }
 
-    fun getTexture(): ResourceLocation = dynamicTexture.takeIf { dynamic } ?: texturepackTexture
+    fun getTexture(): ResourceLocation = dynamicTexture.takeIf { dynamic } ?: texturepackTexture.takeIf { doesTextureExist(it) } ?: skyhanniTexture
+
+    fun doesTextureExist(texture: ResourceLocation): Boolean {
+        return McClient.self.resourceManager.getResource(texture).getOrNull()?.let {
+            true
+        } == true
+    }
 }

@@ -7,7 +7,7 @@ indent_size = 4
 indent_style = space
 ij_any_block_comment_add_space = true
 ij_any_line_comment_add_space = true
-max_line_length = 140
+max_line_length = 160
 
 [*.kt]
 ij_kotlin_name_count_to_use_star_import = 2147483647
