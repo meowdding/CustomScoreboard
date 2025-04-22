@@ -37,8 +37,6 @@ object CustomScoreboardBackground {
     fun getTexture(): ResourceLocation = dynamicTexture.takeIf { dynamic } ?: texturepackTexture.takeIf { doesTextureExist(it) } ?: skyhanniTexture
 
     fun doesTextureExist(texture: ResourceLocation): Boolean {
-        return McClient.self.resourceManager.getResource(texture).getOrNull()?.let {
-            true
-        } == true
+        return McClient.self.resourceManager.getResource(texture).getOrNull()?.let { true } == true
     }
 }
