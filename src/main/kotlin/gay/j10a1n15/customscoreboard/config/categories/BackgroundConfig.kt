@@ -54,20 +54,37 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     init {
-        button {
-            this.title = "Custom Background Image"
-            this.description = "Click to choose a custom background image"
-            this.text = "Open Editor"
-
-            onClick {
-                CustomBackgroundModal.open()
-            }
+        separator {
+            this.title = "config.cs.background.separator"
+            this.description = "config.cs.background.separator.desc"
         }
     }
 
     val imageBackground by boolean(false) {
         this.name = Translated("config.cs.background.image")
         this.description = Translated("config.cs.background.image.desc")
+    }
+
+    init {
+        button {
+            this.title = "config.cs.background.website"
+            this.description = "config.cs.background.website.desc"
+            this.text = "Open Website"
+
+            onClick {
+                Util.getPlatform().openUri("https://j10a1n15.github.io/j10a1n15/pages/background.html")
+            }
+        }
+
+        button {
+            this.title = "config.cs.background.editor"
+            this.description = "config.cs.background.editor.desc"
+            this.text = "Open Editor"
+
+            onClick {
+                CustomBackgroundModal.open()
+            }
+        }
     }
 
     val imageBackgroundTransparency by int(90) {
