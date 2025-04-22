@@ -32,11 +32,5 @@ object CustomScoreboardBackground {
         }.onFailure(Throwable::printStackTrace)
     }
 
-    fun getTexture(): ResourceLocation {
-        return if (dynamic) {
-            dynamicTexture
-        } else {
-            texturepackTexture
-        }
-    }
+        fun getTexture(): ResourceLocation = dynamicTexture.takeIf { dynamic } ?: texturepackTexture
 }
