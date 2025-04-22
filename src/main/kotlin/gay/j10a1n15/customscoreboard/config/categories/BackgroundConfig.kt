@@ -88,7 +88,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val imageBackgroundTransparency by int(90) {
-        this.range = 0..100
+        this.range = 5..100
         this.slider = true
         this.name = Translated("config.cs.background.transparency")
         this.description = Translated("config.cs.background.transparency.desc")
