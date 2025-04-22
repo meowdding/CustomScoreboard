@@ -5,6 +5,7 @@ import com.teamresourceful.resourcefulconfig.api.loader.Configurator
 import gay.j10a1n15.customscoreboard.config.CustomScoreboardKeybinds
 import gay.j10a1n15.customscoreboard.config.MainConfig
 import gay.j10a1n15.customscoreboard.feature.KeybindManager
+import gay.j10a1n15.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
 import gay.j10a1n15.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import gay.j10a1n15.customscoreboard.feature.customscoreboard.elements.ElementArea
 import gay.j10a1n15.customscoreboard.feature.customscoreboard.elements.ElementLobby
@@ -40,6 +41,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.resources.ResourceManager
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.misc.LiteralCommandBuilder
@@ -93,15 +99,22 @@ object Main : ModInitializer {
         SkyBlockAPI.eventBus.register(ElementPurse)
         SkyBlockAPI.eventBus.register(CustomScoreboardKeybinds)
         SkyBlockAPI.eventBus.register(KeybindManager)
+
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(object : SimpleSynchronousResourceReloadListener {
+            override fun getFabricId(): ResourceLocation = ResourceLocation.fromNamespaceAndPath("customscoreboard", "reload")
+
+            override fun onResourceManagerReload(resourceManager: ResourceManager) {
+                CustomScoreboardBackground.load()
+            }
+
+        })
     }
 
     @Subscription
     fun onRegisterCommands(event: RegisterCommandsEvent) {
         val builder: (LiteralCommandBuilder.() -> Unit) = {
             callback {
-                McClient.tell {
-                    McClient.setScreen(ResourcefulConfigScreen.getFactory("customscoreboard").apply(null))
-                }
+                McClient.setScreen(ResourcefulConfigScreen.getFactory("customscoreboard").apply(null))
             }
         }
 
