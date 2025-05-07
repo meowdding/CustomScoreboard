@@ -15,11 +15,10 @@ Features:
 
 - Fully customizable scoreboard layout.
 - Custom Lines beyond Hypixel's Lines, like the current Mayor or your Party.
-- Rounded Background
+- Rounded Background, Rounded Textured Background
 
 Later Planned Additions:
 
-- Image as a Background
 - Elements that are in SkyHanni and not this mod, like Power, ...
 
 Using /customscoreboard, or /cs for short, you can open the config and start customizing your Custom Scoreboard experience!
