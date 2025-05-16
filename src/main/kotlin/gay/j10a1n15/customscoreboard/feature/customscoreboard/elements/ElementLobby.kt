@@ -1,11 +1,13 @@
 package gay.j10a1n15.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@Module
 object ElementLobby : Element() {
     private val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
     private var lobbyCode: String? = null

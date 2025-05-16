@@ -1,18 +1,17 @@
 package gay.j10a1n15.customscoreboard.feature.customscoreboard.elements
 
 import gay.j10a1n15.customscoreboard.config.categories.LinesConfig
-import gay.j10a1n15.customscoreboard.utils.Utils.formatReadableTime
+import me.owdding.lib.extensions.toReadableTime
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
 import tech.thatgravyboat.skyblockapi.api.data.Candidate
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import kotlin.time.Duration
-import kotlin.time.DurationUnit
 
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
         val mayor = ElectionAPI.currentMayor ?: return@buildList
-        val instant = timeUntilNextMayor().formatReadableTime(DurationUnit.DAYS, 2)
+        val instant = timeUntilNextMayor().toReadableTime()
         val time = if (LinesConfig.showMayorTime) " §7(§e$instant§7)"
         else ""
 

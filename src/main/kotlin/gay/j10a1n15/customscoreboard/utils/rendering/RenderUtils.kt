@@ -1,14 +1,14 @@
 package gay.j10a1n15.customscoreboard.utils.rendering
 
 import com.mojang.blaze3d.systems.RenderSystem
-import com.mojang.blaze3d.vertex.PoseStack
-import earth.terrarium.olympus.client.pipelines.RoundedRectanage
+import earth.terrarium.olympus.client.pipelines.RoundedRectangle
 import earth.terrarium.olympus.client.pipelines.RoundedTexture
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.TextAlignment
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.helpers.McFont
+import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 
 typealias AlignedText = Pair<Component, TextAlignment>
 
@@ -33,15 +33,7 @@ object RenderUtils {
         backgroundColor: Int, borderColor: Int = backgroundColor,
         borderSize: Int = 0, radius: Int = 0,
     ) {
-        val xOffset = this.pose().last().pose().m30()
-        val yOffset = this.pose().last().pose().m31()
-        pushPop {
-            translate(-xOffset, -yOffset, 0f)
-            RoundedRectanage.draw(
-                this@drawRec, (x + xOffset).toInt(), (y + yOffset).toInt(), width, height,
-                backgroundColor, borderColor, radius.toFloat(), borderSize,
-            )
-        }
+        RoundedRectangle.drawRelative(this, x, y, width, height, backgroundColor, borderColor, borderSize.toFloat(), radius)
     }
 
     fun GuiGraphics.drawTexture(
@@ -51,8 +43,7 @@ object RenderUtils {
     ) {
         val xOffset = this.pose().last().pose().m30()
         val yOffset = this.pose().last().pose().m31()
-        pushPop {
-            translate(-xOffset, -yOffset, 0f)
+        translated(-xOffset, -yOffset) {
             RenderSystem.setShaderColor(1f, 1f, 1f, alpha)
             RoundedTexture.draw(
                 this@drawTexture, (x + xOffset).toInt(), (y + yOffset).toInt(), width, height,
@@ -60,15 +51,5 @@ object RenderUtils {
             )
             RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         }
-    }
-
-    inline fun GuiGraphics.pushPop(action: PoseStack.() -> Unit) {
-        this.pose().pushPop(action)
-    }
-
-    inline fun PoseStack.pushPop(action: PoseStack.() -> Unit) {
-        this.pushPose()
-        this.action()
-        this.popPose()
     }
 }

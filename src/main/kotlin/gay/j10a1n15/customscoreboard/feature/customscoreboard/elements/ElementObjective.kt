@@ -1,11 +1,13 @@
 package gay.j10a1n15.customscoreboard.feature.customscoreboard.elements
 
 import gay.j10a1n15.customscoreboard.utils.TextUtils.isBlank
+import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
+@Module
 object ElementObjective : Element() {
     override fun getDisplay() = objectiveLines
 

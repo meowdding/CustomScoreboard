@@ -43,14 +43,12 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     }
 
     var enabled by boolean(true) {
-        this.name = Translated("config.cs.enabled")
-        this.description = Translated("config.cs.enabled.desc")
+        this.translation = "config.cs.enabled"
     }
 
     val appearance by observable(
         draggable(*ScoreboardEntry.default.toTypedArray()) {
-            this.name = Translated("config.cs.appearance")
-            this.description = Translated("config.cs.appearance.desc")
+            this.translation = "config.cs.appearance"
         },
     ) { old, new ->
         CustomScoreboardRenderer.updateIslandCache()
@@ -58,56 +56,46 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val events by observable(
         draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
-            this.name = Translated("config.cs.events")
-            this.description = Translated("config.cs.events.desc")
+            this.translation = "config.cs.events"
         },
     ) { old, new ->
         CustomScoreboardRenderer.updateIslandCache()
     }
 
     val title = obj("title_options", TitleOrFooterObject()) {
-        this.name = Translated("config.cs.title_options")
-        this.description = Translated("config.cs.title_options.desc")
+        this.translation = "config.cs.title_options"
     }
 
     val footer = obj("footer_options", TitleOrFooterObject()) {
-        this.name = Translated("config.cs.footer_options")
-        this.description = Translated("config.cs.footer_options.desc")
+        this.translation = "config.cs.footer_options"
     }
 
     val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
-        this.name = Translated("config.cs.number_display_format")
-        this.description = Translated("config.cs.number_display_format.desc")
+        this.translation = "config.cs.number_display_format"
     }
 
     val numberFormat by enum("number_format", NumberFormatType.LONG) {
-        this.name = Translated("config.cs.number_format")
-        this.description = Translated("config.cs.number_format.desc")
+        this.translation = "config.cs.number_format"
     }
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
-        this.name = Translated("config.cs.vertical_alignment")
-        this.description = Translated("config.cs.vertical_alignment.desc")
+        this.translation = "config.cs.vertical_alignment"
     }
 
     val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
-        this.name = Translated("config.cs.horizontal_alignment")
-        this.description = Translated("config.cs.horizontal_alignment.desc")
+        this.translation = "config.cs.horizontal_alignment"
     }
 
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
-        this.name = Translated("config.cs.hide_hypixel")
-        this.description = Translated("config.cs.hide_hypixel.desc")
+        this.translation = "config.cs.hide_hypixel"
     }
 
     val textShadow by boolean("text_shadow", true) {
-        this.name = Translated("config.cs.text_shadow")
-        this.description = Translated("config.cs.text_shadow.desc")
+        this.translation = "config.cs.text_shadow"
     }
 
     val updateNotification by boolean("update_notification", true) {
-        this.name = Translated("config.cs.update_notification")
-        this.description = Translated("config.cs.update_notification.desc")
+        this.translation = "config.cs.update_notification"
     }
 
 }
