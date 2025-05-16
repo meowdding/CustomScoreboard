@@ -37,15 +37,15 @@ object CustomScoreboardRenderer {
     private val screenHeight get() = McClient.window.guiScaledHeight
 
 
-    @Subscription
+    @Subscription(event = [TickEvent::class])
     @TimePassed("10t")
-    fun onTick(event: TickEvent) {
+    fun onTick() {
         if (!isEnabled()) return
 
         updateDisplay()
     }
 
-    @Subscription
+    @Subscription()
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         val display = display ?: return
@@ -136,8 +136,8 @@ object CustomScoreboardRenderer {
         }
     }
 
-    @Subscription
-    fun onIslandChange(event: IslandChangeEvent) {
+    @Subscription(event = [IslandChangeEvent::class])
+    fun onIslandChange() {
         updateIslandCache()
     }
 
