@@ -62,6 +62,8 @@ object Main : ModInitializer {
         )
 
         MeowddingUpdateChecker("fpb5uaJt", SELF) { link, current, new ->
+            if (!MainConfig.updateNotification) return@MeowddingUpdateChecker
+
             fun MutableComponent.withLink() = this.apply {
                 this.url = link
                 this.hover = Text.of(link).withColor(TextColor.GRAY)

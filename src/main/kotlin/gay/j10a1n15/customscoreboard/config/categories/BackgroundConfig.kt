@@ -22,33 +22,28 @@ import kotlin.jvm.optionals.getOrNull
 object BackgroundConfig : CategoryKt("Background") {
 
     val enabled by boolean(true) {
-        this.name = Translated("config.cs.background.enabled")
-        this.description = Translated("config.cs.background.enabled.desc")
+        this.translation = "config.cs.background.enabled"
     }
 
     val backgroundColor by color("color", 0xA0000000.toInt()) {
-        this.name = Translated("config.cs.background.color")
-        this.description = Translated("config.cs.background.color.desc")
+        this.translation = "config.cs.background.color"
         this.allowAlpha = true
     }
 
     val padding by int(5) {
-        this.name = Translated("config.cs.background.padding")
-        this.description = Translated("config.cs.background.padding.desc")
+        this.translation = "config.cs.background.padding"
         this.range = 0..20
         this.slider = true
     }
 
     val margin by int(0) {
-        this.name = Translated("config.cs.background.margin")
-        this.description = Translated("config.cs.background.margin.desc")
+        this.translation = "config.cs.background.margin"
         this.range = 0..20
         this.slider = true
     }
 
     val radius by int(5) {
-        this.name = Translated("config.cs.background.radius")
-        this.description = Translated("config.cs.background.radius.desc")
+        this.translation = "config.cs.background.radius"
         this.range = 0..20
         this.slider = true
     }
@@ -61,8 +56,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val imageBackground by boolean(false) {
-        this.name = Translated("config.cs.background.image")
-        this.description = Translated("config.cs.background.image.desc")
+        this.translation = "config.cs.background.image"
     }
 
     init {
@@ -88,14 +82,13 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val imageBackgroundTransparency by int(90) {
+        this.translation = "config.cs.background.transparency"
         this.range = 5..100
         this.slider = true
-        this.name = Translated("config.cs.background.transparency")
-        this.description = Translated("config.cs.background.transparency.desc")
     }
 
     var customImageFile by string("") {
-        this.hidden = true
+        this.condition = { false }
     }
 }
 
