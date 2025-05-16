@@ -1,6 +1,7 @@
 package gay.j10a1n15.customscoreboard.feature.customscoreboard.events
 
 import gay.j10a1n15.customscoreboard.utils.TextUtils.toComponent
+import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.rift.RiftAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -10,6 +11,7 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
+@Module
 object EventRift : Event() {
     override fun getDisplay() = formattedLines
 

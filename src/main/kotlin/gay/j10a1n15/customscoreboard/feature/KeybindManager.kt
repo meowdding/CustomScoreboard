@@ -2,9 +2,11 @@ package gay.j10a1n15.customscoreboard.feature
 
 import gay.j10a1n15.customscoreboard.config.CustomScoreboardKeybinds
 import gay.j10a1n15.customscoreboard.config.MainConfig
+import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 
+@Module
 object KeybindManager {
     var toggleKeyHold = false
 

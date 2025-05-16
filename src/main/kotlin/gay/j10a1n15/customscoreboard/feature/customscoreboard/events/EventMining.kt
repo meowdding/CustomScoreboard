@@ -3,11 +3,13 @@ package gay.j10a1n15.customscoreboard.feature.customscoreboard.events
 import gay.j10a1n15.customscoreboard.config.categories.LinesConfig
 import gay.j10a1n15.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.TextAlignment
+import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
+@Module
 object EventMining : Event() {
     override fun getDisplay() = formattedLines
 

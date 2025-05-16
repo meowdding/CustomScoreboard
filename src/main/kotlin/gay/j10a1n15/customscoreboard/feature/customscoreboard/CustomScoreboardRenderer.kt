@@ -10,6 +10,7 @@ import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.drawRec
 import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.VerticalAlignment
+import me.owdding.ktmodules.Module
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
@@ -20,6 +21,7 @@ import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 
+@Module
 object CustomScoreboardRenderer {
 
     private var display: List<AlignedText>? = null

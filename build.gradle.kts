@@ -4,7 +4,12 @@ plugins {
     java
     kotlin("jvm") version "2.0.0"
     id("fabric-loom") version "1.10-SNAPSHOT"
-    id("net.kyori.blossom") version "1.3.2"
+    alias(libs.plugins.ksp)
+}
+
+ksp {
+    arg("meowdding.modules.project_name", "CustomScoreboard")
+    arg("meowdding.modules.package", "gay.j10a1n15.customscoreboard.generated")
 }
 
 repositories {
@@ -15,10 +20,13 @@ repositories {
 }
 
 dependencies {
+    compileOnly(libs.meowdding.ktmodules)
+    ksp(libs.meowdding.ktmodules)
+
     minecraft(libs.minecraft)
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.21.3:2024.12.07@zip")
+        parchment("org.parchmentmc.data:parchment-1.21.5:2025.04.19@zip")
     })
     modImplementation(libs.loader)
     modImplementation(libs.fabrickotlin)
@@ -30,6 +38,7 @@ dependencies {
     modImplementation(libs.rconfigkt)
     modImplementation(libs.rlib)
     modImplementation(libs.olympus)
+    modImplementation(libs.meowdding.lib)
 
     include(libs.hypixelapi)
     include(libs.skyblockapi)
@@ -37,6 +46,7 @@ dependencies {
     include(libs.rconfigkt)
     include(libs.rlib)
     include(libs.olympus)
+    include(libs.meowdding.lib)
 
     modRuntimeOnly(libs.devauth)
 }
@@ -47,10 +57,6 @@ loom {
             property("devauth.configDir", rootProject.file(".devauth").absolutePath)
         }
     }
-}
-
-blossom {
-    replaceToken("@MOD_VERSION@", project.version)
 }
 
 tasks {

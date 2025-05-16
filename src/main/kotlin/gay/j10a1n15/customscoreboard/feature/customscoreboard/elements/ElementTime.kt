@@ -1,8 +1,10 @@
 package gay.j10a1n15.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
 
+@Module
 object ElementTime : Element() {
     override fun getDisplay() = buildString {
         append("§7")
