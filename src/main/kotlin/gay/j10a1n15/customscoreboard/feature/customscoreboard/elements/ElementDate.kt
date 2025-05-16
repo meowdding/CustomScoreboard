@@ -7,7 +7,7 @@ import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 
 object ElementDate : Element() {
     override fun getDisplay() =
-        DateTimeAPI.season?.run { if (LinesConfig.coloredMonth) getColoredName() else toString() } + " " + DateTimeAPI.day.ordinal()
+        DateTimeAPI.season?.run { if (LinesConfig.coloredMonth) getColoredName() else toString() } + " " + DateTimeAPI.day.let { "$it" + it.ordinal() }
 
     override fun showWhen() = DateTimeAPI.season != null
 
