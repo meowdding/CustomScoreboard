@@ -1,7 +1,7 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "gay.j10a1n15.customscoreboard.mixins",
+    "package": "me.owdding.customscoreboard.mixins",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
     ],

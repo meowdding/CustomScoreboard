@@ -9,7 +9,7 @@ plugins {
 
 ksp {
     arg("meowdding.modules.project_name", "CustomScoreboard")
-    arg("meowdding.modules.package", "gay.j10a1n15.customscoreboard.generated")
+    arg("meowdding.modules.package", "me.owdding.customscoreboard.generated")
 }
 
 repositories {
