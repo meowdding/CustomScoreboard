@@ -2,16 +2,17 @@ package gay.j10a1n15.customscoreboard.feature.customscoreboard.elements
 
 import gay.j10a1n15.customscoreboard.config.categories.LinesConfig
 import gay.j10a1n15.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
-import gay.j10a1n15.customscoreboard.utils.TextUtils.uppercaseFirstChar
 import net.minecraft.world.item.Items
 import tech.thatgravyboat.skyblockapi.api.profile.quiver.QuiverAPI
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
+import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedName
+import tech.thatgravyboat.skyblockapi.utils.extentions.toTitleCase
 
 object ElementQuiver : Element() {
     private const val MAX_ARROW_AMOUNT = 2880
 
     override fun getDisplay(): String? {
-        val type = QuiverAPI.currentArrow?.uppercaseFirstChar() ?: return null
+        val type = QuiverAPI.currentArrow?.toTitleCase() ?: return null
         val amount = QuiverAPI.currentAmount ?: return null
 
         val percentage = amount / MAX_ARROW_AMOUNT.toDouble() * 100
@@ -49,6 +50,7 @@ object ElementQuiver : Element() {
         PERCENTAGE,
         ;
 
-        override fun toString() = name.uppercaseFirstChar()
+        private val formattedName = toFormattedName()
+        override fun toString() = formattedName
     }
 }

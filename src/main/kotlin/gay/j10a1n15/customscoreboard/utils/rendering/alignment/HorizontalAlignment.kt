@@ -1,11 +1,12 @@
 package gay.j10a1n15.customscoreboard.utils.rendering.alignment
 
-import gay.j10a1n15.customscoreboard.utils.TextUtils.uppercaseFirstChar
+import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedName
 
 enum class HorizontalAlignment {
     LEFT,
     CENTER,
     RIGHT;
 
-    override fun toString() = name.uppercaseFirstChar()
+    private val formattedName = toFormattedName()
+    override fun toString() = formattedName
 }
