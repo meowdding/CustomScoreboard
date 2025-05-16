@@ -22,6 +22,7 @@ abstract class Element {
     open fun showIsland(): Boolean = true
 
     open fun getLines(): List<ScoreboardLine> = if (isVisible()) getElementsFromAny(getDisplay()) else listOf()
+    fun getAlignedText() = getLines().map { it.toAlignedText() }
 
     private fun isVisible(): Boolean {
         //if (!informationFilteringConfig.hideIrrelevantLines) return true

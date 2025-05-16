@@ -11,12 +11,13 @@ import gay.j10a1n15.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import gay.j10a1n15.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.HudElement
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudElementEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudEvent
+import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
@@ -35,39 +36,13 @@ object CustomScoreboardRenderer {
     private val screenWidth get() = McClient.window.guiScaledWidth
     private val screenHeight get() = McClient.window.guiScaledHeight
 
-    private var tickCounter = 0
 
-    init {
-        ClientTickEvents.START_CLIENT_TICK.register {
-            tickCounter++
+    @Subscription
+    @TimePassed("10t")
+    fun onTick(event: TickEvent) {
+        if (!isEnabled()) return
 
-            if (tickCounter >= 10) {
-                if (isEnabled()) {
-                    updateDisplay()
-                }
-                tickCounter = 0
-            }
-        }
-    }
-
-    private fun updatePosition() {
-        with(BackgroundConfig) {
-            val width = display?.let { it.maxOf { McFont.width(it.first) } } ?: 0
-            val height = display?.let { it.size * McFont.self.lineHeight } ?: 0
-
-            val newX = when (MainConfig.horizontalAlignment) {
-                HorizontalAlignment.LEFT -> padding + margin
-                HorizontalAlignment.CENTER -> (screenWidth - width) / 2
-                HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin
-            }
-            val newY = when (MainConfig.verticalAlignment) {
-                VerticalAlignment.TOP -> padding + margin
-                VerticalAlignment.CENTER -> (screenHeight - height) / 2
-                VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin
-            }
-            position = newX to newY
-            dimensions = width to height
-        }
+        updateDisplay()
     }
 
     @Subscription
@@ -113,11 +88,7 @@ object CustomScoreboardRenderer {
         display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
     }
 
-    private fun createDisplay() = buildList {
-        for (element in currentIslandElements) {
-            addAll(element.element.getLines().map { it.toAlignedText() })
-        }
-    }
+    private fun createDisplay() = currentIslandElements.flatMap { it.element.getAlignedText() }
 
     private fun List<AlignedText>.hideLeadingAndTrailingSeparators() =
         if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.first.isBlank() }.dropWhile { it.first.isBlank() } else this
@@ -136,6 +107,27 @@ object CustomScoreboardRenderer {
                     acc to false
                 }
             }.first
+
+    private fun updatePosition() {
+        with(BackgroundConfig) {
+            val width = display?.let { it.maxOf { McFont.width(it.first) } } ?: 0
+            val height = display?.let { it.size * McFont.self.lineHeight } ?: 0
+
+            val newX = when (MainConfig.horizontalAlignment) {
+                HorizontalAlignment.LEFT -> padding + margin
+                HorizontalAlignment.CENTER -> (screenWidth - width) / 2
+                HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin
+            }
+            val newY = when (MainConfig.verticalAlignment) {
+                VerticalAlignment.TOP -> padding + margin
+                VerticalAlignment.CENTER -> (screenHeight - height) / 2
+                VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin
+            }
+            position = newX to newY
+            dimensions = width to height
+        }
+    }
+
 
     @Subscription
     fun onRenderHudElement(event: RenderHudElementEvent) {
