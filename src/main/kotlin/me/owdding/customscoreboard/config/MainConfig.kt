@@ -49,6 +49,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     val appearance by observable(
         draggable(*ScoreboardEntry.default.toTypedArray()) {
             this.translation = "config.cs.appearance"
+            this.duplicatable = listOf(ScoreboardEntry.SEPARATOR).toTypedArray()
         },
     ) { old, new ->
         CustomScoreboardRenderer.updateIslandCache()
