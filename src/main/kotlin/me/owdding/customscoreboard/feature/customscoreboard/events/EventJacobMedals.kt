@@ -1,11 +1,13 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
+import me.owdding.customscoreboard.AutoElement
 import tech.thatgravyboat.skyblockapi.api.area.hub.FarmhouseAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedString
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
+@AutoElement
 object EventJacobMedals : Event() {
     override fun getDisplay() = buildList {
         add("§6§lGOLD §fmedals: §6${FarmhouseAPI.goldMedals.toFormattedString()}")

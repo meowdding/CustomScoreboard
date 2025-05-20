@@ -1,9 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileType
 
+@AutoElement(ElementGroup.HEADER)
 object ElementProfile : Element() {
     override fun getDisplay() = buildString {
         val profile = ProfileAPI.profileType

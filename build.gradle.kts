@@ -1,9 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    java
-    kotlin("jvm") version "2.0.0"
-    id("fabric-loom") version "1.10-SNAPSHOT"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.loom)
     alias(libs.plugins.ksp)
 }
 
@@ -22,6 +21,8 @@ repositories {
 dependencies {
     compileOnly(libs.meowdding.ktmodules)
     ksp(libs.meowdding.ktmodules)
+    compileOnly(project(":annotations"))
+    ksp(project(":annotations"))
 
     minecraft(libs.minecraft)
     mappings(loom.layered {
@@ -82,4 +83,8 @@ tasks {
 
 java {
     withSourcesJar()
+}
+
+kotlin {
+    jvmToolchain(21)
 }

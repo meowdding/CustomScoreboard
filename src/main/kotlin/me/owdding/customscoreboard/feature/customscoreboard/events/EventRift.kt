@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
+import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
 import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
@@ -12,6 +13,7 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @Module
+@AutoElement
 object EventRift : Event() {
     override fun getDisplay() = formattedLines
 

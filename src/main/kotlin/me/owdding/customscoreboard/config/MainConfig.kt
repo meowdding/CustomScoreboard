@@ -8,8 +8,8 @@ import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
-import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardEntry
-import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardEventEntry
+import me.owdding.customscoreboard.generated.ScoreboardEntry
+import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.NumberFormatType
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
@@ -46,8 +46,40 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "config.cs.enabled"
     }
 
+    private val default = listOf<ScoreboardEntry>(
+        ScoreboardEntry.TITLE,
+        ScoreboardEntry.LOBBY,
+        ScoreboardEntry.SEPARATOR,
+        ScoreboardEntry.DATE,
+        ScoreboardEntry.TIME,
+        ScoreboardEntry.ISLAND,
+        ScoreboardEntry.AREA,
+        ScoreboardEntry.PROFILE,
+        ScoreboardEntry.SEPARATOR,
+        ScoreboardEntry.PURSE,
+        ScoreboardEntry.MOTES,
+        ScoreboardEntry.BANK,
+        ScoreboardEntry.BITS,
+        ScoreboardEntry.COPPER,
+        ScoreboardEntry.GEMS,
+        ScoreboardEntry.HEAT,
+        ScoreboardEntry.COLD,
+        ScoreboardEntry.NORTH_STARS,
+        ScoreboardEntry.SOULFLOW,
+        ScoreboardEntry.SEPARATOR,
+        ScoreboardEntry.OBJECTIVE,
+        ScoreboardEntry.SLAYER,
+        ScoreboardEntry.QUIVER,
+        ScoreboardEntry.EVENTS,
+        ScoreboardEntry.POWDER,
+        ScoreboardEntry.MAYOR,
+        ScoreboardEntry.PARTY,
+        ScoreboardEntry.PET,
+        ScoreboardEntry.FOOTER,
+    )
+
     val appearance by observable(
-        draggable(*ScoreboardEntry.default.toTypedArray()) {
+        draggable(*default.toTypedArray()) {
             this.translation = "config.cs.appearance"
             this.duplicatable = listOf(ScoreboardEntry.SEPARATOR).toTypedArray()
         },

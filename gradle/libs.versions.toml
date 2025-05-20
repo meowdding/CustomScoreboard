@@ -5,10 +5,13 @@ minecraft = "1.21.5"
 loom = "1.10-SNAPSHOT"
 loader = "0.16.10"
 
-# Dependencies
+# Kotlin
 ksp = "2.1.20-2.0.0"
+kotlin = "2.1.20"
+fabrickotlin = "1.13.2+kotlin.2.1.20"
+
+# Dependencies
 fabric = "0.119.5+1.21.5"
-fabrickotlin = "1.13.0+kotlin.2.1.0"
 skyblockapi = "1.0.0-beta.107"
 hypixelapi = "1.0.1+build.1+mc1.21"
 rconfig = "3.5.5"
@@ -21,7 +24,16 @@ meowdding-ktmodules = "1.0.3"
 # Dev Dependencies
 devauth = "1.2.1"
 
+# Codegen
+kotlin_poet = "2.2.1-SNAPSHOT"
+kotlin_poet_ksp = "2.2.0-SNAPSHOT"
+
 [libraries]
+
+# Codegen
+kotlin_poet = { module = "me.owdding.kotlinpoet:kotlinpoet-jvm", version.ref = "kotlin_poet" }
+kotlin_poet_ksp = { module = "me.owdding.kotlinpoet:ksp", version.ref = "kotlin_poet_ksp" }
+ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
@@ -40,4 +52,5 @@ devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth"
 
 [plugins]
 loom = { id = "fabric-loom", version.ref = "loom" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

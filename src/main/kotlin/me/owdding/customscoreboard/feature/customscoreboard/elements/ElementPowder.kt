@@ -1,10 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import tech.thatgravyboat.skyblockapi.api.area.mining.PowderAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 
+@AutoElement
 object ElementPowder : Element() {
     override fun getDisplay() = buildList {
         add("§9Powder")

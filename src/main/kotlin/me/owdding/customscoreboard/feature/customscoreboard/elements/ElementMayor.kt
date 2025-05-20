@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.lib.extensions.toReadableTime
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
@@ -8,6 +9,7 @@ import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import kotlin.time.Duration
 
+@AutoElement
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
         val mayor = ElectionAPI.currentMayor ?: return@buildList
