@@ -1,9 +1,11 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 
+@AutoElement
 object ElementCold : Element() {
     override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay("Cold", "${-GlaciteAPI.cold}❄", "§b")
 

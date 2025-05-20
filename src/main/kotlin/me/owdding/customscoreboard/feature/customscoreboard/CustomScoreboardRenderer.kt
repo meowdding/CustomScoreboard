@@ -3,6 +3,8 @@ package me.owdding.customscoreboard.feature.customscoreboard
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.generated.ScoreboardEntry
+import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.TextUtils.isBlank
 import me.owdding.customscoreboard.utils.rendering.AlignedText
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawAlignedTexts

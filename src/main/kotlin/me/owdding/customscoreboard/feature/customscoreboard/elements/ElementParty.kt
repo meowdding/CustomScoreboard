@@ -1,10 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.party.PartyAPI
 
+@AutoElement
 object ElementParty : Element() {
     override fun getDisplay() = buildList {
         val list = PartyAPI.members.distinctBy { it.name }

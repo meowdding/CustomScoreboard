@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
+import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.rendering.alignment.TextAlignment
@@ -10,6 +11,7 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @Module
+@AutoElement
 object EventMining : Event() {
     override fun getDisplay() = formattedLines
 

@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.ElementGroup
 import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
@@ -8,6 +10,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Module
+@AutoElement(ElementGroup.HEADER)
 object ElementLobby : Element() {
     private val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
     private var lobbyCode: String? = null
@@ -20,7 +23,7 @@ object ElementLobby : Element() {
     override val configLine = "Lobby"
 
 
-    private val roomIdRegex = "\\d+\\/\\d+\\/\\d+ \\w+ (?<roomId>[\\w,-]+)".toRegex()
+    private val roomIdRegex = "\\d+/\\d+/\\d+ \\w+ (?<roomId>[\\w,-]+)".toRegex()
 
     @Subscription
     fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
