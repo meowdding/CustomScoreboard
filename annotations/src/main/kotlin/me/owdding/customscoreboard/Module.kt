@@ -1,24 +1,12 @@
 package me.owdding.customscoreboard
 
 import com.google.devtools.ksp.KspExperimental
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
-import com.google.devtools.ksp.processing.SymbolProcessorProvider
+import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSDeclaration
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.KModifier
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.TypeSpec.Companion.anonymousClassBuilder
-import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.ksp.writeTo
 
 internal class Processor(
@@ -38,7 +26,12 @@ internal class Processor(
             .groupBy { it.getSuperClass() }
             .mapKeys { (key, _) -> Kind.getByName(key?.simpleName?.asString()) }
             .mapValues { (_, value) ->
-                value.map { Declaration(it, ElementGroup.byName(it.getField<AutoElement, KSDeclaration>("element")?.simpleName?.asString())) }
+                value.map {
+                    Declaration(
+                        it,
+                        ElementGroup.byName(it.getField<AutoElement, KSDeclaration>("element")?.simpleName?.asString())
+                    )
+                }
                     .sortedBy { (_, group) -> group.ordinal }
             }
             .mapNotNull { (key, value) -> key?.let { it to value } }
@@ -66,18 +59,27 @@ internal class Processor(
                                     ClassName(kind.packageName, kind.typeName),
                                 ).build(),
                         )
-                        this.addSuperinterface(ClassName("com.teamresourceful.resourcefulconfig.api.types.info", "TooltipProvider"))
+                        this.addSuperinterface(
+                            ClassName(
+                                "com.teamresourceful.resourcefulconfig.api.types.info",
+                                "TooltipProvider"
+                            )
+                        )
                         this.addProperty(PropertySpec.builder(field).initializer(field).build())
-                        this.addFunction(FunSpec.builder("toString")
-                            .returns(String::class.asClassName())
-                            .addModifiers(KModifier.OVERRIDE)
-                            .addCode("return $field.configLine")
-                            .build())
-                        this.addFunction(FunSpec.builder("getTooltip")
-                            .addModifiers(KModifier.OVERRIDE)
-                            .returns(ClassName("net.minecraft.network.chat", "Component"))
-                            .addCode("return $field.configLineHover.joinToString(\"\\n\").toComponent()")
-                            .build())
+                        this.addFunction(
+                            FunSpec.builder("toString")
+                                .returns(String::class.asClassName())
+                                .addModifiers(KModifier.OVERRIDE)
+                                .addCode("return $field.configLine")
+                                .build()
+                        )
+                        this.addFunction(
+                            FunSpec.builder("getTooltip")
+                                .addModifiers(KModifier.OVERRIDE)
+                                .returns(ClassName("net.minecraft.network.chat", "Component"))
+                                .addCode("return $field.configLineHover.joinToString(\"\\n\").toComponent()")
+                                .build()
+                        )
 
                         declarations.forEach {
                             this.addEnumConstant(

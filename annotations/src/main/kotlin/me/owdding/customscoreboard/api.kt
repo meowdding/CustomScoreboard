@@ -12,6 +12,6 @@ enum class ElementGroup {
     ;
 
     companion object {
-        fun byName(asString: String?) = ElementGroup.entries.firstOrNull { it.name.equals(asString, true) }?: MIDDLE
+        fun byName(asString: String?) = ElementGroup.entries.firstOrNull { it.name.equals(asString, true) } ?: MIDDLE
     }
 }
