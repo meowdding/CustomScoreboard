@@ -4,13 +4,10 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.rendering.alignment.TextAlignment
-import me.owdding.ktmodules.Module
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
-@Module
 @AutoElement
 object EventMining : Event() {
     override fun getDisplay() = formattedLines
@@ -49,8 +46,7 @@ object EventMining : Event() {
     )
 
 
-    @Subscription
-    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.clear()
         val patterns = powderRegex.takeIf { LinesConfig.showHypixelPowder }?.let { patterns + it } ?: patterns
         formattedLines.addAll(

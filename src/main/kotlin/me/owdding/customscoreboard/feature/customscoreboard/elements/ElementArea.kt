@@ -3,15 +3,12 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.utils.TextUtils.trim
-import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyMatch
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 
-@Module
 @AutoElement(ElementGroup.HEADER)
 object ElementArea : Element() {
     override fun getDisplay() = listOfNotNull(formattedLocation, formattedGardenPlot, formattedVisiting)
@@ -30,8 +27,7 @@ object ElementArea : Element() {
     private var formattedGardenPlot: Component? = null
     private var formattedVisiting: Component? = null
 
-    @Subscription
-    fun onScoreboardChange(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         locationComponentRegex.anyMatch(event.addedComponents) {
             this.formattedLocation = it.component.trim()
         }

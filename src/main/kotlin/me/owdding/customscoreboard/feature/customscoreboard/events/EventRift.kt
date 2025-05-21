@@ -2,17 +2,14 @@ package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
-import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.rift.RiftAPI
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
-@Module
 @AutoElement
 object EventRift : Event() {
     override fun getDisplay() = formattedLines
@@ -32,8 +29,7 @@ object EventRift : Event() {
 
     private val patterns = listOf(hotdogContestRegex, aveikxRegex, cluesRegex, barryProtestRegex, protestorsHandledRegex)
 
-    @Subscription
-    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.clear()
         formattedLines.addAll(
             event.components.filter { component ->

@@ -5,13 +5,10 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
-import me.owdding.ktmodules.Module
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
-@Module
 @AutoElement
 object ElementPurse : Element(), NumberTrackingElement {
     override var previousAmount: Long = -1
@@ -36,8 +33,7 @@ object ElementPurse : Element(), NumberTrackingElement {
 
     private val piggyRegex = "Piggy: .*".toRegex()
 
-    @Subscription
-    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         isPiggy = event.new.any { it.matches(piggyRegex) }
     }
 }

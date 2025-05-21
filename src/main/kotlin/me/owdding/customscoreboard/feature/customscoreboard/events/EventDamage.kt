@@ -1,14 +1,11 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
-import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
-@Module
 @AutoElement
 object EventDamage : Event() {
     override fun getDisplay() = formattedLines
@@ -26,8 +23,7 @@ object EventDamage : Event() {
     private val patterns = listOf(hpRegex, damageRegex)
 
 
-    @Subscription
-    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.clear()
         formattedLines.addAll(
             event.components.filter { component ->

@@ -2,14 +2,11 @@ package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.Utils.nextAfter
-import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
-@Module
 @AutoElement
 object EventDarkAuction : Event() {
     override fun getDisplay() = formattedLines
@@ -26,8 +23,7 @@ object EventDarkAuction : Event() {
     private val currentItemRegex = ComponentRegex("Current Item:")
 
 
-    @Subscription
-    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.clear()
         val lines = event.components
         val startingIn = lines.find { startingInRegex.matches(it) }

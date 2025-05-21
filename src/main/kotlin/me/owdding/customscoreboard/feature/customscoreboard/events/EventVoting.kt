@@ -1,15 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
-import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
-import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
-@Module
 @AutoElement
 object EventVoting : Event() {
     override fun getDisplay() = formattedLines
@@ -32,8 +29,7 @@ object EventVoting : Event() {
 
     private val formattedLines = mutableListOf<Component>()
 
-    @Subscription
-    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.clear()
         for (component in event.components) {
             if (titleRegex.matches(component.stripped)) {
