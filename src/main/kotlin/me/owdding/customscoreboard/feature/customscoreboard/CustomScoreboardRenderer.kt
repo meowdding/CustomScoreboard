@@ -3,16 +3,15 @@ package me.owdding.customscoreboard.feature.customscoreboard
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.createColumn
 import me.owdding.customscoreboard.generated.ScoreboardEntry
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
-import me.owdding.customscoreboard.utils.TextUtils.isBlank
-import me.owdding.customscoreboard.utils.rendering.AlignedText
-import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawAlignedTexts
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawRec
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import me.owdding.lib.builder.LayoutBuilder.Companion.setPos
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
@@ -27,7 +26,7 @@ import tech.thatgravyboat.skyblockapi.helpers.McFont
 @Module
 object CustomScoreboardRenderer {
 
-    private var display: List<AlignedText>? = null
+    private var display: List<ScoreboardLine>? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
@@ -55,7 +54,7 @@ object CustomScoreboardRenderer {
 
         updatePosition()
         renderBackground(event)
-        event.graphics.drawAlignedTexts(display, position.first, position.second, MainConfig.textShadow)
+        display.createColumn().setPos(position.first, position.second).visitWidgets { it.render(event.graphics, 0, 0, 0f) }
     }
 
     private fun renderBackground(event: RenderHudEvent) {
@@ -90,16 +89,16 @@ object CustomScoreboardRenderer {
         display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
     }
 
-    private fun createDisplay() = currentIslandElements.flatMap { it.element.getAlignedText() }
+    private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }
 
-    private fun List<AlignedText>.hideLeadingAndTrailingSeparators() =
-        if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.first.isBlank() }.dropWhile { it.first.isBlank() } else this
+    private fun List<ScoreboardLine>.hideLeadingAndTrailingSeparators() =
+        if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.isBlank }.dropWhile { it.isBlank } else this
 
-    private fun List<AlignedText>.condenseConsecutiveSeparators() =
+    private fun List<ScoreboardLine>.condenseConsecutiveSeparators() =
         if (!LinesConfig.condenseConsecutiveSeparators) this
         else
-            fold(mutableListOf<AlignedText>() to false) { (acc, lastWasSeparator), line ->
-                if (line.first.isBlank()) {
+            fold(mutableListOf<ScoreboardLine>() to false) { (acc, lastWasSeparator), line ->
+                if (line.isBlank) {
                     if (!lastWasSeparator) {
                         acc.add(line)
                     }
@@ -112,7 +111,7 @@ object CustomScoreboardRenderer {
 
     private fun updatePosition() {
         with(BackgroundConfig) {
-            val width = display?.let { it.maxOf { McFont.width(it.first) } } ?: 0
+            val width = display?.let { it.maxOf { it.layout.width } } ?: 0
             val height = display?.let { it.size * McFont.self.lineHeight } ?: 0
 
             val newX = when (MainConfig.horizontalAlignment) {
