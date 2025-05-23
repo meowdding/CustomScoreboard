@@ -15,10 +15,9 @@ abstract class Element {
     /**
      * Must be specified as one of the following:
      * - `String`
-     * - `List<String>`
-     * - `ScoreboardLine` (`String align Alignment`)
-     * - `List<ScoreboardLine>`
+     * - `ScoreboardLine`
      * - `Component`
+     * And any of the above can be a list of the above.
      *
      * `null` values will be treated as empty lines/lists.
      */

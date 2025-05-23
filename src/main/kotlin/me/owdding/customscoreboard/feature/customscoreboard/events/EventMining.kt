@@ -3,7 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.events
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
-import me.owdding.customscoreboard.utils.rendering.alignment.TextAlignment
+import me.owdding.lib.displays.Alignment
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
@@ -55,7 +55,7 @@ object EventMining : Event() {
             },
         )
         event.components.firstOrNull { compassArrowRegex.matches(it) }?.let {
-            formattedLines.add(it align TextAlignment.CENTER)
+            formattedLines.add(it align Alignment.CENTER)
         }
     }
 }

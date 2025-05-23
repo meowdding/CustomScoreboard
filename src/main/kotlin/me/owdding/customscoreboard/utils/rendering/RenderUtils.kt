@@ -3,18 +3,24 @@ package me.owdding.customscoreboard.utils.rendering
 import com.mojang.blaze3d.systems.RenderSystem
 import earth.terrarium.olympus.client.pipelines.RoundedRectangle
 import earth.terrarium.olympus.client.pipelines.RoundedTexture
-import me.owdding.customscoreboard.utils.rendering.alignment.TextAlignment
+import me.owdding.lib.displays.Alignment
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 
-typealias AlignedText = Pair<Component, TextAlignment>
+typealias AlignedText = Pair<Component, Alignment>
 
 object RenderUtils {
 
-    fun GuiGraphics.drawAlignedText(text: Component, x: Int, y: Int, width: Int, alignment: TextAlignment, shadow: Boolean = true) {
+    fun Alignment.align(value: Int, length: Int): Int = when (this) {
+        Alignment.START -> 0
+        Alignment.CENTER -> (length - value) / 2
+        Alignment.END -> length - value
+    }
+
+    fun GuiGraphics.drawAlignedText(text: Component, x: Int, y: Int, width: Int, alignment: Alignment, shadow: Boolean = true) {
         val textWidth = McFont.width(text)
         drawString(McFont.self, text, x + alignment.align(textWidth, width), y, -1, shadow)
     }

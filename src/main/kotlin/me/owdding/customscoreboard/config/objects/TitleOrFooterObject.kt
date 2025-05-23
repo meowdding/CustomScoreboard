@@ -1,10 +1,10 @@
 package me.owdding.customscoreboard.config.objects
 
 import com.teamresourceful.resourcefulconfigkt.api.ObjectKt
-import me.owdding.customscoreboard.utils.rendering.alignment.TextAlignment
+import me.owdding.lib.displays.Alignment
 
 class TitleOrFooterObject : ObjectKt() {
-    val alignment by enum(TextAlignment.CENTER) {
+    val alignment by enum(Alignment.CENTER) {
         this.name = Translated("config.cs.title_footer.alignment")
         this.description = Translated("config.cs.title_footer.alignment.desc")
     }
