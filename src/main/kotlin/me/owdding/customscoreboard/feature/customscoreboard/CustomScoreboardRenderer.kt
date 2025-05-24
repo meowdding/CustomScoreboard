@@ -12,6 +12,7 @@ import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
 import me.owdding.lib.builder.LayoutBuilder.Companion.setPos
+import net.minecraft.client.gui.layouts.Layout
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
@@ -21,12 +22,11 @@ import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
-import tech.thatgravyboat.skyblockapi.helpers.McFont
 
 @Module
 object CustomScoreboardRenderer {
 
-    private var display: List<ScoreboardLine>? = null
+    private var display: Layout? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
@@ -50,12 +50,11 @@ object CustomScoreboardRenderer {
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         val display = display ?: return
-        if (display.isEmpty()) return
         val (mouseX, mouseY) = McClient.mouse
 
         updatePosition()
         renderBackground(event)
-        display.createColumn().setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
+        display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
     }
 
     private fun renderBackground(event: RenderHudEvent) {
@@ -87,7 +86,7 @@ object CustomScoreboardRenderer {
 
     private fun updateDisplay() {
         if (!isEnabled()) return
-        display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
+        display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators().takeUnless { it.isEmpty() }?.createColumn()
     }
 
     private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }
@@ -112,8 +111,8 @@ object CustomScoreboardRenderer {
 
     private fun updatePosition() {
         with(BackgroundConfig) {
-            val width = display?.let { it.maxOf { it.layout.width } } ?: 0
-            val height = display?.let { it.size * McFont.self.lineHeight } ?: 0
+            val width = display?.width ?: 0
+            val height = display?.height ?: 0
 
             val newX = when (MainConfig.horizontalAlignment) {
                 HorizontalAlignment.LEFT -> padding + margin
