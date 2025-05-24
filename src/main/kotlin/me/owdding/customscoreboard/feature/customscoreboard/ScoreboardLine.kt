@@ -109,12 +109,14 @@ data class ScoreboardLine(
 
 class ActionBuilder() {
     var hover: List<String> = listOf()
-    var clickCommand: String = ""
+    var clientCommand: String = ""
+    var serverCommand: String = ""
     var click: Unit = Unit
 
     fun toMap() = mapOf(
         Element.Actions.HOVER to hover,
-        Element.Actions.CLICK_COMMAND to clickCommand,
+        Element.Actions.CLIENT_COMMAND to clientCommand,
+        Element.Actions.SERVER_COMMAND to serverCommand,
         Element.Actions.CLICK to click,
     )
 }

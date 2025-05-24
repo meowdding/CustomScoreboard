@@ -45,7 +45,8 @@ abstract class Element {
 
     enum class Actions {
         HOVER,
-        CLICK_COMMAND,
+        CLIENT_COMMAND,
+        SERVER_COMMAND,
         CLICK;
     }
 }
