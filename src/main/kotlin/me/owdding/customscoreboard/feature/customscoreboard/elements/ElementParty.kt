@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.lib.utils.KnownMods
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.party.PartyAPI
@@ -12,18 +13,11 @@ object ElementParty : Element() {
         val list = PartyAPI.members.distinctBy { it.name }
         add("§9Party (${list.size})") {
             this.hover = listOf("§7Click to view party info")
-            this.clickCommand = "/party info"
+            this.serverCommand = "/party list"
         }
-
-        add(
-            "§9Party (${list.size})".withActions {
-                this.hover = listOf("§7Click to view party info")
-                this.clickCommand = "/party info"
-            },
-        )
         if (LinesConfig.showPartyLeader) {
             PartyAPI.leader?.let {
-                add("§7- §f${it.name ?: "§cUnknown"} §e♚")
+                addPerson("§7- §f${it.name ?: "§cUnknown"} §e♚", it.name)
             }
         }
 
@@ -31,11 +25,27 @@ object ElementParty : Element() {
             .take(LinesConfig.maxPartyMembers)
             .filter { LinesConfig.showPartyLeader && it != PartyAPI.leader }
             .forEach {
-                add("§7- §f${it.name ?: "§cUnknown"}")
+                val line = "§7- §f${it.name ?: "§cUnknown"}"
+                if ((KnownMods.SKYBLOCK_PV.installed || KnownMods.SKYBLOCKER.installed) && it.name != null) {
+                    addPerson(line, it.name)
+                } else add(line) {
+                    this.hover = listOf("§7Click to open SkyCrypt.")
+                    // TODO
+                }
             }
 
         if (list.any { it.name == null }) {
-            add("§fRun §7/pl §fto fix your party")
+            add("§fRun §7/pl §fto fix your party") {
+                this.hover = listOf("§7Click to run the /pl")
+                this.serverCommand = "/pl"
+            }
+        }
+    }
+
+    private fun MutableList<Any>.addPerson(line: String, name: String?) {
+        add(line) {
+            this.hover = listOf("§7Click to view ${name ?: "§cUnknown"}'s profile")
+            if (name != null) this.clientCommand = "/pv $name"
         }
     }
 
