@@ -1,19 +1,24 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
 import earth.terrarium.olympus.client.components.Widgets
+import earth.terrarium.olympus.client.components.compound.LayoutWidget
 import earth.terrarium.olympus.client.components.string.TextWidget
 import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
 import me.owdding.lib.builder.LayoutFactory
 import me.owdding.lib.displays.Alignment
 import me.owdding.lib.displays.Display
 import me.owdding.lib.displays.DisplayWidget
-import net.minecraft.client.gui.layouts.LayoutElement
+import net.minecraft.client.gui.components.AbstractWidget
+import net.minecraft.client.gui.layouts.Layout
 import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.utils.extentions.translated
+import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 data class ScoreboardLine(
-    val layout: LayoutElement,
+    private val layout: AbstractWidget,
     val alignment: Alignment = DEFAULT_ALIGNMENT,
     val isBlank: Boolean = false,
 ) {
@@ -26,6 +31,30 @@ data class ScoreboardLine(
         alignment,
         isBlank,
     )
+
+    val widget by lazy {
+        Widgets.button {
+            it.setSize(layout.width, layout.height)
+            it.withTexture(null)
+            it.withRenderer { graphics, ctx, ticks ->
+                graphics.translated(it.x, it.y) {
+                    layout.render(graphics, ctx.mouseX, ctx.mouseY, ticks)
+                }
+            }
+
+            if (Element.Actions.HOVER in actions) {
+                it.withTooltip(Text.multiline(actions[Element.Actions.HOVER]))
+            }
+
+            it.withCallback {
+                println("Clicked on scoreboard line: $this")
+            }
+
+        }
+    }
+
+    var actions: Map<Element.Actions, Any> = emptyMap()
+        private set
 
     fun applySettings(settings: LayoutSettings) {
         settings.alignHorizontally(
@@ -58,17 +87,36 @@ data class ScoreboardLine(
             is String -> this.toComponent().align()
             is Component -> this.align()
             is ScoreboardLine -> this
-            is LayoutElement -> ScoreboardLine(this)
+            is Layout -> ScoreboardLine(LayoutWidget(this))
+            is AbstractWidget -> ScoreboardLine(this)
             is Display -> ScoreboardLine(DisplayWidget(this))
+            is Pair<*, *> -> {
+                (this.second as? ActionBuilder)?.let { action ->
+                    this.first!!.toScoreboardElement()?.apply { this.actions = action.toMap() }
+                }
+            }
+
             else -> null
         }
 
         fun List<ScoreboardLine>.createColumn() = LayoutFactory.vertical {
             this@createColumn.forEach { line ->
-                widget(line.layout, line::applySettings)
+                widget(line.widget, line::applySettings)
             }
         }
     }
+}
+
+class ActionBuilder() {
+    var hover: List<String> = listOf()
+    var clickCommand: String = ""
+    var click: Unit = Unit
+
+    fun toMap() = mapOf(
+        Element.Actions.HOVER to hover,
+        Element.Actions.CLICK_COMMAND to clickCommand,
+        Element.Actions.CLICK to click,
+    )
 }
 
 private fun String.asTextWidget() = toComponent().asTextWidget()
