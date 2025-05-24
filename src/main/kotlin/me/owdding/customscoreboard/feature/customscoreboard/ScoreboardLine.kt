@@ -17,6 +17,16 @@ data class ScoreboardLine(
     val alignment: Alignment = DEFAULT_ALIGNMENT,
     val isBlank: Boolean = false,
 ) {
+    constructor(
+        string: String,
+        alignment: Alignment = DEFAULT_ALIGNMENT,
+        isBlank: Boolean = false,
+    ) : this(
+        string.asTextWidget(),
+        alignment,
+        isBlank,
+    )
+
     fun applySettings(settings: LayoutSettings) {
         settings.alignHorizontally(
             when (alignment) {
@@ -27,26 +37,16 @@ data class ScoreboardLine(
         )
     }
 
-    constructor(
-        string: String,
-        alignment: Alignment = DEFAULT_ALIGNMENT,
-        isBlank: Boolean = false,
-    ) : this(
-        string.textWidgetWithPotentialShadow(),
-        alignment,
-        isBlank,
-    )
-
     companion object {
         private val DEFAULT_ALIGNMENT get() = Alignment.START//displayConfig.textAlignment
 
         fun String.align(): ScoreboardLine = this.toComponent().align()
 
-        fun Component.align(): ScoreboardLine = ScoreboardLine(this.textWidgetWithPotentialShadow(), DEFAULT_ALIGNMENT)
+        fun Component.align(): ScoreboardLine = ScoreboardLine(this.asTextWidget(), DEFAULT_ALIGNMENT)
 
         infix fun String.align(alignment: Alignment): ScoreboardLine = this.toComponent().align(alignment)
 
-        infix fun Component.align(alignment: Alignment): ScoreboardLine = ScoreboardLine(this.textWidgetWithPotentialShadow(), alignment)
+        infix fun Component.align(alignment: Alignment): ScoreboardLine = ScoreboardLine(this.asTextWidget(), alignment)
 
         internal fun getElementsFromAny(element: Any?): List<ScoreboardLine> = when (element) {
             null -> listOf()
@@ -71,9 +71,9 @@ data class ScoreboardLine(
     }
 }
 
-private fun String.textWidgetWithPotentialShadow() = toComponent().textWidgetWithPotentialShadow()
+private fun String.asTextWidget() = toComponent().asTextWidget()
 
-private fun Component.textWidgetWithPotentialShadow(): TextWidget {
+private fun Component.asTextWidget(): TextWidget {
     val textWidget = Widgets.text(this)
     if (MainConfig.textShadow) {
         textWidget.withShadow()

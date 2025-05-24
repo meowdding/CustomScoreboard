@@ -3,19 +3,11 @@ package me.owdding.customscoreboard.utils.rendering
 import com.mojang.blaze3d.systems.RenderSystem
 import earth.terrarium.olympus.client.pipelines.RoundedRectangle
 import earth.terrarium.olympus.client.pipelines.RoundedTexture
-import me.owdding.lib.displays.Alignment
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 
 object RenderUtils {
-
-    fun Alignment.align(value: Int, length: Int): Int = when (this) {
-        Alignment.START -> 0
-        Alignment.CENTER -> (length - value) / 2
-        Alignment.END -> length - value
-    }
-
     fun GuiGraphics.drawRec(
         x: Int, y: Int, width: Int, height: Int,
         backgroundColor: Int, borderColor: Int = backgroundColor,
