@@ -13,12 +13,16 @@ import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
 import me.owdding.lib.builder.LayoutBuilder.Companion.setPos
 import net.minecraft.client.gui.layouts.Layout
+import net.minecraft.client.gui.screens.ChatScreen
+import net.minecraft.client.gui.screens.inventory.ContainerScreen
+import net.minecraft.client.gui.screens.inventory.InventoryScreen
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.HudElement
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudElementEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudEvent
+import tech.thatgravyboat.skyblockapi.api.events.screen.ScreenMouseClickEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
@@ -46,6 +50,18 @@ object CustomScoreboardRenderer {
         updateDisplay()
     }
 
+    @Subscription
+    fun onScreenOpen(event: ScreenMouseClickEvent.Pre) {
+        if (!isAllowedScreen()) return
+
+        display?.visitWidgets {
+            if (it.mouseClicked(event.x, event.y, event.button)) {
+                event.cancel()
+                return@visitWidgets
+            }
+        }
+    }
+
     @Subscription()
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
@@ -54,8 +70,18 @@ object CustomScoreboardRenderer {
 
         updatePosition()
         renderBackground(event)
-        display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
+        if (isAllowedScreen()) {
+            display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
+        } else {
+            display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, 0, 0, 0f) }
+        }
     }
+
+    fun isAllowedScreen() = when (McClient.self.screen) {
+        is ChatScreen, is ContainerScreen, is InventoryScreen, null -> true
+        else -> false
+    }
+
 
     private fun renderBackground(event: RenderHudEvent) {
         if (!BackgroundConfig.enabled) return
