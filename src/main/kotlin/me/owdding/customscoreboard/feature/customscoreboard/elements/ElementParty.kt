@@ -17,21 +17,15 @@ object ElementParty : Element() {
         }
         if (LinesConfig.showPartyLeader) {
             PartyAPI.leader?.let {
-                addPerson("§7- §f${it.name ?: "§cUnknown"} §e♚", it.name)
+                addMember("§7- §f${it.name ?: "§cUnknown"} §e♚", it.name)
             }
         }
 
         list
             .take(LinesConfig.maxPartyMembers)
-            .filter { LinesConfig.showPartyLeader && it != PartyAPI.leader }
+            .filter { LinesConfig.showPartyLeader && it != PartyAPI.leader && it.name != null }
             .forEach {
-                val line = "§7- §f${it.name ?: "§cUnknown"}"
-                if ((KnownMods.SKYBLOCK_PV.installed || KnownMods.SKYBLOCKER.installed) && it.name != null) {
-                    addPerson(line, it.name)
-                } else add(line) {
-                    this.hover = listOf("§7Click to open SkyCrypt.")
-                    this.link = "https://sky.shiiyu.moe/stats/${it.name}"
-                }
+                addMember("§7- §f${it.name}", it.name)
             }
 
         if (list.any { it.name == null }) {
@@ -42,10 +36,15 @@ object ElementParty : Element() {
         }
     }
 
-    private fun MutableList<Any>.addPerson(line: String, name: String?) {
-        add(line) {
-            this.hover = listOf("§7Click to view ${name ?: "§cUnknown"}'s profile")
-            if (name != null) this.command = "/pv $name"
+    private fun MutableList<Any>.addMember(line: String, name: String?) {
+        if ((KnownMods.SKYBLOCK_PV.installed || KnownMods.SKYBLOCKER.installed)) {
+            add(line) {
+                this.hover = listOf("§7Click to view ${name}'s profile")
+                this.command = "/pv $name"
+            }
+        } else add(line) {
+            this.hover = listOf("§7Click to open SkyCrypt.")
+            this.link = "https://sky.shiiyu.moe/stats/${name}"
         }
     }
 
