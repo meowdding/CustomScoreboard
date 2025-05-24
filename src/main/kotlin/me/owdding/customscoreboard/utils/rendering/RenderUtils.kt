@@ -3,43 +3,17 @@ package me.owdding.customscoreboard.utils.rendering
 import com.mojang.blaze3d.systems.RenderSystem
 import earth.terrarium.olympus.client.pipelines.RoundedRectangle
 import earth.terrarium.olympus.client.pipelines.RoundedTexture
-import me.owdding.lib.displays.Alignment
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 
-typealias AlignedText = Pair<Component, Alignment>
-
 object RenderUtils {
-
-    fun Alignment.align(value: Int, length: Int): Int = when (this) {
-        Alignment.START -> 0
-        Alignment.CENTER -> (length - value) / 2
-        Alignment.END -> length - value
-    }
-
-    fun GuiGraphics.drawAlignedText(text: Component, x: Int, y: Int, width: Int, alignment: Alignment, shadow: Boolean = true) {
-        val textWidth = McFont.width(text)
-        drawString(McFont.self, text, x + alignment.align(textWidth, width), y, -1, shadow)
-    }
-
-    fun GuiGraphics.drawAlignedTexts(texts: List<AlignedText>, x: Int, y: Int, shadow: Boolean = true) {
-        var currentY = y
-        val maxWidth = texts.maxOf { McFont.width(it.first) }
-        texts.forEach { text ->
-            drawAlignedText(text.first, x, currentY, maxWidth, text.second, shadow)
-            currentY += McFont.self.lineHeight
-        }
-    }
-
     fun GuiGraphics.drawRec(
         x: Int, y: Int, width: Int, height: Int,
         backgroundColor: Int, borderColor: Int = backgroundColor,
         borderSize: Int = 0, radius: Int = 0,
     ) {
-        RoundedRectangle.drawRelative(this, x, y, width, height, backgroundColor, borderColor, borderSize.toFloat(), radius)
+        RoundedRectangle.drawRelative(this, x, y, width, height, backgroundColor, borderColor, radius.toFloat(), borderSize)
     }
 
     fun GuiGraphics.drawTexture(

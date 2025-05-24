@@ -3,16 +3,16 @@ package me.owdding.customscoreboard.feature.customscoreboard
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.createColumn
 import me.owdding.customscoreboard.generated.ScoreboardEntry
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
-import me.owdding.customscoreboard.utils.TextUtils.isBlank
-import me.owdding.customscoreboard.utils.rendering.AlignedText
-import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawAlignedTexts
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawRec
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import me.owdding.lib.builder.LayoutBuilder.Companion.setPos
+import net.minecraft.client.gui.layouts.Layout
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
@@ -22,12 +22,11 @@ import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
-import tech.thatgravyboat.skyblockapi.helpers.McFont
 
 @Module
 object CustomScoreboardRenderer {
 
-    private var display: List<AlignedText>? = null
+    private var display: Layout? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
@@ -51,11 +50,11 @@ object CustomScoreboardRenderer {
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         val display = display ?: return
-        if (display.isEmpty()) return
+        val (mouseX, mouseY) = McClient.mouse
 
         updatePosition()
         renderBackground(event)
-        event.graphics.drawAlignedTexts(display, position.first, position.second, MainConfig.textShadow)
+        display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
     }
 
     private fun renderBackground(event: RenderHudEvent) {
@@ -87,19 +86,19 @@ object CustomScoreboardRenderer {
 
     private fun updateDisplay() {
         if (!isEnabled()) return
-        display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
+        display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators().takeUnless { it.isEmpty() }?.createColumn()
     }
 
-    private fun createDisplay() = currentIslandElements.flatMap { it.element.getAlignedText() }
+    private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }
 
-    private fun List<AlignedText>.hideLeadingAndTrailingSeparators() =
-        if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.first.isBlank() }.dropWhile { it.first.isBlank() } else this
+    private fun List<ScoreboardLine>.hideLeadingAndTrailingSeparators() =
+        if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.isBlank }.dropWhile { it.isBlank } else this
 
-    private fun List<AlignedText>.condenseConsecutiveSeparators() =
+    private fun List<ScoreboardLine>.condenseConsecutiveSeparators() =
         if (!LinesConfig.condenseConsecutiveSeparators) this
         else
-            fold(mutableListOf<AlignedText>() to false) { (acc, lastWasSeparator), line ->
-                if (line.first.isBlank()) {
+            fold(mutableListOf<ScoreboardLine>() to false) { (acc, lastWasSeparator), line ->
+                if (line.isBlank) {
                     if (!lastWasSeparator) {
                         acc.add(line)
                     }
@@ -112,8 +111,8 @@ object CustomScoreboardRenderer {
 
     private fun updatePosition() {
         with(BackgroundConfig) {
-            val width = display?.let { it.maxOf { McFont.width(it.first) } } ?: 0
-            val height = display?.let { it.size * McFont.self.lineHeight } ?: 0
+            val width = display?.width ?: 0
+            val height = display?.height ?: 0
 
             val newX = when (MainConfig.horizontalAlignment) {
                 HorizontalAlignment.LEFT -> padding + margin

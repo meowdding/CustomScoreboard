@@ -1,40 +1,82 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
+import earth.terrarium.olympus.client.components.Widgets
+import earth.terrarium.olympus.client.components.string.TextWidget
+import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
-import me.owdding.customscoreboard.utils.rendering.AlignedText
+import me.owdding.lib.builder.LayoutFactory
 import me.owdding.lib.displays.Alignment
+import me.owdding.lib.displays.Display
+import me.owdding.lib.displays.DisplayWidget
+import net.minecraft.client.gui.layouts.LayoutElement
+import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
 
 data class ScoreboardLine(
-    val display: Component,
+    val layout: LayoutElement,
     val alignment: Alignment = DEFAULT_ALIGNMENT,
+    val isBlank: Boolean = false,
 ) {
+    constructor(
+        string: String,
+        alignment: Alignment = DEFAULT_ALIGNMENT,
+        isBlank: Boolean = false,
+    ) : this(
+        string.asTextWidget(),
+        alignment,
+        isBlank,
+    )
 
-    fun toAlignedText(): AlignedText = display to alignment
+    fun applySettings(settings: LayoutSettings) {
+        settings.alignHorizontally(
+            when (alignment) {
+                Alignment.START -> 0f
+                Alignment.CENTER -> 0.5f
+                Alignment.END -> 1f
+            },
+        )
+    }
 
     companion object {
         private val DEFAULT_ALIGNMENT get() = Alignment.START//displayConfig.textAlignment
 
-        fun String.align(): ScoreboardLine = ScoreboardLine(this.toComponent(), DEFAULT_ALIGNMENT)
+        fun String.align(): ScoreboardLine = this.toComponent().align()
 
-        fun Component.align(): ScoreboardLine = ScoreboardLine(this, DEFAULT_ALIGNMENT)
+        fun Component.align(): ScoreboardLine = ScoreboardLine(this.asTextWidget(), DEFAULT_ALIGNMENT)
 
-        infix fun String.align(alignment: Alignment): ScoreboardLine = ScoreboardLine(this.toComponent(), alignment)
+        infix fun String.align(alignment: Alignment): ScoreboardLine = this.toComponent().align(alignment)
 
-        infix fun Component.align(alignment: Alignment): ScoreboardLine = ScoreboardLine(this, alignment)
+        infix fun Component.align(alignment: Alignment): ScoreboardLine = ScoreboardLine(this.asTextWidget(), alignment)
 
         internal fun getElementsFromAny(element: Any?): List<ScoreboardLine> = when (element) {
             null -> listOf()
-            is Component -> listOfNotNull(element.toScoreboardElement())
             is List<*> -> element.mapNotNull { it?.toScoreboardElement() }
             else -> listOfNotNull(element.toScoreboardElement())
         }
 
         private fun Any.toScoreboardElement(): ScoreboardLine? = when (this) {
             is String -> this.toComponent().align()
-            is ScoreboardLine -> this
             is Component -> this.align()
+            is ScoreboardLine -> this
+            is LayoutElement -> ScoreboardLine(this)
+            is Display -> ScoreboardLine(DisplayWidget(this))
             else -> null
         }
+
+        fun List<ScoreboardLine>.createColumn() = LayoutFactory.vertical {
+            this@createColumn.forEach { line ->
+                widget(line.layout, line::applySettings)
+            }
+        }
     }
+}
+
+private fun String.asTextWidget() = toComponent().asTextWidget()
+
+private fun Component.asTextWidget(): TextWidget {
+    val textWidget = Widgets.text(this)
+    if (MainConfig.textShadow) {
+        textWidget.withShadow()
+    }
+    return textWidget
 }
