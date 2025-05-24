@@ -11,14 +11,14 @@ object ElementParty : Element() {
     override fun getDisplay() = buildList {
         val list = PartyAPI.members.distinctBy { it.name }
         add("§9Party (${list.size})") {
-            Actions.CLICK_COMMAND to { "/party info" }
-            Actions.HOVER to { listOf("§7Click to view party info") }
+            this.hover = listOf("§7Click to view party info")
+            this.clickCommand = "/party info"
         }
 
         add(
             "§9Party (${list.size})".withActions {
-                Actions.CLICK_COMMAND to { "/party info" }
-                Actions.HOVER to { listOf("§7Click to view party info") }
+                this.hover = listOf("§7Click to view party info")
+                this.clickCommand = "/party info"
             },
         )
         if (LinesConfig.showPartyLeader) {
@@ -39,14 +39,7 @@ object ElementParty : Element() {
         }
     }
 
-    override fun showWhen() = PartyAPI.size > 0 && when {
-        SkyBlockIsland.THE_CATACOMBS.inIsland() -> false
-        LinesConfig.showPartyEverywhere -> true
-        else -> SkyBlockIsland.inAnyIsland(
-            SkyBlockIsland.DUNGEON_HUB,
-            SkyBlockIsland.CRIMSON_ISLE,
-        ) || GlaciteAPI.inGlaciteTunnels()
-    }
+    override fun showWhen() = true
 
     override val configLine = "Party"
 }
