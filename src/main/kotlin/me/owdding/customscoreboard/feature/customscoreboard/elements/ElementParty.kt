@@ -39,7 +39,14 @@ object ElementParty : Element() {
         }
     }
 
-    override fun showWhen() = true
+    override fun showWhen() = PartyAPI.size > 0 && when {
+        SkyBlockIsland.THE_CATACOMBS.inIsland() -> false
+        LinesConfig.showPartyEverywhere -> true
+        else -> SkyBlockIsland.inAnyIsland(
+            SkyBlockIsland.DUNGEON_HUB,
+            SkyBlockIsland.CRIMSON_ISLE,
+        ) || GlaciteAPI.inGlaciteTunnels()
+    }
 
     override val configLine = "Party"
 }
