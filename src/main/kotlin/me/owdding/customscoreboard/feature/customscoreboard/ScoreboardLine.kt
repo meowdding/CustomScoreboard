@@ -16,6 +16,8 @@ import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 data class ScoreboardLine(
     private val layout: AbstractWidget,
@@ -44,6 +46,7 @@ data class ScoreboardLine(
 
             if (Element.Actions.HOVER in actions) {
                 it.withTooltip(Text.multiline(actions[Element.Actions.HOVER]))
+                it.setTooltipDelay(Duration.of(-1, ChronoUnit.SECONDS))
             }
 
             it.withCallback {
