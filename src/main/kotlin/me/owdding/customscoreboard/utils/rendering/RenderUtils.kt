@@ -21,7 +21,7 @@ object RenderUtils {
         backgroundColor: Int, borderColor: Int = backgroundColor,
         borderSize: Int = 0, radius: Int = 0,
     ) {
-        RoundedRectangle.drawRelative(this, x, y, width, height, backgroundColor, borderColor, borderSize.toFloat(), radius)
+        RoundedRectangle.drawRelative(this, x, y, width, height, backgroundColor, borderColor, radius.toFloat(), borderSize)
     }
 
     fun GuiGraphics.drawTexture(
