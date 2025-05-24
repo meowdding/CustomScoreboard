@@ -61,18 +61,21 @@ object CustomScoreboardRenderer {
         if (!BackgroundConfig.enabled) return
         val padding = BackgroundConfig.padding
 
+        val x = position.first - padding
+        val y = position.second - padding
+        val width = dimensions.first + padding * 2
+        val height = dimensions.second + padding * 2
+
         if (BackgroundConfig.imageBackground) {
             event.graphics.drawTexture(
-                position.first - padding, position.second - padding,
-                dimensions.first + padding * 2, dimensions.second + padding * 2,
+                x, y, width, height,
                 CustomScoreboardBackground.getTexture(),
                 radius = BackgroundConfig.radius,
                 alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
             )
         } else {
             event.graphics.drawRec(
-                position.first - padding, position.second - padding,
-                dimensions.first + padding * 2, dimensions.second + padding * 2,
+                x, y, width, height,
                 BackgroundConfig.backgroundColor,
                 radius = BackgroundConfig.radius,
             )
