@@ -13,7 +13,7 @@ object ElementParty : Element() {
         val list = PartyAPI.members.distinctBy { it.name }
         add("§9Party (${list.size})") {
             this.hover = listOf("§7Click to view party info")
-            this.serverCommand = "/party list"
+            this.command = "/party list"
         }
         if (LinesConfig.showPartyLeader) {
             PartyAPI.leader?.let {
@@ -37,7 +37,7 @@ object ElementParty : Element() {
         if (list.any { it.name == null }) {
             add("§fRun §7/pl §fto fix your party") {
                 this.hover = listOf("§7Click to run the /pl")
-                this.serverCommand = "/pl"
+                this.command = "/pl"
             }
         }
     }
@@ -45,7 +45,7 @@ object ElementParty : Element() {
     private fun MutableList<Any>.addPerson(line: String, name: String?) {
         add(line) {
             this.hover = listOf("§7Click to view ${name ?: "§cUnknown"}'s profile")
-            if (name != null) this.clientCommand = "/pv $name"
+            if (name != null) this.command = "/pv $name"
         }
     }
 

@@ -56,8 +56,7 @@ data class ScoreboardLine(
             it.withCallback {
                 actions.forEach { (k, v) ->
                     when (k) {
-                        Element.Actions.CLIENT_COMMAND -> McClient.self.connection?.sendCommand((v as String).removePrefix("/"))
-                        Element.Actions.SERVER_COMMAND -> McClient.sendCommand((v as String).removePrefix("/"))
+                        Element.Actions.COMMAND -> McClient.self.connection?.sendCommand((v as String).removePrefix("/"))
                         Element.Actions.CLICK -> (v as (() -> Unit))()
                         Element.Actions.LINK -> Util.getPlatform().openUri(v as String)
                         else -> {}
@@ -122,15 +121,13 @@ data class ScoreboardLine(
 
 class ActionBuilder() {
     var hover: List<String>? = null
-    var clientCommand: String? = null
-    var serverCommand: String? = null
+    var command: String? = null
     var click: (() -> Unit)? = null
     var link: String? = null
 
     fun toMap() = mapOf(
         Element.Actions.HOVER to hover,
-        Element.Actions.CLIENT_COMMAND to clientCommand,
-        Element.Actions.SERVER_COMMAND to serverCommand,
+        Element.Actions.COMMAND to command,
         Element.Actions.CLICK to click,
         Element.Actions.LINK to link,
     ).mapNotNull { (key, value) -> value?.let { key to it } }.toMap()
