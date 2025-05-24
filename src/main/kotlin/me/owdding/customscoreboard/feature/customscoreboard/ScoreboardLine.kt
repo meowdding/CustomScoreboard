@@ -10,10 +10,12 @@ import me.owdding.lib.builder.LayoutFactory
 import me.owdding.lib.displays.Alignment
 import me.owdding.lib.displays.Display
 import me.owdding.lib.displays.DisplayWidget
+import net.minecraft.Util
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.layouts.Layout
 import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import java.time.Duration
@@ -34,6 +36,8 @@ data class ScoreboardLine(
         isBlank,
     )
 
+    private var actions: Map<Element.Actions, Any> = emptyMap()
+
     val widget by lazy {
         Widgets.button {
             it.setSize(layout.width, layout.height)
@@ -50,14 +54,20 @@ data class ScoreboardLine(
             }
 
             it.withCallback {
-                println("Clicked on scoreboard line: $this")
+                actions.forEach { (k, v) ->
+                    when (k) {
+                        Element.Actions.CLIENT_COMMAND -> McClient.self.connection?.sendCommand((v as String).removePrefix("/"))
+                        Element.Actions.SERVER_COMMAND -> McClient.sendCommand((v as String).removePrefix("/"))
+                        Element.Actions.CLICK -> (v as (() -> Unit))()
+                        Element.Actions.LINK -> Util.getPlatform().openUri(v as String)
+                        else -> {}
+                    }
+                }
             }
 
         }
     }
 
-    var actions: Map<Element.Actions, Any> = emptyMap()
-        private set
 
     fun applySettings(settings: LayoutSettings) {
         settings.alignHorizontally(
@@ -111,17 +121,19 @@ data class ScoreboardLine(
 }
 
 class ActionBuilder() {
-    var hover: List<String> = listOf()
-    var clientCommand: String = ""
-    var serverCommand: String = ""
-    var click: Unit = Unit
+    var hover: List<String>? = null
+    var clientCommand: String? = null
+    var serverCommand: String? = null
+    var click: (() -> Unit)? = null
+    var link: String? = null
 
     fun toMap() = mapOf(
         Element.Actions.HOVER to hover,
         Element.Actions.CLIENT_COMMAND to clientCommand,
         Element.Actions.SERVER_COMMAND to serverCommand,
         Element.Actions.CLICK to click,
-    )
+        Element.Actions.LINK to link,
+    ).mapNotNull { (key, value) -> value?.let { key to it } }.toMap()
 }
 
 private fun String.asTextWidget() = toComponent().asTextWidget()

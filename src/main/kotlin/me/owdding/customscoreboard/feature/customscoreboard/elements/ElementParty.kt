@@ -30,7 +30,7 @@ object ElementParty : Element() {
                     addPerson(line, it.name)
                 } else add(line) {
                     this.hover = listOf("§7Click to open SkyCrypt.")
-                    // TODO
+                    this.link = "https://sky.shiiyu.moe/stats/${it.name}"
                 }
             }
 

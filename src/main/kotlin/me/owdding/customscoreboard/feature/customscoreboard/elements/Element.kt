@@ -47,6 +47,8 @@ abstract class Element {
         HOVER,
         CLIENT_COMMAND,
         SERVER_COMMAND,
-        CLICK;
+        CLICK,
+        LINK,
+        ;
     }
 }
