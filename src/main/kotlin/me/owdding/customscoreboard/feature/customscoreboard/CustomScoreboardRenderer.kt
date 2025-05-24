@@ -51,10 +51,11 @@ object CustomScoreboardRenderer {
         if (!isEnabled()) return
         val display = display ?: return
         if (display.isEmpty()) return
+        val (mouseX, mouseY) = McClient.mouse
 
         updatePosition()
         renderBackground(event)
-        display.createColumn().setPos(position.first, position.second).visitWidgets { it.render(event.graphics, 0, 0, 0f) }
+        display.createColumn().setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
     }
 
     private fun renderBackground(event: RenderHudEvent) {
