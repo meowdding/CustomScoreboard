@@ -56,7 +56,7 @@ data class ScoreboardLine(
             it.withCallback {
                 actions.forEach { (k, v) ->
                     when (k) {
-                        Element.Actions.COMMAND -> McClient.self.connection?.sendCommand((v as String).removePrefix("/"))
+                        Element.Actions.COMMAND -> McClient.sendCommand((v as String).removePrefix("/"))
                         Element.Actions.CLICK -> (v as (() -> Unit))()
                         Element.Actions.LINK -> Util.getPlatform().openUri(v as String)
                         else -> {}

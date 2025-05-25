@@ -51,12 +51,11 @@ object CustomScoreboardRenderer {
     }
 
     @Subscription
-    fun onScreenOpen(event: ScreenMouseClickEvent.Pre) {
+    fun onMouseClick(event: ScreenMouseClickEvent.Post) {
         if (!isAllowedScreen()) return
 
         display?.visitWidgets {
             if (it.mouseClicked(event.x, event.y, event.button)) {
-                event.cancel()
                 return@visitWidgets
             }
         }
