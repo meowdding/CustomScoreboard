@@ -13,11 +13,14 @@ object ElementCopper : Element(), NumberTrackingElement {
     override var temporaryChangeDisplay: String? = null
     override val numberColor = "§c"
 
-    override fun getDisplay(): String {
+    override fun getDisplay(): Any {
         checkDifference(CurrencyAPI.copper)
         val line = CurrencyAPI.copper.format() + temporaryChangeDisplay.orEmpty()
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Copper", line, numberColor)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Copper", line, numberColor).withActions {
+            hover = listOf("§7Click to teleport to your barn.")
+            command = "/tptoplot barn"
+        }
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GARDEN)

@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import net.minecraft.world.item.Items
 import tech.thatgravyboat.skyblockapi.api.profile.quiver.QuiverAPI
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
@@ -13,7 +14,7 @@ import tech.thatgravyboat.skyblockapi.utils.extentions.toTitleCase
 object ElementQuiver : Element() {
     private const val MAX_ARROW_AMOUNT = 2880
 
-    override fun getDisplay(): String? {
+    override fun getDisplay(): Any? {
         val type = QuiverAPI.currentArrow?.toTitleCase() ?: return null
         val amount = QuiverAPI.currentAmount ?: return null
 
@@ -40,7 +41,11 @@ object ElementQuiver : Element() {
             }
         }
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay(type, amountLine, color)
+        val element = CustomScoreboardRenderer.formatNumberDisplayDisplay(type, amountLine, color)
+        return if (!hasCookieActive()) element else element.withActions {
+            hover = listOf("§7Click to open the quiver")
+            command = "/quiver"
+        }
     }
 
     override fun showWhen() = McPlayer.inventory.any { it.item == Items.BOW }

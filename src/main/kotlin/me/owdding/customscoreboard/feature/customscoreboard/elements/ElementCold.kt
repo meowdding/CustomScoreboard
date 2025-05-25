@@ -7,7 +7,10 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 
 @AutoElement
 object ElementCold : Element() {
-    override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay("Cold", "${-GlaciteAPI.cold}❄", "§b")
+    override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay("Cold", "${-GlaciteAPI.cold}❄", "§b").withActions {
+        hover = listOf("§7Click to warp to the basecamp.")
+        command = "/warp basecamp"
+    }
 
     override fun showWhen() = GlaciteAPI.inGlaciteTunnels() && (GlaciteAPI.cold > 0)
 

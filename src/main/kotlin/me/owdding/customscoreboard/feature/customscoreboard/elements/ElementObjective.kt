@@ -8,7 +8,12 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
 @AutoElement
 object ElementObjective : Element() {
-    override fun getDisplay() = objectiveLines
+    override fun getDisplay() = objectiveLines.map {
+        it.withActions {
+            hover = listOf("§7Click to view quest details")
+            command = "/quests"
+        }
+    }
 
     override val configLine = "Objective"
 

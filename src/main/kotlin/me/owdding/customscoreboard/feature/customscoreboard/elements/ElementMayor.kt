@@ -5,8 +5,10 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.lib.extensions.toReadableTime
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
 import tech.thatgravyboat.skyblockapi.api.data.Candidate
+import tech.thatgravyboat.skyblockapi.api.data.Perk
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitToWidth
 import kotlin.time.Duration
 
 @AutoElement
@@ -17,11 +19,14 @@ object ElementMayor : Element() {
         val time = if (LinesConfig.showMayorTime) " §7(§e$instant§7)"
         else ""
 
-        add("${candidateColor[mayor]}${mayor.candidateName}$time")
+        add("${candidateColor[mayor]}${mayor.candidateName}$time") {
+            hover = listOf("§7Click to open the calendar.")
+            command = "/calendar"
+        }
 
         if (LinesConfig.showMayorPerks) {
-            for (perk in mayor.activePerks) {
-                add(" §7- §e${perk.perkName}")
+            mayor.activePerks.forEach {
+                addPerk(it)
             }
         }
 
@@ -31,10 +36,16 @@ object ElementMayor : Element() {
             add("${candidateColor[minister]}${minister.candidateName}")
 
             if (LinesConfig.showMayorPerks) {
-                for (perk in minister.activePerks) {
-                    add(" §7- §e${perk.perkName}")
+                minister.activePerks.forEach {
+                    addPerk(it)
                 }
             }
+        }
+    }
+
+    private fun MutableList<Any>.addPerk(perk: Perk) {
+        add(" §7- §e${perk.perkName}") {
+            hover = perk.description.splitToWidth(" ", 140).map { "§7$it" }
         }
     }
 

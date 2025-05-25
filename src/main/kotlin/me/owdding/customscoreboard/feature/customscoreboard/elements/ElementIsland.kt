@@ -6,7 +6,10 @@ import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 
 @AutoElement(ElementGroup.HEADER)
 object ElementIsland : Element() {
-    override fun getDisplay() = "§7㋖ §a${LocationAPI.island}"
+    override fun getDisplay() = "§7㋖ §a${LocationAPI.island}".withActions {
+        hover = listOf("§7Click to open the warp menu.")
+        command = "/warp"
+    }
 
     override fun showWhen() = LocationAPI.island != null
 

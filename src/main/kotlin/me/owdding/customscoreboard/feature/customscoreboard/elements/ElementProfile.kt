@@ -16,6 +16,9 @@ object ElementProfile : Element() {
         } else {
             append(profile)
         }
+    }.withActions {
+        hover = listOf("§7Click to open the profile switcher")
+        command = "/profiles"
     }
 
     override fun showWhen() = ProfileAPI.profileType != ProfileType.UNKNOWN

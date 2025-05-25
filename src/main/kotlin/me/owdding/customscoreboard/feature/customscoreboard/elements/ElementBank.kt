@@ -4,6 +4,7 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
@@ -14,14 +15,18 @@ object ElementBank : Element(), NumberTrackingElement {
     override var temporaryChangeDisplay: String? = null
     override val numberColor = "§6"
 
-    override fun getDisplay(): String {
+    override fun getDisplay(): Any {
         checkDifference(CurrencyAPI.coopBank)
         val line = when (ProfileAPI.coop) {
             true -> "${CurrencyAPI.personalBank.format()}§7/§6${CurrencyAPI.coopBank.format()}"
             false -> CurrencyAPI.coopBank.format()
         } + temporaryChangeDisplay.orEmpty()
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
+        val element = CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
+        return if (!hasCookieActive()) element else element.withActions {
+            hover = listOf("§7Click to open the bank")
+            command = "/bank"
+        }
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)

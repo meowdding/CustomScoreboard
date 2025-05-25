@@ -41,7 +41,7 @@ abstract class Element {
 
     fun MutableList<Any>.add(element: Any, actions: ActionBuilder.() -> Unit = {}) = add(element to ActionBuilder().apply(actions))
 
-    infix fun String.withActions(actions: ActionBuilder.() -> Unit) = this to ActionBuilder().apply(actions)
+    infix fun Any.withActions(actions: ActionBuilder.() -> Unit) = this to ActionBuilder().apply(actions)
 
     enum class Actions {
         HOVER,

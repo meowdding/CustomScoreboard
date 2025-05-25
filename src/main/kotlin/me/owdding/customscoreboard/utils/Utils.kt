@@ -2,9 +2,14 @@ package me.owdding.customscoreboard.utils
 
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
+import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
+import tech.thatgravyboat.skyblockapi.utils.time.until
+import kotlin.time.Duration.Companion.seconds
 
 object Utils {
+    fun hasCookieActive() = EffectsAPI.boosterCookieExpireTime.until() > 1.seconds
+
     private val seasonColors = mapOf(
         SkyBlockSeason.EARLY_SPRING to "§a",
         SkyBlockSeason.SPRING to "§a",
