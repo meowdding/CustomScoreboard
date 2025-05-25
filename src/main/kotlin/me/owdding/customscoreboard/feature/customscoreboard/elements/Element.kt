@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.feature.customscoreboard.ActionBuilder
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.getElementsFromAny
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
@@ -37,4 +38,16 @@ abstract class Element {
 
     open fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {}
     open fun onServerChange(event: ServerChangeEvent) {}
+
+    fun MutableList<Any>.add(element: Any, actions: ActionBuilder.() -> Unit = {}) = add(element to ActionBuilder().apply(actions))
+
+    infix fun String.withActions(actions: ActionBuilder.() -> Unit) = this to ActionBuilder().apply(actions)
+
+    enum class Actions {
+        HOVER,
+        COMMAND,
+        CLICK,
+        LINK,
+        ;
+    }
 }
