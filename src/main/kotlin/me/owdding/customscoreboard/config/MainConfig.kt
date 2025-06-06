@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.config
 
+import com.google.gson.JsonObject
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
@@ -13,29 +14,37 @@ import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.NumberFormatType
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
+import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
 
-    override val name get() = TranslatableValue("Custom Scoreboard Config")
-    override val description get() = TranslatableValue("by j10a1n15. Version ${Main.VERSION}")
-    override val links: Array<ResourcefulConfigLink>
-        get() = arrayOf(
-            ResourcefulConfigLink.create(
-                "https://discord.gg/FsRc2GUwZR",
-                "discord",
-                TranslatableValue("Discord"),
-            ),
-            ResourcefulConfigLink.create(
-                "https://modrinth.com/mod/skyblock-custom-scoreboard",
-                "modrinth",
-                TranslatableValue("Modrinth"),
-            ),
-            ResourcefulConfigLink.create(
-                "https://github.com/meowdding/CustomScoreboard",
-                "code",
-                TranslatableValue("GitHub"),
-            ),
-        )
+    override val name = TranslatableValue("Custom Scoreboard Config")
+    override val description = TranslatableValue("by j10a1n15. Version ${Main.VERSION}")
+    override val links: Array<ResourcefulConfigLink> = arrayOf(
+        ResourcefulConfigLink.create(
+            "https://discord.gg/FsRc2GUwZR",
+            "discord",
+            TranslatableValue("Discord"),
+        ),
+        ResourcefulConfigLink.create(
+            "https://modrinth.com/mod/skyblock-custom-scoreboard",
+            "modrinth",
+            TranslatableValue("Modrinth"),
+        ),
+        ResourcefulConfigLink.create(
+            "https://github.com/meowdding/CustomScoreboard",
+            "code",
+            TranslatableValue("GitHub"),
+        ),
+    )
+
+    override val version = 1
+    override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
+        0 to UnaryOperator { json ->
+            json.getAsJsonArray("events").add(ScoreboardEventEntry.GALATEA.name)
+            json
+        },
+    )
 
     init {
         category(BackgroundConfig)
