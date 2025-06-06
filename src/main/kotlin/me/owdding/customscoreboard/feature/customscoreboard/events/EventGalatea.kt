@@ -4,12 +4,15 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.Utils.nextAfter
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 
 @AutoElement
 object EventGalatea : Event() {
     override fun getDisplay() = formattedLines
+
+    override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GALATEA)
 
     override val configLine = "Galatea"
 
