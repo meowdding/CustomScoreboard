@@ -18,6 +18,7 @@ object EventGalatea : Event() {
 
 
     private val whisperRegex = ComponentRegex("Whispers: [\\w,.]+.*")
+    private val hotfRegex = ComponentRegex("\\s*HOTF: [\\w,.]+.*")
     private val contestRegex = ComponentRegex("Agatha's Contest.*")
     private val hypixelFooterRegex = "(?:www|alpha).hypixel.net".toRegex()
 
@@ -27,6 +28,9 @@ object EventGalatea : Event() {
         formattedLines.clear()
 
         whisperRegex.anyMatch(event.components) {
+            formattedLines.add(it.component)
+        }
+        hotfRegex.anyMatch(event.components) {
             formattedLines.add(it.component)
         }
 
