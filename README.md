@@ -1,5 +1,6 @@
-<h1 align="center">Custom Scoreboards</h1>
-
+<h1 align="center">
+    Custom Scoreboards
+</h1>
 <div align="center">
 
 [![Discord](https://img.shields.io/discord/1296157888343179264?color=8c03fc&label=Discord&logo=discord&logoColor=white)](https://discord.gg/FsRc2GUwZR)
@@ -11,14 +12,25 @@ Custom Scoreboard is a mod for modern Minecraft and Hypixel SkyBlock, inspired b
 This mod lets you fully customize your scoreboard, making it easier to focus on the information that matters most while you're running a
 Dungeon, slaying a Voidgloom or grinding for a Mineshaft in a Party!
 
-Features:
-
-- Fully customizable scoreboard layout.
-- Custom Lines beyond Hypixel's Lines, like the current Mayor or your Party.
-- Rounded Background, Rounded Textured Background
-
-Later Planned Additions:
-
-- Elements that are in SkyHanni and not this mod, like Power, ...
-
 Using /customscoreboard, or /cs for short, you can open the config and start customizing your Custom Scoreboard experience!
+
+## SkyHanni vs Custom Scoreboard
+
+Elements that are in both mods are not listed for obvious reasons.
+
+| Feature                         | in SkyHanni? | in Custom Scoreboard? |
+|---------------------------------|--------------|-----------------------|
+| Hypixel Lines                   | ✅            | ✅                     |
+| Rounded Background              | ✅            | ✅                     |
+| Rounded Background with Outline | ✅            | ❌                     |
+| Rounded Textured Background     | ✅            | ✅                     |
+| Ingame Background Texture Adder | ❌            | ✅                     |
+| Click and Hover Actions         | ❌            | ✅                     |
+| Infinite Separators             | ❌            | ✅                     |
+| Active Pet                      | ❌            | ✅                     |
+| Cookie Buff Time                | ✅            | ❌                     |
+| SkyBlock Level                  | ✅            | ❌                     |
+| Chunked Stats                   | ✅            | ❌                     |
+| Maxwell Lines                   | ✅            | ❌                     |
+| Players in Lobby                | ✅            | ❌                     |
+
