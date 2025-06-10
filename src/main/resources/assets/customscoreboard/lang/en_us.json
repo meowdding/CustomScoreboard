@@ -56,6 +56,8 @@
     "config.cs.background.editor": "Custom Background Image",
     "config.cs.background.editor.desc": "Click to open the custom background image editor.",
     "_comment": "Line Config",
+    "config.cs.lines.date_format": "Date Format",
+    "config.cs.lines.date_format.desc": "Choose the format of the date in the scoreboard.",
     "config.cs.lines.bits_available": "Bits Available",
     "config.cs.lines.bits_available.desc": "Show your available bits on the scoreboard.",
     "config.cs.lines.colored_month": "Colored Month",
