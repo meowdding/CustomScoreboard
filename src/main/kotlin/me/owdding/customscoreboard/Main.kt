@@ -9,6 +9,7 @@ import kotlinx.coroutines.SupervisorJob
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
+import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
 import me.owdding.lib.utils.MeowddingUpdateChecker
 import net.fabricmc.api.ModInitializer
@@ -32,8 +33,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
 object Main : ModInitializer {
-
-    val PREFIX = Text.of("[CustomScoreboard] ").withColor(TextColor.YELLOW)
 
     val SELF = FabricLoader.getInstance().getModContainer("customscoreboard").get()
     val MOD_ID: String = SELF.metadata.id
@@ -72,14 +71,13 @@ object Main : ModInitializer {
             McClient.tell {
                 Text.of().send()
                 Text.join(
-                    PREFIX,
                     "New version found! (",
                     Text.of(current).withColor(TextColor.RED),
                     Text.of(" -> ").withColor(TextColor.GRAY),
                     Text.of(new).withColor(TextColor.GREEN),
                     ")",
-                ).withLink().send()
-                Text.join(PREFIX, "Click to download.").withLink().send()
+                ).withLink().sendWithPrefix()
+                Text.of("Click to download.").withLink().sendWithPrefix()
                 Text.of().send()
             }
         }
