@@ -2,8 +2,13 @@ package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
+import me.owdding.customscoreboard.utils.DateFormat
 
 object LinesConfig : CategoryKt("Line Modification") {
+
+    val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
+        this.translation = "config.cs.lines.date_format"
+    }
 
     val showBitsAvailable by boolean("bits_available", true) {
         this.translation = "config.cs.lines.bits_available"
