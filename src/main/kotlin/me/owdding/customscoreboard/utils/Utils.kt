@@ -3,6 +3,9 @@ package me.owdding.customscoreboard.utils
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.Text.send
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 import tech.thatgravyboat.skyblockapi.utils.time.until
 import kotlin.time.Duration.Companion.seconds
@@ -32,4 +35,12 @@ object Utils {
         if (index == -1 || index + skip >= size) return null
         return elementAt(index + skip)
     }
+
+    val PREFIX = Text.join(
+        Text.of("[").withColor(TextColor.GRAY),
+        Text.of("CustomScoreboard").withColor(TextColor.AQUA),
+        Text.of("] ").withColor(TextColor.GRAY),
+    )
+
+    fun Component.sendWithPrefix() = Text.join(PREFIX, this).send()
 }

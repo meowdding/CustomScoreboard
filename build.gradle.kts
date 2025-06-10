@@ -40,6 +40,7 @@ dependencies {
     modImplementation(libs.rlib)
     modImplementation(libs.olympus)
     modImplementation(libs.meowdding.lib)
+    modImplementation(libs.mixinconstraints)
 
     include(libs.hypixelapi)
     include(libs.skyblockapi)
@@ -48,6 +49,7 @@ dependencies {
     include(libs.rlib)
     include(libs.olympus)
     include(libs.meowdding.lib)
+    include(libs.mixinconstraints)
 
     modRuntimeOnly(libs.devauth)
 }
