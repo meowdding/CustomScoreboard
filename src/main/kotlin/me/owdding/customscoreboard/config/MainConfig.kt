@@ -38,10 +38,14 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ),
     )
 
-    override val version = 1
+    override val version = 2
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
             json.getAsJsonArray("events").add(ScoreboardEventEntry.GALATEA.name)
+            json
+        },
+        1 to UnaryOperator { json ->
+            json.getAsJsonArray("events").add(ScoreboardEventEntry.ANNIVERSARY.name)
             json
         },
     )
