@@ -7,80 +7,80 @@ import me.owdding.customscoreboard.utils.DateFormat
 object LinesConfig : CategoryKt("Line Modification") {
 
     val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
-        this.translation = "config.cs.lines.date_format"
+        this.translation = "customscoreboard.config.lines.date_format"
     }
 
     val showBitsAvailable by boolean("bits_available", true) {
-        this.translation = "config.cs.lines.bits_available"
+        this.translation = "customscoreboard.config.lines.bits_available"
     }
 
     val coloredMonth by boolean("colored_month", true) {
-        this.translation = "config.cs.lines.colored_month"
+        this.translation = "customscoreboard.config.lines.colored_month"
     }
 
     val showProfileName by boolean("profile_name", false) {
-        this.translation = "config.cs.lines.profile_name"
+        this.translation = "customscoreboard.config.lines.profile_name"
     }
 
     val showMayorTime by boolean("mayor_time", true) {
-        this.translation = "config.cs.lines.mayor_time"
+        this.translation = "customscoreboard.config.lines.mayor_time"
     }
 
     val showMayorPerks by boolean("mayor_perks", true) {
-        this.translation = "config.cs.lines.mayor_perks"
+        this.translation = "customscoreboard.config.lines.mayor_perks"
     }
 
     val showMinister by boolean("mayor_minister", true) {
-        this.translation = "config.cs.lines.mayor_minister"
+        this.translation = "customscoreboard.config.lines.mayor_minister"
     }
 
     val showAllActiveEvents by boolean("all_events", true) {
-        this.translation = "config.cs.lines.all_events"
+        this.translation = "customscoreboard.config.lines.all_events"
     }
 
     val useHypixelTitle by boolean("hypixel_title", true) {
-        this.translation = "config.cs.lines.hypixel_title"
+        this.translation = "customscoreboard.config.lines.hypixel_title"
     }
 
     val showPartyEverywhere by boolean("party_everywhere", true) {
-        this.translation = "config.cs.lines.party_everywhere"
+        this.translation = "customscoreboard.config.lines.party_everywhere"
     }
 
     val maxPartyMembers by int("max_party", 5) {
-        this.translation = "config.cs.lines.max_party"
+        this.translation = "customscoreboard.config.lines.max_party"
         this.slider = true
         this.range = 1..10
     }
 
     val showPartyLeader by boolean("party_leader", true) {
-        this.translation = "config.cs.lines.party_leader"
+        this.translation = "customscoreboard.config.lines.party_leader"
     }
 
     val condenseConsecutiveSeparators by boolean("consecutive_separator", true) {
-        this.translation = "config.cs.lines.consecutive_separator"
+        this.translation = "customscoreboard.config.lines.consecutive_separator"
     }
 
     val hideSeparatorsAtStartEnd by boolean("separators_start_end", true) {
-        this.translation = "config.cs.lines.separators_start_end"
+        this.translation = "customscoreboard.config.lines.separators_start_end"
     }
 
     val colorArrowAmount by boolean("color_arrow", true) {
-        this.translation = "config.cs.lines.color_arrow"
+        this.translation = "customscoreboard.config.lines.color_arrow"
     }
 
     val arrowDisplay by enum("arrow_display", ElementQuiver.ArrowDisplay.NUMBER) {
-        this.translation = "config.cs.lines.arrow_display"
+        this.translation = "customscoreboard.config.lines.arrow_display"
     }
 
     val showPiggy by boolean("piggy", false) {
-        this.translation = "config.cs.lines.piggy"
+        this.translation = "customscoreboard.config.lines.piggy"
     }
 
     val showPetMax by boolean("pet_max", true) {
-        this.translation = "config.cs.lines.pet_max"
+        this.translation = "customscoreboard.config.lines.pet_max"
     }
 
     val showHypixelPowder by boolean("hypixel_powder", true) {
-        this.translation = "config.cs.lines.hypixel_powder"
+        this.translation = "customscoreboard.config.lines.hypixel_powder"
     }
 }

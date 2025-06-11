@@ -22,47 +22,47 @@ import kotlin.jvm.optionals.getOrNull
 object BackgroundConfig : CategoryKt("Background") {
 
     val enabled by boolean(true) {
-        this.translation = "config.cs.background.enabled"
+        this.translation = "customscoreboard.config.background.enabled"
     }
 
     val backgroundColor by color("color", 0xA0000000.toInt()) {
-        this.translation = "config.cs.background.color"
+        this.translation = "customscoreboard.config.background.color"
         this.allowAlpha = true
     }
 
     val padding by int(5) {
-        this.translation = "config.cs.background.padding"
+        this.translation = "customscoreboard.config.background.padding"
         this.range = 0..20
         this.slider = true
     }
 
     val margin by int(0) {
-        this.translation = "config.cs.background.margin"
+        this.translation = "customscoreboard.config.background.margin"
         this.range = 0..20
         this.slider = true
     }
 
     val radius by int(5) {
-        this.translation = "config.cs.background.radius"
+        this.translation = "customscoreboard.config.background.radius"
         this.range = 0..20
         this.slider = true
     }
 
     init {
         separator {
-            this.title = "config.cs.background.separator"
-            this.description = "config.cs.background.separator.desc"
+            this.title = "customscoreboard.config.background.separator"
+            this.description = "customscoreboard.config.background.separator.desc"
         }
     }
 
     val imageBackground by boolean(false) {
-        this.translation = "config.cs.background.image"
+        this.translation = "customscoreboard.config.background.image"
     }
 
     init {
         button {
-            this.title = "config.cs.background.website"
-            this.description = "config.cs.background.website.desc"
+            this.title = "customscoreboard.config.background.website"
+            this.description = "customscoreboard.config.background.website.desc"
             this.text = "Open Website"
 
             onClick {
@@ -71,8 +71,8 @@ object BackgroundConfig : CategoryKt("Background") {
         }
 
         button {
-            this.title = "config.cs.background.editor"
-            this.description = "config.cs.background.editor.desc"
+            this.title = "customscoreboard.config.background.editor"
+            this.description = "customscoreboard.config.background.editor.desc"
             this.text = "Open Editor"
 
             onClick {
@@ -82,7 +82,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val imageBackgroundTransparency by int(90) {
-        this.translation = "config.cs.background.transparency"
+        this.translation = "customscoreboard.config.background.transparency"
         this.range = 5..100
         this.slider = true
     }

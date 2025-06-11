@@ -9,9 +9,9 @@ import org.lwjgl.glfw.GLFW
 object CustomScoreboardKeybinds {
     val TOGGLE_KEY: KeyMapping = KeyBindingHelper.registerKeyBinding(
         KeyMapping(
-            "config.cs.keybind.toggle",
+            "customscoreboard.keybinds.toggle",
             GLFW.GLFW_KEY_I,
-            "config.cs",
+            "customscoreboard",
         ),
     )
 }

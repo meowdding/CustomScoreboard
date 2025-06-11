@@ -1,97 +1,197 @@
 {
-    "config.cs": "Custom Scoreboard",
-    "_comment": "Keybinds",
-    "config.cs.keybind.toggle": "Toggle Custom Scoreboard",
-    "_comment": "Main Config",
-    "config.cs.enabled": "Main Toggle",
-    "config.cs.enabled.desc": "Enable or disable the custom scoreboard",
-    "config.cs.appearance": "Appearance",
-    "config.cs.appearance.desc": "Edit this list to change the order of appearance of the scoreboard.",
-    "config.cs.events": "Events Priority",
-    "config.cs.events.desc": "Edit this list to change the order of appearance of the events.",
-    "config.cs.title_options": "Title Options",
-    "config.cs.title_options.desc": "Edit the title of the scoreboard.",
-    "config.cs.footer_options": "Footer Options",
-    "config.cs.footer_options.desc": "Edit the footer of the scoreboard.",
-    "config.cs.number_format": "Number Format",
-    "config.cs.number_format.desc": "Choose the format of the numbers in the scoreboard.",
-    "config.cs.number_display_format": "Number Display Format",
-    "config.cs.number_display_format.desc": "Choose the format numbers with their prefix are displayed in the scoreboard.",
-    "config.cs.vertical_alignment": "Vertical Alignment",
-    "config.cs.vertical_alignment.desc": "Choose the vertical alignment of the scoreboard.",
-    "config.cs.horizontal_alignment": "Horizontal Alignment",
-    "config.cs.horizontal_alignment.desc": "Choose the horizontal alignment of the scoreboard.",
-    "config.cs.hide_hypixel": "Hide Hypixel Scoreboard",
-    "config.cs.hide_hypixel.desc": "Enable or disable the Hypixel scoreboard.",
-    "config.cs.text_shadow": "Text Shadow",
-    "config.cs.text_shadow.desc": "Enable or disable the text shadow on the scoreboard.",
-    "config.cs.update_notification": "Update Notification",
-    "config.cs.update_notification.desc": "Enable the update notification.",
-    "_comment": "Title or Footer Config",
-    "config.cs.title_footer.alignment": "Alignment",
-    "config.cs.title_footer.alignment.desc": "Choose the alignment of this element.",
-    "config.cs.title_footer.use_custom_text": "Use Custom Text",
-    "config.cs.title_footer.use_custom_text.desc": "Enable or disable custom text for this element.",
-    "config.cs.title_footer.custom_text": "Custom Text",
-    "config.cs.title_footer.custom_text.desc": "Edit the custom text for this element. Use && for colors and \\n for new line",
-    "_comment": "Background Config",
-    "config.cs.background.enabled": "Toggle Background",
-    "config.cs.background.enabled.desc": "Enable or disable the background of the scoreboard.",
-    "config.cs.background.color": "Background Color",
-    "config.cs.background.color.desc": "Choose the color of the background.",
-    "config.cs.background.padding": "Padding",
-    "config.cs.background.padding.desc": "Choose the padding of the background.",
-    "config.cs.background.margin": "Margin",
-    "config.cs.background.margin.desc": "Choose the margin between the scoreboard and the screen border.",
-    "config.cs.background.radius": "Radius",
-    "config.cs.background.radius.desc": "Choose the radius of the rounded corner of the background.",
-    "config.cs.background.image": "Custom Image Background",
-    "config.cs.background.image.desc": "Use a custom image as the background.\nMake sure you have your texturepack enabled.",
-    "config.cs.background.transparency": "Transparency of the Background",
-    "config.cs.background.transparency.desc": "Choose the transparency of the background.",
-    "config.cs.background.separator": "Background Options",
-    "config.cs.background.separator.desc": "Edit the background options.",
-    "config.cs.background.website": "Image Creator Website",
-    "config.cs.background.website.desc": "Click to open a website that helps you generate your own background texturepack. Make sure to enable the 'Modern CustomScoreboard' option.",
-    "config.cs.background.editor": "Custom Background Image",
-    "config.cs.background.editor.desc": "Click to open the custom background image editor.",
-    "_comment": "Line Config",
-    "config.cs.lines.date_format": "Date Format",
-    "config.cs.lines.date_format.desc": "Choose the format of the date in the scoreboard.",
-    "config.cs.lines.bits_available": "Bits Available",
-    "config.cs.lines.bits_available.desc": "Show your available bits on the scoreboard.",
-    "config.cs.lines.colored_month": "Colored Month",
-    "config.cs.lines.colored_month.desc": "Show the month in color on the scoreboard.",
-    "config.cs.lines.profile_name": "Profile Name",
-    "config.cs.lines.profile_name.desc": "Show your profile name on the scoreboard.",
-    "config.cs.lines.mayor_time": "Mayor Time till Election",
-    "config.cs.lines.mayor_time.desc": "Show the time till the next mayor election on the scoreboard.",
-    "config.cs.lines.mayor_perks": "Mayor Perks",
-    "config.cs.lines.mayor_perks.desc": "Show the perks of the mayor on the scoreboard.",
-    "config.cs.lines.mayor_minister": "Show Minister",
-    "config.cs.lines.mayor_minister.desc": "Show the minister on the scoreboard.",
-    "config.cs.lines.all_events": "All Events",
-    "config.cs.lines.all_events.desc": "Show all events instead of the first one. Uses the \"Events Priority\" list.",
-    "config.cs.lines.hypixel_title": "Use Hypixel Title",
-    "config.cs.lines.hypixel_title.desc": "Use Hypixel's Scoreboard Title. §cWill override the Custom Title if enabled.",
-    "config.cs.lines.party_everywhere": "Party Everywhere",
-    "config.cs.lines.party_everywhere.desc": "Show the party on every Island instead of just Glacite Tunnels, Dungeon Hub and Crimson Isle.",
-    "config.cs.lines.max_party": "Max Party Size",
-    "config.cs.lines.max_party.desc": "Show the max party size on the scoreboard.",
-    "config.cs.lines.party_leader": "Show Party Leader",
-    "config.cs.lines.party_leader.desc": "Show the party leader on the scoreboard.",
-    "config.cs.lines.consecutive_separator": "Condense Consecutive Separator",
-    "config.cs.lines.consecutive_separator.desc": "Condense consecutive Separator into one.",
-    "config.cs.lines.separators_start_end": "Hide Separators at Start and End",
-    "config.cs.lines.separators_start_end.desc": "Hide the separators at the start and end of the scoreboard.",
-    "config.cs.lines.color_arrow": "Colored Arrow",
-    "config.cs.lines.color_arrow.desc": "Color the Arrow Line based on the amount of arrows left.",
-    "config.cs.lines.arrow_display": "Arrow Display",
-    "config.cs.lines.arrow_display.desc": "Choose the display type of the arrows.",
-    "config.cs.lines.piggy": "Piggy Bank",
-    "config.cs.lines.piggy.desc": "Use \"Piggy\" instead of \"Purse\" as your Purse prefix when a piggy bank is active.",
-    "config.cs.lines.pet_max": "Show Pet Max Level",
-    "config.cs.lines.pet_max.desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden.",
-    "config.cs.lines.hypixel_powder": "Show Hypixel's Powder Line",
-    "config.cs.lines.hypixel_powder.desc": "Show Hypixel's Powder Line on the scoreboard."
+    "@meowdding:metadata": {
+        "allowMultiline": true,
+        "allowReferences": true,
+        "allowTags": true,
+        "objectAsKeys": true,
+        "prefix": "customscoreboard"
+    },
+    "@value": "Custom Scoreboard",
+    "config": {
+        "enabled": {
+            "@value": "Main Toggle",
+            "desc": "Enable or disable the custom scoreboard"
+        },
+        "appearance": {
+            "@value": "Appearance",
+            "desc": "Edit this list to change the order of appearance of the scoreboard."
+        },
+        "events": {
+            "@value": "Events Priority",
+            "desc": "Edit this list to change the order of appearance of the events."
+        },
+        "title_options": {
+            "@value": "Title Options",
+            "desc": "Edit the title of the scoreboard."
+        },
+        "footer_options": {
+            "@value": "Footer Options",
+            "desc": "Edit the footer of the scoreboard."
+        },
+        "number_format": {
+            "@value": "Number Format",
+            "desc": "Choose the format of the numbers in the scoreboard."
+        },
+        "number_display_format": {
+            "@value": "Number Display Format",
+            "desc": "Choose the format numbers with their prefix are displayed in the scoreboard."
+        },
+        "vertical_alignment": {
+            "@value": "Vertical Alignment",
+            "desc": "Choose the vertical alignment of the scoreboard."
+        },
+        "horizontal_alignment": {
+            "@value": "Horizontal Alignment",
+            "desc": "Choose the horizontal alignment of the scoreboard."
+        },
+        "hide_hypixel": {
+            "@value": "Hide Hypixel Scoreboard",
+            "desc": "Enable or disable the Hypixel scoreboard."
+        },
+        "text_shadow": {
+            "@value": "Text Shadow",
+            "desc": "Enable or disable the text shadow on the scoreboard."
+        },
+        "update_notification": {
+            "@value": "Update Notification",
+            "desc": "Enable the update notification."
+        },
+        "title_footer": {
+            "alignment": {
+                "@value": "Alignment",
+                "desc": "Choose the alignment of the title and footer."
+            },
+            "use_custom_text": {
+                "@value": "Use Custom Text",
+                "desc": "Enable or disable custom text for the title and footer."
+            },
+            "custom_text": {
+                "@value": "Custom Text",
+                "desc": "Edit the custom text for the title and footer. Use && for colors and \\n for new line."
+            }
+        },
+        "background": {
+            "enabled": {
+                "@value": "Toggle Background",
+                "desc": "Enable or disable the background of the scoreboard."
+            },
+            "color": {
+                "@value": "Background Color",
+                "desc": "Choose the color of the background."
+            },
+            "padding": {
+                "@value": "Padding",
+                "desc": "Choose the padding of the background."
+            },
+            "margin": {
+                "@value": "Margin",
+                "desc": "Choose the margin between the scoreboard and the screen border."
+            },
+            "radius": {
+                "@value": "Radius",
+                "desc": "Choose the radius of the rounded corner of the background."
+            },
+            "image": {
+                "@value": "Custom Image Background",
+                "desc": "Use a custom image as the background.\nMake sure you have your texturepack enabled."
+            },
+            "transparency": {
+                "@value": "Transparency of the Background",
+                "desc": "Choose the transparency of the background."
+            },
+            "separator": {
+                "@value": "Background Options",
+                "desc": "Edit the background options."
+            },
+            "website": {
+                "@value": "Image Creator Website",
+                "desc": "Click to open a website that helps you generate your own background texturepack. Make sure to enable the 'Modern CustomScoreboard' option."
+            },
+            "editor": {
+                "@value": "Custom Background Image",
+                "desc": "Click to open the custom background image editor."
+            }
+        },
+        "lines": {
+            "date_format": {
+                "@value": "Date Format",
+                "desc": "Choose the format of the date in the scoreboard."
+            },
+            "bits_available": {
+                "@value": "Bits Available",
+                "desc": "Show your available bits on the scoreboard."
+            },
+            "colored_month": {
+                "@value": "Colored Month",
+                "desc": "Show the month in color on the scoreboard."
+            },
+            "profile_name": {
+                "@value": "Profile Name",
+                "desc": "Show your profile name on the scoreboard."
+            },
+            "mayor_time": {
+                "@value": "Mayor Time till Election",
+                "desc": "Show the time till the next mayor election on the scoreboard."
+            },
+            "mayor_perks": {
+                "@value": "Mayor Perks",
+                "desc": "Show the perks of the mayor on the scoreboard."
+            },
+            "mayor_minister": {
+                "@value": "Show Minister",
+                "desc": "Show the minister on the scoreboard."
+            },
+            "all_events": {
+                "@value": "All Events",
+                "desc": "Show all events instead of the first one. Uses the \"Events Priority\" list."
+            },
+            "hypixel_title": {
+                "@value": "Use Hypixel Title",
+                "desc": "Use Hypixel's Scoreboard Title. §cWill override the Custom Title if enabled."
+            },
+            "party_everywhere": {
+                "@value": "Party Everywhere",
+                "desc": "Show the party on every Island instead of just Glacite Tunnels, Dungeon Hub and Crimson Isle."
+            },
+            "max_party": {
+                "@value": "Max Party Size",
+                "desc": "Show the max party size on the scoreboard."
+            },
+            "party_leader": {
+                "@value": "Show Party Leader",
+                "desc": "Show the party leader on the scoreboard."
+            },
+            "consecutive_separator": {
+                "@value": "Condense Consecutive Separator",
+                "desc": "Condense consecutive Separator into one."
+            },
+            "separators_start_end": {
+                "@value": "Hide Separators at Start and End",
+                "desc": "Hide the separators at the start and end of the scoreboard."
+            },
+            "color_arrow": {
+                "@value": "Colored Arrow",
+                "desc": "Color the Arrow Line based on the amount of arrows left."
+            },
+            "arrow_display": {
+                "@value": "Arrow Display",
+                "desc": "Choose the display type of the arrows."
+            },
+            "piggy": {
+                "@value": "Piggy Bank",
+                "desc": "Use \"Piggy\" instead of \"Purse\" as your Purse prefix when a piggy bank is active."
+            },
+            "pet_max": {
+                "@value": "Show Pet Max Level",
+                "desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden."
+            },
+            "hypixel_powder": {
+                "@value": "Show Hypixel's Powder Line",
+                "desc": "Show Hypixel's Powder Line on the scoreboard."
+            }
+        }
+    },
+    "keybinds": {
+        "toggle": "Toggle Custom Scoreboard"
+    }
 }

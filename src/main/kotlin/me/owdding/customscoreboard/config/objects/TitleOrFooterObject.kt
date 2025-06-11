@@ -5,17 +5,17 @@ import me.owdding.lib.displays.Alignment
 
 class TitleOrFooterObject : ObjectKt() {
     val alignment by enum(Alignment.CENTER) {
-        this.name = Translated("config.cs.title_footer.alignment")
-        this.description = Translated("config.cs.title_footer.alignment.desc")
+        this.name = Translated("customscoreboard.config.title_footer.alignment")
+        this.description = Translated("customscoreboard.config.title_footer.alignment.desc")
     }
 
     val useCustomText by boolean("use_custom_text", false) {
-        this.name = Translated("config.cs.title_footer.use_custom_text")
-        this.description = Translated("config.cs.title_footer.use_custom_text.desc")
+        this.name = Translated("customscoreboard.config.title_footer.use_custom_text")
+        this.description = Translated("customscoreboard.config.title_footer.use_custom_text.desc")
     }
 
     val text by string("custom_text", "") {
-        this.name = Translated("config.cs.title_footer.custom_text")
-        this.description = Translated("config.cs.title_footer.custom_text.desc")
+        this.name = Translated("customscoreboard.config.title_footer.custom_text")
+        this.description = Translated("customscoreboard.config.title_footer.custom_text.desc")
     }
 }
