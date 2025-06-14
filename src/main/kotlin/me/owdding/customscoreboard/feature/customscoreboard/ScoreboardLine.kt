@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
+import com.teamresourceful.resourcefullib.common.color.ConstantColors
 import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.components.compound.LayoutWidget
 import earth.terrarium.olympus.client.components.string.TextWidget
@@ -26,15 +27,8 @@ data class ScoreboardLine(
     val alignment: Alignment = DEFAULT_ALIGNMENT,
     val isBlank: Boolean = false,
 ) {
-    constructor(
-        string: String,
-        alignment: Alignment = DEFAULT_ALIGNMENT,
-        isBlank: Boolean = false,
-    ) : this(
-        string.asTextWidget(),
-        alignment,
-        isBlank,
-    )
+    constructor(component: Component, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(component.asTextWidget(), alignment, isBlank)
+    constructor(string: String, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(string.asTextWidget(), alignment, isBlank)
 
     private var actions: Map<Element.Actions, Any> = emptyMap()
 
@@ -116,6 +110,11 @@ data class ScoreboardLine(
                 widget(line.widget, line::applySettings)
             }
         }
+
+        fun getVanillaLines() = buildList {
+            McClient.scoreboardTitle?.let { add(ScoreboardLine(it, MainConfig.title.alignment)) }
+            McClient.scoreboard.forEach { add(ScoreboardLine(it)) }
+        }
     }
 }
 
@@ -136,7 +135,9 @@ class ActionBuilder() {
 private fun String.asTextWidget() = toComponent().asTextWidget()
 
 private fun Component.asTextWidget(): TextWidget {
-    val textWidget = Widgets.text(this)
+    val textWidget = Widgets.text(this) {
+        it.withColor(ConstantColors.white)
+    }
     if (MainConfig.textShadow) {
         textWidget.withShadow()
     }
