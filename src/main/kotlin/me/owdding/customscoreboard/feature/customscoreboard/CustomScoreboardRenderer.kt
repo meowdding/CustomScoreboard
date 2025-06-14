@@ -187,7 +187,7 @@ object CustomScoreboardRenderer {
         override fun toString() = config
     }
 
-    private fun isEnabled() = (LocationAPI.isOnSkyBlock || (MainConfig.outsideSkyBlock && !LocationAPI.isOnSkyBlock)) && MainConfig.enabled
+    private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
     private fun shouldUseCustomLines() = MainConfig.customLines && !LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
 
