@@ -117,7 +117,7 @@ object CustomScoreboardRenderer {
         display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators().takeUnless { it.isEmpty() }?.createColumn()
     }
 
-    private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }
+    private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }.takeIf { shouldUseCustomLines() } ?: ScoreboardLine.getVanillaLines()
 
     private fun List<ScoreboardLine>.hideLeadingAndTrailingSeparators() =
         if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.isBlank }.dropWhile { it.isBlank } else this
@@ -187,7 +187,8 @@ object CustomScoreboardRenderer {
         override fun toString() = config
     }
 
-    private fun isEnabled() = LocationAPI.isOnSkyBlock && MainConfig.enabled
+    private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
+    private fun shouldUseCustomLines() = MainConfig.customLines && !LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
 
 }

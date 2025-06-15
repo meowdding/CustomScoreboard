@@ -140,6 +140,14 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.text_shadow"
     }
 
+    val customLines by boolean(true) {
+        this.translation = "customscoreboard.config.custom_lines"
+    }
+
+    val outsideSkyBlock by boolean(false) {
+        this.translation = "customscoreboard.config.outside_skyblock"
+    }
+
     val updateNotification by boolean("update_notification", true) {
         this.translation = "customscoreboard.config.update_notification"
     }

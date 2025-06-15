@@ -52,6 +52,17 @@
             "@value": "Text Shadow",
             "desc": "Enable or disable the text shadow on the scoreboard."
         },
+        "custom_lines": {
+            "@value": "Custom Lines",
+            "desc": "Instead of displaying the Hypixel's scoreboard lines, it will display the custom lines you selected in appearance & events."
+        },
+        "outside_skyblock": {
+            "@value": "Outside SkyBlock",
+            "desc": [
+                "Show the Custom Scoreboard outside SkyBlock.",
+                "If enabled, it will use that servers lines without adding any other special lines."
+            ]
+        },
         "update_notification": {
             "@value": "Update Notification",
             "desc": "Enable the update notification."
