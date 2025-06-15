@@ -54,7 +54,7 @@
         },
         "custom_lines": {
             "@value": "Custom Lines",
-            "desc": "Use custom lines instead of the default Hypixel lines."
+            "desc": "Instead of displaying the Hypixel's scoreboard lines, it will display the custom lines you selected in appearance & events."
         },
         "outside_skyblock": {
             "@value": "Outside SkyBlock",
