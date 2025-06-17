@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
 import me.owdding.customscoreboard.utils.DateFormat
 
@@ -78,6 +79,10 @@ object LinesConfig : CategoryKt("Line Modification") {
 
     val showPetMax by boolean("pet_max", true) {
         this.translation = "customscoreboard.config.lines.pet_max"
+    }
+
+    val powderDisplay by enum(ElementPowder.PowderDisplay.CURRENT) {
+        this.translation = "customscoreboard.config.lines.powder_display"
     }
 
     val showHypixelPowder by boolean("hypixel_powder", true) {
