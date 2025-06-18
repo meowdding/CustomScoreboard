@@ -20,7 +20,7 @@ object ElementPowder : Element() {
                 add(" §7- ${format("Glacite", PowderAPI.glacite.format(), "§b")}")
             }
 
-            PowderDisplay.MAX -> {
+            PowderDisplay.TOTAL -> {
                 add(" §7- ${format("Mithril", PowderAPI.mithrilTotal.format(), "§2")}")
                 add(" §7- ${format("Gemstone", PowderAPI.gemstoneTotal.format(), "§d")}")
                 add(" §7- ${format("Glacite", PowderAPI.glaciteTotal.format(), "§b")}")
@@ -41,8 +41,8 @@ object ElementPowder : Element() {
 
     enum class PowderDisplay(val display: String) {
         CURRENT("Current"),
-        MAX("Max"),
-        BOTH("Current/Max");
+        TOTAL("Total"),
+        BOTH("Current/Total");
 
         override fun toString() = display
     }
