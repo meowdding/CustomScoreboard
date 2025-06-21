@@ -35,7 +35,8 @@ object ElementMayor : Element() {
                     addHoverPerks(minister)
                 }
                 add("")
-                add("§7Click to open the calendar.")
+                add("")
+                add("§eClick to open the calendar.")
             } else listOf("§7Click to open the calendar.")
             command = "/calendar"
         }
@@ -68,7 +69,8 @@ object ElementMayor : Element() {
 
     private fun MutableList<String>.addHoverPerks(candidate: Candidate) {
         val color = candidateColor[candidate] ?: "§e"
-        candidate.activePerks.forEach { perk ->
+        candidate.activePerks.forEachIndexed { i, perk ->
+            if (i != 0) add("")
             add("$color${perk.perkName}:")
             perk.description.splitToWidth(" ", 140).mapTo(this) { "  §7$it" }
         }
