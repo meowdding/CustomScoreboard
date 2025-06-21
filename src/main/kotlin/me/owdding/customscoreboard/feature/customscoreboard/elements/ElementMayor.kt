@@ -112,7 +112,7 @@ object ElementMayor : Element() {
         Candidate.DERPY to "§d",
     )
 
-    enum class PerkDisplay(private val display: String = "") {
+    enum class PerkDisplay(private val display: String) {
         OFF("Off"),
         COUNT("Perk Amount"),
         ALL("All Perks"),
@@ -121,7 +121,7 @@ object ElementMayor : Element() {
         override fun toString(): String = display
     }
 
-    enum class MinisterDisplay(private val display: String = "") {
+    enum class MinisterDisplay(private val display: String) {
         OFF("Off"),
         COMPACT("Compact"),
         FULL("Show"),
