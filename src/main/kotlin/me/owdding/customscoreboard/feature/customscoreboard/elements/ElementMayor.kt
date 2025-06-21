@@ -5,7 +5,6 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.lib.extensions.toReadableTime
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
 import tech.thatgravyboat.skyblockapi.api.data.Candidate
-import tech.thatgravyboat.skyblockapi.api.data.Perk
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitToWidth
@@ -15,37 +14,63 @@ import kotlin.time.Duration
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
         val mayor = ElectionAPI.currentMayor ?: return@buildList
-        val instant = timeUntilNextMayor().toReadableTime()
-        val time = if (LinesConfig.showMayorTime) " §7(§e$instant§7)"
+        val time = if (LinesConfig.showMayorTime) " §7(§e${timeUntilNextMayor().toReadableTime()}§7)"
         else ""
 
-        add("${candidateColor[mayor]}${mayor.candidateName}$time") {
-            hover = listOf("§7Click to open the calendar.")
+        val perksDisplay = LinesConfig.mayorPerksDisplay
+        val count = if (perksDisplay == PerkDisplay.COUNT) " §e(${mayor.activePerks.size})"
+        else ""
+
+        val ministerDisplay = LinesConfig.ministerDisplay
+        val minister = ElectionAPI.currentMinister
+        val ministerCompact = if (ministerDisplay == MinisterDisplay.COMPACT && minister != null) {
+            "§7, ${minister.formatName()}"
+        } else ""
+
+        add("${mayor.formatName()}$count$ministerCompact$time") {
+            hover = if (perksDisplay != PerkDisplay.ALL) buildList {
+                addHoverPerks(mayor)
+                if (minister != null && ministerDisplay == MinisterDisplay.COMPACT) {
+                    add("")
+                    addHoverPerks(minister)
+                }
+                add("")
+                add("§7Click to open the calendar.")
+            } else listOf("§7Click to open the calendar.")
             command = "/calendar"
         }
 
-        if (LinesConfig.showMayorPerks) {
-            mayor.activePerks.forEach {
-                addPerk(it)
-            }
+        if (perksDisplay == PerkDisplay.ALL) {
+            addPerks(mayor)
         }
 
-        if (LinesConfig.showMinister) {
-            val minister = ElectionAPI.currentMinister ?: return@buildList
-
-            add("${candidateColor[minister]}${minister.candidateName}")
-
-            if (LinesConfig.showMayorPerks) {
-                minister.activePerks.forEach {
-                    addPerk(it)
+        if (minister != null && ministerDisplay == MinisterDisplay.FULL) {
+            add(minister.formatName()) {
+                if (perksDisplay == PerkDisplay.OFF) {
+                    hover = buildList { addHoverPerks(minister) }
                 }
+            }
+
+            if (perksDisplay == PerkDisplay.ALL) {
+                addPerks(minister)
             }
         }
     }
 
-    private fun MutableList<Any>.addPerk(perk: Perk) {
-        add(" §7- §e${perk.perkName}") {
-            hover = perk.description.splitToWidth(" ", 140).map { "§7$it" }
+    private fun MutableList<Any>.addPerks(candidate: Candidate) {
+        val color = candidateColor[candidate] ?: "§e"
+        candidate.activePerks.forEach { perk ->
+            add(" §7- $color${perk.perkName}") {
+                hover = perk.description.splitToWidth(" ", 140).map { "§7$it" }
+            }
+        }
+    }
+
+    private fun MutableList<String>.addHoverPerks(candidate: Candidate) {
+        val color = candidateColor[candidate] ?: "§e"
+        candidate.activePerks.forEach { perk ->
+            add("$color${perk.perkName}:")
+            perk.description.splitToWidth(" ", 140).mapTo(this) { "  §7$it" }
         }
     }
 
@@ -71,6 +96,8 @@ object ElementMayor : Element() {
         return SkyBlockInstant(mayorYear, 3, 27) - instant
     }
 
+    private fun Candidate.formatName(): String = (candidateColor[this] ?: "§e") + candidateName
+
     private val candidateColor = mapOf(
         Candidate.AATROX to "§3",
         Candidate.COLE to "§e",
@@ -84,4 +111,22 @@ object ElementMayor : Element() {
         Candidate.JERRY to "§d",
         Candidate.DERPY to "§d",
     )
+
+    enum class PerkDisplay(private val display: String = "") {
+        OFF("Off"),
+        COUNT("Perk Amount"),
+        ALL("All Perks"),
+        ;
+
+        override fun toString(): String = display
+    }
+
+    enum class MinisterDisplay(private val display: String = "") {
+        OFF("Off"),
+        COMPACT("Compact"),
+        FULL("Show"),
+        ;
+
+        override fun toString(): String = display
+    }
 }

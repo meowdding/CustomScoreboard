@@ -9,6 +9,7 @@ import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.generated.ScoreboardEntry
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.NumberFormatType
@@ -38,7 +39,8 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ),
     )
 
-    override val version = 2
+    override val version = 3
+    //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
             json.getAsJsonArray("events").add(ScoreboardEventEntry.GALATEA.name)
@@ -48,7 +50,21 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             json.getAsJsonArray("events").add(ScoreboardEventEntry.ANNIVERSARY.name)
             json
         },
+        2 to UnaryOperator { json ->
+            val lines = json.getAsJsonObject("Line Modification")
+
+            val perksEnum = if (lines.get("mayor_perks").asBoolean) ElementMayor.PerkDisplay.ALL
+            else ElementMayor.PerkDisplay.OFF
+            lines.addProperty("mayorPerksDisplay", perksEnum.name)
+
+            val ministerEnum = if (lines.get("mayor_minister").asBoolean) ElementMayor.MinisterDisplay.FULL
+            else ElementMayor.MinisterDisplay.OFF
+            lines.addProperty("ministerDisplay", ministerEnum.name)
+
+            json
+        }
     )
+    //endregion
 
     init {
         category(BackgroundConfig)
