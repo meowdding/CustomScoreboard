@@ -14,12 +14,10 @@ import kotlin.time.Duration
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
         val mayor = ElectionAPI.currentMayor ?: return@buildList
-        val time = if (LinesConfig.showMayorTime) " §7(§e${timeUntilNextMayor().toReadableTime()}§7)"
-        else ""
+        val time = if (LinesConfig.showMayorTime) " §7(§e${timeUntilNextMayor().toReadableTime()}§7)" else ""
 
         val perksDisplay = LinesConfig.mayorPerksDisplay
-        val count = if (perksDisplay == PerkDisplay.COUNT) " §e(${mayor.activePerks.size})"
-        else ""
+        val count = if (perksDisplay == PerkDisplay.COUNT) " §e(${mayor.activePerks.size})" else ""
 
         val ministerDisplay = LinesConfig.ministerDisplay
         val minister = ElectionAPI.currentMinister

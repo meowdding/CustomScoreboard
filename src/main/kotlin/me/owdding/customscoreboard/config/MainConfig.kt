@@ -61,6 +61,8 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             else ElementMayor.MinisterDisplay.OFF
             lines.addProperty("ministerDisplay", ministerEnum.name)
 
+            lines.add("line_modification", lines)
+
             json
         }
     )

@@ -6,7 +6,9 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowd
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
 import me.owdding.customscoreboard.utils.DateFormat
 
-object LinesConfig : CategoryKt("Line Modification") {
+object LinesConfig : CategoryKt("line_modification") {
+
+    override val  name = Literal("Line Modification")
 
     val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
         this.translation = "customscoreboard.config.lines.date_format"
