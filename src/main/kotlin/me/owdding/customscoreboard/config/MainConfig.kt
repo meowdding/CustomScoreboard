@@ -108,6 +108,12 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         CustomScoreboardRenderer.updateIslandCache()
     }
 
+    val scale by double(1.0) {
+        this.translation = "customscoreboard.config.scale"
+        this.range = 0.1..2.0
+        this.slider = true
+    }
+
     val title = obj("title_options", TitleOrFooterObject()) {
         this.translation = "customscoreboard.config.title_options"
     }

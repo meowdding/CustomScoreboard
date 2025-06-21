@@ -20,6 +20,10 @@
             "@value": "Events Priority",
             "desc": "Edit this list to change the order of appearance of the events."
         },
+        "scale": {
+            "@value": "Scale",
+            "desc": "Choose the scale of the scoreboard."
+        },
         "title_options": {
             "@value": "Title Options",
             "desc": "Edit the title of the scoreboard."

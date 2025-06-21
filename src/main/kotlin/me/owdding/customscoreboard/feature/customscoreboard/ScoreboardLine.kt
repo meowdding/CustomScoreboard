@@ -11,6 +11,7 @@ import me.owdding.lib.builder.LayoutFactory
 import me.owdding.lib.displays.Alignment
 import me.owdding.lib.displays.Display
 import me.owdding.lib.displays.DisplayWidget
+import me.owdding.lib.layouts.Scalable
 import net.minecraft.Util
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.layouts.Layout
@@ -105,11 +106,11 @@ data class ScoreboardLine(
             else -> null
         }
 
-        fun List<ScoreboardLine>.createColumn() = LayoutFactory.vertical {
+        fun List<ScoreboardLine>.createColumn() = (LayoutFactory.vertical {
             this@createColumn.forEach { line ->
                 widget(line.widget, line::applySettings)
             }
-        }
+        }).also { (it as Scalable).scale(MainConfig.scale) }
 
         fun getVanillaLines() = buildList {
             McClient.scoreboardTitle?.let { add(ScoreboardLine(it, MainConfig.title.alignment)) }

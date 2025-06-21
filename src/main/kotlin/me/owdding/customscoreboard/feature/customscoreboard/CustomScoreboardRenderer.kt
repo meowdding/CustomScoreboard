@@ -11,8 +11,7 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
-import me.owdding.lib.builder.LayoutBuilder.Companion.setPos
-import net.minecraft.client.gui.layouts.Layout
+import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.client.gui.screens.inventory.InventoryScreen
@@ -30,7 +29,7 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 @Module
 object CustomScoreboardRenderer {
 
-    private var display: Layout? = null
+    private var display: LayoutElement? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
@@ -69,10 +68,15 @@ object CustomScoreboardRenderer {
 
         updatePosition()
         renderBackground(event)
-        if (isAllowedScreen()) {
-            display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f) }
-        } else {
-            display.setPos(position.first, position.second).visitWidgets { it.render(event.graphics, 0, 0, 0f) }
+
+        display.apply {
+            setPosition(position.first, position.second)
+        }.visitWidgets { widget ->
+            if (isAllowedScreen()) {
+                widget.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f)
+            } else {
+                widget.render(event.graphics, 0, 0, 0f)
+            }
         }
     }
 
