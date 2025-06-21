@@ -200,6 +200,10 @@
                 "@value": "Show Pet Max Level",
                 "desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden."
             },
+            "powder_dispaly": {
+                "@value": "Powder Display",
+                "desc": "Choose the format to display Hotm Powder."
+            },
             "hypixel_powder": {
                 "@value": "Show Hypixel's Powder Line",
                 "desc": "Show Hypixel's Powder Line on the scoreboard."
