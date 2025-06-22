@@ -1,11 +1,14 @@
 package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
 import me.owdding.customscoreboard.utils.DateFormat
 
-object LinesConfig : CategoryKt("Line Modification") {
+object LinesConfig : CategoryKt("line_modification") {
+
+    override val  name = Literal("Line Modification")
 
     val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
         this.translation = "customscoreboard.config.lines.date_format"
@@ -27,11 +30,11 @@ object LinesConfig : CategoryKt("Line Modification") {
         this.translation = "customscoreboard.config.lines.mayor_time"
     }
 
-    val showMayorPerks by boolean("mayor_perks", true) {
+    val mayorPerksDisplay by enum(ElementMayor.PerkDisplay.ALL) {
         this.translation = "customscoreboard.config.lines.mayor_perks"
     }
 
-    val showMinister by boolean("mayor_minister", true) {
+    val ministerDisplay by enum(ElementMayor.MinisterDisplay.FULL) {
         this.translation = "customscoreboard.config.lines.mayor_minister"
     }
 
