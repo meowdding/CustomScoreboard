@@ -27,7 +27,7 @@ object ElementBits : Element(), NumberTrackingElement {
         }
     }
 
-    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT, SkyBlockIsland.THE_CATACOMBS)
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_CATACOMBS)
 
     override val configLine = "Bits"
 }
