@@ -51,6 +51,8 @@ dependencies {
     include(libs.meowdding.lib)
     include(libs.mixinconstraints)
 
+    modCompileOnly("maven.modrinth:scoreboard-overhaul:1.4.0-mc1.21.5")
+
     modRuntimeOnly(libs.devauth)
 }
 

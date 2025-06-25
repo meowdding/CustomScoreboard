@@ -6,6 +6,7 @@ import earth.terrarium.olympus.client.components.compound.LayoutWidget
 import earth.terrarium.olympus.client.components.string.TextWidget
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
+import me.owdding.customscoreboard.mixins.accessor.TextWidgetAccessor
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
 import me.owdding.lib.builder.LayoutFactory
 import me.owdding.lib.displays.Alignment
@@ -32,6 +33,8 @@ data class ScoreboardLine(
     constructor(string: String, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(string.asTextWidget(), alignment, isBlank)
 
     private var actions: Map<Element.Actions, Any> = emptyMap()
+
+    val component = (layout as? TextWidgetAccessor)?.text ?: "fail".toComponent()
 
     val widget by lazy {
         Widgets.button {

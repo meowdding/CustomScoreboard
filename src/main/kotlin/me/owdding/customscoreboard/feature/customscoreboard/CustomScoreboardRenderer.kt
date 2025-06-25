@@ -29,6 +29,8 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 @Module
 object CustomScoreboardRenderer {
 
+    var lines: List<ScoreboardLine> = emptyList()
+        private set
     private var display: LayoutElement? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
@@ -118,7 +120,8 @@ object CustomScoreboardRenderer {
 
     private fun updateDisplay() {
         if (!isEnabled()) return
-        display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators().takeUnless { it.isEmpty() }?.createColumn()
+        lines = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
+        display = lines.takeUnless { it.isEmpty() }?.createColumn()
     }
 
     private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }.takeIf { shouldUseCustomLines() } ?: ScoreboardLine.getVanillaLines()

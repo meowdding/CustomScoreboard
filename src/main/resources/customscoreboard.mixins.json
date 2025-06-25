@@ -4,9 +4,12 @@
     "package": "me.owdding.customscoreboard.mixins",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
+        "compat.ScoreboardOverhaulScoreboardAccessorMixin",
         "compat.SkyHanniCustomScoreboardMixin"
     ],
-    "client": [],
+    "client": [
+        "accessor.TextWidgetAccessor"
+    ],
     "injectors": {
         "defaultRequire": 1
     }
