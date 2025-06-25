@@ -48,9 +48,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
 
     @ModifyReturnValue(
         method = "getScoreList",
-        at = @At(
-            value = "RETURN"
-        ),
+        at = @At("RETURN"),
         remap = false
     )
     List<ScoreInfo> customscoreboard$getScoreList(List<ScoreInfo> original) {
