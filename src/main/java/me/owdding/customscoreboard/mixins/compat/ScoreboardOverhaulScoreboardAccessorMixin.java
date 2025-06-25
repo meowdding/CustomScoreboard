@@ -5,6 +5,7 @@ import com.moulberry.mixinconstraints.annotations.IfModLoaded;
 import kotlinx.datetime.Instant;
 import me.jfenn.scoreboardoverhaul.common.data.ObjectiveInfo;
 import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo;
+import me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor;
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer;
 import net.minecraft.ChatFormatting;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Pseudo
 @IfModLoaded("scoreboard-overhaul")
-@Mixin(targets = "me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor", remap = false)
+@Mixin(value = {ScoreboardAccessor.class}, remap = false)
 public class ScoreboardOverhaulScoreboardAccessorMixin {
 
     @ModifyReturnValue(
@@ -70,7 +71,6 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
 
         for (int i = lines.size() - 1; i >= 0; i--) {
             if (i == lines.size() - 1) {
-
                 continue;
             }
             scores.add(
