@@ -71,6 +71,7 @@
             "@value": "Scoreboard Overhaul Compatibility",
             "desc": [
                 "If enabled, the custom lines will render inside the Scoreboard Overhaul scoreboard.",
+                "First line of the appearance option will be used as the title, no more no less.",
                 "Requires Scoreboard Overhaul to be installed.",
                 "§cThis will only work inside SkyBlock, click and hover actions, aswell as padding, marging, background, etc. wont work on them."
             ]
