@@ -11,6 +11,7 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
@@ -65,6 +66,7 @@ object CustomScoreboardRenderer {
     @Subscription()
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
+        if (renderScoreboardOverhaul()) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse
 
@@ -197,5 +199,5 @@ object CustomScoreboardRenderer {
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
     private fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
-
+    fun renderScoreboardOverhaul() = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul") && MainConfig.scoreboardOverhaul
 }

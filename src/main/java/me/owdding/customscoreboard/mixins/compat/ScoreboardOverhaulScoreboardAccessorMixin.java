@@ -7,7 +7,6 @@ import me.jfenn.scoreboardoverhaul.common.data.ObjectiveInfo;
 import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo;
 import me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor;
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer;
-import net.minecraft.ChatFormatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,6 +30,9 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
     ObjectiveInfo customscoreboard$getSidebarObjective(ObjectiveInfo original) {
         if (original == null) {
             return null;
+        }
+        if (!CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()) {
+            return original;
         }
         if (!LocationAPI.INSTANCE.isOnSkyBlock()) {
             return original;
@@ -56,6 +58,9 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
     List<ScoreInfo> customscoreboard$getScoreList(List<ScoreInfo> original) {
         if (original == null) {
             return null;
+        }
+        if (!CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()) {
+            return original;
         }
         if (!LocationAPI.INSTANCE.isOnSkyBlock()) {
             return original;
@@ -84,16 +89,5 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         }
 
         return scores;
-    }
-
-    @ModifyReturnValue(
-        method = "getTeamColor",
-        at = @At(
-            value = "RETURN"
-        ),
-        remap = false
-    )
-    ChatFormatting customscoreboard$getTeamColor(ChatFormatting original) {
-        return ChatFormatting.GOLD;
     }
 }
