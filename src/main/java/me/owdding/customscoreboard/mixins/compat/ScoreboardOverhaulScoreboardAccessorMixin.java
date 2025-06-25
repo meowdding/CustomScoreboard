@@ -74,10 +74,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
 
         ArrayList<ScoreInfo> scores = new ArrayList<>();
 
-        for (int i = lines.size() - 1; i >= 0; i--) {
-            if (i == lines.size() - 1) {
-                continue;
-            }
+        for (int i = lines.size() - 2; i >= 0; i--) {
             scores.add(
                 new ScoreInfo(
                     "Line " + i,
