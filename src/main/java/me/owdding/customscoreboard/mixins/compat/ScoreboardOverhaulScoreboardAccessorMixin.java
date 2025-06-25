@@ -22,9 +22,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
 
     @ModifyReturnValue(
         method = "getSidebarObjective",
-        at = @At(
-            value = "RETURN"
-        ),
+        at = @At("RETURN"),
         remap = false
     )
     ObjectiveInfo customscoreboard$getSidebarObjective(ObjectiveInfo original) {
