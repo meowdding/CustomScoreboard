@@ -197,7 +197,7 @@ object CustomScoreboardRenderer {
     }
 
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
-    private fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
+    fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
     fun renderScoreboardOverhaul() = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul") && MainConfig.scoreboardOverhaul
 }

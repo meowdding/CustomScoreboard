@@ -2,7 +2,6 @@ package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
-import kotlinx.datetime.Instant;
 import me.jfenn.scoreboardoverhaul.common.data.ObjectiveInfo;
 import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo;
 import me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor;
@@ -10,10 +9,11 @@ import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRend
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
-import tech.thatgravyboat.skyblockapi.api.location.LocationAPI;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static tech.thatgravyboat.skyblockapi.utils.time.InstantExtensionsKt.currentInstant;
 
 @Pseudo
 @IfModLoaded("scoreboard-overhaul")
@@ -32,7 +32,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         if (!CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()) {
             return original;
         }
-        if (!LocationAPI.INSTANCE.isOnSkyBlock()) {
+        if (!CustomScoreboardRenderer.INSTANCE.shouldUseCustomLines()) {
             return original;
         }
         if (CustomScoreboardRenderer.INSTANCE.getLines().isEmpty()) {
@@ -58,7 +58,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         if (!CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()) {
             return original;
         }
-        if (!LocationAPI.INSTANCE.isOnSkyBlock()) {
+        if (!CustomScoreboardRenderer.INSTANCE.shouldUseCustomLines()) {
             return original;
         }
 
@@ -76,7 +76,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
                     "Line " + i,
                     lines.get(lines.size() - i - 1).getComponent(),
                     i,
-                    Instant.Companion.now()
+                    currentInstant()
                 )
             );
         }
