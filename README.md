@@ -28,9 +28,9 @@ Elements that are in both mods are not listed for obvious reasons.
 | Click and Hover Actions         | ❌            | ✅                     |
 | Infinite Separators             | ❌            | ✅                     |
 | Active Pet                      | ❌            | ✅                     |
-| Cookie Buff Time                | ✅            | ❌                     |
-| SkyBlock Level                  | ✅            | ❌                     |
+| Cookie Buff Time                | ✅            | ✅                     |
+| SkyBlock Level                  | ✅            | ✅                     |
 | Chunked Stats                   | ✅            | ❌                     |
 | Maxwell Lines                   | ✅            | ❌                     |
-| Players in Lobby                | ✅            | ❌                     |
+| Players in Lobby                | ✅            | ✅                     |
 
