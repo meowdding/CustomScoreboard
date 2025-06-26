@@ -8,6 +8,7 @@ import me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor;
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.ArrayList;
@@ -20,22 +21,19 @@ import static tech.thatgravyboat.skyblockapi.utils.time.InstantExtensionsKt.curr
 @Mixin(value = {ScoreboardAccessor.class}, remap = false)
 public class ScoreboardOverhaulScoreboardAccessorMixin {
 
+    @Unique
+    private boolean shouldModify() {
+        return CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()
+            && CustomScoreboardRenderer.INSTANCE.shouldUseCustomLines()
+            && !CustomScoreboardRenderer.INSTANCE.getLines().isEmpty();
+    }
+
     @ModifyReturnValue(
         method = "getSidebarObjective",
-        at = @At("RETURN"),
-        remap = false
+        at = @At("RETURN")
     )
     ObjectiveInfo customscoreboard$getSidebarObjective(ObjectiveInfo original) {
-        if (original == null) {
-            return null;
-        }
-        if (!CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()) {
-            return original;
-        }
-        if (!CustomScoreboardRenderer.INSTANCE.shouldUseCustomLines()) {
-            return original;
-        }
-        if (CustomScoreboardRenderer.INSTANCE.getLines().isEmpty()) {
+        if (original == null || !shouldModify()) {
             return original;
         }
 
@@ -48,25 +46,14 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
 
     @ModifyReturnValue(
         method = "getScoreList",
-        at = @At("RETURN"),
-        remap = false
+        at = @At("RETURN")
     )
     List<ScoreInfo> customscoreboard$getScoreList(List<ScoreInfo> original) {
-        if (original == null) {
-            return null;
-        }
-        if (!CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()) {
-            return original;
-        }
-        if (!CustomScoreboardRenderer.INSTANCE.shouldUseCustomLines()) {
+        if (original == null || !shouldModify()) {
             return original;
         }
 
         var lines = CustomScoreboardRenderer.INSTANCE.getLines();
-
-        if (lines.isEmpty()) {
-            return original;
-        }
 
         ArrayList<ScoreInfo> scores = new ArrayList<>();
 
