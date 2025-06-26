@@ -8,10 +8,10 @@ import tech.thatgravyboat.skyblockapi.utils.time.until
 @AutoElement(ElementGroup.MIDDLE)
 object ElementCookieBuff : Element() {
 
-    override fun getDisplay(): String {
-        if (EffectsAPI.isBoosterCookieActive) {
+    override fun getDisplay(): Any {
+        return if (EffectsAPI.isBoosterCookieActive) {
             val duration = EffectsAPI.boosterCookieExpireTime.until()
-            return duration.toComponents { days, hours, minutes, seconds, _ ->
+            duration.toComponents { days, hours, minutes, seconds, _ ->
                 val text = buildString {
                     if (days > 0) append("${days}d ")
                     if (hours > 0) append("${hours}h ")
@@ -24,7 +24,10 @@ object ElementCookieBuff : Element() {
                 "§dCookie Buff: $color$text"
             }
         } else {
-            return "§dCookie Buff: §cExpired"
+            "§dCookie Buff: §cExpired"
+        }.withActions {
+            hover = listOf("§7Click to open Booster Cookie Menu")
+            command = "/boostercookiemenu"
         }
     }
 
