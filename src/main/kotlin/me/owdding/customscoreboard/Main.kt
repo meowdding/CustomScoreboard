@@ -86,6 +86,10 @@ object Main : ModInitializer {
     @Subscription
     fun onRegisterCommands(event: RegisterCommandsEvent) {
         val builder: (LiteralCommandBuilder.() -> Unit) = {
+            thenCallback("version") {
+                Text.of("Version: $VERSION").withColor(TextColor.GRAY).sendWithPrefix()
+            }
+
             callback {
                 McClient.setScreen(ResourcefulConfigScreen.getFactory("customscoreboard").apply(null))
             }
