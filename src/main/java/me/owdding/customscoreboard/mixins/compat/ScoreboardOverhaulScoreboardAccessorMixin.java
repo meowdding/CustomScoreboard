@@ -25,7 +25,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
     private boolean shouldModify() {
         return CustomScoreboardRenderer.INSTANCE.renderScoreboardOverhaul()
             && CustomScoreboardRenderer.INSTANCE.shouldUseCustomLines()
-            && !CustomScoreboardRenderer.INSTANCE.getLines().isEmpty();
+            && CustomScoreboardRenderer.INSTANCE.getLines().size() > 1;
     }
 
     @ModifyReturnValue(
