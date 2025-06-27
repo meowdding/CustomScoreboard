@@ -11,6 +11,7 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
@@ -29,6 +30,8 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 @Module
 object CustomScoreboardRenderer {
 
+    var lines: List<ScoreboardLine> = emptyList()
+        private set
     private var display: LayoutElement? = null
     private var currentIslandElements = emptyList<ScoreboardEntry>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
@@ -63,6 +66,7 @@ object CustomScoreboardRenderer {
     @Subscription()
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
+        if (renderScoreboardOverhaul()) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse
 
@@ -118,7 +122,8 @@ object CustomScoreboardRenderer {
 
     private fun updateDisplay() {
         if (!isEnabled()) return
-        display = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators().takeUnless { it.isEmpty() }?.createColumn()
+        lines = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
+        display = lines.takeUnless { it.isEmpty() }?.createColumn()
     }
 
     private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }.takeIf { shouldUseCustomLines() } ?: ScoreboardLine.getVanillaLines()
@@ -192,7 +197,7 @@ object CustomScoreboardRenderer {
     }
 
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
-    private fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
+    fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
-
+    fun renderScoreboardOverhaul() = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul") && MainConfig.scoreboardOverhaul
 }

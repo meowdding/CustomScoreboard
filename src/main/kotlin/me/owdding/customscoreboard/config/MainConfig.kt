@@ -176,4 +176,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.update_notification"
     }
 
+    val scoreboardOverhaul by boolean(false) {
+        this.translation = "customscoreboard.config.scoreboard_overhaul"
+    }
 }

@@ -18,16 +18,17 @@ Using /customscoreboard, or /cs for short, you can open the config and start cus
 
 Elements that are in both mods are not listed for obvious reasons.
 
-| Feature                         | in SkyHanni? | in Custom Scoreboard? |
-|---------------------------------|--------------|-----------------------|
-| Hypixel Lines                   | ✅            | ✅                     |
-| Rounded Background              | ✅            | ✅                     |
-| Rounded Background with Outline | ✅            | ❌                     |
-| Rounded Textured Background     | ✅            | ✅                     |
-| Ingame Background Texture Adder | ❌            | ✅                     |
-| Click and Hover Actions         | ❌            | ✅                     |
-| Infinite Separators             | ❌            | ✅                     |
-| Active Pet                      | ❌            | ✅                     |
-| Chunked Stats                   | ✅            | ❌                     |
-| Maxwell Lines                   | ✅            | ❌                     |
+| Feature                                                                             | in SkyHanni? | in Custom Scoreboard? |
+|-------------------------------------------------------------------------------------|--------------|-----------------------|
+| Hypixel Lines                                                                       | ✅            | ✅                     |
+| Rounded Background                                                                  | ✅            | ✅                     |
+| Rounded Background with Outline                                                     | ✅            | ❌                     |
+| Rounded Textured Background                                                         | ✅            | ✅                     |
+| Custom Lines in [Scoreboard Overhaul](https://modrinth.com/mod/scoreboard-overhaul) | ❌            | ✅                     |
+| Ingame Background Texture Adder                                                     | ❌            | ✅                     |
+| Click and Hover Actions                                                             | ❌            | ✅                     |
+| Infinite Separators                                                                 | ❌            | ✅                     |
+| Active Pet                                                                          | ❌            | ✅                     |
+| Chunked Stats                                                                       | ✅            | ❌                     |
+| Maxwell Lines                                                                       | ✅            | ❌                     |
 
