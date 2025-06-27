@@ -10,4 +10,5 @@ public interface TextWidgetAccessor {
 
     @Accessor("text")
     Component getText();
+
 }
