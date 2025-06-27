@@ -68,7 +68,7 @@ object Main : ModInitializer {
                 this.hover = Text.of(link).withColor(TextColor.GRAY)
             }
 
-            McClient.tell {
+            McClient.runNextTick {
                 Text.of().send()
                 Text.join(
                     "New version found! (",

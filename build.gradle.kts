@@ -68,8 +68,18 @@ tasks {
     processResources {
         inputs.property("version", project.version)
         filesMatching("fabric.mod.json") {
-            expand(getProperties())
-            expand(mutableMapOf("version" to project.version))
+            expand(
+                "version" to project.version,
+                "minecraft" to libs.versions.minecraft.get(),
+                "fabricLoader" to libs.versions.loader.get(),
+                "fabricLanguageKotlin" to libs.versions.fabrickotlin.get(),
+                "meowddingLib" to libs.versions.meowdding.lib.get(),
+                "resourcefullib" to libs.versions.rlib.get(),
+                "skyblockApi" to libs.versions.skyblockapi.get(),
+                "olympus" to libs.versions.olympus.get(),
+                "resourcefulconfigkt" to libs.versions.rconfigkt.get(),
+                "resourcefulconfig" to libs.versions.rconfig.get(),
+            )
         }
     }
 
