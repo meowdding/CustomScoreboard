@@ -40,6 +40,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     )
 
     override val version = 3
+
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
@@ -64,7 +65,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             lines.add("line_modification", lines)
 
             json
-        }
+        },
     )
     //endregion
 
@@ -178,5 +179,10 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val scoreboardOverhaul by boolean(false) {
         this.translation = "customscoreboard.config.scoreboard_overhaul"
+    }
+
+    val overhaulColor by color(0xFFFFFF55u.toInt()) {
+        this.translation = "customscoreboard.config.overhaul_color"
+        this.allowAlpha = true
     }
 }
