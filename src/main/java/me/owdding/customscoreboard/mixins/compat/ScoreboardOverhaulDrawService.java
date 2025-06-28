@@ -2,12 +2,16 @@ package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.moulberry.mixinconstraints.annotations.IfModLoaded;
 import me.jfenn.scoreboardoverhaul.impl.DrawService;
 import me.owdding.customscoreboard.config.MainConfig;
 import net.minecraft.util.ARGB;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 
+@Pseudo
+@IfModLoaded("scoreboard-overhaul")
 @Mixin(value = DrawService.class, remap = false)
 public class ScoreboardOverhaulDrawService {
 
