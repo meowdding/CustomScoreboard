@@ -13,9 +13,10 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.command
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 
 @Module
-object SkyHanniCompat {
+object ModCompat {
 
     var isSkyhanniCustomScoreboardEnabled = false
+    var isScoreboardOverhaulEnabled = false
 
     @Subscription
     fun onProfile(event: ProfileChangeEvent) {

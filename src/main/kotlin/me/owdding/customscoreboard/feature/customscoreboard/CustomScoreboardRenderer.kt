@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.feature.ModCompat
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.createColumn
 import me.owdding.customscoreboard.generated.ScoreboardEntry
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
@@ -29,6 +30,8 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 
 @Module
 object CustomScoreboardRenderer {
+
+    private val isOverhaulLoaded = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul")
 
     var lines: List<ScoreboardLine> = emptyList()
         private set
@@ -199,5 +202,6 @@ object CustomScoreboardRenderer {
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
     fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
-    fun renderScoreboardOverhaul() = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul") && MainConfig.scoreboardOverhaul
+    fun renderScoreboardOverhaul() =
+        LocationAPI.isOnSkyBlock && MainConfig.enabled && isOverhaulLoaded && MainConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled
 }
