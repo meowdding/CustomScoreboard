@@ -18,7 +18,7 @@ import static tech.thatgravyboat.skyblockapi.utils.time.InstantExtensionsKt.curr
 
 @Pseudo
 @IfModLoaded("scoreboard-overhaul")
-@Mixin(value = ScoreboardAccessor.class, remap = false)
+@Mixin(value = {ScoreboardAccessor.class}, remap = false)
 public class ScoreboardOverhaulScoreboardAccessorMixin {
 
     @Unique
