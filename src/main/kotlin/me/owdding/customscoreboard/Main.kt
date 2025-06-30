@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardEditor
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
@@ -44,10 +45,9 @@ object Main : ModInitializer {
     )
 
     val configurator = Configurator("customscoreboard")
+    val config = MainConfig.register(configurator)
 
     override fun onInitialize() {
-        MainConfig.register(configurator)
-
         CustomScoreboardModules.init { SkyBlockAPI.eventBus.register(it) }
 
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(
@@ -88,6 +88,10 @@ object Main : ModInitializer {
         val builder: (LiteralCommandBuilder.() -> Unit) = {
             thenCallback("version") {
                 Text.of("Version: $VERSION").withColor(TextColor.GRAY).sendWithPrefix()
+            }
+
+            thenCallback("editor") {
+                McClient.setScreenAsync { CustomScoreboardEditor() }
             }
 
             callback {

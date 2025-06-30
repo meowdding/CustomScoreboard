@@ -109,7 +109,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ScoreboardEntry.FOOTER,
     )
 
-    val appearance by observable(
+    var appearance by observable(
         draggable(*default.toTypedArray()) {
             this.translation = "customscoreboard.config.appearance"
             this.duplicatable = listOf(ScoreboardEntry.SEPARATOR).toTypedArray()
