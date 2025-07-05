@@ -12,7 +12,7 @@ fabrickotlin = "1.13.2+kotlin.2.1.20"
 
 # Dependencies
 fabric = "0.126.0+1.21.5"
-skyblockapi = "1.0.0-beta.133"
+skyblockapi = "1.0.0-beta.136"
 hypixelapi = "1.0.1+build.1+mc1.21"
 rconfig = "3.5.7"
 rconfigkt = "3.5.10"

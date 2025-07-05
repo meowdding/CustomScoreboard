@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.utils.Utils.nextAfter
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -27,8 +28,10 @@ object EventGalatea : Event() {
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.clear()
 
-        whisperRegex.anyMatch(event.components) {
-            formattedLines.add(it.component)
+        if (LinesConfig.showHypixelPowder) {
+            whisperRegex.anyMatch(event.components) {
+                formattedLines.add(it.component)
+            }
         }
         hotfRegex.anyMatch(event.components) {
             formattedLines.add(it.component)
