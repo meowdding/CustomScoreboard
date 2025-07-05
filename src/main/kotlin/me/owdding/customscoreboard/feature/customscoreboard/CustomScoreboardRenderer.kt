@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.feature.ModCompat
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.createColumn
 import me.owdding.customscoreboard.generated.ScoreboardEntry
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
@@ -11,7 +12,6 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
@@ -199,5 +199,5 @@ object CustomScoreboardRenderer {
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
     fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
-    fun renderScoreboardOverhaul() = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul") && MainConfig.scoreboardOverhaul
+    fun renderScoreboardOverhaul() = LocationAPI.isOnSkyBlock && MainConfig.enabled && MainConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled()
 }
