@@ -12,7 +12,6 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
@@ -30,8 +29,6 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 
 @Module
 object CustomScoreboardRenderer {
-
-    private val isOverhaulLoaded = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul")
 
     var lines: List<ScoreboardLine> = emptyList()
         private set
@@ -202,6 +199,5 @@ object CustomScoreboardRenderer {
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
     fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
-    fun renderScoreboardOverhaul() =
-        LocationAPI.isOnSkyBlock && MainConfig.enabled && isOverhaulLoaded && MainConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled
+    fun renderScoreboardOverhaul() = LocationAPI.isOnSkyBlock && MainConfig.enabled && MainConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled()
 }
