@@ -4,7 +4,7 @@
     "package": "me.owdding.customscoreboard.mixins",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
-        "compat.ScoreboardOverhaulConfigManagerMixin",
+      "compat.ScoreboardConfigMixin",
         "compat.ScoreboardOverhaulScoreboardAccessorMixin",
         "compat.SkyHanniCustomScoreboardMixin"
     ],
