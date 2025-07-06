@@ -19,7 +19,7 @@ object ElementPowder : Element() {
 
         when {
             SkyBlockIsland.inAnyIsland(foragingIsland) -> {
-                addLine("Whispers", HotfAPI.whispers, HotfAPI.whispersTotal, "§b")
+                addLine("Whispers", HotfAPI.whispers, HotfAPI.whispersTotal, "§3")
             }
 
             SkyBlockIsland.inAnyIsland(miningIslands) -> {
