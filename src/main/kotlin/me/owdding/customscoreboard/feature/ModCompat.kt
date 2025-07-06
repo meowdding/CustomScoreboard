@@ -17,11 +17,11 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 object ModCompat {
 
     var isSkyhanniCustomScoreboardEnabled = false
-    var isScoreboardOverhaulEnabled = false
+    var isOverhaulEnabled = false
 
     val isScoreboardOverhaulLoaded = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul")
 
-    fun isScoreboardOverhaulEnabled() = isScoreboardOverhaulLoaded && isScoreboardOverhaulEnabled
+    fun isScoreboardOverhaulEnabled() = isScoreboardOverhaulLoaded && isOverhaulEnabled
 
     @Subscription
     fun onProfile(event: ProfileChangeEvent) {

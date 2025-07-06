@@ -15,7 +15,7 @@ public class ScoreboardConfigMixin {
 
     @ModifyReturnValue(method = "isEnabled", at = @At("RETURN"))
     private static boolean customscoreboard$isEnabled(boolean original) {
-        ModCompat.INSTANCE.setScoreboardOverhaulEnabled(original);
+        ModCompat.INSTANCE.setOverhaulEnabled(original);
         return original;
     }
 
