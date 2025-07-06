@@ -2,7 +2,7 @@ package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
-import me.owdding.customscoreboard.feature.SkyHanniCompat;
+import me.owdding.customscoreboard.feature.ModCompat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +20,7 @@ public class SkyHanniCustomScoreboardMixin {
         remap = false
     )
     boolean customscoreboard$isEnabled(boolean original) {
-        SkyHanniCompat.INSTANCE.setSkyhanniCustomScoreboardEnabled(original);
+        ModCompat.INSTANCE.setSkyhanniCustomScoreboardEnabled(original);
         return original;
     }
 
