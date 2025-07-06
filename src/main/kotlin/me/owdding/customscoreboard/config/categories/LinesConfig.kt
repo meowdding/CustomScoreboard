@@ -84,6 +84,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "customscoreboard.config.lines.pet_max"
     }
 
+    val magicalPower by boolean(true) {
+        this.translation = "customscoreboard.config.lines.magical_power"
+    }
+
     val powderDisplay by enum(ElementPowder.PowderDisplay.CURRENT) {
         this.translation = "customscoreboard.config.lines.powder_display"
     }
