@@ -15,14 +15,22 @@ object ElementPowder : Element() {
     private val allIslands = foragingIsland + miningIslands
 
     override fun getDisplay() = buildList {
-        add("§9Powder")
-
         when {
             SkyBlockIsland.inAnyIsland(foragingIsland) -> {
+                add("§9Powder") {
+                    hover = listOf("§7Click to open your Hotf.")
+                    command = "/hotf"
+                }
+
                 addLine("Whispers", HotfAPI.whispers, HotfAPI.whispersTotal, "§3")
             }
 
             SkyBlockIsland.inAnyIsland(miningIslands) -> {
+                add("§9Powder") {
+                    hover = listOf("§7Click to open your Hotm.")
+                    command = "/hotm"
+                }
+
                 addLine("Mithril", PowderAPI.mithril, PowderAPI.mithrilTotal, "§2")
                 addLine("Gemstone", PowderAPI.gemstone, PowderAPI.gemstoneTotal, "§d")
                 addLine("Glacite", PowderAPI.glacite, PowderAPI.glaciteTotal, "§b")
@@ -30,7 +38,7 @@ object ElementPowder : Element() {
         }
     }
 
-    private fun MutableList<String>.addLine(name: String, current: Number, total: Number, color: String) {
+    private fun MutableList<Any>.addLine(name: String, current: Number, total: Number, color: String) {
         val value = when (LinesConfig.powderDisplay) {
             PowderDisplay.CURRENT -> current.format()
             PowderDisplay.TOTAL -> total.format()
