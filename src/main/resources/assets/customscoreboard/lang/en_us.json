@@ -209,6 +209,10 @@
                 "@value": "Show Pet Max Level",
                 "desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden."
             },
+            "magical_power": {
+                "@value": "Magical Power",
+                "desc": "Show your Magical Power next to selected power."
+            },
             "powder_dispaly": {
                 "@value": "Powder Display",
                 "desc": "Choose the format to display Hotm Powder."
