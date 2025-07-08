@@ -213,13 +213,13 @@
                 "@value": "Magical Power",
                 "desc": "Show your Magical Power next to selected power."
             },
-            "powder_dispaly": {
-                "@value": "Powder Display",
-                "desc": "Choose the format to display Hotm Powder."
+            "powder_display": {
+                "@value": "Powder/Whisper Display",
+                "desc": "Choose the format to display Hotm Powder / Hotf Whispers."
             },
             "hypixel_powder": {
-                "@value": "Show Hypixel's Powder Line",
-                "desc": "Show Hypixel's Powder Line on the scoreboard."
+                "@value": "Show Hypixel's Powder/Whisper Line",
+                "desc": "Show Hypixel's Powder/Whisper Line on the scoreboard."
             }
         }
     },

@@ -5,39 +5,52 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.api.profile.hotf.HotfAPI
 import tech.thatgravyboat.skyblockapi.api.profile.hotm.PowderAPI
 
 @AutoElement
 object ElementPowder : Element() {
+    private val foragingIsland = setOf(SkyBlockIsland.GALATEA)
+    private val miningIslands = setOf(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT)
+    private val allIslands = foragingIsland + miningIslands
+
     override fun getDisplay() = buildList {
-        fun format(text: String, powder: String, color: String) = CustomScoreboardRenderer.formatNumberDisplayDisplay(text, powder, color)
+        when {
+            SkyBlockIsland.inAnyIsland(foragingIsland) -> {
+                add("§9Powder") {
+                    hover = listOf("§7Click to open your Hotf.")
+                    command = "/hotf"
+                }
 
-        add("§9Powder")
-        when (LinesConfig.powderDisplay) {
-            PowderDisplay.CURRENT -> {
-                add(" §7- ${format("Mithril", PowderAPI.mithril.format(), "§2")}")
-                add(" §7- ${format("Gemstone", PowderAPI.gemstone.format(), "§d")}")
-                add(" §7- ${format("Glacite", PowderAPI.glacite.format(), "§b")}")
+                addLine("Whispers", HotfAPI.whispers, HotfAPI.whispersTotal, "§3")
             }
 
-            PowderDisplay.TOTAL -> {
-                add(" §7- ${format("Mithril", PowderAPI.mithrilTotal.format(), "§2")}")
-                add(" §7- ${format("Gemstone", PowderAPI.gemstoneTotal.format(), "§d")}")
-                add(" §7- ${format("Glacite", PowderAPI.glaciteTotal.format(), "§b")}")
-            }
+            SkyBlockIsland.inAnyIsland(miningIslands) -> {
+                add("§9Powder") {
+                    hover = listOf("§7Click to open your Hotm.")
+                    command = "/hotm"
+                }
 
-            PowderDisplay.BOTH -> {
-                add(" §7- ${format("Mithril", "${PowderAPI.mithril.format()}/${PowderAPI.mithrilTotal.format()}", "§2")}")
-                add(" §7- ${format("Gemstone", "${PowderAPI.gemstone.format()}/${PowderAPI.gemstoneTotal.format()}", "§d")}")
-                add(" §7- ${format("Glacite", "${PowderAPI.glacite.format()}/${PowderAPI.glaciteTotal.format()}", "§b")}")
+                addLine("Mithril", PowderAPI.mithril, PowderAPI.mithrilTotal, "§2")
+                addLine("Gemstone", PowderAPI.gemstone, PowderAPI.gemstoneTotal, "§d")
+                addLine("Glacite", PowderAPI.glacite, PowderAPI.glaciteTotal, "§b")
             }
         }
     }
 
-    override fun showIsland() =
-        SkyBlockIsland.inAnyIsland(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT)
+    private fun MutableList<Any>.addLine(name: String, current: Number, total: Number, color: String) {
+        val value = when (LinesConfig.powderDisplay) {
+            PowderDisplay.CURRENT -> current.format()
+            PowderDisplay.TOTAL -> total.format()
+            PowderDisplay.BOTH -> "${current.format()}/${total.format()}"
+        }
 
-    override val configLine = "Powder"
+        add(" §7- ${CustomScoreboardRenderer.formatNumberDisplayDisplay(name, value, color)}")
+    }
+
+    override fun showIsland() = SkyBlockIsland.inAnyIsland(allIslands)
+
+    override val configLine = "Powder / Whispers"
 
     enum class PowderDisplay(val display: String) {
         CURRENT("Current"),
