@@ -29,7 +29,7 @@ object EventMining : Event() {
     private val donUseless = ComponentRegex("Give Tasty Mithril to Don!")
     private val donRemaining = ComponentRegex("Remaining: (?:\\d+ Tasty Mithril|FULL)")
     private val donYourMithril = ComponentRegex("Your Tasty Mithril: \\d+.*")
-    private val nearbyPlayers = ComponentRegex("Nearby Players: (?:\\d+|N/A)")
+    private val nearbyPlayers = ComponentRegex("Nearby Players: .*")
     private val goblinUseless = ComponentRegex("Kill goblins!")
     private val goblinRemaining = ComponentRegex("Remaining: \\d+ goblins?")
     private val goblinYourKills = ComponentRegex("Your kills: \\d+ ☠.*")
