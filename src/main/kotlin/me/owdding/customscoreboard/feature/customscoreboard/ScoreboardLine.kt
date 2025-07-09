@@ -55,7 +55,7 @@ data class ScoreboardLine(
                 actions.forEach { (k, v) ->
                     when (k) {
                         Element.Actions.COMMAND -> McClient.sendCommand((v as String).removePrefix("/"))
-                        Element.Actions.CLICK -> (v as (() -> Unit))()
+                        Element.Actions.CLICK -> @Suppress("UNCHECKED_CAST") (v as (() -> Unit))()
                         Element.Actions.LINK -> Util.getPlatform().openUri(v as String)
                         else -> {}
                     }

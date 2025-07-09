@@ -22,7 +22,7 @@ object CustomScoreboardBackground {
             if (file.exists()) {
                 file.inputStream().use { stream ->
                     val image = NativeImage.read(NativeImage.Format.RGBA, stream)
-                    McClient.tell {
+                    McClient.runNextTick {
                         val texture = DynamicTexture({ "Custom Scoreboard Background" }, image)
                         McClient.self.textureManager.register(dynamicTexture, texture)
                     }
