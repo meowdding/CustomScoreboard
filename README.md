@@ -1,5 +1,5 @@
 <h1 align="center">
-    Custom Scoreboards
+    Custom Scoreboard
 </h1>
 <div align="center">
 
@@ -29,6 +29,7 @@ Elements that are in both mods are not listed for obvious reasons.
 | Click and Hover Actions                                                             | ❌            | ✅                     |
 | Infinite Separators                                                                 | ❌            | ✅                     |
 | Active Pet                                                                          | ❌            | ✅                     |
+| Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
 | Chunked Stats                                                                       | ✅            | ❌                     |
-| Maxwell Lines                                                                       | ✅            | ❌                     |
+| Maxwell Tunings                                                                     | ✅            | ❌                     |
 

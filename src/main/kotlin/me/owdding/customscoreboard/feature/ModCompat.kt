@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
+import net.fabricmc.loader.api.FabricLoader
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.profile.ProfileChangeEvent
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -13,9 +14,14 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.command
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 
 @Module
-object SkyHanniCompat {
+object ModCompat {
 
     var isSkyhanniCustomScoreboardEnabled = false
+    var isOverhaulEnabled = false
+
+    val isScoreboardOverhaulLoaded = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul")
+
+    fun isScoreboardOverhaulEnabled() = isScoreboardOverhaulLoaded && isOverhaulEnabled
 
     @Subscription
     fun onProfile(event: ProfileChangeEvent) {
