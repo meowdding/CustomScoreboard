@@ -15,9 +15,9 @@ object ElementSlayerStats : Element() {
         val data = SlayerProgressAPI.slayerData.entries.find { it.key == type } ?: return@buildList
         val repo = RepoSlayerData.getData(type)
 
-        add("Slayer Stats")
         val slayerLevel = " §7(§c${repo.getLevel(data.value.xp)}§7)".takeIf { LinesConfig.slayerLevel } ?: ""
-        add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Xp", "${data.value.xp.format()}$slayerLevel", "§c")}")
+        add("Slayer Stats$slayerLevel")
+        add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Xp", data.value.xp.format(), "§c")}")
         add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Meter", data.value.meterXp.format(), "§d")}")
     }
 
