@@ -17,12 +17,12 @@ object ElementPowder : Element() {
     override fun getDisplay() = buildList {
         when {
             SkyBlockIsland.inAnyIsland(foragingIsland) -> {
-                add("§9Powder") {
+                add("§9Whispers") {
                     hover = listOf("§7Click to open your Hotf.")
                     command = "/hotf"
                 }
 
-                addLine("Whispers", HotfAPI.whispers, HotfAPI.whispersTotal, "§3")
+                addLine("Forest", HotfAPI.whispers, HotfAPI.whispersTotal, "§3")
             }
 
             SkyBlockIsland.inAnyIsland(miningIslands) -> {
