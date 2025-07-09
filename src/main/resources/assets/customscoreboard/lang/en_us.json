@@ -213,6 +213,10 @@
                 "@value": "Magical Power",
                 "desc": "Show your Magical Power next to selected power."
             },
+            "slayer_level": {
+                "@value": "Slayer Level",
+                "desc": "Show your Slayer Level in the Slayer Stats Line"
+            },
             "powder_display": {
                 "@value": "Powder/Whisper Display",
                 "desc": "Choose the format to display Hotm Powder / Hotf Whispers."

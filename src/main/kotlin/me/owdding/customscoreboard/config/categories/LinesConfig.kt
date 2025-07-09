@@ -88,6 +88,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "customscoreboard.config.lines.magical_power"
     }
 
+    val slayerLevel by boolean(true) {
+        this.translation = "customscoreboard.config.lines.slayer_level"
+    }
+
     val powderDisplay by enum(ElementPowder.PowderDisplay.CURRENT) {
         this.translation = "customscoreboard.config.lines.powder_display"
     }
