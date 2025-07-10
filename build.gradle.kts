@@ -75,7 +75,7 @@ tasks {
                 "fabricLanguageKotlin" to libs.versions.fabrickotlin.get(),
                 "meowddingLib" to libs.versions.meowdding.lib.get(),
                 "resourcefullib" to libs.versions.rlib.get(),
-                "skyblockApi" to libs.versions.skyblockapi.get(),
+                "skyblockApi" to libs.versions.sbapi.get(),
                 "olympus" to libs.versions.olympus.get(),
                 "resourcefulconfigkt" to libs.versions.rconfigkt.get(),
                 "resourcefulconfig" to libs.versions.rconfig.get(),
