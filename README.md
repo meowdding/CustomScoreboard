@@ -29,6 +29,7 @@ Elements that are in both mods are not listed for obvious reasons.
 | Click and Hover Actions                                                             | ❌            | ✅                     |
 | Infinite Separators                                                                 | ❌            | ✅                     |
 | Active Pet                                                                          | ❌            | ✅                     |
+| Slayer Xp and Meter                                                                 | ❌            | ✅                     |
 | Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
 | Chunked Stats                                                                       | ✅            | ❌                     |
 | Maxwell Tunings                                                                     | ✅            | ❌                     |
