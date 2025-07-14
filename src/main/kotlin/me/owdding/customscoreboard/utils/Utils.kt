@@ -8,6 +8,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text.send
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 import tech.thatgravyboat.skyblockapi.utils.time.until
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 object Utils {
@@ -27,6 +28,21 @@ object Utils {
         SkyBlockSeason.WINTER to "§9",
         SkyBlockSeason.LATE_WINTER to "§9",
     )
+
+    fun Duration.toFormatYears() = buildString {
+        val years = inWholeDays / 365
+        val days = inWholeDays % 365
+        val hours = inWholeHours % 24
+        val minutes = inWholeMinutes % 60
+        val seconds = inWholeSeconds % 60
+
+        if (years > 0) append("${years}y ")
+        if (days > 0) append("${days}d ")
+        if (hours > 0) append("${hours}h ")
+        if (minutes > 0) append("${minutes}m ")
+        if (years <= 0 && days <= 0 && seconds > 0) append("${seconds}s") // Only show seconds if there is no days or years
+        if (isEmpty()) append("0s")
+    }
 
     fun SkyBlockSeason.getColoredName(): String = seasonColors[this] + this.toString()
 
