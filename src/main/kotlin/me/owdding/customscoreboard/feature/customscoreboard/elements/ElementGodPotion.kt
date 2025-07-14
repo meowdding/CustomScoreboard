@@ -11,7 +11,7 @@ import kotlin.time.Duration.Companion.seconds
 object ElementGodPotion : Element() {
     override fun getDisplay(): Any? {
         val duration = EffectsAPI.godPotionDuration
-        val line = duration.toFormatYears().takeIf { duration > 0.seconds } ?: "§cExpired"
+        val line = duration.toFormatYears().takeIf { duration.isPositive() } ?: "§cExpired"
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("God Potion", line, "§c")
     }
