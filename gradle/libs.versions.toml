@@ -1,60 +1,63 @@
 [versions]
 
-# Minecraft
-minecraft = "1.21.5"
-loom = "1.10-SNAPSHOT"
-loader = "0.16.10"
+fabric-loader = "0.16.10"
+fabric-language-kotlin = "1.13.0+kotlin.2.1.0"
+fabric-api = "0.128.1"
 
-# Kotlin
-ksp = "2.1.20-2.0.0"
 kotlin = "2.1.20"
-fabrickotlin = "1.13.2+kotlin.2.1.20"
+ksp = "2.1.20-2.0.0"
+kotlin-symbol-processor = "2.1.20-2.0.0"
 
 # Dependencies
-fabric = "0.126.0+1.21.5"
+skyblockapi = "1.0.0-beta.140-multiversion+build.14"
 hypixelapi = "1.0.1+build.1+mc1.21"
-
-meowdding-lib = "1.0.53"
-sbapi = "1.0.0-beta.138"
-rconfig = "3.5.14"
-rconfigkt = "3.5.12"
-olympus = "1.3.6"
-
-rlib = "3.5.0"
-meowdding-ktmodules = "1.0.3"
 mixinconstraints = "1.0.7"
 
-# Dev Dependencies
-devauth = "1.2.1"
-
-# Codegen
 kotlin_poet = "2.2.1-SNAPSHOT"
 kotlin_poet_ksp = "2.2.0-SNAPSHOT"
 
+# Dev Dependencies
+devauth = "1.2.1"
+modmenu = "14.0.0-rc.1"
+
+meowdding-lib = "1.0.53-multiversion+build.1"
+meowdding-ktmodules = "1.0.3"
+
+terrarium-cloche = "0.11.6"
+
 [libraries]
+
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+fabric-language-kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-language-kotlin" }
+
+skyblockapi = { module = "tech.thatgravyboat:skyblock-api", version.ref = "skyblockapi" }
+hypixelapi = { module = "maven.modrinth:hypixel-mod-api", version.ref = "hypixelapi" }
+
+resourceful-lib1215 = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.5", version = "3.5.0" }
+resourceful-lib1217 = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.6", version = "3.6.0" }
+resourceful-config1215 = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.5", version = "3.5.14" }
+resourceful-config1217 = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.7", version = "3.7.0" }
+resourcefulkt-config = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version = "3.5.12" }
+olympus-lib1215 = { module = "earth.terrarium.olympus:olympus-fabric-1.21.5", version = "1.3.6" }
+olympus-lib1217 = { module = "earth.terrarium.olympus:olympus-fabric-1.21.7", version = "1.5.0" }
+
+meowdding-lib = { module = "me.owdding.meowdding-lib:meowdding-lib", version.ref = "meowdding-lib" }
+meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref = "meowdding-ktmodules" }
+
+mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "mixinconstraints" }
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+
+devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
+modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 # Codegen
 kotlin_poet = { module = "me.owdding.kotlinpoet:kotlinpoet-jvm", version.ref = "kotlin_poet" }
 kotlin_poet_ksp = { module = "me.owdding.kotlinpoet:ksp", version.ref = "kotlin_poet_ksp" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 
-minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
-loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
-fabric = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric" }
-fabrickotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabrickotlin" }
-skyblockapi = { module = "tech.thatgravyboat:skyblock-api-1.21.5", version.ref = "sbapi" }
-hypixelapi = { module = "maven.modrinth:hypixel-mod-api", version.ref = "hypixelapi" }
-rconfig = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.5", version.ref = "rconfig" }
-rconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version.ref = "rconfigkt" }
-olympus = { module = "earth.terrarium.olympus:olympus-fabric-1.21.5", version.ref = "olympus" }
-rlib = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.5", version.ref = "rlib" }
-meowdding-lib = { module = "me.owdding.meowdding-lib:meowdding-lib-1.21.5", version.ref = "meowdding-lib" }
-meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref = "meowdding-ktmodules" }
-mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "mixinconstraints" }
-
-devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
-
 [plugins]
-loom = { id = "fabric-loom", version.ref = "loom" }
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+terrarium-cloche = { id = "earth.terrarium.cloche", version.ref = "terrarium-cloche" }
+
+kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }
