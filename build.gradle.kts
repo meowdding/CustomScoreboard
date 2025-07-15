@@ -48,6 +48,7 @@ cloche {
         name = "Custom Scoreboard"
         license = ""
         clientOnly = true
+        icon = "assets/customscoreboard/icon.png"
     }
 
     common {
