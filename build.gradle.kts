@@ -152,9 +152,6 @@ cloche {
 tasks.named("createCommonApiStub", GenerateStubApi::class) {
     excludes.add(libs.skyblockapi.get().module.toString())
     excludes.add(libs.meowdding.lib.get().module.toString())
-    project(":annotations").let {
-        excludes.add("${it.group}:${it.name}:${it.version}")
-    }
 }
 
 tasks {

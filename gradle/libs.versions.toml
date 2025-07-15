@@ -13,15 +13,15 @@ skyblockapi = "1.0.0-beta.140-multiversion+build.14"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
-kotlin_poet = "2.2.1-SNAPSHOT"
-kotlin_poet_ksp = "2.2.0-SNAPSHOT"
+kotlin_poet = "1.0.1"
+kotlin_poet_ksp = "1.0.1"
 
 # Dev Dependencies
 devauth = "1.2.1"
 modmenu = "14.0.0-rc.1"
 
 meowdding-lib = "1.0.53-multiversion+build.1"
-meowdding-ktmodules = "1.0.3"
+meowdding-ktmodules = "1.0.5"
 
 terrarium-cloche = "0.11.6"
 
