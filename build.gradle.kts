@@ -38,9 +38,7 @@ tasks.withType<KotlinCompile>().configureEach {
 
 dependencies {
     ksp(libs.meowdding.ktmodules)
-
-    compileOnly(libs.kotlin.stdlib)
-
+    compileOnly(project(":annotations"))
     ksp(project(":annotations"))
 }
 
