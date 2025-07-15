@@ -5,7 +5,6 @@ import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.Utils.toFormatYears
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
-import kotlin.time.Duration.Companion.seconds
 
 @AutoElement(ElementGroup.MIDDLE)
 object ElementGodPotion : Element() {
