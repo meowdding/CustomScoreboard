@@ -83,6 +83,7 @@ cloche {
         val rlib = dependencies["resourcefullib"]!!
         val rconfig = dependencies["resourcefulconfig"]!!
         val olympus = dependencies["olympus"]!!
+        val scoreboardOverhaul = dependencies["scoreboard-overhaul"]!!
 
         fabric(name) {
             includedClient()
@@ -125,6 +126,8 @@ cloche {
                 modImplementation(olympus)
                 modImplementation(rconfig)
                 modImplementation(libs.resourcefulkt.config)
+
+                modCompileOnly(scoreboardOverhaul)
             }
 
             runs {
@@ -137,11 +140,13 @@ cloche {
         this["resourcefullib"] = libs.resourceful.lib1215
         this["resourcefulconfig"] = libs.resourceful.config1215
         this["olympus"] = libs.olympus.lib1215
+        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1215
     }
     createVersion("1.21.7") {
         this["resourcefullib"] = libs.resourceful.lib1217
         this["resourcefulconfig"] = libs.resourceful.config1217
         this["olympus"] = libs.olympus.lib1217
+        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1217
     }
 
     mappings { official() }
