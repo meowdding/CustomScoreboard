@@ -68,7 +68,7 @@ cloche {
             modImplementation(libs.meowdding.lib)
 
             modRuntimeOnly(libs.devauth)
-            modRuntimeOnly(libs.modmenu)
+            //modRuntimeOnly(libs.modmenu)
         }
     }
 
@@ -155,6 +155,10 @@ cloche {
 tasks.named("createCommonApiStub", GenerateStubApi::class) {
     excludes.add(libs.skyblockapi.get().module.toString())
     excludes.add(libs.meowdding.lib.get().module.toString())
+}
+
+tasks.named("write1215RemapClasspath") {
+    enabled = false
 }
 
 tasks {
