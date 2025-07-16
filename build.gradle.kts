@@ -1,9 +1,13 @@
 @file:Suppress("UnstableApiUsage")
 
+import net.msrandom.minecraftcodev.core.utils.toPath
+import net.msrandom.minecraftcodev.runs.task.WriteClasspathFile
 import net.msrandom.stubs.GenerateStubApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
 plugins {
     java
@@ -158,8 +162,14 @@ tasks.named("createCommonApiStub", GenerateStubApi::class) {
     excludes.add(libs.meowdding.lib.get().module.toString())
 }
 
-tasks.named("write1215RemapClasspath") {
-    enabled = false
+// TODO temporary workaround for a cloche issue on certain systems, remove once fixed
+tasks.withType<WriteClasspathFile>().configureEach {
+    actions.clear()
+    actions.add {
+        generate()
+        val file = output.get().toPath()
+        file.writeText(file.readText().lines().joinToString(File.pathSeparator))
+    }
 }
 
 tasks {
