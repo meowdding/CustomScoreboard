@@ -72,7 +72,6 @@ cloche {
             modImplementation(libs.skyblockapi)
             modImplementation(libs.meowdding.lib)
 
-            modRuntimeOnly(libs.devauth)
             //modRuntimeOnly(libs.modmenu)
         }
     }

@@ -15,8 +15,6 @@ mixinconstraints = "1.0.7"
 kotlin_poet = "1.0.1"
 kotlin_poet_ksp = "1.0.1"
 
-# Dev Dependencies
-devauth = "1.2.1"
 modmenu = "14.0.0-rc.1"
 
 meowdding-lib = "1.0.53-multiversion+build.9"
@@ -49,7 +47,6 @@ meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref =
 
 mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "mixinconstraints" }
 
-devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 # Codegen
