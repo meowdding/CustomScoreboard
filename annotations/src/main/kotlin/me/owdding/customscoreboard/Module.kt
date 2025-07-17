@@ -1,13 +1,25 @@
 package me.owdding.customscoreboard
 
 import com.google.devtools.ksp.KspExperimental
-import com.google.devtools.ksp.processing.*
+import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.Dependencies
+import com.google.devtools.ksp.processing.KSPLogger
+import com.google.devtools.ksp.processing.Resolver
+import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
+import com.google.devtools.ksp.processing.SymbolProcessorProvider
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSDeclaration
-import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.TypeSpec.Companion.anonymousClassBuilder
-import com.squareup.kotlinpoet.ksp.writeTo
+import me.owdding.kotlinpoet.ClassName
+import me.owdding.kotlinpoet.FileSpec
+import me.owdding.kotlinpoet.FunSpec
+import me.owdding.kotlinpoet.KModifier
+import me.owdding.kotlinpoet.PropertySpec
+import me.owdding.kotlinpoet.TypeSpec
+import me.owdding.kotlinpoet.TypeSpec.Companion.anonymousClassBuilder
+import me.owdding.kotlinpoet.asClassName
+import me.owdding.kotlinpoet.ksp.writeTo
 
 internal class Processor(
     private val codeGenerator: CodeGenerator,

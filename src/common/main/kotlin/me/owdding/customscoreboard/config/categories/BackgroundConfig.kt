@@ -2,7 +2,6 @@ package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
-import com.teamresourceful.resourcefullib.client.utils.ScreenUtils
 import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
@@ -11,6 +10,7 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import net.minecraft.Util
 import net.minecraft.client.gui.layouts.LayoutElement
 import tech.thatgravyboat.skyblockapi.helpers.McFont
+import tech.thatgravyboat.skyblockapi.platform.showTooltip
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -125,16 +125,18 @@ object CustomBackgroundModal {
                         this.color = TextColor.RED
                     }
                     hovered -> {
-                        ScreenUtils.setTooltip(listOf(
-                            Text.of(BackgroundConfig.customImageFile) {
-                                this.color = TextColor.GRAY
-                                this.underlined = true
-                            },
-                            CommonText.EMPTY,
-                            Text.of("Click to open file location") {
-                                this.color = TextColor.YELLOW
-                            }
-                        ))
+                        graphics.showTooltip(
+                            Text.multiline(
+                                Text.of(BackgroundConfig.customImageFile) {
+                                    this.color = TextColor.GRAY
+                                    this.underlined = true
+                                },
+                                CommonText.EMPTY,
+                                Text.of("Click to open file location") {
+                                    this.color = TextColor.YELLOW
+                                },
+                            ),
+                        )
 
                         Text.of("Hover to view file") {
                             this.color = TextColor.WHITE

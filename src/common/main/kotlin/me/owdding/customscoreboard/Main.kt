@@ -12,7 +12,7 @@ import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
 import me.owdding.lib.utils.MeowddingUpdateChecker
-import net.fabricmc.api.ModInitializer
+import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
 import net.fabricmc.loader.api.FabricLoader
@@ -32,7 +32,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
-object Main : ModInitializer {
+object Main : ClientModInitializer {
 
     val SELF = FabricLoader.getInstance().getModContainer("customscoreboard").get()
     val MOD_ID: String = SELF.metadata.id
@@ -45,7 +45,7 @@ object Main : ModInitializer {
 
     val configurator = Configurator("customscoreboard")
 
-    override fun onInitialize() {
+    override fun onInitializeClient() {
         MainConfig.register(configurator)
 
         CustomScoreboardModules.init { SkyBlockAPI.eventBus.register(it) }

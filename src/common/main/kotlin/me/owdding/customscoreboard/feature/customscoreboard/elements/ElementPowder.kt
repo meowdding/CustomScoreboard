@@ -5,7 +5,7 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.api.profile.hotf.HotfAPI
+import tech.thatgravyboat.skyblockapi.api.profile.hotf.WhispersAPI
 import tech.thatgravyboat.skyblockapi.api.profile.hotm.PowderAPI
 
 @AutoElement
@@ -22,7 +22,7 @@ object ElementPowder : Element() {
                     command = "/hotf"
                 }
 
-                addLine("Forest", HotfAPI.whispers, HotfAPI.whispersTotal, "§3")
+                addLine("Forest", WhispersAPI.forest, WhispersAPI.forestTotal, "§3")
             }
 
             SkyBlockIsland.inAnyIsland(miningIslands) -> {

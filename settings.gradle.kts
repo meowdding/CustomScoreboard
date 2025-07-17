@@ -5,6 +5,7 @@ pluginManagement {
         maven("https://maven.fabricmc.net/")
         maven("https://maven.teamresourceful.com/repository/maven-private/")
         maven("https://maven.teamresourceful.com/repository/maven-public/")
+        maven(url = "https://maven.msrandom.net/repository/cloche")
         maven("https://api.modrinth.com/maven") {
             content {
                 includeGroup("maven.modrinth")

@@ -7,19 +7,19 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 
-object RenderUtils {
-    fun GuiGraphics.drawRec(
+actual object RenderUtils {
+    actual fun GuiGraphics.drawRec(
         x: Int, y: Int, width: Int, height: Int,
-        backgroundColor: Int, borderColor: Int = backgroundColor,
-        borderSize: Int = 0, radius: Int = 0,
+        backgroundColor: Int, borderColor: Int,
+        borderSize: Int, radius: Int,
     ) {
         RoundedRectangle.drawRelative(this, x, y, width, height, backgroundColor, borderColor, radius.toFloat(), borderSize)
     }
 
-    fun GuiGraphics.drawTexture(
+    actual fun GuiGraphics.drawTexture(
         x: Int, y: Int, width: Int, height: Int,
-        texture: ResourceLocation, radius: Int = 0,
-        alpha: Float = 1f,
+        texture: ResourceLocation, radius: Int,
+        alpha: Float,
     ) {
         val xOffset = this.pose().last().pose().m30()
         val yOffset = this.pose().last().pose().m31()
