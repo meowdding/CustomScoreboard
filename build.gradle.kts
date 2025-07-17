@@ -147,11 +147,11 @@ cloche {
         this["olympus"] = libs.olympus.lib1215
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1215
     }
-    createVersion("1.21.7") {
-        this["resourcefullib"] = libs.resourceful.lib1217
-        this["resourcefulconfig"] = libs.resourceful.config1217
-        this["olympus"] = libs.olympus.lib1217
-        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1217
+    createVersion("1.21.8") {
+        this["resourcefullib"] = libs.resourceful.lib1218
+        this["resourcefulconfig"] = libs.resourceful.config1218
+        this["olympus"] = libs.olympus.lib1218
+        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
     }
 
     mappings { official() }
@@ -194,5 +194,5 @@ ksp {
     arg("meowdding.modules.project_name", "CustomScoreboard")
     arg("meowdding.modules.package", "me.owdding.customscoreboard.generated")
     this@ksp.excludedSources.from(sourceSets.getByName("1215").kotlin.srcDirs)
-    this@ksp.excludedSources.from(sourceSets.getByName("1217").kotlin.srcDirs)
+    this@ksp.excludedSources.from(sourceSets.getByName("1218").kotlin.srcDirs)
 }
