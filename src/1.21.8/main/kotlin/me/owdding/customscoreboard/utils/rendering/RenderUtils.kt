@@ -23,7 +23,7 @@ actual object RenderUtils {
         RoundedTexture.draw(
             this@drawTexture, x, y, width, height,
             texture, 0f, 0f, 1f, 1f, radius.toFloat(),
-            ARGB.color((alpha * 255).toInt(), 1, 1, 1),
+            ARGB.color((alpha * 255).toInt(), 255, 255, 255),
         )
     }
 }
