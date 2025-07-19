@@ -8,7 +8,7 @@ ksp = "2.1.20-2.0.0"
 kotlin-symbol-processor = "2.1.20-2.0.0"
 
 # Dependencies
-skyblockapi = "1.0.0-beta.140-multiversion+build.20"
+skyblockapi = "2.0.0"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
@@ -17,7 +17,7 @@ kotlin_poet_ksp = "1.0.1"
 
 modmenu = "14.0.0-rc.1"
 
-meowdding-lib = "1.0.53-multiversion+build.9"
+meowdding-lib = "2.0.0"
 meowdding-ktmodules = "1.0.5"
 
 terrarium-cloche = "0.11.6"
