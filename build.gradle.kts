@@ -1,11 +1,18 @@
 @file:Suppress("UnstableApiUsage")
 
+import earth.terrarium.cloche.api.metadata.ModMetadata
 import net.msrandom.minecraftcodev.core.utils.toPath
+import net.msrandom.minecraftcodev.fabric.task.JarInJar
 import net.msrandom.minecraftcodev.runs.task.WriteClasspathFile
 import net.msrandom.stubs.GenerateStubApi
+import org.gradle.kotlin.dsl.assign
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.io.path.createDirectories
+import kotlin.io.path.createFile
+import kotlin.io.path.exists
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
@@ -81,6 +88,11 @@ cloche {
         version: String = name,
         loaderVersion: Provider<String> = libs.versions.fabric.loader,
         fabricApiVersion: Provider<String> = libs.versions.fabric.api,
+        minecraftVersionRange: ModMetadata.VersionRange.() -> Unit = {
+            start = version
+            end = version
+            endExclusive = false
+        },
         dependencies: MutableMap<String, Provider<MinimalExternalModuleDependency>>.() -> Unit = { },
     ) {
         val dependencies = mutableMapOf<String, Provider<MinimalExternalModuleDependency>>().apply(dependencies)
@@ -94,8 +106,8 @@ cloche {
             minecraftVersion = version
             this.loaderVersion = loaderVersion.get()
 
-            include(libs.hypixelapi)
-            include(libs.skyblockapi)
+            //include(libs.hypixelapi) - included in sbapi
+            //include(libs.skyblockapi) - included in mlib
             include(libs.meowdding.lib)
             include(rlib)
             include(olympus)
@@ -108,16 +120,25 @@ cloche {
                     value = "me.owdding.customscoreboard.Main"
                 }
 
-                fun dependency(modId: String, version: Provider<String>) {
+                fun dependency(modId: String, version: Provider<String>? = null) {
                     dependency {
                         this.modId = modId
                         this.required = true
-                        version {
+                        if (version != null) version {
                             this.start = version
                         }
                     }
                 }
 
+                dependency {
+                    modId = "minecraft"
+                    required = true
+                    version(minecraftVersionRange)
+                }
+                dependency("fabric")
+                dependency("fabricloader", libs.versions.fabric.loader)
+                dependency("resourcefulconfigkt", libs.versions.rconfigkt)
+                dependency("resourcefulconfig", rconfig.map { it.version!! })
                 dependency("fabric-language-kotlin", libs.versions.fabric.language.kotlin)
                 dependency("resourcefullib", rlib.map { it.version!! })
                 dependency("skyblock-api", libs.versions.skyblockapi)
@@ -146,7 +167,9 @@ cloche {
         this["olympus"] = libs.olympus.lib1215
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1215
     }
-    createVersion("1.21.8") {
+    createVersion("1.21.8", minecraftVersionRange = {
+        start = "1.21.6"
+    }) {
         this["resourcefullib"] = libs.resourceful.lib1218
         this["resourcefulconfig"] = libs.resourceful.config1218
         this["olympus"] = libs.olympus.lib1218
@@ -159,16 +182,6 @@ cloche {
 tasks.named("createCommonApiStub", GenerateStubApi::class) {
     excludes.add(libs.skyblockapi.get().module.toString())
     excludes.add(libs.meowdding.lib.get().module.toString())
-}
-
-// TODO temporary workaround for a cloche issue on certain systems, remove once fixed
-tasks.withType<WriteClasspathFile>().configureEach {
-    actions.clear()
-    actions.add {
-        generate()
-        val file = output.get().toPath()
-        file.writeText(file.readText().lines().joinToString(File.pathSeparator))
-    }
 }
 
 tasks {
@@ -188,10 +201,45 @@ java {
     withSourcesJar()
 }
 
-
 ksp {
     arg("meowdding.modules.project_name", "CustomScoreboard")
     arg("meowdding.modules.package", "me.owdding.customscoreboard.generated")
     this@ksp.excludedSources.from(sourceSets.getByName("1215").kotlin.srcDirs)
     this@ksp.excludedSources.from(sourceSets.getByName("1218").kotlin.srcDirs)
+}
+
+// TODO temporary workaround for a cloche issue on certain systems, remove once fixed
+tasks.withType<WriteClasspathFile>().configureEach {
+    actions.clear()
+    actions.add {
+        output.get().toPath().also { it.parent.createDirectories() }.takeUnless { it.exists() }?.createFile()
+        generate()
+        val file = output.get().toPath()
+        file.writeText(file.readText().lines().joinToString(File.pathSeparator))
+    }
+}
+
+tasks.register("release") {
+    group = "meowdding"
+    sourceSets.filterNot { it.name == SourceSet.MAIN_SOURCE_SET_NAME || it.name == SourceSet.TEST_SOURCE_SET_NAME }
+        .forEach {
+            tasks.findByName("${it.name}JarInJar")?.let { task ->
+                dependsOn(task)
+                mustRunAfter(task)
+            }
+        }
+}
+
+tasks.register("cleanRelease") {
+    group = "meowdding"
+    listOf("clean", "release").forEach {
+        tasks.getByName(it).let { task ->
+            dependsOn(task)
+            mustRunAfter(task)
+        }
+    }
+}
+
+tasks.withType<JarInJar>().configureEach {
+    include { !it.name.endsWith("-dev.jar") }
 }
