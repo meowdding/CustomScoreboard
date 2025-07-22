@@ -107,7 +107,7 @@ cloche {
             this.loaderVersion = loaderVersion.get()
 
             //include(libs.hypixelapi) - included in sbapi
-            //include(libs.skyblockapi) - included in mlib
+            include(libs.skyblockapi)
             include(libs.meowdding.lib)
             include(rlib)
             include(olympus)
