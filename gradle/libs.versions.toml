@@ -19,7 +19,7 @@ kotlin_poet_ksp = "1.0.1"
 
 modmenu = "14.0.0-rc.1"
 
-meowdding-lib = "2.1.4"
+meowdding-lib = "2.1.5"
 meowdding-ktmodules = "1.0.5"
 
 terrarium-cloche = "0.11.6"
