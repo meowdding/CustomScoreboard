@@ -2,7 +2,9 @@ package me.owdding.customscoreboard.utils.rendering
 
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
+import net.msrandom.stub.Stub
 
+@Stub
 expect object RenderUtils {
     fun GuiGraphics.drawRec(
         x: Int, y: Int, width: Int, height: Int,
