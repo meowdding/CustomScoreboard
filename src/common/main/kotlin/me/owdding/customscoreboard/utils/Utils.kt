@@ -42,7 +42,7 @@ object Utils {
         if (minutes > 0) append("${minutes}m ")
         if (years <= 0 && days <= 0 && seconds > 0) append("${seconds}s") // Only show seconds if there is no days or years
         if (isEmpty()) append("0s")
-    }
+    }.trim()
 
     fun SkyBlockSeason.getColoredName(): String = seasonColors[this] + this.toString()
 
