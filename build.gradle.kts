@@ -213,10 +213,11 @@ tasks.withType<WriteClasspathFile>().configureEach {
     }
 }
 
+val mcVersions = sourceSets.filterNot { it.name == SourceSet.MAIN_SOURCE_SET_NAME || it.name == SourceSet.TEST_SOURCE_SET_NAME }.map { it.name }
+
 tasks.register("release") {
     group = "meowdding"
-    sourceSets.filterNot { it.name == SourceSet.MAIN_SOURCE_SET_NAME || it.name == SourceSet.TEST_SOURCE_SET_NAME }
-        .forEach {
+    mcVersions.forEach {
             tasks.findByName("${it.name}JarInJar")?.let { task ->
                 dependsOn(task)
                 mustRunAfter(task)
