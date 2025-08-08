@@ -2,6 +2,7 @@
     "required": true,
     "minVersion": "0.8",
     "package": "me.owdding.customscoreboard.mixins",
+    "plugin": "com.moulberry.mixinconstraints.ConstraintsMixinPlugin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
         "compat.ScoreboardConfigMixin",
