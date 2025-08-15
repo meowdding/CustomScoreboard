@@ -1,14 +1,13 @@
 [versions]
 
 fabric-loader = "0.16.10"
-fabric-language-kotlin = "1.13.0+kotlin.2.1.0"
+fabric-language-kotlin = "1.13.4+kotlin.2.2.0"
 fabric-api = "0.128.1"
 
-ksp = "2.1.20-2.0.0"
-kotlin-symbol-processor = "2.1.20-2.0.0"
+kotlin-symbol-processor = "2.2.0-2.0.2"
 
 # Dependencies
-skyblockapi = "2.1.2"
+skyblockapi = "2.3.0"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
@@ -54,7 +53,7 @@ modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 # Codegen
 kotlin_poet = { module = "me.owdding.kotlinpoet:kotlinpoet-jvm", version.ref = "kotlin_poet" }
 kotlin_poet_ksp = { module = "me.owdding.kotlinpoet:ksp", version.ref = "kotlin_poet_ksp" }
-ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
+ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "kotlin-symbol-processor" }
 
 [plugins]
 terrarium-cloche = { id = "earth.terrarium.cloche", version.ref = "terrarium-cloche" }
