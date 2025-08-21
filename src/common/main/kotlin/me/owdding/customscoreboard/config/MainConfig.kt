@@ -156,6 +156,10 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.horizontal_alignment"
     }
 
+    val hideWhenTab by boolean(false) {
+        this.translation = "customscoreboard.config.hide_when_tab"
+    }
+
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
         this.translation = "customscoreboard.config.hide_hypixel"
     }

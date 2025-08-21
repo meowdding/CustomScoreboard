@@ -31,6 +31,7 @@ Elements that are in both mods are not listed for obvious reasons.
 | Active Pet                                                                          | ❌            | ✅                     |
 | Slayer Xp and Meter                                                                 | ❌            | ✅                     |
 | Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
+| Hide while Tablist is Open                                                          | ❌            | ✅                     |
 | Chunked Stats                                                                       | ✅            | ❌                     |
 | Maxwell Tunings                                                                     | ✅            | ❌                     |
 

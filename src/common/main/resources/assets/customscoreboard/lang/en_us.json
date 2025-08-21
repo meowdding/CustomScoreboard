@@ -48,6 +48,10 @@
             "@value": "Horizontal Alignment",
             "desc": "Choose the horizontal alignment of the scoreboard."
         },
+        "hide_when_tab": {
+            "@value": "Hide When Tablist Open",
+            "desc": "Hide the Custom Scoreboard while the tablist is open."
+        },
         "hide_hypixel": {
             "@value": "Hide Hypixel Scoreboard",
             "desc": "Enable or disable the Hypixel scoreboard."
