@@ -67,6 +67,7 @@ object CustomScoreboardRenderer {
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         if (renderScoreboardOverhaul()) return
+        if (McClient.options.keyPlayerList.isDown && MainConfig.hideWhenTab) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse
 
