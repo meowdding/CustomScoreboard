@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.PetsAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -9,6 +10,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @AutoElement
+@ScoreboardElement
 object ElementPet : Element() {
     override fun getDisplay() = buildList {
         val pet = PetsAPI.pet ?: return@buildList
@@ -30,4 +32,5 @@ object ElementPet : Element() {
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
 
     override val configLine = "Pet"
+    override val id = "PET"
 }

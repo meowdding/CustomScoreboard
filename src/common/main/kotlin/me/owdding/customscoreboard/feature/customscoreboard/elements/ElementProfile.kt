@@ -3,10 +3,12 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileType
 
 @AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementProfile : Element() {
     override fun getDisplay() = buildString {
         val profile = ProfileAPI.profileType
@@ -24,6 +26,7 @@ object ElementProfile : Element() {
     override fun showWhen() = ProfileAPI.profileType != ProfileType.UNKNOWN
 
     override val configLine = "Profile"
+    override val id = "PROFILE"
 
 
     private val profileSymbol = mapOf(

@@ -5,6 +5,8 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
+import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigString
+import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toStupidInterfaceList
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
@@ -39,7 +41,8 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ),
     )
 
-    override val version = 3
+    override val version = 4
+
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
@@ -64,7 +67,12 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             lines.add("line_modification", lines)
 
             json
-        }
+        },
+        3 to UnaryOperator { json ->
+            val appearance = json.getAsJsonArray("appearance").joinToString(",") { it.asString }
+            json.addProperty("appearance", appearance)
+            json
+        },
     )
     //endregion
 
@@ -77,7 +85,8 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.enabled"
     }
 
-    private val default = listOf<ScoreboardEntry>(
+    // todo: maybe do differently and remove the autothingy
+    private val default = listOf(
         ScoreboardEntry.TITLE,
         ScoreboardEntry.LOBBY,
         ScoreboardEntry.SEPARATOR,
@@ -107,14 +116,18 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ScoreboardEntry.PARTY,
         ScoreboardEntry.PET,
         ScoreboardEntry.FOOTER,
-    )
+    ).joinToString(",") { it.element.id }
 
     val appearance by observable(
-        draggable(*default.toTypedArray()) {
-            this.translation = "customscoreboard.config.appearance"
-            this.duplicatable = listOf(ScoreboardEntry.SEPARATOR).toTypedArray()
-        },
-    ) { old, new ->
+        transform(
+            string(default) {
+                this.translation = "customscoreboard.config.appearance"
+                renderer = CUSTOM_DRAGGABLE_RENDERER
+            },
+            { it.toConfigString() },
+            { it.toStupidInterfaceList() },
+        ),
+    ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
     }
 
@@ -122,7 +135,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
             this.translation = "customscoreboard.config.events"
         },
-    ) { old, new ->
+    ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
     }
 

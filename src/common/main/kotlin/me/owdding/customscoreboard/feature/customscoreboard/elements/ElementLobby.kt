@@ -3,10 +3,12 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 
 @AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementLobby : Element() {
     private var lobbyCode: String? = null
     private var roomId: String? = null
@@ -16,6 +18,7 @@ object ElementLobby : Element() {
     override fun showWhen() = lobbyCode != null
 
     override val configLine = "Lobby"
+    override val id = "LOBBY"
 
 
     private val roomIdRegex = "\\d+/\\d+/\\d+ \\w+ (?<roomId>[\\w,-]+)".toRegex()

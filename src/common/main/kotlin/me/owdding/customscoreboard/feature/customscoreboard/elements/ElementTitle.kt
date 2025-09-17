@@ -5,9 +5,11 @@ import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 
 @AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementTitle : Element() {
     override fun getDisplay() = when {
         LinesConfig.useHypixelTitle -> McClient.scoreboardTitle?.align(MainConfig.title.alignment)
@@ -16,6 +18,7 @@ object ElementTitle : Element() {
     }
 
     override val configLine = "§e§lSkyBlock"
+    override val id = "TITLE"
 
     fun String.formatTitle() = replace("&&", "§").split("\\n")
 }

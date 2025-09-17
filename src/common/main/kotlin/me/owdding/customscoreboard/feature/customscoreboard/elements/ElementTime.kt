@@ -2,10 +2,12 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.ElementGroup
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
 
 @AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementTime : Element() {
     override fun getDisplay() = buildString {
         append("§7")
@@ -31,4 +33,5 @@ object ElementTime : Element() {
     }
 
     override val configLine = "Time"
+    override val id = "TIME"
 }

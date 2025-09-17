@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.toReadableTime
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
 import tech.thatgravyboat.skyblockapi.api.data.Candidate
@@ -11,6 +12,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitToWidth
 import kotlin.time.Duration
 
 @AutoElement
+@ScoreboardElement
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
         val mayor = ElectionAPI.currentMayor ?: return@buildList
@@ -79,6 +81,7 @@ object ElementMayor : Element() {
     override fun showWhen() = ElectionAPI.currentMayor != null
 
     override val configLine = "Mayor"
+    override val id = "MAYOR"
 
 
     private const val ELECTION_MONTH = 3

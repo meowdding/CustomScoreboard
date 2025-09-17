@@ -4,10 +4,12 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
 @AutoElement
+@ScoreboardElement
 object ElementSoulflow : Element(), NumberTrackingElement {
     override var previousAmount: Long = -1
     override var temporaryChangeDisplay: String? = null
@@ -23,5 +25,6 @@ object ElementSoulflow : Element(), NumberTrackingElement {
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
 
     override val configLine = "Soulflow"
+    override val id = "SOULFLOW"
     override val configLineHover = listOf("Requires the Soulflow option enabled in the Profile category in /tablist.")
 }

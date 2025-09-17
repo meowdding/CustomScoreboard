@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.ElementGroup
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.wrap
@@ -10,6 +11,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @AutoElement(ElementGroup.MIDDLE)
+@ScoreboardElement
 object ElementSkyblockLevel : Element() {
 
     override fun getDisplay() = Text.of {
@@ -29,4 +31,5 @@ object ElementSkyblockLevel : Element() {
     }
 
     override val configLine = "SB Level"
+    override val id = "SKYBLOCK_LEVEL"
 }

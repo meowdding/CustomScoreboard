@@ -4,11 +4,13 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.hotf.WhispersAPI
 import tech.thatgravyboat.skyblockapi.api.profile.hotm.PowderAPI
 
 @AutoElement
+@ScoreboardElement
 object ElementPowder : Element() {
     private val foragingIsland = setOf(SkyBlockIsland.GALATEA)
     private val miningIslands = setOf(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT)
@@ -51,6 +53,7 @@ object ElementPowder : Element() {
     override fun showIsland() = SkyBlockIsland.inAnyIsland(allIslands)
 
     override val configLine = "Powder / Whispers"
+    override val id = "POWDER"
 
     enum class PowderDisplay(val display: String) {
         CURRENT("Current"),

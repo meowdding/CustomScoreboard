@@ -5,11 +5,13 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
 @AutoElement
+@ScoreboardElement
 object ElementPurse : Element(), NumberTrackingElement {
     override var previousAmount: Long = -1
     override var temporaryChangeDisplay: String? = null
@@ -30,6 +32,7 @@ object ElementPurse : Element(), NumberTrackingElement {
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
 
     override val configLine = "Purse"
+    override val id = "PURSE"
 
     private val piggyRegex = "Piggy: .*".toRegex()
 

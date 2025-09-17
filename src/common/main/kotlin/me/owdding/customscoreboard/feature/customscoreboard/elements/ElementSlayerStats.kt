@@ -4,11 +4,13 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerAPI
 import tech.thatgravyboat.skyblockapi.api.profile.slayer.SlayerProgressAPI
 import tech.thatgravyboat.skyblockapi.api.remote.repo.RepoSlayerData
 
 @AutoElement
+@ScoreboardElement
 object ElementSlayerStats : Element() {
     override fun getDisplay() = buildList<Any?> {
         val type = SlayerAPI.type ?: return@buildList
@@ -22,6 +24,7 @@ object ElementSlayerStats : Element() {
     }
 
     override val configLine: String = "Slayer Stats"
+    override val id = "SLAYER_STATS"
     override val configLineHover = listOf(
         "§7The current slayer xp (and level) and meter xp you have.",
         "§7Will only show when Hypixel shows an active slayer quest.",
