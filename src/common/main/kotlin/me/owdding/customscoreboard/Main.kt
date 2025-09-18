@@ -11,6 +11,7 @@ import me.owdding.customscoreboard.config.CUSTOM_DRAGGABLE_RENDERER
 import me.owdding.customscoreboard.config.CustomDraggableList
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
@@ -50,7 +51,8 @@ object Main : ClientModInitializer {
 
     val configurator = Configurator("customscoreboard")
 
-    val allScoreboardElements = mutableListOf<Element>()
+    private val allScoreboardElements = mutableListOf<Element>()
+    val allPossibleScoreboardElements get() = allScoreboardElements + TabWidgetHelper.tablistLineCache
 
     override fun onInitializeClient() {
         MainConfig.register(configurator)

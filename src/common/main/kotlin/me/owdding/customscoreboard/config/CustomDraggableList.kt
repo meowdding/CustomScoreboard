@@ -27,7 +27,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
         return listOf(
             ResourcefulConfigOptionUI.draggable(
                 entry.options().title().toComponent(),
-                Main.allScoreboardElements.map { it.toDraggableOptionEntry() }, // todo: sorting
+                Main.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }, // todo: sorting
                 {
                     entry.string.toStupidInterfaceList()
                 },
@@ -46,7 +46,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
 
     companion object {
         fun String.toStupidInterfaceList() = split(",").mapNotNull { id ->
-            Main.allScoreboardElements.find { it.id == id }
+            Main.allPossibleScoreboardElements.find { it.id == id }
         }
 
         fun List<SomeStupidInterface>.toConfigString() = joinToString(",") { it.id }

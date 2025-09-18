@@ -11,12 +11,14 @@ import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.generated.ScoreboardEntry
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.NumberFormatType
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
+import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
@@ -137,6 +139,14 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         },
     ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
+    }
+
+    val tablistLines by observable(
+        draggable<TabWidget> {
+            this.translation = "customscoreboard.config.tablist_lines"
+        },
+    ) { _, _ ->
+        TabWidgetHelper.updateTablistLineCache()
     }
 
     val scale by double(1.0) {
