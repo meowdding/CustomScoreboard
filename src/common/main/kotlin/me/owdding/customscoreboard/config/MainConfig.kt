@@ -12,8 +12,33 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementArea
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBits
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCold
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopper
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementDate
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementEvents
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementFooter
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementGems
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementHeat
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementIsland
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementLobby
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
-import me.owdding.customscoreboard.generated.ScoreboardEntry
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMotes
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementNorthStars
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementObjective
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementParty
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPet
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementProfile
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPurse
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSeparator
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSlayer
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSoulflow
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.NumberFormatType
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
@@ -87,38 +112,37 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.enabled"
     }
 
-    // todo: maybe do differently and remove the autothingy
     private val default = listOf(
-        ScoreboardEntry.TITLE,
-        ScoreboardEntry.LOBBY,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.DATE,
-        ScoreboardEntry.TIME,
-        ScoreboardEntry.ISLAND,
-        ScoreboardEntry.AREA,
-        ScoreboardEntry.PROFILE,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.PURSE,
-        ScoreboardEntry.MOTES,
-        ScoreboardEntry.BANK,
-        ScoreboardEntry.BITS,
-        ScoreboardEntry.COPPER,
-        ScoreboardEntry.GEMS,
-        ScoreboardEntry.HEAT,
-        ScoreboardEntry.COLD,
-        ScoreboardEntry.NORTH_STARS,
-        ScoreboardEntry.SOULFLOW,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.OBJECTIVE,
-        ScoreboardEntry.SLAYER,
-        ScoreboardEntry.QUIVER,
-        ScoreboardEntry.EVENTS,
-        ScoreboardEntry.POWDER,
-        ScoreboardEntry.MAYOR,
-        ScoreboardEntry.PARTY,
-        ScoreboardEntry.PET,
-        ScoreboardEntry.FOOTER,
-    ).joinToString(",") { it.element.id }
+        ElementTitle,
+        ElementLobby,
+        ElementSeparator,
+        ElementDate,
+        ElementTime,
+        ElementIsland,
+        ElementArea,
+        ElementProfile,
+        ElementSeparator,
+        ElementPurse,
+        ElementMotes,
+        ElementBank,
+        ElementBits,
+        ElementCopper,
+        ElementGems,
+        ElementHeat,
+        ElementCold,
+        ElementNorthStars,
+        ElementSoulflow,
+        ElementSeparator,
+        ElementObjective,
+        ElementSlayer,
+        ElementQuiver,
+        ElementEvents,
+        ElementPowder,
+        ElementMayor,
+        ElementParty,
+        ElementPet,
+        ElementFooter,
+    ).joinToString(",") { it.id }
 
     val appearance by observable(
         transform(

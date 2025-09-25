@@ -1,11 +1,9 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer.currentIslandEvents
 import me.owdding.customscoreboard.utils.ScoreboardElement
 
-@AutoElement
 @ScoreboardElement
 object ElementEvents : Element() {
     override fun getDisplay() =

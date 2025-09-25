@@ -1,6 +1,5 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -9,7 +8,6 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.hotf.WhispersAPI
 import tech.thatgravyboat.skyblockapi.api.profile.hotm.PowderAPI
 
-@AutoElement
 @ScoreboardElement
 object ElementPowder : Element() {
     private val foragingIsland = setOf(SkyBlockIsland.GALATEA)

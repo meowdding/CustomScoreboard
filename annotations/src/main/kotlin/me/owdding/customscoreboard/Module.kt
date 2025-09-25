@@ -113,11 +113,6 @@ internal class Processor(
 internal data class Declaration(val type: KSClassDeclaration, val group: ElementGroup)
 
 internal enum class Kind(val enumName: String, val packageName: String, val typeName: String) {
-    ELEMENT(
-        "ScoreboardEntry",
-        "me.owdding.customscoreboard.feature.customscoreboard.elements",
-        "Element",
-    ),
     EVENT(
         "ScoreboardEventEntry",
         "me.owdding.customscoreboard.feature.customscoreboard.events",

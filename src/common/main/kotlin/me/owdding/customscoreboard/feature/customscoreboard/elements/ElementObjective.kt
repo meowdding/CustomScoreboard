@@ -1,13 +1,11 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.TextUtils.isBlank
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
-@AutoElement
 @ScoreboardElement
 object ElementObjective : Element() {
     override fun getDisplay() = objectiveLines.map {

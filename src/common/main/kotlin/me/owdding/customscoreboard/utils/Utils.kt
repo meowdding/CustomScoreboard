@@ -67,3 +67,10 @@ object Utils {
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 annotation class ScoreboardElement
+
+enum class ElementGroup {
+    SEPARATOR,
+    HEADER,
+    MIDDLE,
+    FOOTER,
+}

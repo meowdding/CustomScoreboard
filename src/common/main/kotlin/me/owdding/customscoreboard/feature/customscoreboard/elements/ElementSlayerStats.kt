@@ -1,6 +1,5 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -9,7 +8,6 @@ import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerAPI
 import tech.thatgravyboat.skyblockapi.api.profile.slayer.SlayerProgressAPI
 import tech.thatgravyboat.skyblockapi.api.remote.repo.RepoSlayerData
 
-@AutoElement
 @ScoreboardElement
 object ElementSlayerStats : Element() {
     override fun getDisplay() = buildList<Any?> {

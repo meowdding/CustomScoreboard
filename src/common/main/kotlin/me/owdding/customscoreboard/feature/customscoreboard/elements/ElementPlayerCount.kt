@@ -1,12 +1,9 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 
-@AutoElement(ElementGroup.MIDDLE)
 @ScoreboardElement
 object ElementPlayerCount : Element() {
 

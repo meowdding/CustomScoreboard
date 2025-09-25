@@ -10,6 +10,7 @@ import com.teamresourceful.resourcefulconfig.client.UIConstants
 import com.teamresourceful.resourcefulconfig.client.components.ModSprites
 import com.teamresourceful.resourcefulconfig.client.components.base.SpriteButton
 import me.owdding.customscoreboard.Main
+import me.owdding.customscoreboard.utils.ElementGroup
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
@@ -27,7 +28,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
         return listOf(
             ResourcefulConfigOptionUI.draggable(
                 entry.options().title().toComponent(),
-                Main.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }, // todo: sorting
+                Main.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }.sortedBy { it.value().group.ordinal },
                 {
                     entry.string.toStupidInterfaceList()
                 },
@@ -58,4 +59,5 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
 interface SomeStupidInterface {
     val id: String
     val canDuplicate: Boolean get() = false
+    val group: ElementGroup get() = ElementGroup.MIDDLE
 }

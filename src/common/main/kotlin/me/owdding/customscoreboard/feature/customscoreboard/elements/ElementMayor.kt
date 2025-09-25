@@ -1,6 +1,5 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.toReadableTime
@@ -11,7 +10,6 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitToWidth
 import kotlin.time.Duration
 
-@AutoElement
 @ScoreboardElement
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
