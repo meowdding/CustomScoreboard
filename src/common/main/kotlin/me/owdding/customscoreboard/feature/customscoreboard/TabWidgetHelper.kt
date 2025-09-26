@@ -22,7 +22,7 @@ object TabWidgetHelper {
             object : Element() {
                 override fun getDisplay(): List<Component>? = tabWidgetCache[it]
 
-                override val configLine: String get() = it.name.toTitleCase()
+                override val configLine: String get() = "Tablist - ${it.name.toTitleCase()}"
                 override val id: String = "TABLIST_${it.name}"
             }
         }
