@@ -5,6 +5,7 @@ import com.teamresourceful.resourcefulconfig.api.client.options.ResourcefulConfi
 import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfigElement
 import com.teamresourceful.resourcefulconfig.api.types.elements.ResourcefulConfigEntryElement
 import com.teamresourceful.resourcefulconfig.api.types.entries.ResourcefulConfigValueEntry
+import com.teamresourceful.resourcefulconfig.api.types.info.TooltipProvider
 import com.teamresourceful.resourcefulconfig.api.types.options.data.DraggableOptionEntry
 import com.teamresourceful.resourcefulconfig.client.UIConstants
 import com.teamresourceful.resourcefulconfig.client.components.ModSprites
@@ -12,8 +13,10 @@ import com.teamresourceful.resourcefulconfig.client.components.base.SpriteButton
 import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.utils.ElementGroup
 import net.minecraft.client.gui.components.AbstractWidget
+import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
+import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 
 val CUSTOM_DRAGGABLE_RENDERER = ResourceLocation.fromNamespaceAndPath("customscoreboard", "custom_draggable_list")
@@ -56,8 +59,11 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
     }
 }
 
-interface SomeStupidInterface {
+interface SomeStupidInterface : TooltipProvider {
     val id: String
+    val configLineHover get() = listOf<String>()
     val canDuplicate: Boolean get() = false
     val group: ElementGroup get() = ElementGroup.MIDDLE
+
+    override fun getTooltip(): Component = Text.multiline(this.configLineHover)
 }

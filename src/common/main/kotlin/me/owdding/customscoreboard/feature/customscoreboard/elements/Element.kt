@@ -26,7 +26,6 @@ abstract class Element : SomeStupidInterface {
     protected abstract fun getDisplay(): Any?
     open fun showWhen(): Boolean = true
     abstract val configLine: String
-    open val configLineHover = listOf<String>()
 
     override fun toString() = configLine
 
