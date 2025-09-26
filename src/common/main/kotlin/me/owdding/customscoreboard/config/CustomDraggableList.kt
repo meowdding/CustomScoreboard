@@ -53,13 +53,13 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
             Main.allPossibleScoreboardElements.find { it.id == id }
         }
 
-        fun List<SomeStupidInterface>.toConfigString() = joinToString(",") { it.id }
+        fun List<BaseElement>.toConfigString() = joinToString(",") { it.id }
 
-        fun SomeStupidInterface.toDraggableOptionEntry() = DraggableOptionEntry(this, this.canDuplicate)
+        fun BaseElement.toDraggableOptionEntry() = DraggableOptionEntry(this, this.canDuplicate)
     }
 }
 
-interface SomeStupidInterface : TooltipProvider {
+interface BaseElement : TooltipProvider {
     val id: String
     val configLineHover get() = listOf<String>()
     val canDuplicate: Boolean get() = false

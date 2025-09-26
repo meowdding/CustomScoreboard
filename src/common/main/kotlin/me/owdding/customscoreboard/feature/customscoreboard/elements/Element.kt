@@ -1,6 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.config.SomeStupidInterface
+import me.owdding.customscoreboard.config.BaseElement
 import me.owdding.customscoreboard.feature.customscoreboard.ActionBuilder
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.getElementsFromAny
@@ -8,7 +8,7 @@ import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 
-abstract class Element : SomeStupidInterface {
+abstract class Element : BaseElement {
     init {
         SkyBlockAPI.eventBus.register<ScoreboardUpdateEvent> { event -> onScoreboardUpdate(event) }
         SkyBlockAPI.eventBus.register<ServerChangeEvent> { event -> onServerChange(event) }
