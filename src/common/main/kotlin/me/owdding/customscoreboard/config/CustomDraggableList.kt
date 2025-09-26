@@ -33,7 +33,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
                 entry.options().title().toComponent(),
                 Main.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }.sortedBy { it.value().group.ordinal },
                 {
-                    entry.string.toStupidInterfaceList()
+                    entry.string.toBaseElements()
                 },
                 {
                     entry.string = it.toConfigString()
@@ -49,7 +49,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
     }
 
     companion object {
-        fun String.toStupidInterfaceList() = split(",").mapNotNull { id ->
+        fun String.toBaseElements() = split(",").mapNotNull { id ->
             Main.allPossibleScoreboardElements.find { it.id == id }
         }
 

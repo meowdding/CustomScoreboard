@@ -5,8 +5,8 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
+import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigString
-import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toStupidInterfaceList
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
@@ -151,7 +151,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
                 renderer = CUSTOM_DRAGGABLE_RENDERER
             },
             { it.toConfigString() },
-            { it.toStupidInterfaceList() },
+            { it.toBaseElements() },
         ),
     ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
