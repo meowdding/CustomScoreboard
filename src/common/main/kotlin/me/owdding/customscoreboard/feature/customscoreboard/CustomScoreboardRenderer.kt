@@ -16,6 +16,7 @@ import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.client.gui.screens.inventory.InventoryScreen
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
@@ -26,6 +27,7 @@ import tech.thatgravyboat.skyblockapi.api.events.screen.ScreenMouseClickEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
+import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 @Module
 object CustomScoreboardRenderer {
@@ -185,6 +187,13 @@ object CustomScoreboardRenderer {
         NumberDisplayFormat.COLOR_TEXT_NUMBER -> "$color$text: $number"
         NumberDisplayFormat.COLOR_NUMBER_TEXT -> "$color$number $text"
         NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> "$color$number §f$text"
+    }
+
+    fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (MainConfig.numberDisplayFormat) {
+        NumberDisplayFormat.TEXT_COLOR_NUMBER -> Text.join(text, Text.of(": "), number.copy().withColor(color))
+        NumberDisplayFormat.COLOR_TEXT_NUMBER -> Text.join(text, Text.of(": "), number).withColor(color)
+        NumberDisplayFormat.COLOR_NUMBER_TEXT -> Text.join(number, Text.of(" "), text).withColor(color)
+        NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> Text.join(number.copy().withColor(color), Text.of(" "), text)
     }
 
     enum class NumberDisplayFormat(val config: String) {
