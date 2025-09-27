@@ -15,10 +15,11 @@ abstract class Element {
 
     /**
      * Must be specified as one of the following:
-     * - `String`
-     * - `ScoreboardLine`
-     * - `Component`
-     * And any of the above can be a list of the above.
+     * - [String]
+     * - [ScoreboardLine][me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine]
+     * - [Component][net.minecraft.network.chat.Component]
+     *
+     * And any of the above can be a [Collection] of the above.
      *
      * `null` values will be treated as empty lines/lists.
      */
