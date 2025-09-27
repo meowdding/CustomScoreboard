@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.PetsAPI
@@ -13,7 +14,13 @@ object ElementPet : Element() {
     override fun getDisplay() = buildList {
         val pet = PetsAPI.pet ?: return@buildList
 
-        add(Text.of(pet) { this.color = PetsAPI.rarity?.color ?: 0x00000 })
+        val petColor = PetsAPI.rarity?.color ?: 0xFFFFFF
+        val petLine = Text.of(pet) { this.color = petColor }
+        if (LinesConfig.petPrefix) {
+            add(CustomScoreboardRenderer.formatNumberDisplayDisplay(Text.of("Pet"), petLine, petColor))
+        } else {
+            add(petLine)
+        }
 
         if (PetsAPI.isMaxLevel && LinesConfig.showPetMax) {
             add(Text.of(" MAX") { this.color = TextColor.GREEN })

@@ -232,6 +232,10 @@
             "hypixel_powder": {
                 "@value": "Show Hypixel's Powder/Whisper Line",
                 "desc": "Show Hypixel's Powder/Whisper Line on the scoreboard."
+            },
+            "pet_prefix": {
+                "@value": "Add Pet Prefix/Suffix",
+                "desc": "Add \"Pet:\" as a prefix/suffix to the pet line."
             }
         }
     },
