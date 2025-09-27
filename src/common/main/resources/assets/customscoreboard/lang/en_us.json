@@ -228,6 +228,10 @@
             "hypixel_powder": {
                 "@value": "Show Hypixel's Powder/Whisper Line",
                 "desc": "Show Hypixel's Powder/Whisper Line on the scoreboard."
+            },
+            "smooth_time": {
+                "@value": "Show SkyBlock Time Smoothly",
+                "desc": "Show the individual minutes of the current SkyBlock time instead of only updating every ~8 seconds.\nWill turn off if the smoothing is too inaccurate"
             }
         }
     },
