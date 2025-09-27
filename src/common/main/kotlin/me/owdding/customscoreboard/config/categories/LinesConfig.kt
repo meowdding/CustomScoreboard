@@ -80,6 +80,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "customscoreboard.config.lines.piggy"
     }
 
+    val petPrefix by boolean(true) {
+        this.translation = "customscoreboard.config.lines.pet_prefix"
+    }
+
     val showPetMax by boolean("pet_max", true) {
         this.translation = "customscoreboard.config.lines.pet_max"
     }
