@@ -30,6 +30,8 @@ repositories {
     mavenLocal()
 }
 
+evaluationDependsOn(":annotations")
+
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         languageVersion = KotlinVersion.KOTLIN_2_2
@@ -252,10 +254,13 @@ tasks.withType<JarInJar>().configureEach {
 }
 
 tasks.register("setupForWorkflows") {
+    val buildAnnotations = project(":annotations").tasks.named("build")
     mcVersions.flatMap {
         listOf("remap${it}CommonMinecraftNamed", "remap${it}ClientMinecraftNamed")
     }.mapNotNull { tasks.findByName(it) }.forEach {
         dependsOn(it)
         mustRunAfter(it)
+        it.dependsOn(buildAnnotations)
     }
+    dependsOn(buildAnnotations)
 }
