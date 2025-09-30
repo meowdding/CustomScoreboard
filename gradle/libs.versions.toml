@@ -7,7 +7,7 @@ fabric-api = "0.128.1"
 kotlin-symbol-processor = "2.2.0-2.0.2"
 
 # Dependencies
-skyblockapi = "2.3.0"
+skyblockapi = "3.0.0+beta.6"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
@@ -18,13 +18,14 @@ kotlin_poet_ksp = "1.0.1"
 
 modmenu = "14.0.0-rc.1"
 
-meowdding-lib = "2.2.11"
+meowdding-lib = "3.0.0-pre12"
 meowdding-ktmodules = "1.0.5"
 
-terrarium-cloche = "0.11.6"
+terrarium-cloche = "0.13.5"
 
 scoreboard-overhaul1215 = "1.4.1-mc1.21.5"
 scoreboard-overhaul1218 = "1.4.1-mc1.21.6"
+scoreboard-overhaul1219 = "1.4.1-mc1.21.6" # todo correct version
 
 [libraries]
 
@@ -35,13 +36,17 @@ hypixelapi = { module = "maven.modrinth:hypixel-mod-api", version.ref = "hypixel
 
 resourceful-lib1215 = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.5", version = "3.5.0" }
 resourceful-lib1218 = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.6", version = "3.6.0" }
+resourceful-lib1219 = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.9-rc1", version = "3.7.0-pre.3" }
 resourceful-config1215 = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.5", version = "3.5.15" }
 resourceful-config1218 = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.7", version = "3.7.1" }
+resourceful-config1219 = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.9-pre1", version = "3.8.0-pre.1" }
 resourcefulkt-config = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version.ref = "rconfigkt" }
 olympus-lib1215 = { module = "earth.terrarium.olympus:olympus-fabric-1.21.5", version = "1.3.6" }
 olympus-lib1218 = { module = "earth.terrarium.olympus:olympus-fabric-1.21.7", version = "1.5.0" }
+olympus-lib1219 = { module = "earth.terrarium.olympus:olympus-fabric-1.21.9-rc1", version = "1.6.0-pre.2" }
 scoreboard-overhaul1215 = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul1215" }
 scoreboard-overhaul1218 = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul1218" }
+scoreboard-overhaul1219 = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul1219" }
 
 meowdding-lib = { module = "me.owdding.meowdding-lib:meowdding-lib", version.ref = "meowdding-lib" }
 meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref = "meowdding-ktmodules" }

@@ -12,6 +12,9 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import me.owdding.lib.platform.screens.MouseButtonEvent
+import me.owdding.lib.platform.screens.MouseButtonInfo
+import me.owdding.lib.platform.screens.mouseClicked
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
@@ -59,7 +62,7 @@ object CustomScoreboardRenderer {
         if (!isAllowedScreen()) return
 
         display?.visitWidgets {
-            if (it.mouseClicked(event.x, event.y, event.button)) {
+            if (it.mouseClicked(MouseButtonEvent(event.x, event.y, MouseButtonInfo(event.button, 0)), false)) {
                 return@visitWidgets
             }
         }

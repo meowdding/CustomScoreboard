@@ -101,14 +101,6 @@ cloche {
             minecraftVersion = version
             this.loaderVersion = loaderVersion.get()
 
-            //include(libs.hypixelapi) - included in sbapi
-            include(libs.skyblockapi)
-            include(libs.meowdding.lib)
-            include(rlib)
-            include(olympus)
-            include(rconfig)
-            include(libs.resourcefulkt.config)
-
             metadata {
                 entrypoint("client") {
                     adapter = "kotlin"
@@ -148,6 +140,13 @@ cloche {
                 modImplementation(libs.resourcefulkt.config)
 
                 modCompileOnly(scoreboardOverhaul)
+
+                include(libs.skyblockapi)
+                include(libs.meowdding.lib)
+                include(rlib)
+                include(olympus)
+                include(rconfig)
+                include(libs.resourcefulkt.config)
             }
 
             runs {
@@ -164,11 +163,21 @@ cloche {
     }
     createVersion("1.21.8", minecraftVersionRange = {
         start = "1.21.6"
+        end = "1.21.8"
+        endExclusive = false
     }) {
         this["resourcefullib"] = libs.resourceful.lib1218
         this["resourcefulconfig"] = libs.resourceful.config1218
         this["olympus"] = libs.olympus.lib1218
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
+    }
+    createVersion("1.21.9", "1.21.9-rc1", fabricApiVersion = provider { "0.133.7" }, minecraftVersionRange = {
+        start = "1.21.9-rc.1"
+    }) {
+        this["resourcefullib"] = libs.resourceful.lib1219
+        this["resourcefulconfig"] = libs.resourceful.config1219
+        this["olympus"] = libs.olympus.lib1219
+        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1219
     }
 
     mappings { official() }
@@ -201,6 +210,7 @@ ksp {
     arg("meowdding.modules.package", "me.owdding.customscoreboard.generated")
     this@ksp.excludedSources.from(sourceSets.getByName("1215").kotlin.srcDirs)
     this@ksp.excludedSources.from(sourceSets.getByName("1218").kotlin.srcDirs)
+    this@ksp.excludedSources.from(sourceSets.getByName("1219").kotlin.srcDirs)
 }
 
 // TODO temporary workaround for a cloche issue on certain systems, remove once fixed
