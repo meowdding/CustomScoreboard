@@ -125,7 +125,7 @@ cloche {
                 dependency("fabric")
                 dependency("fabricloader", libs.versions.fabric.loader)
                 dependency("resourcefulconfigkt", libs.versions.rconfigkt)
-                dependency("resourcefulconfig", rconfig.map { it.version!! })
+                //dependency("resourcefulconfig", rconfig.map { it.version!! })
                 dependency("fabric-language-kotlin", libs.versions.fabric.language.kotlin)
                 dependency("resourcefullib", rlib.map { it.version!! })
                 dependency("skyblock-api", libs.versions.skyblockapi)
