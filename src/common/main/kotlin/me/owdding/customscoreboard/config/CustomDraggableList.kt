@@ -11,15 +11,15 @@ import com.teamresourceful.resourcefulconfig.client.UIConstants
 import com.teamresourceful.resourcefulconfig.client.components.ModSprites
 import com.teamresourceful.resourcefulconfig.client.components.base.SpriteButton
 import me.owdding.customscoreboard.Main
+import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.utils.ElementGroup
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.resources.ResourceLocation
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 
-val CUSTOM_DRAGGABLE_RENDERER = ResourceLocation.fromNamespaceAndPath("customscoreboard", "custom_draggable_list")
+val CUSTOM_DRAGGABLE_RENDERER = Main.id("custom_draggable_list")
 
 class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulConfigElementRenderer {
     val entry get() = (element as ResourcefulConfigEntryElement).entry() as ResourcefulConfigValueEntry
@@ -33,10 +33,10 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
                 entry.options().title().toComponent(),
                 Main.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }.sortedBy { it.value().group.ordinal },
                 {
-                    entry.string.toBaseElements()
+                    (entry.array as Array<String>).asList().toBaseElements()
                 },
                 {
-                    entry.string = it.toConfigString()
+                    entry.array = it.toConfigStrings()
                 },
             ),
             SpriteButton.builder(12, 12)
@@ -49,11 +49,11 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
     }
 
     companion object {
-        fun String.toBaseElements() = split(",").mapNotNull { id ->
+        fun List<String>.toBaseElements(): List<Element> = mapNotNull { id ->
             Main.allPossibleScoreboardElements.find { it.id == id }
         }
 
-        fun List<BaseElement>.toConfigString() = joinToString(",") { it.id }
+        fun List<BaseElement>.toConfigStrings(): Array<String> = map { it.id }.toTypedArray()
 
         fun BaseElement.toDraggableOptionEntry() = DraggableOptionEntry(this, this.canDuplicate)
     }

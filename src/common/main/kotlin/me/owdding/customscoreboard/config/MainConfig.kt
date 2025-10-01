@@ -6,7 +6,7 @@ import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
-import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigString
+import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
@@ -68,7 +68,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ),
     )
 
-    override val version = 4
+    override val version = 3
 
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
@@ -93,11 +93,6 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
             lines.add("line_modification", lines)
 
-            json
-        },
-        3 to UnaryOperator { json ->
-            val appearance = json.getAsJsonArray("appearance").joinToString(",") { it.asString }
-            json.addProperty("appearance", appearance)
             json
         },
     )
@@ -142,16 +137,16 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ElementParty,
         ElementPet,
         ElementFooter,
-    ).joinToString(",") { it.id }
+    ).map { it.id }
 
     val appearance by observable(
         transform(
-            string(default) {
+            strings(*default.toTypedArray()) {
                 this.translation = "customscoreboard.config.appearance"
                 renderer = CUSTOM_DRAGGABLE_RENDERER
             },
-            { it.toConfigString() },
-            { it.toBaseElements() },
+            { it.toConfigStrings() },
+            { it.asList().toBaseElements() },
         ),
     ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()

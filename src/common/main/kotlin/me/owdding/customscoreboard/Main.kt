@@ -94,6 +94,8 @@ object Main : ClientModInitializer {
         }
     }
 
+    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
+
     @Subscription
     fun onRegisterCommands(event: RegisterCommandsEvent) {
         val builder: (LiteralCommandBuilder.() -> Unit) = {
