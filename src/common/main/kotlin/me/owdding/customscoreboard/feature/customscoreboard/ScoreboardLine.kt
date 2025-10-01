@@ -19,6 +19,7 @@ import net.minecraft.client.gui.layouts.Layout
 import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.helpers.McClient
+import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import java.time.Duration
@@ -89,7 +90,7 @@ data class ScoreboardLine(
 
         internal fun getElementsFromAny(element: Any?): List<ScoreboardLine> = when (element) {
             null -> listOf()
-            is List<*> -> element.mapNotNull { it?.toScoreboardElement() }
+            is Collection<*> -> element.mapNotNull { it?.toScoreboardElement() }
             else -> listOfNotNull(element.toScoreboardElement())
         }
 
@@ -133,7 +134,7 @@ class ActionBuilder() {
         Element.Actions.COMMAND to command,
         Element.Actions.CLICK to click,
         Element.Actions.LINK to link,
-    ).mapNotNull { (key, value) -> value?.let { key to it } }.toMap()
+    ).filterValuesNotNull()
 }
 
 private fun String.asTextWidget() = toComponent().asTextWidget()
