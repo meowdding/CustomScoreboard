@@ -5,7 +5,7 @@ import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.ModCompat
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.createColumn
-import me.owdding.customscoreboard.generated.ScoreboardEntry
+import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawRec
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
@@ -35,7 +35,7 @@ object CustomScoreboardRenderer {
     var lines: List<ScoreboardLine> = emptyList()
         private set
     private var display: LayoutElement? = null
-    private var currentIslandElements = emptyList<ScoreboardEntry>()
+    private var currentIslandElements = emptyList<Element>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
 
@@ -119,7 +119,7 @@ object CustomScoreboardRenderer {
     }
 
     fun updateIslandCache() {
-        currentIslandElements = MainConfig.appearance.filter { it.element.showIsland() }
+        currentIslandElements = MainConfig.appearance.filter { it.showIsland() }
         currentIslandEvents = MainConfig.events.filter { it.event.showIsland() }
     }
 
@@ -129,7 +129,7 @@ object CustomScoreboardRenderer {
         display = lines.takeUnless { it.isEmpty() }?.createColumn()
     }
 
-    private fun createDisplay() = currentIslandElements.flatMap { it.element.getLines() }.takeIf { shouldUseCustomLines() } ?: ScoreboardLine.getVanillaLines()
+    private fun createDisplay() = currentIslandElements.flatMap { it.getLines() }.takeIf { shouldUseCustomLines() } ?: ScoreboardLine.getVanillaLines()
 
     private fun List<ScoreboardLine>.hideLeadingAndTrailingSeparators() =
         if (LinesConfig.hideSeparatorsAtStartEnd) this.dropLastWhile { it.isBlank }.dropWhile { it.isBlank } else this

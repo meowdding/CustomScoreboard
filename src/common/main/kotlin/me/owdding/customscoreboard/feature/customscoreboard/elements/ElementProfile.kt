@@ -1,8 +1,8 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileType
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText
@@ -10,7 +10,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
-@AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementProfile : Element() {
     override fun getDisplay() = Text.of {
         val profile = ProfileAPI.profileType
@@ -29,6 +29,8 @@ object ElementProfile : Element() {
     override fun showWhen() = ProfileAPI.profileType != ProfileType.UNKNOWN
 
     override val configLine = "Profile"
+    override val id = "PROFILE"
+    override val group = ElementGroup.HEADER
 
 
     private val profileSymbol = mapOf(

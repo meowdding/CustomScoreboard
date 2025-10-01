@@ -1,13 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.maxwell.MaxwellAPI
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedString
 
-@AutoElement(ElementGroup.MIDDLE)
+@ScoreboardElement
 object ElementMaxwellPower : Element() {
     override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay(
         "Power",
@@ -16,4 +15,5 @@ object ElementMaxwellPower : Element() {
     )
 
     override val configLine = "Maxwell Power"
+    override val id = "MAXWELL_POWER"
 }

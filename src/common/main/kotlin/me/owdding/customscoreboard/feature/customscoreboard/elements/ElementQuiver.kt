@@ -1,8 +1,8 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import net.minecraft.world.item.Items
 import tech.thatgravyboat.skyblockapi.api.profile.quiver.QuiverAPI
@@ -10,7 +10,7 @@ import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedName
 import tech.thatgravyboat.skyblockapi.utils.extentions.toTitleCase
 
-@AutoElement
+@ScoreboardElement
 object ElementQuiver : Element() {
     private const val MAX_ARROW_AMOUNT = 2880
 
@@ -51,6 +51,7 @@ object ElementQuiver : Element() {
     override fun showWhen() = McPlayer.inventory.any { it.item == Items.BOW }
 
     override val configLine = "Quiver"
+    override val id = "QUIVER"
 
     enum class ArrowDisplay {
         NUMBER,

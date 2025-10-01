@@ -1,14 +1,14 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import kotlin.time.Duration.Companion.seconds
 
-@AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementTime : Element() {
     override fun getDisplay() = buildString {
         append("§7")
@@ -45,6 +45,8 @@ object ElementTime : Element() {
     }
 
     override val configLine = "Time"
+    override val id = "TIME"
+    override val group = ElementGroup.HEADER
 
     private fun isInstantAccurate(instant: SkyBlockInstant): Boolean {
         val season = DateTimeAPI.season ?: return false

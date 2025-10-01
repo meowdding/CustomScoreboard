@@ -5,16 +5,45 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
+import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
+import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementArea
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBits
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCold
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopper
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementDate
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementEvents
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementFooter
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementGems
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementHeat
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementIsland
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementLobby
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
-import me.owdding.customscoreboard.generated.ScoreboardEntry
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMotes
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementNorthStars
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementObjective
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementParty
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPet
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementProfile
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPurse
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSeparator
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSlayer
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSoulflow
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.NumberFormatType
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
+import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
@@ -40,6 +69,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     )
 
     override val version = 3
+
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
@@ -64,7 +94,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             lines.add("line_modification", lines)
 
             json
-        }
+        },
     )
     //endregion
 
@@ -77,44 +107,48 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.enabled"
     }
 
-    private val default = listOf<ScoreboardEntry>(
-        ScoreboardEntry.TITLE,
-        ScoreboardEntry.LOBBY,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.DATE,
-        ScoreboardEntry.TIME,
-        ScoreboardEntry.ISLAND,
-        ScoreboardEntry.AREA,
-        ScoreboardEntry.PROFILE,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.PURSE,
-        ScoreboardEntry.MOTES,
-        ScoreboardEntry.BANK,
-        ScoreboardEntry.BITS,
-        ScoreboardEntry.COPPER,
-        ScoreboardEntry.GEMS,
-        ScoreboardEntry.HEAT,
-        ScoreboardEntry.COLD,
-        ScoreboardEntry.NORTH_STARS,
-        ScoreboardEntry.SOULFLOW,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.OBJECTIVE,
-        ScoreboardEntry.SLAYER,
-        ScoreboardEntry.QUIVER,
-        ScoreboardEntry.EVENTS,
-        ScoreboardEntry.POWDER,
-        ScoreboardEntry.MAYOR,
-        ScoreboardEntry.PARTY,
-        ScoreboardEntry.PET,
-        ScoreboardEntry.FOOTER,
-    )
+    private val default = listOf(
+        ElementTitle,
+        ElementLobby,
+        ElementSeparator,
+        ElementDate,
+        ElementTime,
+        ElementIsland,
+        ElementArea,
+        ElementProfile,
+        ElementSeparator,
+        ElementPurse,
+        ElementMotes,
+        ElementBank,
+        ElementBits,
+        ElementCopper,
+        ElementGems,
+        ElementHeat,
+        ElementCold,
+        ElementNorthStars,
+        ElementSoulflow,
+        ElementSeparator,
+        ElementObjective,
+        ElementSlayer,
+        ElementQuiver,
+        ElementEvents,
+        ElementPowder,
+        ElementMayor,
+        ElementParty,
+        ElementPet,
+        ElementFooter,
+    ).map { it.id }
 
     val appearance by observable(
-        draggable(*default.toTypedArray()) {
-            this.translation = "customscoreboard.config.appearance"
-            this.duplicatable = listOf(ScoreboardEntry.SEPARATOR).toTypedArray()
-        },
-    ) { old, new ->
+        transform(
+            strings(*default.toTypedArray()) {
+                this.translation = "customscoreboard.config.appearance"
+                renderer = CUSTOM_DRAGGABLE_RENDERER
+            },
+            { it.toConfigStrings() },
+            { it.asList().toBaseElements() },
+        ),
+    ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
     }
 
@@ -122,8 +156,16 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
             this.translation = "customscoreboard.config.events"
         },
-    ) { old, new ->
+    ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
+    }
+
+    val tablistLines by observable(
+        draggable<TabWidget> {
+            this.translation = "customscoreboard.config.tablist_lines"
+        },
+    ) { _, _ ->
+        TabWidgetHelper.updateTablistLineCache()
     }
 
     val scale by double(1.0) {

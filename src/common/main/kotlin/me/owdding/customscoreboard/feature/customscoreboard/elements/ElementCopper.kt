@@ -1,13 +1,13 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
-@AutoElement
+@ScoreboardElement
 object ElementCopper : Element(), NumberTrackingElement {
     override var previousAmount: Long = -1
     override var temporaryChangeDisplay: String? = null
@@ -26,4 +26,5 @@ object ElementCopper : Element(), NumberTrackingElement {
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GARDEN)
 
     override val configLine = "Copper"
+    override val id = "COPPER"
 }

@@ -1,14 +1,20 @@
 package me.owdding.customscoreboard
 
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
+import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import me.owdding.customscoreboard.config.CUSTOM_DRAGGABLE_RENDERER
+import me.owdding.customscoreboard.config.CustomDraggableList
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
+import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
+import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
 import me.owdding.lib.utils.MeowddingUpdateChecker
@@ -45,10 +51,15 @@ object Main : ClientModInitializer {
 
     val configurator = Configurator("customscoreboard")
 
+    private val allScoreboardElements = mutableListOf<Element>()
+    val allPossibleScoreboardElements get() = allScoreboardElements + TabWidgetHelper.tablistLineCache
+
     override fun onInitializeClient() {
         MainConfig.register(configurator)
+        ResourcefulConfigUI.registerElementRenderer(CUSTOM_DRAGGABLE_RENDERER, ::CustomDraggableList)
 
         CustomScoreboardModules.init { SkyBlockAPI.eventBus.register(it) }
+        CustomScoreboardScoreboardElements.init { allScoreboardElements.add(it as Element) }
 
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(
             object : SimpleSynchronousResourceReloadListener {
@@ -82,6 +93,8 @@ object Main : ClientModInitializer {
             }
         }
     }
+
+    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
 
     @Subscription
     fun onRegisterCommands(event: RegisterCommandsEvent) {
