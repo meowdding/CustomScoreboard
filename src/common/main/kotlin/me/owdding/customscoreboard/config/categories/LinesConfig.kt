@@ -103,4 +103,8 @@ object LinesConfig : CategoryKt("line_modification") {
     val showHypixelPowder by boolean("hypixel_powder", true) {
         this.translation = "customscoreboard.config.lines.hypixel_powder"
     }
+
+    val smoothTime by boolean(true) {
+        this.translation = "customscoreboard.config.lines.smooth_time"
+    }
 }
