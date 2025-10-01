@@ -173,8 +173,8 @@ cloche {
         this["olympus"] = libs.olympus.lib1218
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
     }
-    createVersion("1.21.9", "1.21.9-rc1", fabricApiVersion = provider { "0.133.7" }, minecraftVersionRange = {
-        start = "1.21.9-rc.1"
+    createVersion("1.21.9", fabricApiVersion = provider { "0.133.7" }, minecraftVersionRange = {
+        start = "1.21.9"
     }) {
         this["resourcefullib"] = libs.resourceful.lib1219
         this["resourcefulconfig"] = libs.resourceful.config1219
