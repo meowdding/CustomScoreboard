@@ -30,6 +30,8 @@ repositories {
     mavenLocal()
 }
 
+evaluationDependsOn(":annotations")
+
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         languageVersion = KotlinVersion.KOTLIN_2_2
@@ -101,14 +103,6 @@ cloche {
             minecraftVersion = version
             this.loaderVersion = loaderVersion.get()
 
-            //include(libs.hypixelapi) - included in sbapi
-            include(libs.skyblockapi)
-            include(libs.meowdding.lib)
-            include(rlib)
-            include(olympus)
-            include(rconfig)
-            include(libs.resourcefulkt.config)
-
             metadata {
                 entrypoint("client") {
                     adapter = "kotlin"
@@ -133,7 +127,7 @@ cloche {
                 dependency("fabric")
                 dependency("fabricloader", libs.versions.fabric.loader)
                 dependency("resourcefulconfigkt", libs.versions.rconfigkt)
-                dependency("resourcefulconfig", rconfig.map { it.version!! })
+                //dependency("resourcefulconfig", rconfig.map { it.version!! })
                 dependency("fabric-language-kotlin", libs.versions.fabric.language.kotlin)
                 dependency("resourcefullib", rlib.map { it.version!! })
                 dependency("skyblock-api", libs.versions.skyblockapi)
@@ -143,11 +137,19 @@ cloche {
 
             dependencies {
                 fabricApi(fabricApiVersion, minecraftVersion)
-                modImplementation(olympus)
-                modImplementation(rconfig)
-                modImplementation(libs.resourcefulkt.config)
+                modImplementation(olympus) { exclude("net.fabricmc.fabric-api") }
+                modImplementation(rconfig)  { exclude("net.fabricmc.fabric-api") }
+                modImplementation(rlib) { exclude("net.fabricmc.fabric-api") }
+                modImplementation(libs.resourcefulkt.config) { exclude("net.fabricmc.fabric-api") }
 
                 modCompileOnly(scoreboardOverhaul)
+
+                include(libs.skyblockapi)
+                include(libs.meowdding.lib)
+                include(rlib)
+                include(olympus)
+                include(rconfig)
+                include(libs.resourcefulkt.config)
             }
 
             runs {
@@ -164,11 +166,19 @@ cloche {
     }
     createVersion("1.21.8", minecraftVersionRange = {
         start = "1.21.6"
+        end = "1.21.8"
+        endExclusive = false
     }) {
         this["resourcefullib"] = libs.resourceful.lib1218
         this["resourcefulconfig"] = libs.resourceful.config1218
         this["olympus"] = libs.olympus.lib1218
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
+    }
+    createVersion("1.21.9", fabricApiVersion = provider { "0.133.7" }) {
+        this["resourcefullib"] = libs.resourceful.lib1219
+        this["resourcefulconfig"] = libs.resourceful.config1219
+        this["olympus"] = libs.olympus.lib1219
+        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1219
     }
 
     mappings { official() }
@@ -201,6 +211,7 @@ ksp {
     arg("meowdding.modules.package", "me.owdding.customscoreboard.generated")
     this@ksp.excludedSources.from(sourceSets.getByName("1215").kotlin.srcDirs)
     this@ksp.excludedSources.from(sourceSets.getByName("1218").kotlin.srcDirs)
+    this@ksp.excludedSources.from(sourceSets.getByName("1219").kotlin.srcDirs)
 }
 
 // TODO temporary workaround for a cloche issue on certain systems, remove once fixed
@@ -242,10 +253,13 @@ tasks.withType<JarInJar>().configureEach {
 }
 
 tasks.register("setupForWorkflows") {
+    val buildAnnotations = project(":annotations").tasks.named("build")
     mcVersions.flatMap {
         listOf("remap${it}CommonMinecraftNamed", "remap${it}ClientMinecraftNamed")
     }.mapNotNull { tasks.findByName(it) }.forEach {
         dependsOn(it)
         mustRunAfter(it)
+        it.dependsOn(buildAnnotations)
     }
+    dependsOn(buildAnnotations)
 }
