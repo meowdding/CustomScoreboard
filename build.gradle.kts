@@ -85,10 +85,13 @@ cloche {
         version: String = name,
         loaderVersion: Provider<String> = libs.versions.fabric.loader,
         fabricApiVersion: Provider<String> = libs.versions.fabric.api,
+        endAtSameVersion: Boolean = true,
         minecraftVersionRange: ModMetadata.VersionRange.() -> Unit = {
             start = version
-            end = version
-            endExclusive = false
+            if (endAtSameVersion) {
+                end = version
+                endExclusive = false
+            }
         },
         dependencies: MutableMap<String, Provider<MinimalExternalModuleDependency>>.() -> Unit = { },
     ) {
@@ -174,7 +177,7 @@ cloche {
         this["olympus"] = libs.olympus.lib1218
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
     }
-    createVersion("1.21.9", fabricApiVersion = provider { "0.133.7" }) {
+    createVersion("1.21.9", endAtSameVersion = false, fabricApiVersion = provider { "0.133.7" }) {
         this["resourcefullib"] = libs.resourceful.lib1219
         this["resourcefulconfig"] = libs.resourceful.config1219
         this["olympus"] = libs.olympus.lib1219
