@@ -230,7 +230,7 @@ val mcVersions = sourceSets.filterNot { it.name == SourceSet.MAIN_SOURCE_SET_NAM
 tasks.register("release") {
     group = "meowdding"
     mcVersions.forEach {
-            tasks.findByName("${it}JarInJar")?.let { task ->
+            tasks.findByName("${it}IncludeJar")?.let { task ->
                 dependsOn(task)
                 mustRunAfter(task)
             }
