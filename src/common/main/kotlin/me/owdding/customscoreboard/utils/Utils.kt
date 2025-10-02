@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.utils
 
+import me.owdding.ktmodules.AutoCollect
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
@@ -59,4 +60,17 @@ object Utils {
     )
 
     fun Component.sendWithPrefix() = Text.join(PREFIX, this).send()
+}
+
+
+@AutoCollect("ScoreboardElements")
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
+annotation class ScoreboardElement
+
+enum class ElementGroup {
+    SEPARATOR,
+    HEADER,
+    MIDDLE,
+    FOOTER,
 }

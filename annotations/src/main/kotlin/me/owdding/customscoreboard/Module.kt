@@ -10,7 +10,6 @@ import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
 import com.google.devtools.ksp.processing.SymbolProcessorProvider
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSDeclaration
 import me.owdding.kotlinpoet.ClassName
 import me.owdding.kotlinpoet.FileSpec
 import me.owdding.kotlinpoet.FunSpec
@@ -37,22 +36,13 @@ internal class Processor(
         resolver.getAnnotatedSymbols<AutoElement>().filterIsInstance<KSClassDeclaration>()
             .groupBy { it.getSuperClass() }
             .mapKeys { (key, _) -> Kind.getByName(key?.simpleName?.asString()) }
-            .mapValues { (_, value) ->
-                value.map {
-                    Declaration(
-                        it,
-                        ElementGroup.byName(it.getField<AutoElement, KSDeclaration>("element")?.simpleName?.asString())
-                    )
-                }
-                    .sortedBy { (_, group) -> group.ordinal }
-            }
             .mapNotNull { (key, value) -> key?.let { it to value } }
             .map { (kind, declarations) -> this.createEnum(kind, declarations) }
 
         return emptyList()
     }
 
-    private fun createEnum(kind: Kind, declarations: List<Declaration>) {
+    private fun createEnum(kind: Kind, declarations: List<KSClassDeclaration>) {
         logger.warn("Found ${declarations.size} entries for ${kind.typeName}")
         val file = FileSpec.builder(
             ModuleProvider::class.java.packageName + ".generated",
@@ -95,9 +85,9 @@ internal class Processor(
 
                         declarations.forEach {
                             this.addEnumConstant(
-                                kind.fix(it.type.simpleName.asString()),
+                                kind.fix(it.simpleName.asString()),
                                 anonymousClassBuilder()
-                                    .addSuperclassConstructorParameter(it.type.qualifiedName!!.asString())
+                                    .addSuperclassConstructorParameter(it.qualifiedName!!.asString())
                                     .build(),
                             )
                         }
@@ -110,14 +100,7 @@ internal class Processor(
     }
 }
 
-internal data class Declaration(val type: KSClassDeclaration, val group: ElementGroup)
-
 internal enum class Kind(val enumName: String, val packageName: String, val typeName: String) {
-    ELEMENT(
-        "ScoreboardEntry",
-        "me.owdding.customscoreboard.feature.customscoreboard.elements",
-        "Element",
-    ),
     EVENT(
         "ScoreboardEventEntry",
         "me.owdding.customscoreboard.feature.customscoreboard.events",

@@ -1,13 +1,13 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.utils.KnownMods
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.party.PartyAPI
 
-@AutoElement
+@ScoreboardElement
 object ElementParty : Element() {
     override fun getDisplay() = buildList {
         val list = PartyAPI.members.distinctBy { it.name }
@@ -58,4 +58,5 @@ object ElementParty : Element() {
     }
 
     override val configLine = "Party"
+    override val id = "PARTY"
 }

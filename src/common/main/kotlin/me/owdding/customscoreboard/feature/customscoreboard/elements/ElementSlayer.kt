@@ -1,15 +1,16 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
-@AutoElement
+@ScoreboardElement
 object ElementSlayer : Element() {
     override fun getDisplay() = formattedLines
 
     override val configLine = "Slayer"
+    override val id = "SLAYER"
 
 
     private val slayerQuestRegex = "Slayer Quest".toRegex()
