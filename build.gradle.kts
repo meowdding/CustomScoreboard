@@ -137,9 +137,10 @@ cloche {
 
             dependencies {
                 fabricApi(fabricApiVersion, minecraftVersion)
-                modImplementation(olympus)
-                modImplementation(rconfig)
-                modImplementation(libs.resourcefulkt.config)
+                modImplementation(olympus) { exclude("net.fabricmc.fabric-api") }
+                modImplementation(rconfig)  { exclude("net.fabricmc.fabric-api") }
+                modImplementation(rlib) { exclude("net.fabricmc.fabric-api") }
+                modImplementation(libs.resourcefulkt.config) { exclude("net.fabricmc.fabric-api") }
 
                 modCompileOnly(scoreboardOverhaul)
 
@@ -173,9 +174,7 @@ cloche {
         this["olympus"] = libs.olympus.lib1218
         this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
     }
-    createVersion("1.21.9", fabricApiVersion = provider { "0.133.7" }, minecraftVersionRange = {
-        start = "1.21.9"
-    }) {
+    createVersion("1.21.9", fabricApiVersion = provider { "0.133.7" }) {
         this["resourcefullib"] = libs.resourceful.lib1219
         this["resourcefulconfig"] = libs.resourceful.config1219
         this["olympus"] = libs.olympus.lib1219
