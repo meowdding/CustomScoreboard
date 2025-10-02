@@ -32,6 +32,7 @@ Elements that are in both mods are not listed for obvious reasons.
 | Slayer Xp and Meter                                                                 | ❌            | ✅                     |
 | Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
 | Hide while Tablist is Open                                                          | ❌            | ✅                     |
+| Tablist lines in Scoreboard                                                         | ❌            | ✅                     |
 | Chunked Stats                                                                       | ✅            | ❌                     |
 | Maxwell Tunings                                                                     | ✅            | ❌                     |
 
