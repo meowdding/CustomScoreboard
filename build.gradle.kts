@@ -1,7 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 import earth.terrarium.cloche.api.metadata.ModMetadata
-import net.msrandom.minecraftcodev.core.utils.lowerCamelCaseGradleName
 import net.msrandom.minecraftcodev.fabric.task.JarInJar
 import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -197,8 +196,8 @@ tasks.withType<JarInJar>().configureEach {
     archiveBaseName = "CustomScoreboard"
 }
 
-cloche.targets.forEach {
-    tasks.named(lowerCamelCaseGradleName("accessWiden", it.name, "CommonMinecraft")) {
-        dependsOn(tasks.getByPath(":annotations:build"))
-    }
+val annotations: Task = project(":annotations").tasks.getByName("build")
+val setupForWorkflows: TaskProvider<Task> = tasks.named("setupForWorkflows") {
+    dependsOn(annotations)
+    mustRunAfter(annotations)
 }
