@@ -20,6 +20,15 @@ pluginManagement {
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs")
+        create("libs1215") {
+            from(files("gradle/libs1215.versions.toml"))
+        }
+        create("libs1218") {
+            from(files("gradle/libs1218.versions.toml"))
+        }
+        create("libs1219") {
+            from(files("gradle/libs1219.versions.toml"))
+        }
     }
 }
 
