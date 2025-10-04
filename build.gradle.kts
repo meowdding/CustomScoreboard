@@ -1,17 +1,14 @@
 @file:Suppress("UnstableApiUsage")
 
 import earth.terrarium.cloche.api.metadata.ModMetadata
-import net.msrandom.minecraftcodev.core.utils.toPath
+import net.msrandom.minecraftcodev.core.utils.lowerCamelCaseGradleName
 import net.msrandom.minecraftcodev.fabric.task.JarInJar
-import net.msrandom.minecraftcodev.runs.task.WriteClasspathFile
-import net.msrandom.stubs.GenerateStubApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlin.io.path.*
 
 plugins {
-    java
+    id("me.owdding.gradle") version "1.1.1"
     kotlin("jvm") version "2.2.0"
     alias(libs.plugins.terrarium.cloche)
     id("maven-publish")
@@ -187,11 +184,6 @@ cloche {
     mappings { official() }
 }
 
-tasks.named("createCommonApiStub", GenerateStubApi::class) {
-    excludes.add(libs.skyblockapi.get().module.toString())
-    excludes.add(libs.meowdding.lib.get().module.toString())
-}
-
 tasks {
     compileKotlin {
         compilerOptions {
@@ -209,45 +201,10 @@ java {
     withSourcesJar()
 }
 
-ksp {
-    arg("meowdding.modules.project_name", "CustomScoreboard")
-    arg("meowdding.modules.package", "me.owdding.customscoreboard.generated")
-    this@ksp.excludedSources.from(sourceSets.getByName("1215").kotlin.srcDirs)
-    this@ksp.excludedSources.from(sourceSets.getByName("1218").kotlin.srcDirs)
-    this@ksp.excludedSources.from(sourceSets.getByName("1219").kotlin.srcDirs)
-}
-
-// TODO temporary workaround for a cloche issue on certain systems, remove once fixed
-tasks.withType<WriteClasspathFile>().configureEach {
-    actions.clear()
-    actions.add {
-        output.get().toPath().also { it.parent.createDirectories() }.takeUnless { it.exists() }?.createFile()
-        generate()
-        val file = output.get().toPath()
-        file.writeText(file.readText().lines().joinToString(File.pathSeparator))
-    }
-}
-
-val mcVersions = sourceSets.filterNot { it.name == SourceSet.MAIN_SOURCE_SET_NAME || it.name == SourceSet.TEST_SOURCE_SET_NAME }.map { it.name }
-
-tasks.register("release") {
-    group = "meowdding"
-    mcVersions.forEach {
-            tasks.findByName("${it}IncludeJar")?.let { task ->
-                dependsOn(task)
-                mustRunAfter(task)
-            }
-        }
-}
-
-tasks.register("cleanRelease") {
-    group = "meowdding"
-    listOf("clean", "release").forEach {
-        tasks.getByName(it).let { task ->
-            dependsOn(task)
-            mustRunAfter(task)
-        }
-    }
+meowdding {
+    setupClocheClasspathFix()
+    configureModules = true
+    projectName = "CustomScoreboard"
 }
 
 tasks.withType<JarInJar>().configureEach {
@@ -255,14 +212,8 @@ tasks.withType<JarInJar>().configureEach {
     archiveBaseName = "CustomScoreboard"
 }
 
-tasks.register("setupForWorkflows") {
-    val buildAnnotations = project(":annotations").tasks.named("build")
-    mcVersions.flatMap {
-        listOf("remap${it}CommonMinecraftNamed", "remap${it}ClientMinecraftNamed")
-    }.mapNotNull { tasks.findByName(it) }.forEach {
-        dependsOn(it)
-        mustRunAfter(it)
-        it.dependsOn(buildAnnotations)
+cloche.targets.forEach {
+    tasks.named(lowerCamelCaseGradleName("accessWiden", it.name, "CommonMinecraft")) {
+        dependsOn(tasks.getByPath(":annotations:build"))
     }
-    dependsOn(buildAnnotations)
 }
