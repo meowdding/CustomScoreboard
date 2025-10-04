@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import earth.terrarium.cloche.api.metadata.ModMetadata
+import net.msrandom.minecraftcodev.core.utils.lowerCamelCaseGradleName
 import net.msrandom.minecraftcodev.fabric.task.JarInJar
 import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -137,7 +138,7 @@ cloche {
             dependencies {
                 fabricApi(fabricApiVersion, minecraftVersion)
                 modImplementation(olympus) { exclude("net.fabricmc.fabric-api") }
-                modImplementation(rconfig)  { exclude("net.fabricmc.fabric-api") }
+                modImplementation(rconfig) { exclude("net.fabricmc.fabric-api") }
                 modImplementation(rlib) { exclude("net.fabricmc.fabric-api") }
                 modImplementation(libs.resourcefulkt.config) { exclude("net.fabricmc.fabric-api") }
 
@@ -196,8 +197,10 @@ tasks.withType<JarInJar>().configureEach {
     archiveBaseName = "CustomScoreboard"
 }
 
-val annotations: Task = project(":annotations").tasks.getByName("build")
-val setupForWorkflows: TaskProvider<Task> = tasks.named("setupForWorkflows") {
-    dependsOn(annotations)
-    mustRunAfter(annotations)
+cloche.targets.forEach {
+    listOf(lowerCamelCaseGradleName("accessWiden", it.name, "CommonMinecraft"), lowerCamelCaseGradleName("accessWiden", it.name, "minecraft")).forEach {
+        tasks.named(it) {
+            dependsOn(tasks.getByPath(":annotations:build"))
+        }
+    }
 }
