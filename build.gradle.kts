@@ -125,7 +125,7 @@ cloche {
                     version(minecraftVersionRange)
                 }
                 dependency("fabric")
-                dependency("fabricloader", libs.versions.fabric.loader)
+                dependency("fabricloader")
                 dependency("resourcefulconfigkt", libs.versions.rconfigkt)
                 dependency("resourcefulconfig", rconfig.map { it.version!! })
                 dependency("fabric-language-kotlin", libs.versions.fabric.language.kotlin)
