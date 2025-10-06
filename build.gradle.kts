@@ -3,6 +3,7 @@
 import earth.terrarium.cloche.api.metadata.ModMetadata
 import net.msrandom.minecraftcodev.core.utils.lowerCamelCaseGradleName
 import net.msrandom.minecraftcodev.fabric.task.JarInJar
+import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -90,13 +91,12 @@ cloche {
                 endExclusive = false
             }
         },
-        dependencies: MutableMap<String, Provider<MinimalExternalModuleDependency>>.() -> Unit = { },
+        catalog: AbstractExternalDependencyFactory,
     ) {
-        val dependencies = mutableMapOf<String, Provider<MinimalExternalModuleDependency>>().apply(dependencies)
-        val rlib = dependencies["resourcefullib"]!!
-        val rconfig = dependencies["resourcefulconfig"]!!
-        val olympus = dependencies["olympus"]!!
-        val scoreboardOverhaul = dependencies["scoreboard-overhaul"]!!
+        val rlib = catalog.create("resourceful-lib")
+        val rconfig = catalog.create("resourceful-config")
+        val olympus = catalog.create("olympus-lib")
+        val scoreboardOverhaul = catalog.create("scoreboard-overhaul")
 
         fabric(name) {
             includedClient()
@@ -125,9 +125,9 @@ cloche {
                     version(minecraftVersionRange)
                 }
                 dependency("fabric")
-                dependency("fabricloader", libs.versions.fabric.loader)
+                dependency("fabricloader")
                 dependency("resourcefulconfigkt", libs.versions.rconfigkt)
-                //dependency("resourcefulconfig", rconfig.map { it.version!! })
+                dependency("resourcefulconfig", rconfig.map { it.version!! })
                 dependency("fabric-language-kotlin", libs.versions.fabric.language.kotlin)
                 dependency("resourcefullib", rlib.map { it.version!! })
                 dependency("skyblock-api", libs.versions.skyblockapi)
@@ -138,7 +138,7 @@ cloche {
             dependencies {
                 fabricApi(fabricApiVersion, minecraftVersion)
                 modImplementation(olympus) { exclude("net.fabricmc.fabric-api") }
-                modImplementation(rconfig)  { exclude("net.fabricmc.fabric-api") }
+                modImplementation(rconfig) { exclude("net.fabricmc.fabric-api") }
                 modImplementation(rlib) { exclude("net.fabricmc.fabric-api") }
                 modImplementation(libs.resourcefulkt.config) { exclude("net.fabricmc.fabric-api") }
 
@@ -158,28 +158,13 @@ cloche {
         }
     }
 
-    createVersion("1.21.5", fabricApiVersion = provider { "0.127.1" }) {
-        this["resourcefullib"] = libs.resourceful.lib1215
-        this["resourcefulconfig"] = libs.resourceful.config1215
-        this["olympus"] = libs.olympus.lib1215
-        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1215
-    }
+    createVersion("1.21.5", fabricApiVersion = provider { "0.127.1" }, catalog = libs1215)
     createVersion("1.21.8", minecraftVersionRange = {
         start = "1.21.6"
         end = "1.21.8"
         endExclusive = false
-    }) {
-        this["resourcefullib"] = libs.resourceful.lib1218
-        this["resourcefulconfig"] = libs.resourceful.config1218
-        this["olympus"] = libs.olympus.lib1218
-        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1218
-    }
-    createVersion("1.21.9", endAtSameVersion = false, fabricApiVersion = provider { "0.133.7" }) {
-        this["resourcefullib"] = libs.resourceful.lib1219
-        this["resourcefulconfig"] = libs.resourceful.config1219
-        this["olympus"] = libs.olympus.lib1219
-        this["scoreboard-overhaul"] = libs.scoreboard.overhaul1219
-    }
+    }, catalog = libs1218)
+    createVersion("1.21.9", endAtSameVersion = false, fabricApiVersion = provider { "0.133.7" }, catalog = libs1219)
 
     mappings { official() }
 }
@@ -213,7 +198,9 @@ tasks.withType<JarInJar>().configureEach {
 }
 
 cloche.targets.forEach {
-    tasks.named(lowerCamelCaseGradleName("accessWiden", it.name, "CommonMinecraft")) {
-        dependsOn(tasks.getByPath(":annotations:build"))
+    listOf(lowerCamelCaseGradleName("accessWiden", it.name, "CommonMinecraft"), lowerCamelCaseGradleName("accessWiden", it.name, "minecraft")).forEach {
+        tasks.named(it) {
+            dependsOn(tasks.getByPath(":annotations:build"))
+        }
     }
 }
