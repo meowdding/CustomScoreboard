@@ -202,6 +202,10 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.hide_when_tab"
     }
 
+    val hideWhenChat by boolean(false) {
+        this.translation = "customscoreboard.config.hide_when_chat"
+    }
+
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
         this.translation = "customscoreboard.config.hide_hypixel"
     }

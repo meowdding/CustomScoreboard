@@ -30,6 +30,7 @@ import tech.thatgravyboat.skyblockapi.api.events.screen.ScreenMouseClickEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
+import tech.thatgravyboat.skyblockapi.helpers.McScreen
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 @Module
@@ -68,11 +69,12 @@ object CustomScoreboardRenderer {
         }
     }
 
-    @Subscription()
+    @Subscription
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         if (renderScoreboardOverhaul()) return
         if (McClient.options.keyPlayerList.isDown && MainConfig.hideWhenTab) return
+        if (McScreen.isOf<ChatScreen>() && MainConfig.hideWhenChat) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse
 
@@ -94,7 +96,6 @@ object CustomScoreboardRenderer {
         is ChatScreen, is ContainerScreen, is InventoryScreen, null -> true
         else -> false
     }
-
 
     private fun renderBackground(event: RenderHudEvent) {
         if (!BackgroundConfig.enabled) return
