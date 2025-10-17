@@ -178,6 +178,10 @@
                     "@value": "Show Minister",
                     "desc": "Show the minister on the scoreboard."
                 },
+                "jerry_minister": {
+                    "@value": "Show Extra Jerry Mayor as Minister",
+                    "desc": "The extra Jerry mayor will behave exactly like a minister in the scoreboard."
+                },
                 "all_events": {
                     "@value": "All Events",
                     "desc": "Show all events instead of the first one. Uses the \"Events Priority\" list."
