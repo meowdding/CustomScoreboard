@@ -7,22 +7,29 @@ import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
 import tech.thatgravyboat.skyblockapi.api.data.Candidate
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.utils.extentions.until
 import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitToWidth
 import kotlin.time.Duration
 
 @ScoreboardElement
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
+        val jerryActive = Candidate.JERRY.isActive && LinesConfig.showJerryInMinister
         val mayor = ElectionAPI.currentMayor ?: return@buildList
-        val time = if (LinesConfig.showMayorTime) " §7(§e${timeUntilNextMayor().toReadableTime()}§7)" else ""
 
         val perksDisplay = LinesConfig.mayorPerksDisplay
         val count = if (perksDisplay == PerkDisplay.COUNT) " §e(${mayor.activePerks.size})" else ""
 
         val ministerDisplay = LinesConfig.ministerDisplay
-        val minister = ElectionAPI.currentMinister
+        val minister = ElectionAPI.currentMinister ?: if (jerryActive) ElectionAPI.jerryCandidate?.first else null
         val ministerCompact = if (ministerDisplay == MinisterDisplay.COMPACT && minister != null) {
             "§7, ${minister.formatName()}"
+        } else ""
+
+        val time = if (LinesConfig.showMayorTime) buildString {
+            append(" §7(§e${timeUntilNextMayor().toReadableTime()}")
+            if (jerryActive && ministerDisplay == MinisterDisplay.COMPACT) append("§7, §e${timeUntilJerryMayor()?.toReadableTime()}")
+            append("§7)")
         } else ""
 
         add("${mayor.formatName()}$count$ministerCompact$time") {
@@ -44,7 +51,11 @@ object ElementMayor : Element() {
         }
 
         if (minister != null && ministerDisplay == MinisterDisplay.FULL) {
-            add(minister.formatName()) {
+            val name = buildString {
+                append(minister.formatName())
+                if (jerryActive) append(" §7(§e${timeUntilJerryMayor()?.toReadableTime()}§7)")
+            }
+            add(name) {
                 if (perksDisplay == PerkDisplay.OFF) {
                     hover = buildList { addHoverPerks(minister) }
                 }
@@ -84,6 +95,8 @@ object ElementMayor : Element() {
 
     private const val ELECTION_MONTH = 3
     private const val ELECTION_DAY = 27
+
+    private fun timeUntilJerryMayor(): Duration? = ElectionAPI.jerryCandidate?.second?.until()
 
     private fun timeUntilNextMayor(): Duration {
         val instant = SkyBlockInstant.now()

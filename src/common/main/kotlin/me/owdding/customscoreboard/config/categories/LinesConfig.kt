@@ -38,6 +38,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "customscoreboard.config.lines.mayor_minister"
     }
 
+    val showJerryInMinister by boolean(true) {
+        this.translation = "customscoreboard.config.lines.jerry_minister"
+    }
+
     val showAllActiveEvents by boolean("all_events", true) {
         this.translation = "customscoreboard.config.lines.all_events"
     }
