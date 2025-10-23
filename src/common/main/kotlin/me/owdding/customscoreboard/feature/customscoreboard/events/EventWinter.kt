@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -15,7 +16,7 @@ object EventWinter : Event() {
     override val configLine = "Winter"
 
 
-    private var formattedLines = mutableListOf<Component>()
+    private val formattedLines = mutableListOf<Component>()
 
     private val startRegex = ComponentRegex("Event Start: [\\d:,.]+")
     private val nextWaveRegex = ComponentRegex("Next Wave: (?:[\\d:,.]+|Soon!)")
@@ -28,12 +29,7 @@ object EventWinter : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        formattedLines.addAll(
-            event.components.filter { component ->
-                patterns.any { it.matches(component) }
-            },
-        )
+        formattedLines.replaceWithMatches(event.components, patterns)
     }
 
 }

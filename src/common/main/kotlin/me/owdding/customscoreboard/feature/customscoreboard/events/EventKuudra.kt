@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -16,7 +17,7 @@ object EventKuudra : Event() {
     override val configLineHover = listOf("These have not been tested as I don't play Kuudra.", "Please report any issues.")
 
 
-    private var formattedLines = mutableListOf<Component>()
+    private val formattedLines = mutableListOf<Component>()
 
     private val autoCloseRegex = ComponentRegex("Auto-closing in: [\\d+:,.]+")
     private val startingInRegex = ComponentRegex("Starting in: [\\d+:,.]+")
@@ -31,11 +32,6 @@ object EventKuudra : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        formattedLines.addAll(
-            event.components.filter { component ->
-                patterns.any { it.matches(component) }
-            },
-        )
+        formattedLines.replaceWithMatches(event.components, patterns)
     }
 }

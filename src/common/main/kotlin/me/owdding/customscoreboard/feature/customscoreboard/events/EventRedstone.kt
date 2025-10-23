@@ -22,13 +22,6 @@ object EventRedstone : Event() {
     private val redstoneRegex = ComponentRegex(" ⚡ Redstone: [\\d.,]+%")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        if (redstoneRegex.regex().anyMatch(event.removed)) {
-            formattedLine = null
-        }
-
-        redstoneRegex.anyMatch(event.addedComponents) {
-            formattedLine = it.component
-        }
-
+        formattedLine = event.components.find(redstoneRegex::matches)
     }
 }

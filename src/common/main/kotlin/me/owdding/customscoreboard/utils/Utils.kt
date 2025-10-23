@@ -4,6 +4,7 @@ import me.owdding.ktmodules.AutoCollect
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
+import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.send
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -51,6 +52,26 @@ object Utils {
         val index = indexOfFirst { if (it is Component && element is String) it.stripped == element else it == element }
         if (index == -1 || index + skip >= size) return null
         return elementAt(index + skip)
+    }
+
+    inline fun <T, C : MutableCollection<T>> C.replaceWith(builder: C.() -> Unit): C = apply {
+        clear()
+        builder()
+    }
+
+    fun <C : MutableCollection<Component>> C.replaceWithMatches(
+        newLines: Collection<Component>,
+        regexes: Collection<ComponentRegex>
+    ): C = replaceWith {
+        newLines.filterTo(this) { component ->
+            regexes.any { it.matches(component) }
+        }
+    }
+
+    fun <T> List<T>.sublistFromFirst(amount: Int, predicate: (T) -> Boolean): List<T> {
+        val index = indexOfFirst(predicate)
+        if (index == -1) return emptyList()
+        return subList(index, (index + amount).coerceAtMost(size))
     }
 
     val PREFIX = Text.join(

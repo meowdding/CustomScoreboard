@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.events
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
+import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.lib.displays.Alignment
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -18,7 +19,7 @@ object EventMining : Event() {
     override val configLine = "Mining"
 
 
-    private var formattedLines = mutableListOf<Any>()
+    private val formattedLines = mutableListOf<Any>()
 
     private val powderRegex = ComponentRegex("᠅ (?:Gemstone|Mithril|Glacite)(?: Powder)?.*")
     private val eventRegex = ComponentRegex("Event: .*")
@@ -47,15 +48,14 @@ object EventMining : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        val patterns = powderRegex.takeIf { LinesConfig.showHypixelPowder }?.let { patterns + it } ?: patterns
-        formattedLines.addAll(
-            event.components.filter { component ->
+        formattedLines.replaceWith {
+            val patterns = powderRegex.takeIf { LinesConfig.showHypixelPowder }?.let { patterns + it } ?: patterns
+            event.components.filterTo(this) { component ->
                 patterns.any { it.matches(component) }
-            },
-        )
-        event.components.firstOrNull { compassArrowRegex.matches(it) }?.let {
-            formattedLines.add(it align Alignment.CENTER)
+            }
+            event.components.find(compassArrowRegex::matches)?.let {
+                add(it align Alignment.CENTER)
+            }
         }
     }
 }
