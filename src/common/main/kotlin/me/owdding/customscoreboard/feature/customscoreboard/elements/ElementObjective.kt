@@ -21,7 +21,7 @@ object ElementObjective : Element() {
     override val id = "OBJECTIVE"
 
 
-    private val objectiveTitleRegex = "^Objective|Quest".toRegex()
+    private val objectiveTitleRegex = "^(?:Objective|Quest)".toRegex()
 
     private val objectiveLines = mutableListOf<Component>()
 
