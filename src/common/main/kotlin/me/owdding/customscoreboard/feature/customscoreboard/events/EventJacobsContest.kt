@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.CommonRegexes
+import me.owdding.customscoreboard.utils.TextUtils.isBlank
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -19,8 +20,8 @@ object EventJacobsContest : Event() {
     private var formattedLines = emptyList<Component>()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines = event.components.sublistFromFirst(3, contestRegex::matches)
-            .filterNot(CommonRegexes.hypixelFooterRegex::matches)
+        formattedLines = event.components.sublistFromFirst(4, contestRegex::matches)
+            .filterNot(CommonRegexes.hypixelFooterRegex::matches).filterNot { it.isBlank() }
 
     }
 }
