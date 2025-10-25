@@ -19,13 +19,6 @@ object EventServerRestart : Event() {
     private val restartRegex = ComponentRegex("Server closing.*")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        if (restartRegex.regex().anyMatch(event.removed)) {
-            formattedLine = null
-        }
-
-        restartRegex.anyMatch(event.addedComponents) {
-            formattedLine = it.component
-        }
-
+        formattedLine = event.components.find(restartRegex::matches)
     }
 }

@@ -5,6 +5,7 @@ import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
+import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyFound
 
 @ScoreboardElement
 object ElementLobby : Element() {
@@ -23,11 +24,10 @@ object ElementLobby : Element() {
     private val roomIdRegex = "\\d+/\\d+/\\d+ \\w+ (?<roomId>[\\w,-]+)".toRegex()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        for (line in event.new) {
-            roomId = roomIdRegex.find(line)?.groups["roomId"]?.value ?: continue
-            return
+        val found = roomIdRegex.anyFound(event.new, "roomId") { (roomId) ->
+            this.roomId = roomId
         }
-        roomId = null
+        if (!found) roomId = null
     }
 
     override fun onServerChange(event: ServerChangeEvent) {

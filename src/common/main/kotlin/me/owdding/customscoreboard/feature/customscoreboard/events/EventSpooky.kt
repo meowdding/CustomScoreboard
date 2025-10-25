@@ -22,13 +22,6 @@ object EventSpooky : Event() {
     private val festivalRegex = ComponentRegex("Spooky Festival [\\d.,:]+")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        if (festivalRegex.regex().anyMatch(event.removed)) {
-            formattedLine = null
-        }
-
-        festivalRegex.anyMatch(event.addedComponents) {
-            formattedLine = it.component
-        }
-
+        formattedLine = event.components.find(festivalRegex::matches)
     }
 }

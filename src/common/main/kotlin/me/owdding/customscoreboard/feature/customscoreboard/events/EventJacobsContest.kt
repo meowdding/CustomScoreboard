@@ -1,11 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.utils.Utils.nextAfter
+import me.owdding.customscoreboard.utils.CommonRegexes
+import me.owdding.customscoreboard.utils.TextUtils.isBlank
+import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
-import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 
 @AutoElement
 object EventJacobsContest : Event() {
@@ -15,21 +16,12 @@ object EventJacobsContest : Event() {
 
 
     private val contestRegex = ComponentRegex("Jacob's Contest")
-    private val hypixelFooterRegex = "(?:www|alpha).hypixel.net".toRegex()
 
-    private val formattedLines = mutableListOf<Component>()
+    private var formattedLines = emptyList<Component>()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-
-        contestRegex.anyMatch(event.components) {
-            formattedLines.add(it.component)
-            event.components.nextAfter(it.component)?.let { formattedLines.add(it) }
-            event.components.nextAfter(it.component, 2)?.let { formattedLines.add(it) }
-            event.components.nextAfter(it.component, 3)?.let { formattedLines.add(it) }
-        }
-
-        formattedLines.removeIf { hypixelFooterRegex.matches(it.string) }
+        formattedLines = event.components.sublistFromFirst(4, contestRegex::matches)
+            .filterNot(CommonRegexes.hypixelFooterRegex::matches).filterNot { it.isBlank() }
 
     }
 }
