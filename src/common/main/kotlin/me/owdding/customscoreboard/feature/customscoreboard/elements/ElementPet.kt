@@ -32,6 +32,11 @@ object ElementPet : Element() {
                 },
             )
         }
+    }.map {
+        it.withActions {
+            hover = listOf("§7Click to open the Pets Menu")
+            command = "/pets"
+        }
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
