@@ -43,4 +43,7 @@ object ElementPet : Element() {
 
     override val configLine = "Pet"
     override val id = "PET"
+    override val configLineHover = listOf(
+        "This element currently hard requires the Pet Tabwidget to be in your active to show/update.",
+    )
 }
