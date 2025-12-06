@@ -26,7 +26,7 @@ object ElementTime : Element() {
         }
 
         if (!LinesConfig.time24hFormat) {
-            hour = if (hour%12 == 0) 12 else hour % 12
+            hour = if (hour % 12 == 0) 12 else hour % 12
         }
         append(String.format("%02d:%02d", hour, minutes))
 
