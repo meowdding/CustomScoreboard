@@ -13,6 +13,7 @@ object LinesConfig : ShTransferableCategory("line_modification") {
     val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
         this.translation = "customscoreboard.config.lines.date_format"
         this.shPath = "display.dateFormat"
+        this.shMapper = { DateFormat.valueOf(it.asString) }
     }
 
     val showBitsAvailable by boolean("bits_available", true) {
@@ -102,6 +103,7 @@ object LinesConfig : ShTransferableCategory("line_modification") {
     val arrowDisplay by enum("arrow_display", ElementQuiver.ArrowDisplay.NUMBER) {
         this.translation = "customscoreboard.config.lines.arrow_display"
         this.shPath = "display.arrow.arrowDisplay"
+        this.shMapper = { ElementQuiver.ArrowDisplay.valueOf(it.asString) }
     }
 
     val showPiggy by boolean("piggy", false) {
@@ -132,6 +134,7 @@ object LinesConfig : ShTransferableCategory("line_modification") {
     val powderDisplay by enum(ElementPowder.PowderDisplay.CURRENT) {
         this.translation = "customscoreboard.config.lines.powder_display"
         this.shPath = "display.powderDisplay"
+        this.shMapper = { ElementPowder.PowderDisplay.valueOf(it.asString) }
     }
 
     val showHypixelPowder by boolean("hypixel_powder", true) {

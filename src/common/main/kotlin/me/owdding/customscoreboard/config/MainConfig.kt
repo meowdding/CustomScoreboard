@@ -220,50 +220,36 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
         this.slider = true
     }
 
-    val title = obj("title_options", TitleOrFooterObject()) {
+    val title = obj("title_options", TitleOrFooterObject("Title")) {
         this.translation = "customscoreboard.config.title_options"
-        this.shPath = "display.titleAndFooter"
-        this.shMapper = { json: JsonElement ->
-            val obj = json.asJsonObject
-            JsonObject().apply {
-                addProperty("alignment", obj.get("alignTitle").asString)
-                addProperty("useCustomText", obj.get("useCustomTitle").asBoolean)
-                addProperty("text", obj.get("customTitle").asString)
-            }
-        }
     }
 
-    val footer = obj("footer_options", TitleOrFooterObject()) {
+    val footer = obj("footer_options", TitleOrFooterObject("Footer")) {
         this.translation = "customscoreboard.config.footer_options"
-        this.shPath = "display.titleAndFooter"
-        this.shMapper = { json: JsonElement ->
-            val obj = json.asJsonObject
-            JsonObject().apply {
-                addProperty("alignment", obj.get("alignFooter").asString)
-                addProperty("useCustomText", obj.get("useCustomFooter").asBoolean)
-                addProperty("text", obj.get("customFooter").asString)
-            }
-        }
     }
 
     val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
         this.translation = "customscoreboard.config.number_display_format"
         this.shPath = "display.numberDisplayFormat"
+        this.shMapper = { CustomScoreboardRenderer.NumberDisplayFormat.valueOf(it.asString) }
     }
 
     val numberFormat by enum("number_format", NumberFormatType.LONG) {
         this.translation = "customscoreboard.config.number_format"
         this.shPath = "display.numberFormat"
+        this.shMapper = { NumberFormatType.valueOf(it.asString) }
     }
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
         this.translation = "customscoreboard.config.vertical_alignment"
         this.shPath = "display.alignment.verticalAlignment"
+        this.shMapper = { VerticalAlignment.valueOf(it.asString) }
     }
 
     val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
         this.translation = "customscoreboard.config.horizontal_alignment"
         this.shPath = "display.alignment.horizontalAlignment"
+        this.shMapper = { HorizontalAlignment.valueOf(it.asString) }
     }
 
     val hideWhenTab by boolean(false) {

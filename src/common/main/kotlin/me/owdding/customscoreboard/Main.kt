@@ -17,6 +17,7 @@ import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
+import me.owdding.lib.utils.MeowddingLogger
 import me.owdding.lib.utils.MeowddingUpdateChecker
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
@@ -38,7 +39,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
-object Main : ClientModInitializer {
+object Main : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResolve() {
 
     val SELF = FabricLoader.getInstance().getModContainer("customscoreboard").get()
     val MOD_ID: String = SELF.metadata.id

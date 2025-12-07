@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
+import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.feature.ConfigTransfer
 
 object ModCompatibilityConfig : CategoryKt("compatibility") {
@@ -29,7 +30,11 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
             this.description = "customscoreboard.config.compatibility.skyhanni.button.desc"
             this.text = "customscoreboard.config.compatibility.skyhanni.button.text"
             this.onClick {
-                ConfigTransfer.transfer()
+                runCatching {
+                    ConfigTransfer.transfer()
+                }.exceptionOrNull()?.let {
+                    Main.error("Failed to transfer config", it)
+                }
             }
         }
     }
