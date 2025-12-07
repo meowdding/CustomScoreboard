@@ -9,8 +9,8 @@ import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseEl
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
-import me.owdding.customscoreboard.feature.ConfigTransfer
 import me.owdding.customscoreboard.feature.ShTransferableConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
@@ -73,8 +73,6 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
         ),
     )
 
-    override val version = 3
-
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
@@ -100,12 +98,26 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
 
             json
         },
+        3 to UnaryOperator { json ->
+            val overhaul = json["scoreboardOverhaul"].asBoolean
+            json.remove("scoreboardOverhaul")
+            json.add(
+                "compatibility",
+                JsonObject().apply {
+                    addProperty("scoreboardOverhaul", overhaul)
+                },
+            )
+            json
+        },
     )
+
+    override val version = patches.size
     //endregion
 
     init {
         category(BackgroundConfig)
         category(LinesConfig)
+        category(ModCompatibilityConfig)
     }
 
     var enabled by boolean(true) {
@@ -284,15 +296,4 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
         this.translation = "customscoreboard.config.update_notification"
     }
 
-    val scoreboardOverhaul by boolean(false) {
-        this.translation = "customscoreboard.config.scoreboard_overhaul"
-    }
-
-    init {
-        button {
-            this.onClick {
-                ConfigTransfer.transfer()
-            }
-        }
-    }
 }

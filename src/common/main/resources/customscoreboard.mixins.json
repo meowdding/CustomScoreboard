@@ -7,7 +7,8 @@
     "mixins": [
         "compat.ScoreboardConfigMixin",
         "compat.ScoreboardOverhaulScoreboardAccessorMixin",
-        "compat.SkyHanniCustomScoreboardMixin"
+        "compat.SkyHanniCustomScoreboardMixin",
+        "compat.TypeBuilderAccessor"
     ],
     "client": [
         "accessor.TextWidgetAccessor"
