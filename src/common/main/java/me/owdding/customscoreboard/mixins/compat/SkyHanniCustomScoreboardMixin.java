@@ -23,7 +23,7 @@ public class SkyHanniCustomScoreboardMixin {
     boolean customscoreboard$isEnabled(boolean original) {
         ModCompat.INSTANCE.setSkyhanniCustomScoreboardEnabled(original);
         if (ModCompatibilityConfig.INSTANCE.getOverrideSkyHanniScoreboard()) {
-            return true;
+            return false;
         }
         return original;
     }
