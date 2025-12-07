@@ -81,6 +81,9 @@ object Utils {
     )
 
     fun Component.sendWithPrefix() = Text.join(PREFIX, this).send()
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> Any?.unsafeCast(): T = this as T
 }
 
 

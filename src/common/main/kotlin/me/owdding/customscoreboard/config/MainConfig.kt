@@ -1,21 +1,24 @@
 package me.owdding.customscoreboard.config
 
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
-import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
+import me.owdding.customscoreboard.feature.ConfigTransfer
+import me.owdding.customscoreboard.feature.ShTransferableConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementArea
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBits
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCold
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCookieBuff
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementDate
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementEvents
@@ -30,11 +33,13 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementNort
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementObjective
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementParty
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPet
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPlayerCount
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementProfile
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPurse
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSeparator
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSkyblockLevel
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSlayer
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSoulflow
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
@@ -46,7 +51,7 @@ import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import java.util.function.UnaryOperator
 
-object MainConfig : ConfigKt("customscoreboard/config") {
+object MainConfig : ShTransferableConfig("customscoreboard/config") {
 
     override val name = TranslatableValue("Custom Scoreboard Config")
     override val description = TranslatableValue("by j10a1n15. Version ${Main.VERSION}")
@@ -144,6 +149,22 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             strings(*default.toTypedArray()) {
                 this.translation = "customscoreboard.config.appearance"
                 renderer = CUSTOM_DRAGGABLE_RENDERER
+                shPath = "scoreboardEntries"
+                shMapper = { json: JsonElement ->
+                    json.asJsonArray.mapNotNull {
+                        when (val string = it.asString) {
+                            "EMPTY_LINE" -> ElementSeparator.id
+                            "COOKIE" -> ElementCookieBuff.id
+                            "SKYBLOCK_XP" -> ElementSkyblockLevel.id
+                            "PLAYER_AMOUNT" -> ElementPlayerCount.id
+                            "LOBBY_CODE" -> ElementLobby.id
+                            "LOCATION" -> ElementArea.id
+                            "EXTRA" -> null
+                            "VISITING" -> null
+                            else -> string
+                        }
+                    }
+                }
             },
             { it.toConfigStrings() },
             { it.asList().toBaseElements() },
@@ -155,6 +176,19 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     val events by observable(
         draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
             this.translation = "customscoreboard.config.events"
+            shPath = "display.events.eventEntries"
+            shMapper = { json: JsonElement ->
+                json.asJsonArray.mapNotNull {
+                    val name = it.asString
+                    val changes = mapOf(
+                        "SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART,
+                        "MINING_EVENTS" to ScoreboardEventEntry.MINING,
+                        "ACTIVE_TABLIST_EVENTS" to null,
+                        "STARTING_SOON_TABLIST_EVENTS" to null,
+                    )
+                    changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
+                }
+            }
         },
     ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()
@@ -176,26 +210,48 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val title = obj("title_options", TitleOrFooterObject()) {
         this.translation = "customscoreboard.config.title_options"
+        this.shPath = "display.titleAndFooter"
+        this.shMapper = { json: JsonElement ->
+            val obj = json.asJsonObject
+            JsonObject().apply {
+                addProperty("alignment", obj.get("alignTitle").asString)
+                addProperty("useCustomText", obj.get("useCustomTitle").asBoolean)
+                addProperty("text", obj.get("customTitle").asString)
+            }
+        }
     }
 
     val footer = obj("footer_options", TitleOrFooterObject()) {
         this.translation = "customscoreboard.config.footer_options"
+        this.shPath = "display.titleAndFooter"
+        this.shMapper = { json: JsonElement ->
+            val obj = json.asJsonObject
+            JsonObject().apply {
+                addProperty("alignment", obj.get("alignFooter").asString)
+                addProperty("useCustomText", obj.get("useCustomFooter").asBoolean)
+                addProperty("text", obj.get("customFooter").asString)
+            }
+        }
     }
 
     val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
         this.translation = "customscoreboard.config.number_display_format"
+        this.shPath = "display.numberDisplayFormat"
     }
 
     val numberFormat by enum("number_format", NumberFormatType.LONG) {
         this.translation = "customscoreboard.config.number_format"
+        this.shPath = "display.numberFormat"
     }
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
         this.translation = "customscoreboard.config.vertical_alignment"
+        this.shPath = "display.alignment.verticalAlignment"
     }
 
     val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
         this.translation = "customscoreboard.config.horizontal_alignment"
+        this.shPath = "display.alignment.horizontalAlignment"
     }
 
     val hideWhenTab by boolean(false) {
@@ -208,6 +264,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
         this.translation = "customscoreboard.config.hide_hypixel"
+        this.shPath = "display.hideVanillaScoreboard"
     }
 
     val textShadow by boolean("text_shadow", true) {
@@ -216,6 +273,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val customLines by boolean(true) {
         this.translation = "customscoreboard.config.custom_lines"
+        this.shPath = "display.useCustomLines"
     }
 
     val outsideSkyBlock by boolean(false) {
@@ -228,5 +286,13 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val scoreboardOverhaul by boolean(false) {
         this.translation = "customscoreboard.config.scoreboard_overhaul"
+    }
+
+    init {
+        button {
+            this.onClick {
+                ConfigTransfer.transfer()
+            }
+        }
     }
 }

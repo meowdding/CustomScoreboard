@@ -1,10 +1,10 @@
 package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
-import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
+import me.owdding.customscoreboard.feature.ShTransferableCategory
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import net.minecraft.Util
@@ -19,33 +19,42 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.underlined
 import kotlin.io.path.Path
 import kotlin.jvm.optionals.getOrNull
 
-object BackgroundConfig : CategoryKt("Background") {
+object BackgroundConfig : ShTransferableCategory("Background") {
 
     val enabled by boolean(true) {
         this.translation = "customscoreboard.config.background.enabled"
+        this.shPath = "background.enabled"
     }
 
     val backgroundColor by color("color", 0xA0000000.toInt()) {
         this.translation = "customscoreboard.config.background.color"
         this.allowAlpha = true
+        this.shPath = "background.color"
+        this.shMapper = {
+            val color = it.asString.split(":").map { part -> part.toInt() }
+            (color[1] shl 24) or (color[2] shl 16) or (color[3] shl 8) or color[4]
+        }
     }
 
     val padding by int(5) {
         this.translation = "customscoreboard.config.background.padding"
         this.range = 0..20
         this.slider = true
+        this.shPath = "background.borderSize"
     }
 
     val margin by int(0) {
         this.translation = "customscoreboard.config.background.margin"
         this.range = 0..20
         this.slider = true
+        this.shPath = "display.alignment.margin"
     }
 
     val radius by int(5) {
         this.translation = "customscoreboard.config.background.radius"
         this.range = 0..20
         this.slider = true
+        this.shPath = "background.roundedCornerSmoothness"
     }
 
     init {
@@ -57,6 +66,7 @@ object BackgroundConfig : CategoryKt("Background") {
 
     val imageBackground by boolean(false) {
         this.translation = "customscoreboard.config.background.image"
+        this.shPath = "background.useCustomBackgroundImage"
     }
 
     init {
@@ -85,6 +95,7 @@ object BackgroundConfig : CategoryKt("Background") {
         this.translation = "customscoreboard.config.background.transparency"
         this.range = 5..100
         this.slider = true
+        this.shPath = "background.customBackgroundImageOpacity"
     }
 
     var customImageFile by string("") {
