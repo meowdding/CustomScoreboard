@@ -1,25 +1,21 @@
 package me.owdding.customscoreboard.feature
 
 import com.google.gson.JsonObject
+import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.BackgroundConfig
+import me.owdding.customscoreboard.config.categories.LinesConfig
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.json.Json.readJson
-import tech.thatgravyboat.skyblockapi.utils.json.getPath
 import kotlin.io.path.exists
 import kotlin.io.path.readText
-import kotlin.reflect.KMutableProperty
 
 object ConfigTransfer {
 
-    private val configMoves = mutableMapOf<KMutableProperty<*>, String>()
-    private const val BASE = "gui.customScoreboard."
-
     fun transfer() {
         val shConfig = shConfig() ?: return
-        for ((type, path) in configMoves) {
-            val element = shConfig.getPath(BASE + path)
-            println("Transferring config for $path to $element")
-            type.setter.call(type.getter.call(), element)
-        }
+        MainConfig.transfer(shConfig)
+        BackgroundConfig.transfer(shConfig)
+        LinesConfig.transfer(shConfig)
     }
 
     fun shConfig(): JsonObject? {

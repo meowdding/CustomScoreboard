@@ -50,18 +50,27 @@ interface ShConfig {
         RconfigKtUtils.getElements(self()).filterIsInstance<ResourcefulConfigEntryElement>().forEach {
             val element = (it.entry() as? ResourcefulConfigValueEntry) ?: return@forEach
             val shPath = this.configMoves[it.id()] ?: return@forEach
+            val fullPath = "gui.customScoreboard.$shPath"
             val mapper = this.configMappers[it.id()] ?: { json ->
                 when (element.type()) {
-                    EntryType.FLOAT -> json.asFloat
                     EntryType.INTEGER -> json.asInt
+                    EntryType.FLOAT -> json.asFloat
+                    EntryType.LONG -> json.asLong
+                    EntryType.STRING -> json.asString
+                    EntryType.BOOLEAN -> json.asBoolean
+                    EntryType.ENUM -> json.asString
                     else -> TODO("other stuff")
                 }
             }
-            val jsonElement = shConfig.getPath(shPath) ?: return@forEach
+            val jsonElement = shConfig.getPath(fullPath) ?: return@forEach
             val result = mapper(jsonElement)
             when (element.type()) {
-                EntryType.FLOAT -> element.float = result.unsafeCast()
                 EntryType.INTEGER -> element.int = result.unsafeCast()
+                EntryType.FLOAT -> element.float = result.unsafeCast()
+                EntryType.LONG -> element.long = result.unsafeCast()
+                EntryType.STRING -> element.string = result.unsafeCast()
+                EntryType.BOOLEAN -> element.boolean = result.unsafeCast()
+                EntryType.ENUM -> element.enum = result.unsafeCast()
                 else -> TODO("other stuff")
             }
         }
