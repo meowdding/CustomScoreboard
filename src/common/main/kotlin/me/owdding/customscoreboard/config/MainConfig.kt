@@ -57,7 +57,7 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
     override val description = TranslatableValue("by j10a1n15. Version ${Main.VERSION}")
     override val links: Array<ResourcefulConfigLink> = arrayOf(
         ResourcefulConfigLink.create(
-            "https://discord.gg/FsRc2GUwZR",
+            "https://meowdd.ing/discord",
             "discord",
             TranslatableValue("Discord"),
         ),
