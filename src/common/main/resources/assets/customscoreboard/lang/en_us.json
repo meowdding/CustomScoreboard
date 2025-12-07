@@ -222,6 +222,10 @@
                     "@value": "Piggy Bank",
                     "desc": "Use \"Piggy\" instead of \"Purse\" as your Purse prefix when a piggy bank is active."
                 },
+                "bank_always_compact": {
+                    "@value": "Bank Always Compact",
+                    "desc": "Makes the Bank element ignore the main Number Format option, and always shows shortened (like in tablist)."
+                },
                 "pet_max": {
                     "@value": "Show Pet Max Level",
                     "desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden."
@@ -245,6 +249,10 @@
                 "pet_prefix": {
                     "@value": "Add Pet Prefix/Suffix",
                     "desc": "Add \"Pet:\" as a prefix/suffix to the pet line."
+                },
+                "time_24h_format": {
+                    "@value": "24h SkyBlock Time",
+                    "desc": "Shows the SkyBlock time in 24h format instead of 12h."
                 },
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",

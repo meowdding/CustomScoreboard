@@ -12,6 +12,8 @@ interface NumberTrackingElement {
     var temporaryChangeDisplay: String?
     val numberColor: String
 
+    fun format(number: Number): String = number.format()
+
     fun checkDifference(currentAmount: Long) {
         if (previousAmount == -1L) {
             previousAmount = currentAmount
@@ -26,9 +28,9 @@ interface NumberTrackingElement {
 
     private fun showTemporaryChange(changeAmount: Long, durationMillis: Long = 5000) {
         temporaryChangeDisplay = if (changeAmount > 0) {
-            " §7($numberColor+${changeAmount.format()}§7)$numberColor"
+            " §7($numberColor+${format(changeAmount)}§7)$numberColor"
         } else {
-            " §7($numberColor${changeAmount.format()}§7)$numberColor"
+            " §7($numberColor${format(changeAmount)}§7)$numberColor"
         }
 
 

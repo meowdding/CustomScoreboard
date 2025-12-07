@@ -8,7 +8,7 @@ import me.owdding.customscoreboard.utils.DateFormat
 
 object LinesConfig : CategoryKt("line_modification") {
 
-    override val  name = Literal("Line Modification")
+    override val name = Literal("Line Modification")
 
     val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
         this.translation = "customscoreboard.config.lines.date_format"
@@ -84,6 +84,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "customscoreboard.config.lines.piggy"
     }
 
+    val bankAlwaysCompact by boolean(false) {
+        this.translation = "customscoreboard.config.lines.bank_always_compact"
+    }
+
     val petPrefix by boolean(true) {
         this.translation = "customscoreboard.config.lines.pet_prefix"
     }
@@ -106,6 +110,10 @@ object LinesConfig : CategoryKt("line_modification") {
 
     val showHypixelPowder by boolean("hypixel_powder", true) {
         this.translation = "customscoreboard.config.lines.hypixel_powder"
+    }
+
+    val time24hFormat by boolean(false) {
+        this.translation = "customscoreboard.config.lines.time_24h_format"
     }
 
     val smoothTime by boolean(true) {
