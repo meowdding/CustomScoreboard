@@ -33,3 +33,8 @@ Elements that are in both mods are not listed for obvious reasons.
 | Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
 | Hide while Tablist/Chat is Open                                                     | ❌            | ✅                     |
 | Tablist lines in Scoreboard                                                         | ❌            | ✅                     |
+
+### Transferring from SkyHanni
+
+You can easily transfer your config by using the ``Transfer`` button under `/cs` -> `Mod Compatibility`.
+Your old SkyHanni Custom Scoreboard Background Texturepack will work fine, you won't need to update it. 
