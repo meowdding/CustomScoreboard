@@ -1,206 +1,199 @@
-@file:Suppress("UnstableApiUsage")
-
-import earth.terrarium.cloche.api.metadata.ModMetadata
-import net.msrandom.minecraftcodev.core.utils.lowerCamelCaseGradleName
-import net.msrandom.minecraftcodev.fabric.task.JarInJar
-import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory
+import net.fabricmc.loom.task.ValidateAccessWidenerTask
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("me.owdding.gradle") version "1.1.1"
+    idea
+    id("fabric-loom")
+    `versioned-catalogues`
     kotlin("jvm") version "2.2.0"
-    alias(libs.plugins.terrarium.cloche)
-    id("maven-publish")
+    alias(libs.plugins.meowdding.auto.mixins)
     alias(libs.plugins.kotlin.symbol.processor)
 }
 
 repositories {
-    maven(url = "https://maven.teamresourceful.com/repository/maven-public/")
-    maven(url = "https://repo.hypixel.net/repository/Hypixel/")
-    maven(url = "https://api.modrinth.com/maven")
-    maven(url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
-    maven(url = "https://maven.nucleoid.xyz")
-    maven(url = "https://maven.msrandom.net/repository/cloche")
-    maven(url = "https://maven.msrandom.net/repository/root")
+    fun scopedMaven(url: String, vararg paths: String) = maven(url) { content { paths.forEach(::includeGroupAndSubgroups) } }
+
+    scopedMaven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1", "me.djtheredstoner")
+    scopedMaven("https://repo.hypixel.net/repository/Hypixel", "net.hypixel")
+    scopedMaven("https://maven.parchmentmc.org/", "org.parchmentmc")
+    scopedMaven("https://api.modrinth.com/maven", "maven.modrinth")
+    scopedMaven(
+        "https://maven.teamresourceful.com/repository/maven-public/",
+        "earth.terrarium",
+        "com.teamresourceful",
+        "tech.thatgravyboat",
+        "me.owdding",
+        "com.terraformersmc"
+    )
+    scopedMaven("https://maven.nucleoid.xyz/", "eu.pb4")
+    scopedMaven(url = "https://maven.shedaniel.me/", "me.shedaniel", "dev.architectury")
     mavenCentral()
-    mavenLocal()
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+    compilerOptions.optIn.add("kotlin.time.ExperimentalTime")
+    compilerOptions.freeCompilerArgs.addAll(
+        "-Xcontext-parameters",
+        "-Xcontext-sensitive-resolution",
+        "-Xnullability-annotations=@org.jspecify.annotations:warn"
+    )
 }
 
 evaluationDependsOn(":annotations")
 
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        languageVersion = KotlinVersion.KOTLIN_2_2
-        freeCompilerArgs.addAll(
-            "-Xmulti-platform",
-            "-Xno-check-actual",
-            "-Xexpect-actual-classes",
-            "-Xopt-in=kotlin.time.ExperimentalTime",
-        )
-    }
-}
-
 dependencies {
-    ksp(libs.meowdding.ktmodules)
+    minecraft(versionedCatalog["minecraft"])
+    mappings(loom.layered {
+        officialMojangMappings()
+        parchment(variantOf(versionedCatalog["parchment"]) {
+            artifactType("zip")
+        })
+    })
+    modImplementation(libs.fabric.loader)
+    modImplementation(libs.fabric.language.kotlin)
+    modImplementation(versionedCatalog["fabric.api"])
+
+    modRuntimeOnly(versionedCatalog["placeholders"])
+    modCompileOnly(versionedCatalog["scoreboard.overhaul"])
+
+    api(libs.skyblockapi) {
+        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
+    }
+    include(libs.skyblockapi) {
+        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}-remapped") }
+    }
+    api(libs.meowdding.lib) {
+        capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}") }
+    }
+    include(libs.meowdding.lib) {
+        capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}-remapped") }
+    }
     compileOnly(project(":annotations"))
     ksp(project(":annotations"))
+
+    compileOnly(libs.meowdding.ktmodules)
+    ksp(libs.meowdding.ktmodules)
+
+    modImplementation(libs.hypixelapi)
+    modImplementation(libs.mixinconstraints)
+
+    includeImplementation(versionedCatalog["resourceful.lib"])
+    includeImplementation(versionedCatalog["resourceful.config"])
+    includeImplementation(versionedCatalog["olympus"])
+    includeImplementation(libs.resourcefulkt.config)
 }
 
-cloche {
-    metadata {
-        modId = "customscoreboard"
-        name = "Custom Scoreboard"
-        license = ""
-        clientOnly = true
-        icon = "assets/customscoreboard/icon.png"
-    }
-
-    common {
-        mixins.from("src/mixins/customscoreboard.mixins.json")
-
-        dependencies {
-            compileOnly(project(":annotations"))
-            compileOnly(libs.meowdding.ktmodules)
-
-            modImplementation(libs.hypixelapi)
-            modImplementation(libs.skyblockapi)
-
-            modImplementation(libs.mixinconstraints)
-
-            modImplementation(libs.fabric.language.kotlin)
-
-            modImplementation(libs.skyblockapi)
-            modImplementation(libs.meowdding.lib)
-
-            //modRuntimeOnly(libs.modmenu)
-        }
-    }
-
-    fun createVersion(
-        name: String,
-        version: String = name,
-        loaderVersion: Provider<String> = libs.versions.fabric.loader,
-        fabricApiVersion: Provider<String> = libs.versions.fabric.api,
-        endAtSameVersion: Boolean = true,
-        minecraftVersionRange: ModMetadata.VersionRange.() -> Unit = {
-            start = version
-            if (endAtSameVersion) {
-                end = version
-                endExclusive = false
-            }
-        },
-        catalog: AbstractExternalDependencyFactory,
-    ) {
-        val rlib = catalog.create("resourceful-lib")
-        val rconfig = catalog.create("resourceful-config")
-        val olympus = catalog.create("olympus-lib")
-        val scoreboardOverhaul = catalog.create("scoreboard-overhaul")
-
-        fabric(name) {
-            includedClient()
-            minecraftVersion = version
-            this.loaderVersion = loaderVersion.get()
-
-            metadata {
-                entrypoint("client") {
-                    adapter = "kotlin"
-                    value = "me.owdding.customscoreboard.Main"
-                }
-
-                fun dependency(modId: String, version: Provider<String>? = null) {
-                    dependency {
-                        this.modId = modId
-                        this.required = true
-                        if (version != null) version {
-                            this.start = version
-                        }
-                    }
-                }
-
-                dependency {
-                    modId = "minecraft"
-                    required = true
-                    version(minecraftVersionRange)
-                }
-                dependency("fabric")
-                dependency("fabricloader")
-                dependency("resourcefulconfigkt", libs.versions.rconfigkt)
-                dependency("resourcefulconfig", rconfig.map { it.version!! })
-                dependency("fabric-language-kotlin", libs.versions.fabric.language.kotlin)
-                dependency("resourcefullib", rlib.map { it.version!! })
-                dependency("skyblock-api", libs.versions.skyblockapi)
-                dependency("olympus", olympus.map { it.version!! })
-                dependency("meowdding-lib", libs.versions.meowdding.lib)
-            }
-
-            dependencies {
-                fabricApi(fabricApiVersion, minecraftVersion)
-                modImplementation(olympus) { exclude("net.fabricmc.fabric-api") }
-                modImplementation(rconfig) { exclude("net.fabricmc.fabric-api") }
-                modImplementation(rlib) { exclude("net.fabricmc.fabric-api") }
-                modImplementation(libs.resourcefulkt.config) { exclude("net.fabricmc.fabric-api") }
-
-                modCompileOnly(scoreboardOverhaul)
-
-                include(libs.skyblockapi)
-                include(libs.meowdding.lib)
-                include(rlib)
-                include(olympus)
-                include(rconfig)
-                include(libs.resourcefulkt.config)
-            }
-
-            runs {
-                client()
-            }
-        }
-    }
-
-    createVersion("1.21.5", fabricApiVersion = provider { "0.127.1" }, catalog = libs1215)
-    createVersion("1.21.8", minecraftVersionRange = {
-        start = "1.21.6"
-        end = "1.21.8"
-        endExclusive = false
-    }, catalog = libs1218)
-    createVersion("1.21.9", endAtSameVersion = false, fabricApiVersion = provider { "0.133.7" }, catalog = libs1219)
-
-    mappings { official() }
+fun DependencyHandler.includeImplementation(dep: Any) {
+    include(dep)
+    modImplementation(dep)
 }
 
-tasks {
-    compileKotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_21
-        }
+
+val mcVersion = stonecutter.current.version.replace(".", "")
+val accessWidenerFile = rootProject.file("src/customscoreboard.accesswidener")
+loom {
+    runConfigs["client"].apply {
+        ideConfigGenerated(true)
+        runDir = "../../run"
+        vmArg("-Dfabric.modsFolder=" + '"' + rootProject.projectDir.resolve("run/${mcVersion}Mods").absolutePath + '"')
     }
 
-    withType<JavaCompile>().configureEach {
-        options.encoding = "UTF-8"
-        options.release.set(21)
+    if (accessWidenerFile.exists()) {
+        accessWidenerPath.set(accessWidenerFile)
     }
+
+    mixin {
+        defaultRefmapName = "customscoreboard-refmap.json"
+    }
+}
+
+ksp {
+    arg("meowdding.project_name", "CustomScoreboard")
+    arg("meowdding.package", "me.owdding.customscoreboard.generated")
 }
 
 java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }
 
-meowdding {
-    setupClocheClasspathFix()
-    configureModules = true
-    projectName = "CustomScoreboard"
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
+    options.release.set(21)
 }
 
-tasks.withType<JarInJar>().configureEach {
-    include { !it.name.endsWith("-dev.jar") }
-    archiveBaseName = "CustomScoreboard"
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+    compilerOptions.optIn.add("kotlin.time.ExperimentalTime")
+    compilerOptions.freeCompilerArgs.add(
+        "-Xnullability-annotations=@org.jspecify.annotations:warn"
+    )
 }
 
-cloche.targets.forEach {
-    listOf(lowerCamelCaseGradleName("accessWiden", it.name, "CommonMinecraft"), lowerCamelCaseGradleName("accessWiden", it.name, "minecraft")).forEach {
-        tasks.named(it) {
-            dependsOn(tasks.getByPath(":annotations:build"))
-        }
+tasks.processResources {
+    val replacements = mapOf(
+        "version" to version,
+        "minecraft_start" to versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft"),
+        "minecraft_end" to versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft"),
+        "fabric_lang_kotlin" to libs.versions.fabric.language.kotlin.get(),
+        "rlib" to versionedCatalog.versions["resourceful-lib"],
+        "olympus" to versionedCatalog.versions["olympus"],
+        "sbapi" to libs.versions.skyblockapi.get(),
+        "mlib" to libs.versions.meowdding.lib.get(),
+        "rconfigkt" to libs.versions.rconfigkt.get(),
+        "rconfig" to versionedCatalog.versions["resourceful-config"],
+    )
+    inputs.properties(replacements)
+
+    filesMatching("fabric.mod.json") {
+        expand(replacements)
     }
 }
+
+autoMixins {
+    mixinPackage = "me.owdding.customscoreboard.mixins"
+    projectName = "customscoreboard"
+    plugin = "com.moulberry.mixinconstraints.ConstraintsMixinPlugin"
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+
+        excludeDirs.add(file("run"))
+    }
+}
+
+tasks.withType<ProcessResources>().configureEach {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    filesMatching(listOf("**/*.fsh", "**/*.vsh")) {
+        filter { if (it.startsWith("//!moj_import")) "#${it.substring(3)}" else it }
+    }
+    with(copySpec {
+        from(rootProject.file("src/lang")).include("*.json").into("assets/customscoreboard/lang")
+    })
+    with(copySpec {
+        from(accessWidenerFile)
+    })
+}
+
+val archiveName = "CustomScoreboard"
+
+base {
+    archivesName.set("$archiveName-${archivesName.get()}")
+}
+
+tasks.named("build") {
+    doLast {
+        val sourceFile = rootProject.projectDir.resolve("versions/${project.name}/build/libs/${archiveName}-${stonecutter.current.version}-$version.jar")
+        val targetFile = rootProject.projectDir.resolve("build/libs/${archiveName}-$version-${stonecutter.current.version}.jar")
+        targetFile.parentFile.mkdirs()
+        targetFile.writeBytes(sourceFile.readBytes())
+    }
+}
+
+tasks.withType<ValidateAccessWidenerTask> { enabled = false }

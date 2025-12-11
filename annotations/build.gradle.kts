@@ -1,12 +1,10 @@
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version "2.2.0"
 }
 
 repositories {
     mavenCentral()
     maven("https://maven.teamresourceful.com/repository/maven-public/")
-    maven(url = "https://maven.msrandom.net/repository/cloche")
-    maven(url = "https://maven.msrandom.net/repository/root")
 }
 
 dependencies {

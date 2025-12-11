@@ -1,6 +1,6 @@
 [versions]
 
-fabric-loader = "0.16.10"
+fabric-loader = "0.17.3"
 fabric-language-kotlin = "1.13.4+kotlin.2.2.0"
 fabric-api = "0.133.4"
 
@@ -8,19 +8,21 @@ kotlin-symbol-processor = "2.2.0-2.0.2"
 kotlin_poet = "1.0.1"
 kotlin_poet_ksp = "1.0.1"
 
-skyblockapi = "3.0.25"
+skyblockapi = "4.0.0-beta.6"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
 rconfigkt = "3.5.12"
 
-meowdding-lib = "3.0.3"
+meowdding-lib = "4.0.0-beta.4"
 meowdding-ktmodules = "1.0.8"
+meowdding-auto-mixins = "1.0.5"
 
 terrarium-cloche = "0.13.5"
 
 [libraries]
 
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
 fabric-language-kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-language-kotlin" }
 
 skyblockapi = { module = "tech.thatgravyboat:skyblock-api", version.ref = "skyblockapi" }
@@ -39,6 +41,6 @@ kotlin_poet_ksp = { module = "me.owdding.kotlinpoet:ksp", version.ref = "kotlin_
 ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "kotlin-symbol-processor" }
 
 [plugins]
-terrarium-cloche = { id = "earth.terrarium.cloche", version.ref = "terrarium-cloche" }
+meowdding-auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "meowdding-auto-mixins" }
 
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }

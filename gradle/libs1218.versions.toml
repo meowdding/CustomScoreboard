@@ -1,6 +1,0 @@
-[libraries]
-
-resourceful-lib = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.6", version = "3.6.0" }
-resourceful-config = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.7", version = "3.7.3" }
-olympus-lib = { module = "earth.terrarium.olympus:olympus-fabric-1.21.7", version = "1.5.0" }
-scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version = "1.4.1-mc1.21.6" }
