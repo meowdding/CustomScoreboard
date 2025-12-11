@@ -156,6 +156,7 @@ tasks.processResources {
 autoMixins {
     mixinPackage = "me.owdding.customscoreboard.mixins"
     projectName = "customscoreboard"
+    plugin = "com.moulberry.mixinconstraints.ConstraintsMixinPlugin"
 }
 
 idea {
