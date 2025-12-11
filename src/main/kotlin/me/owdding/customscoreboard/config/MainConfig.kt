@@ -1,7 +1,9 @@
 package me.owdding.customscoreboard.config
 
 import com.google.gson.JsonElement
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import me.owdding.customscoreboard.Main
@@ -42,6 +44,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSepa
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSkyblockLevel
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSlayer
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSoulflow
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
@@ -99,6 +102,23 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
             json
         },
         3 to UnaryOperator { json ->
+            val items = json.getAsJsonArray("appearance").toMutableList()
+            val copperIndex = items.indexOfFirst { it.asString == ElementCopper.id }
+            val newElement = JsonPrimitive(ElementSowdust.id)
+
+            if (copperIndex != -1) {
+                items.add(copperIndex + 1, newElement)
+            } else {
+                items.add(newElement)
+            }
+
+            val newAppearance = JsonArray()
+            items.forEach { newAppearance.add(it) }
+            json.add("appearance", newAppearance)
+
+            json
+        },
+        4 to UnaryOperator { json ->
             val overhaul = json["scoreboardOverhaul"].asBoolean
             json.remove("scoreboardOverhaul")
             json.add(
@@ -139,6 +159,7 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
         ElementBank,
         ElementBits,
         ElementCopper,
+        ElementSowdust,
         ElementGems,
         ElementHeat,
         ElementCold,
