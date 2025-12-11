@@ -1,33 +1,40 @@
-rootProject.name = "Custom Scoreboard"
+rootProject.name = "CustomScoreboard"
 
 pluginManagement {
     repositories {
-        maven("https://maven.fabricmc.net/")
-        maven("https://maven.teamresourceful.com/repository/maven-public/")
-        maven(url = "https://maven.msrandom.net/repository/cloche")
-        maven(url = "https://maven.msrandom.net/repository/root")
-        maven("https://api.modrinth.com/maven") {
-            content {
-                includeGroup("maven.modrinth")
-            }
-        }
-
         gradlePluginPortal()
-        mavenLocal()
+        maven(url = "https://maven.teamresourceful.com/repository/maven-public/")
+        maven("https://maven.kikugie.dev/snapshots")
+        maven("https://maven.fabricmc.net/")
     }
 }
 
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+    id("dev.kikugie.stonecutter") version "0.7.10"
+}
+
+val versions = listOf("1.21.11", "1.21.10", "1.21.8", "1.21.5")
+
+stonecutter {
+    create(rootProject) {
+        versions(versions)
+        vcsVersion = versions.first()
+    }
+}
+
+
 dependencyResolutionManagement {
     versionCatalogs {
-        create("libs")
-        create("libs1215") {
-            from(files("gradle/libs1215.versions.toml"))
-        }
-        create("libs1218") {
-            from(files("gradle/libs1218.versions.toml"))
-        }
-        create("libs1219") {
-            from(files("gradle/libs1219.versions.toml"))
+        versions.forEach {
+            val name = it.replace(".", "")
+            create("libs$name") {
+                from(
+                    files(
+                        rootProject.projectDir.resolve("gradle/${it.replace(".", "_")}.versions.toml")
+                    )
+                )
+            }
         }
     }
 }

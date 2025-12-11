@@ -1,0 +1,31 @@
+{
+    "schemaVersion": 1,
+    "id": "customscoreboard",
+    "version": "${version}",
+    "name": "Custom Scoreboard",
+    "license": "",
+    "icon": "assets/customscoreboard/icon.png",
+    "mixins": [
+        "customscoreboard.mixins.json"
+    ],
+    "entrypoints": {
+        "client": [
+            {
+                "value": "me.owdding.customscoreboard.Main",
+                "adapter": "kotlin"
+            }
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.16.10",
+        "minecraft": ">=${minecraft_start} <=${minecraft_end}",
+        "fabric": "*",
+        "fabric-language-kotlin": ">=${fabric_lang_kotlin}",
+        "resourcefullib": ">=${rlib}",
+        "olympus": ">=${olympus}",
+        "skyblock-api": ">=${sbapi}",
+        "meowdding-lib": ">=${mlib}",
+        "resourcefulconfigkt": ">=${rconfigkt}",
+        "resourcefulconfig": ">=${rconfig}"
+    }
+}
