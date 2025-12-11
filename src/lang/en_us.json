@@ -25,6 +25,14 @@
                 "@value": "Select Tablist Lines",
                 "desc": "Select Tablist Lines which will be able to be selected in the \"Appearance\" list and rendered inbetween Scoreboard lines."
             },
+            "chunked_stats": {
+                "@value": "Chunked Stats",
+                "desc": "Enable having multiple currencies and other stuff in one line to save space."
+            },
+            "chunked_stats_per_line": {
+                "@value": "Chunked Stats Per Line",
+                "desc": "Choose how many chunked stats are shown per line."
+            },
             "scale": {
                 "@value": "Scale",
                 "desc": "Choose the scale of the scoreboard."

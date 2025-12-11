@@ -33,6 +33,3 @@ Elements that are in both mods are not listed for obvious reasons.
 | Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
 | Hide while Tablist/Chat is Open                                                     | ❌            | ✅                     |
 | Tablist lines in Scoreboard                                                         | ❌            | ✅                     |
-| Chunked Stats                                                                       | ✅            | ❌                     |
-| Maxwell Tunings                                                                     | ✅            | ❌                     |
-

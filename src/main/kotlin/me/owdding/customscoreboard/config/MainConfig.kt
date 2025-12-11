@@ -1,7 +1,7 @@
 package me.owdding.customscoreboard.config
 
-import com.google.gson.JsonElement
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
@@ -14,6 +14,7 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
 import me.owdding.customscoreboard.feature.ShTransferableConfig
+import me.owdding.customscoreboard.feature.customscoreboard.ChunkedStat
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementArea
@@ -233,6 +234,22 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
         },
     ) { _, _ ->
         TabWidgetHelper.updateTablistLineCache()
+    }
+
+    val chunkedStats by observable(
+        draggable(*ChunkedStat.entries.toTypedArray()) {
+            this.translation = "customscoreboard.config.chunked_stats"
+            shPath = "display.chunkedStats.chunkedStats"
+            shMapper = { json: JsonElement -> json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } } }
+        },
+    ) { _, _ ->
+        CustomScoreboardRenderer.updateIslandCache()
+    }
+
+    val statsPerLine by int(3) {
+        this.translation = "customscoreboard.config.chunked_stats_per_line"
+        this.range = 1..5
+        this.shPath = "display.chunkedStats.maxStatsPerLine"
     }
 
     val scale by double(1.0) {
