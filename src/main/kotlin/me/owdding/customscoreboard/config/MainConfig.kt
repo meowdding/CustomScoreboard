@@ -1,6 +1,8 @@
 package me.owdding.customscoreboard.config
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
@@ -37,6 +39,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiv
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSeparator
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSlayer
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSoulflow
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
@@ -68,7 +71,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ),
     )
 
-    override val version = 3
+    override val version = 4
 
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
@@ -92,6 +95,23 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             lines.addProperty("ministerDisplay", ministerEnum.name)
 
             lines.add("line_modification", lines)
+
+            json
+        },
+        3 to UnaryOperator { json ->
+            val items = json.getAsJsonArray("appearance").toMutableList()
+            val copperIndex = items.indexOfFirst { it.asString == ElementCopper.id }
+            val newElement = JsonPrimitive(ElementSowdust.id)
+
+            if (copperIndex != -1) {
+                items.add(copperIndex + 1, newElement)
+            } else {
+                items.add(newElement)
+            }
+
+            val newAppearance = JsonArray()
+            items.forEach { newAppearance.add(it) }
+            json.add("appearance", newAppearance)
 
             json
         },
@@ -122,6 +142,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ElementBank,
         ElementBits,
         ElementCopper,
+        ElementSowdust,
         ElementGems,
         ElementHeat,
         ElementCold,
