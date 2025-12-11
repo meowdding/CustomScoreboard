@@ -25,7 +25,7 @@ object EventMining : Event() {
     private val eventRegex = ComponentRegex("Event: .*")
     private val eventZoneRegex = ComponentRegex("Zone: .*")
     private val raffleUselessRegex = ComponentRegex("Find tickets on the|ground and bring them|to the raffle box")
-    private val raffleTicketsRegex = ComponentRegex("Tickets: \\d+ §7\\([\\d.,]+%\\)")
+    private val raffleTicketsRegex = ComponentRegex("Tickets: \\d+ \\([\\d.,]+%\\)")
     private val rafflePoolRegex = ComponentRegex("Pool: [\\d.,]+")
     private val donUseless = ComponentRegex("Give Tasty Mithril to Don!")
     private val donRemaining = ComponentRegex("Remaining: (?:\\d+ Tasty Mithril|FULL)")
