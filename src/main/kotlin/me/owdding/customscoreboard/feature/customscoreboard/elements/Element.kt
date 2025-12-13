@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.BaseElement
+import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ActionBuilder
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.getElementsFromAny
@@ -26,6 +27,11 @@ abstract class Element : BaseElement {
      */
     protected abstract fun getDisplay(): Any?
     open fun showWhen(): Boolean = true
+
+    /**
+     * Uses the [MainConfig.showActiveOnly] option to hide/show lines, should only be used on currency like and booster cookie/god potion like elements.
+     */
+    open fun isLineActive(): Boolean = true
     abstract val configLine: String
 
     override fun toString() = configLine
@@ -35,7 +41,7 @@ abstract class Element : BaseElement {
     open fun getLines(): List<ScoreboardLine> = if (isVisible()) getElementsFromAny(getDisplay()) else listOf()
 
     private fun isVisible(): Boolean {
-        //if (!informationFilteringConfig.hideIrrelevantLines) return true
+        if (MainConfig.showActiveOnly && !isLineActive()) return false
         return showWhen()
     }
 
