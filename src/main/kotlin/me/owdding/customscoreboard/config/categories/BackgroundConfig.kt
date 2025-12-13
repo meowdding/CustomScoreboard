@@ -6,9 +6,10 @@ import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
 import me.owdding.customscoreboard.feature.ShTransferableCategory
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
-import net.minecraft.util.Util
 import net.minecraft.client.gui.layouts.LayoutElement
+import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.platform.showTooltip
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText
@@ -30,10 +31,7 @@ object BackgroundConfig : ShTransferableCategory("Background") {
         this.translation = "customscoreboard.config.background.color"
         this.allowAlpha = true
         this.shPath = "background.color"
-        this.shMapper = {
-            val color = it.asString.split(":").map { part -> part.toInt() }
-            (color[1] shl 24) or (color[2] shl 16) or (color[3] shl 8) or color[4]
-        }
+        this.shMapper = { it.asString.moulConfigColor() }
     }
 
     val padding by int(5) {

@@ -61,7 +61,7 @@ object Utils {
 
     fun <C : MutableCollection<Component>> C.replaceWithMatches(
         newLines: Collection<Component>,
-        regexes: Collection<ComponentRegex>
+        regexes: Collection<ComponentRegex>,
     ): C = replaceWith {
         newLines.filterTo(this) { component ->
             regexes.any { it.matches(component) }
@@ -83,7 +83,11 @@ object Utils {
     fun Component.sendWithPrefix() = Text.join(PREFIX, this).send()
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> Any?.unsafeCast(): T = this as T
+    inline fun <T> Any?.unsafeCast(): T = this as T
+
+    fun String.moulConfigColor(): Int = split(":").map { part -> part.toInt() }.let {
+        (it[1] shl 24) or (it[2] shl 16) or (it[3] shl 8) or it[4]
+    }
 }
 
 

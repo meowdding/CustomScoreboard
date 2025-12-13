@@ -53,6 +53,7 @@ import me.owdding.customscoreboard.utils.NumberFormatType
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
+import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 import java.util.function.UnaryOperator
 
 object MainConfig : ShTransferableConfig("customscoreboard/config") {
@@ -269,25 +270,26 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
     val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
         this.translation = "customscoreboard.config.number_display_format"
         this.shPath = "display.numberDisplayFormat"
-        this.shMapper = { CustomScoreboardRenderer.NumberDisplayFormat.valueOf(it.asString) }
+        this.shMapper =
+            { valueOfOrNull<CustomScoreboardRenderer.NumberDisplayFormat>(it.asString) ?: CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER }
     }
 
     val numberFormat by enum("number_format", NumberFormatType.LONG) {
         this.translation = "customscoreboard.config.number_format"
         this.shPath = "display.numberFormat"
-        this.shMapper = { NumberFormatType.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<NumberFormatType>(it.asString) ?: NumberFormatType.LONG }
     }
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
         this.translation = "customscoreboard.config.vertical_alignment"
         this.shPath = "display.alignment.verticalAlignment"
-        this.shMapper = { VerticalAlignment.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<VerticalAlignment>(it.asString) ?: VerticalAlignment.CENTER }
     }
 
     val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
         this.translation = "customscoreboard.config.horizontal_alignment"
         this.shPath = "display.alignment.horizontalAlignment"
-        this.shMapper = { HorizontalAlignment.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<HorizontalAlignment>(it.asString) ?: HorizontalAlignment.RIGHT }
     }
 
     val hideWhenTab by boolean(false) {

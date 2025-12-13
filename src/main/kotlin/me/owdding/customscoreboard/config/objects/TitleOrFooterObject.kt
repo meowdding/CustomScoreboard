@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.config.objects
 
 import me.owdding.customscoreboard.feature.ShTransferableObject
 import me.owdding.lib.displays.Alignment
+import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 
 class TitleOrFooterObject(val type: String) : ShTransferableObject() {
 
@@ -9,7 +10,7 @@ class TitleOrFooterObject(val type: String) : ShTransferableObject() {
         this.name = Translated("customscoreboard.config.title_footer.alignment")
         this.description = Translated("customscoreboard.config.title_footer.alignment.desc")
         this.shPath = "display.titleAndFooter.align$type"
-        this.shMapper = { Alignment.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<Alignment>(it.asString) ?: Alignment.CENTER }
     }
 
     val useCustomText by boolean("use_custom_text", false) {

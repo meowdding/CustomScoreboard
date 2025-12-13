@@ -5,6 +5,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayo
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
 import me.owdding.customscoreboard.utils.DateFormat
+import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 
 object LinesConfig : ShTransferableCategory("line_modification") {
 
@@ -13,7 +14,7 @@ object LinesConfig : ShTransferableCategory("line_modification") {
     val dateFormat by enum(DateFormat.US_SLASH_MMDDYYYY) {
         this.translation = "customscoreboard.config.lines.date_format"
         this.shPath = "display.dateFormat"
-        this.shMapper = { DateFormat.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<DateFormat>(it.asString) ?: DateFormat.US_SLASH_MMDDYYYY }
     }
 
     val showBitsAvailable by boolean("bits_available", true) {
@@ -103,7 +104,7 @@ object LinesConfig : ShTransferableCategory("line_modification") {
     val arrowDisplay by enum("arrow_display", ElementQuiver.ArrowDisplay.NUMBER) {
         this.translation = "customscoreboard.config.lines.arrow_display"
         this.shPath = "display.arrow.arrowDisplay"
-        this.shMapper = { ElementQuiver.ArrowDisplay.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<ElementQuiver.ArrowDisplay>(it.asString) ?: ElementQuiver.ArrowDisplay.NUMBER }
     }
 
     val showPiggy by boolean("piggy", false) {
@@ -134,7 +135,7 @@ object LinesConfig : ShTransferableCategory("line_modification") {
     val powderDisplay by enum(ElementPowder.PowderDisplay.CURRENT) {
         this.translation = "customscoreboard.config.lines.powder_display"
         this.shPath = "display.powderDisplay"
-        this.shMapper = { ElementPowder.PowderDisplay.valueOf(it.asString) }
+        this.shMapper = { valueOfOrNull<ElementPowder.PowderDisplay>(it.asString) ?: ElementPowder.PowderDisplay.CURRENT }
     }
 
     val showHypixelPowder by boolean("hypixel_powder", true) {
