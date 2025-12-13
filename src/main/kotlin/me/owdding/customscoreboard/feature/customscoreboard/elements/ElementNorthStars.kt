@@ -21,6 +21,7 @@ object ElementNorthStars : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.JERRYS_WORKSHOP)
+    override fun isLineActive() = CurrencyAPI.northStars > 0
 
     override val configLine = "North Stars"
     override val id = "NORTH_STARS"

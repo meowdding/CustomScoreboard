@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -38,17 +39,34 @@ object ElementPowder : Element() {
         }
     }
 
-    private fun MutableList<Any>.addLine(name: String, current: Number, total: Number, color: String) {
+    private fun MutableList<Any>.addLine(name: String, current: Long, total: Long, color: String) {
         val value = when (LinesConfig.powderDisplay) {
             PowderDisplay.CURRENT -> current.format()
             PowderDisplay.TOTAL -> total.format()
             PowderDisplay.BOTH -> "${current.format()}/${total.format()}"
         }
+        if (MainConfig.showActiveOnly && !isCurrencyActive(current, total)) return
 
         add(" §7- ${CustomScoreboardRenderer.formatNumberDisplayDisplay(name, value, color)}")
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(allIslands)
+    override fun isLineActive() = when {
+        SkyBlockIsland.inAnyIsland(foragingIsland) -> isCurrencyActive(WhispersAPI.forest, WhispersAPI.forestTotal)
+        SkyBlockIsland.inAnyIsland(miningIslands) -> {
+            isCurrencyActive(PowderAPI.mithril, PowderAPI.mithrilTotal) ||
+                isCurrencyActive(PowderAPI.gemstone, PowderAPI.gemstoneTotal) ||
+                isCurrencyActive(PowderAPI.glacite, PowderAPI.glaciteTotal)
+        }
+
+        else -> false
+    }
+
+    private fun isCurrencyActive(current: Long, total: Long): Boolean = when (LinesConfig.powderDisplay) {
+        PowderDisplay.CURRENT -> current > 0
+        PowderDisplay.TOTAL -> total > 0
+        PowderDisplay.BOTH -> current > 0 || total > 0
+    }
 
     override val configLine = "Powder / Whispers"
     override val id = "POWDER"

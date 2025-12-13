@@ -28,6 +28,7 @@ object ElementPurse : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = CurrencyAPI.purse > 0
 
     override val configLine = "Purse"
     override val id = "PURSE"

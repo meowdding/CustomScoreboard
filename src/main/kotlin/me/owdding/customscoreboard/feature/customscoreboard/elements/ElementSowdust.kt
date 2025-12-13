@@ -20,6 +20,7 @@ object ElementSowdust : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GARDEN)
+    override fun isLineActive() = false //CurrencyAPI.sowdust > 0
 
     override val configLine = "Sowdust"
     override val id = "SOWDUST"

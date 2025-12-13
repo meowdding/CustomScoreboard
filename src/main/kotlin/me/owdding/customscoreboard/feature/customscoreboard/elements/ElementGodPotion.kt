@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.Utils.toFormatYears
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
 
 @ScoreboardElement
@@ -13,6 +14,9 @@ object ElementGodPotion : Element() {
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("God Potion", line, "§c")
     }
+
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = EffectsAPI.godPotionDuration.isPositive()
 
     override val configLine: String = "God Potion"
     override val id = "GOD_POTION"

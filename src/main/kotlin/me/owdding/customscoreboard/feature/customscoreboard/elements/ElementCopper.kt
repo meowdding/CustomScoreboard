@@ -24,6 +24,7 @@ object ElementCopper : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GARDEN)
+    override fun isLineActive() = CurrencyAPI.copper > 0
 
     override val configLine = "Copper"
     override val id = "COPPER"
