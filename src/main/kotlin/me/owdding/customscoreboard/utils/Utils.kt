@@ -82,7 +82,7 @@ object Utils {
 
     fun Component.sendWithPrefix() = Text.join(PREFIX, this).send()
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "NOTHING_TO_INLINE")
     inline fun <T> Any?.unsafeCast(): T = this as T
 
     fun String.moulConfigColor(): Int = split(":").map { part -> part.toInt() }.let {
