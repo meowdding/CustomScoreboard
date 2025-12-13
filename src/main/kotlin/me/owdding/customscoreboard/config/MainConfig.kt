@@ -245,6 +245,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     val showActiveOnly by boolean(false) {
         this.translation = "customscoreboard.config.show_active_only"
+        // this.shPath = "informationFiltering.hideEmptyLines"
     }
 
     val updateNotification by boolean("update_notification", true) {
