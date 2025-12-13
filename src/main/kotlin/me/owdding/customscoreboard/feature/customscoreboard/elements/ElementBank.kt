@@ -21,12 +21,15 @@ object ElementBank : Element(), NumberTrackingElement {
         else super.format(number)
     }
 
+    fun line() = when (ProfileAPI.coop) {
+        true -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
+        false -> format(CurrencyAPI.coopBank)
+    }
+
+
     override fun getDisplay(): Any {
         checkDifference(CurrencyAPI.coopBank)
-        val line = when (ProfileAPI.coop) {
-            true -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
-            false -> format(CurrencyAPI.coopBank)
-        } + temporaryChangeDisplay.orEmpty()
+        val line = line() + temporaryChangeDisplay.orEmpty()
 
         val element = CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
         return if (!hasCookieActive()) element else element.withActions {

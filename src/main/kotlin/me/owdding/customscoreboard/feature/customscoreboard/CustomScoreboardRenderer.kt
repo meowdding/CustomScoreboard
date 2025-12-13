@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
 import me.owdding.customscoreboard.feature.ModCompat
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.createColumn
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
@@ -213,5 +214,6 @@ object CustomScoreboardRenderer {
     private fun isEnabled() = (LocationAPI.isOnSkyBlock || MainConfig.outsideSkyBlock) && MainConfig.enabled
     fun shouldUseCustomLines() = MainConfig.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && MainConfig.hideHypixelScoreboard
-    fun renderScoreboardOverhaul() = LocationAPI.isOnSkyBlock && MainConfig.enabled && MainConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled()
+    fun renderScoreboardOverhaul() =
+        LocationAPI.isOnSkyBlock && MainConfig.enabled && ModCompatibilityConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled()
 }
