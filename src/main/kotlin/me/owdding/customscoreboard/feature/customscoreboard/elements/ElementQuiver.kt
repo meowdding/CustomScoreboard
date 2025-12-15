@@ -49,6 +49,7 @@ object ElementQuiver : Element() {
     }
 
     override fun showWhen() = McPlayer.inventory.any { it.item == Items.BOW }
+    override fun isLineActive() = QuiverAPI.currentAmount != null && QuiverAPI.currentAmount!! > 0
 
     override val configLine = "Quiver"
     override val id = "QUIVER"

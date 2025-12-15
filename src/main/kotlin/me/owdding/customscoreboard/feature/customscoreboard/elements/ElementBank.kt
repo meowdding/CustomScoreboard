@@ -39,6 +39,7 @@ object ElementBank : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = CurrencyAPI.coopBank > 0 || CurrencyAPI.personalBank > 0
 
     override val configLine = "Bank"
     override val id = "BANK"

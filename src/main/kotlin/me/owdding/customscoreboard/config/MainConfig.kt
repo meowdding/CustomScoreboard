@@ -320,6 +320,11 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.translation = "customscoreboard.config.outside_skyblock"
     }
 
+    val showActiveOnly by boolean(false) {
+        this.translation = "customscoreboard.config.show_active_only"
+        this.shPath = "informationFiltering.hideEmptyLines"
+    }
+
     val updateNotification by boolean("update_notification", true) {
         this.translation = "customscoreboard.config.update_notification"
     }

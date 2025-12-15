@@ -21,6 +21,7 @@ object ElementGems : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = CurrencyAPI.gems > 0
 
     override val configLine = "Gems"
     override val id = "GEMS"

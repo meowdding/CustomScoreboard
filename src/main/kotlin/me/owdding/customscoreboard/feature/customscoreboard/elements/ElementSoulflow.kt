@@ -28,8 +28,8 @@ object ElementSoulflow : Element(), NumberTrackingElement {
     }
 
     override fun showWhen() = soulflowInTablist
-
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = CurrencyAPI.soulflow > 0
 
     override val configLine = "Soulflow"
     override val id = "SOULFLOW"
