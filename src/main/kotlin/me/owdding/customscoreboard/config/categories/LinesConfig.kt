@@ -137,7 +137,12 @@ object LinesConfig : CategoryKt("line_modification") {
     val powderDisplay by enum(ElementPowder.PowderDisplay.CURRENT) {
         this.translation = "customscoreboard.config.lines.powder_display"
         this.shPath = "display.powderDisplay"
-        this.shMapper = { valueOfOrNull<ElementPowder.PowderDisplay>(it.asString) ?: ElementPowder.PowderDisplay.CURRENT }
+        this.shMapper = {
+            when (it.asString) {
+                "AVAILABLE" -> ElementPowder.PowderDisplay.CURRENT
+                else -> valueOfOrNull<ElementPowder.PowderDisplay>(it.asString) ?: ElementPowder.PowderDisplay.CURRENT
+            }
+        }
     }
 
     val showHypixelPowder by boolean("hypixel_powder", true) {
