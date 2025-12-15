@@ -8,13 +8,13 @@ kotlin-symbol-processor = "2.2.0-2.0.2"
 kotlin_poet = "1.0.1"
 kotlin_poet_ksp = "1.0.1"
 
-skyblockapi = "4.0.0-beta.6"
+skyblockapi = "4.0.0"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
 rconfigkt = "3.5.16"
 
-meowdding-lib = "4.0.0-beta.4"
+meowdding-lib = "4.0.0"
 meowdding-ktmodules = "1.0.8"
 meowdding-auto-mixins = "1.0.5"
 
