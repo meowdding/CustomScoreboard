@@ -15,11 +15,12 @@ object ElementBits : Element(), NumberTrackingElement {
     override var temporaryChangeDisplay: String? = null
     override val numberColor = "§b"
 
+    fun line() = (CurrencyAPI.bits.format() + if (LinesConfig.showBitsAvailable) "§7/§b${CommunityCenterAPI.bitsAvailable.format()}" else "")
+
     override fun getDisplay(): Any {
         val bits = CurrencyAPI.bits
         checkDifference(bits)
-        val line = (bits.format() + if (LinesConfig.showBitsAvailable) "§7/§b${CommunityCenterAPI.bitsAvailable.format()}" else "") +
-            temporaryChangeDisplay.orEmpty()
+        val line = line() + temporaryChangeDisplay.orEmpty()
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Bits", line, numberColor).withActions {
             hover = listOf("§7Click to open the SkyBlock menu to resync your bits.")

@@ -25,6 +25,14 @@
                 "@value": "Select Tablist Lines",
                 "desc": "Select Tablist Lines which will be able to be selected in the \"Appearance\" list and rendered inbetween Scoreboard lines."
             },
+            "chunked_stats": {
+                "@value": "Chunked Stats",
+                "desc": "Enable having multiple currencies and other stuff in one line to save space."
+            },
+            "chunked_stats_per_line": {
+                "@value": "Chunked Stats Per Line",
+                "desc": "Choose how many chunked stats are shown per line."
+            },
             "scale": {
                 "@value": "Scale",
                 "desc": "Choose the scale of the scoreboard."
@@ -83,15 +91,6 @@
             "show_active_only": {
                 "@value": "Show Active Elements Only",
                 "desc": "Hides Elements where the currency of the line is zero (like having no Purse) or other lines like the Booster Cookie Line if no cookie is active."
-            },
-            "scoreboard_overhaul": {
-                "@value": "Scoreboard Overhaul Compatibility",
-                "desc": [
-                    "§6Requires Scoreboard Overhaul to be installed.",
-                    "If enabled, the custom lines will render inside the Scoreboard Overhaul scoreboard.",
-                    "First line of the appearance option will be used as the title, no more no less.",
-                    "§cThis will only work inside SkyBlock. Click and hover actions, aswell as padding, marging, background, etc. wont work on them."
-                ]
             },
             "update_notification": {
                 "@value": "Update Notification",
@@ -261,6 +260,34 @@
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",
                     "desc": "Show the individual minutes of the current SkyBlock time instead of only updating every ~8 seconds.\nWill turn off if the smoothing is too inaccurate"
+                }
+            },
+            "compatibility": {
+                "scoreboard_overhaul": {
+                    "@value": "Scoreboard Overhaul Compatibility",
+                    "desc": [
+                        "§6Requires Scoreboard Overhaul to be installed.",
+                        "If enabled, the custom lines will render inside the Scoreboard Overhaul scoreboard.",
+                        "First line of the appearance option will be used as the title, no more no less.",
+                        "§cThis will only work inside SkyBlock. Click and hover actions, aswell as padding, marging, background, etc. wont work on them."
+                    ],
+                    "toggle": {
+                        "@value": "Override Scoreboard Overhaul",
+                        "desc": "Overrides Scoreboard Overhaul's lines with the custom scoreboard lines."
+                    }
+                },
+                "skyhanni": {
+                    "@value": "SkyHanni Compatibility",
+                    "desc": "§6Requires SkyHanni to be installed.",
+                    "button": {
+                        "@value": "Transfer SkyHanni Settings",
+                        "desc": "Click to transfer SkyHanni's CustomScoreboard settings to this mod's settings.",
+                        "text": "Transfer"
+                    },
+                    "override": {
+                        "@value": "Override SkyHanni Scoreboard",
+                        "desc": "Overrides SkyHanni's scoreboard with the custom scoreboard."
+                    }
                 }
             }
         },

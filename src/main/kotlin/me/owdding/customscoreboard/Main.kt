@@ -3,6 +3,7 @@ package me.owdding.customscoreboard
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
+import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -17,6 +18,7 @@ import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
+import me.owdding.lib.utils.MeowddingLogger
 import me.owdding.lib.utils.MeowddingUpdateChecker
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
@@ -38,7 +40,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
-object Main : ClientModInitializer {
+object Main : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResolve() {
 
     val SELF = FabricLoader.getInstance().getModContainer("customscoreboard").get()
     val MOD_ID: String = SELF.metadata.id
@@ -50,12 +52,13 @@ object Main : ClientModInitializer {
     )
 
     val configurator = Configurator("customscoreboard")
+    lateinit var config: ResourcefulConfig
 
     private val allScoreboardElements = mutableListOf<Element>()
     val allPossibleScoreboardElements get() = allScoreboardElements + TabWidgetHelper.tablistLineCache
 
     override fun onInitializeClient() {
-        MainConfig.register(configurator)
+        this.config = MainConfig.register(configurator)
         ResourcefulConfigUI.registerElementRenderer(CUSTOM_DRAGGABLE_RENDERER, ::CustomDraggableList)
 
         CustomScoreboardModules.init { SkyBlockAPI.eventBus.register(it) }
