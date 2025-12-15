@@ -80,6 +80,10 @@
                     "If enabled, it will use that servers lines without adding any other special lines."
                 ]
             },
+            "show_active_only": {
+                "@value": "Show Active Elements Only",
+                "desc": "Hides Elements where the currency of the line is zero (like having no Purse) or other lines like the Booster Cookie Line if no cookie is active."
+            },
             "scoreboard_overhaul": {
                 "@value": "Scoreboard Overhaul Compatibility",
                 "desc": [

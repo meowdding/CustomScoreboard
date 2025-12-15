@@ -18,6 +18,8 @@ object ElementCookieBuff : Element() {
         }
     }
 
+    override fun isLineActive() = EffectsAPI.isBoosterCookieActive
+
     override val configLine = "Cookie Buff"
     override val id = "COOKIE_BUFF"
 }

@@ -21,6 +21,7 @@ object ElementMotes : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = RiftAPI.motes > 0
 
     override val configLine = "Motes"
     override val id = "MOTES"
