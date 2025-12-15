@@ -24,7 +24,7 @@ enum class ChunkedStat(val display: () -> String, val element: Element) {
     BANK({ "§6${ElementBank.line()}" }, ElementBank),
     BITS({ "§b${ElementBits.line()}" }, ElementBits),
     COPPER({ "§c${CurrencyAPI.copper.format()}" }, ElementCopper),
-    SOWDUST({ "Sow Dust" }, ElementSowdust), // TODO
+    SOWDUST({ "§2${CurrencyAPI.sowdust.format()}" }, ElementSowdust),
     GEMS({ "§a${CurrencyAPI.gems.format()}" }, ElementGems),
     HEAT({ if (HollowsAPI.immuneToHeat) "§6IMMUNE" else "§c${HollowsAPI.heat}" }, ElementHeat),
     COLD({ "§b${GlaciteAPI.cold.format()}" }, ElementCold),
