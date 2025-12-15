@@ -1,13 +1,15 @@
 package me.owdding.customscoreboard.config.categories
 
-import me.owdding.customscoreboard.feature.ShTransferableCategory
+import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
+import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
+import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
 import me.owdding.customscoreboard.utils.DateFormat
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 
-object LinesConfig : ShTransferableCategory("line_modification") {
+object LinesConfig : CategoryKt("line_modification") {
 
     override val name = Literal("Line Modification")
 

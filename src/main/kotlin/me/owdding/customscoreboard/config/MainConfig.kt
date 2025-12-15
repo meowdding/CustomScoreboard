@@ -6,6 +6,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
+import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
@@ -13,7 +14,8 @@ import me.owdding.customscoreboard.config.categories.BackgroundConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
 import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
-import me.owdding.customscoreboard.feature.ShTransferableConfig
+import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
+import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.ChunkedStat
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
@@ -56,7 +58,7 @@ import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 import java.util.function.UnaryOperator
 
-object MainConfig : ShTransferableConfig("customscoreboard/config") {
+object MainConfig : ConfigKt("customscoreboard/config") {
 
     override val name = TranslatableValue("Custom Scoreboard Config")
     override val description = TranslatableValue("by j10a1n15. Version ${Main.VERSION}")
@@ -183,8 +185,8 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
         transform(
             strings(*default.toTypedArray()) {
                 this.translation = "customscoreboard.config.appearance"
-                renderer = CUSTOM_DRAGGABLE_RENDERER
-                shPath = "scoreboardEntries"
+                this.renderer = CUSTOM_DRAGGABLE_RENDERER
+                this.shPath = "scoreboardEntries"
                 shMapper = { json: JsonElement ->
                     json.asJsonArray.mapNotNull {
                         when (val string = it.asString) {
@@ -211,8 +213,8 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
     val events by observable(
         draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
             this.translation = "customscoreboard.config.events"
-            shPath = "display.events.eventEntries"
-            shMapper = { json: JsonElement ->
+            this.shPath = "display.events.eventEntries"
+            this.shMapper = { json: JsonElement ->
                 json.asJsonArray.mapNotNull {
                     val name = it.asString
                     val changes = mapOf(
@@ -240,8 +242,8 @@ object MainConfig : ShTransferableConfig("customscoreboard/config") {
     val chunkedStats by observable(
         draggable(*ChunkedStat.entries.toTypedArray()) {
             this.translation = "customscoreboard.config.chunked_stats"
-            shPath = "display.chunkedStats.chunkedStats"
-            shMapper = { json: JsonElement -> json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } } }
+            this.shPath = "display.chunkedStats.chunkedStats"
+            this.shMapper = { json: JsonElement -> json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } } }
         },
     ) { _, _ ->
         CustomScoreboardRenderer.updateIslandCache()

@@ -1,10 +1,12 @@
 package me.owdding.customscoreboard.config.objects
 
-import me.owdding.customscoreboard.feature.ShTransferableObject
+import com.teamresourceful.resourcefulconfigkt.api.ObjectKt
+import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
+import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.lib.displays.Alignment
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 
-class TitleOrFooterObject(val type: String) : ShTransferableObject() {
+class TitleOrFooterObject(val type: String) : ObjectKt() {
 
     val alignment by enum(Alignment.CENTER) {
         this.name = Translated("customscoreboard.config.title_footer.alignment")

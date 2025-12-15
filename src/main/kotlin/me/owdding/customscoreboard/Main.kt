@@ -3,6 +3,7 @@ package me.owdding.customscoreboard
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
+import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -51,12 +52,13 @@ object Main : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResol
     )
 
     val configurator = Configurator("customscoreboard")
+    lateinit var config: ResourcefulConfig
 
     private val allScoreboardElements = mutableListOf<Element>()
     val allPossibleScoreboardElements get() = allScoreboardElements + TabWidgetHelper.tablistLineCache
 
     override fun onInitializeClient() {
-        MainConfig.register(configurator)
+        this.config = MainConfig.register(configurator)
         ResourcefulConfigUI.registerElementRenderer(CUSTOM_DRAGGABLE_RENDERER, ::CustomDraggableList)
 
         CustomScoreboardModules.init { SkyBlockAPI.eventBus.register(it) }

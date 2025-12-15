@@ -1,10 +1,12 @@
 package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
+import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
-import me.owdding.customscoreboard.feature.ShTransferableCategory
+import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
+import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
@@ -20,7 +22,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.underlined
 import kotlin.io.path.Path
 import kotlin.jvm.optionals.getOrNull
 
-object BackgroundConfig : ShTransferableCategory("Background") {
+object BackgroundConfig : CategoryKt("Background") {
 
     val enabled by boolean(true) {
         this.translation = "customscoreboard.config.background.enabled"
