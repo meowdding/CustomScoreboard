@@ -42,9 +42,7 @@ object ElementTime : Element() {
                 DateTimeAPI.isDay -> "§e☀"
                 else -> "§b☽"
             }
-        } else {
-            "§c⚠"
-        }
+        } else "§c⚠"
 
         append(" $symbol")
     }
