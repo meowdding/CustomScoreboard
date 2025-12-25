@@ -13,25 +13,28 @@ object ElementTime : Element() {
     override fun getDisplay() = buildString {
         append("§7")
 
-        var hour: Int
+        var rawHour: Int
         val minutes: Int
 
         val now = SkyBlockInstant.now()
         if (LinesConfig.smoothTime && isInstantAccurate(now)) {
-            hour = now.hour
+            rawHour = now.hour
             minutes = now.minute
         } else {
-            hour = DateTimeAPI.hour
+            rawHour = DateTimeAPI.hour
             minutes = DateTimeAPI.minute
         }
 
-        if (!LinesConfig.time24hFormat) {
-            hour = if (hour % 12 == 0) 12 else hour % 12
+        val displayHour = if (!LinesConfig.time24hFormat) {
+            if (rawHour % 12 == 0) 12 else rawHour % 12
+        } else {
+            rawHour
         }
-        append(String.format("%02d:%02d", hour, minutes))
+
+        append(String.format("%02d:%02d", displayHour, minutes))
 
         if (!LinesConfig.time24hFormat) {
-            if (hour >= 12) append("pm") else append("am")
+            if (rawHour >= 12) append("pm") else append("am")
         }
 
         val symbol = if (McLevel.hasLevel) {
@@ -41,9 +44,7 @@ object ElementTime : Element() {
                 DateTimeAPI.isDay -> "§e☀"
                 else -> "§b☽"
             }
-        } else {
-            "§c⚠"
-        }
+        } else "§c⚠"
 
         append(" $symbol")
     }
