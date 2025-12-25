@@ -25,11 +25,9 @@ object ElementTime : Element() {
             minutes = DateTimeAPI.minute
         }
 
-        val displayHour = if (!LinesConfig.time24hFormat) {
-            if (rawHour % 12 == 0) 12 else rawHour % 12
-        } else {
-            rawHour
-        }
+        val displayHour = if (!LinesConfig.time24hFormat) if (rawHour % 12 == 0) 12 else rawHour % 12
+        else rawHour
+
 
         append(String.format("%02d:%02d", displayHour, minutes))
 
