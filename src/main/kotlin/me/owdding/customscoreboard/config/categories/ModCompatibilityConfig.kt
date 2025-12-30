@@ -19,6 +19,10 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
         this.translation = "customscoreboard.config.compatibility.scoreboard_overhaul.toggle"
     }
 
+    val skyblockLevelColor by boolean(false) {
+        this.translation = "customscoreboard.config.compatibility.scoreboard_overhaul.skyblock_level_color"
+    }
+
     init {
         separator {
             this.title = "customscoreboard.config.compatibility.skyhanni"

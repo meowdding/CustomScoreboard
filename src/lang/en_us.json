@@ -274,6 +274,10 @@
                     "toggle": {
                         "@value": "Override Scoreboard Overhaul",
                         "desc": "Overrides Scoreboard Overhaul's lines with the custom scoreboard lines."
+                    },
+                    "skyblock_level_color": {
+                        "@value": "SkyBlock Level Color",
+                        "desc": "Colors the outline based on your SkyBlock Level."
                     }
                 },
                 "skyhanni": {
