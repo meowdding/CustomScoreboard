@@ -24,7 +24,7 @@ object EventDojo : Event() {
 
     private val challengeRegex = ComponentRegex("Challenge: (?<challenge>.+)")
     private val difficultyRegex = ComponentRegex("Difficulty: (?<difficulty>.+)")
-    private val pointsRegex = ComponentRegex("Points: [\\w.]+.*")
+    private val pointsRegex = ComponentRegex("Points: -?[\\w.]+.*")
     private val timeRegex = ComponentRegex("Time: [\\w.]+.*")
 
     private val patterns = listOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
