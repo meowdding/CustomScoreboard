@@ -111,15 +111,10 @@ object CustomScoreboardRenderer {
             event.graphics.drawTexture(
                 x, y, width, height,
                 CustomScoreboardBackground.getTexture(),
-                radius = BackgroundConfig.radius,
                 alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
             )
         } else {
-            event.graphics.drawRec(
-                x, y, width, height,
-                BackgroundConfig.backgroundColor,
-                radius = BackgroundConfig.radius,
-            )
+            event.graphics.drawRec(x, y, width, height)
         }
     }
 
