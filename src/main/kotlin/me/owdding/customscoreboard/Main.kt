@@ -47,9 +47,7 @@ object Main : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResol
     val VERSION: String = SELF.metadata.version.friendlyString
 
     private val globalJob: Job = Job(null)
-    val coroutineScope = CoroutineScope(
-        CoroutineName("CustomScoreboard") + SupervisorJob(globalJob),
-    )
+    val coroutineScope = CoroutineScope(CoroutineName("CustomScoreboard") + SupervisorJob(globalJob))
 
     val configurator = Configurator("customscoreboard")
     lateinit var config: ResourcefulConfig
