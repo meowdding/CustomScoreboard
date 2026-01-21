@@ -15,7 +15,7 @@ object RenderUtils {
                     this@drawRec, x, y, width, height,
                     backgroundColor,
                     borderColorTopLeft, borderColorTopRight,
-                    borderColorBottomRight, borderColorBottomLeft,
+                    borderColorBottomLeft, borderColorBottomRight,
                     radius, borderSize,
                 )
             } else {

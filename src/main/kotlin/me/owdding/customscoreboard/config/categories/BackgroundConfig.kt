@@ -76,28 +76,28 @@ object BackgroundConfig : CategoryKt("Background") {
         this.shPath = "background.outline.thickness"
     }
 
-    val borderColorTopLeft by color(0x32A1DB) {
+    val borderColorTopLeft by color(0xFF32A1DB.toInt()) {
         this.translation = "customscoreboard.config.background.border.color.topleft"
         this.allowAlpha = true
         this.shPath = "background.outline.colorTop"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
-    val borderColorTopRight by color(0x32DBC2) {
+    val borderColorTopRight by color(0xFF32DBC2.toInt()) {
         this.translation = "customscoreboard.config.background.border.color.topright"
         this.allowAlpha = true
         this.shPath = "background.outline.colorTop"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
-    val borderColorBottomLeft by color(0x29C4AE) {
+    val borderColorBottomLeft by color(0xFF29C4AE.toInt()) {
         this.translation = "customscoreboard.config.background.border.color.bottomleft"
         this.allowAlpha = true
         this.shPath = "background.outline.colorBottom"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
-    val borderColorBottomRight by color(0x2BCF7A) {
+    val borderColorBottomRight by color(0xFF2BCF7A.toInt()) {
         this.translation = "customscoreboard.config.background.border.color.bottomright"
         this.allowAlpha = true
         this.shPath = "background.outline.colorBottom"
