@@ -101,11 +101,12 @@ object CustomScoreboardRenderer {
     private fun renderBackground(event: RenderHudEvent) {
         if (!BackgroundConfig.enabled) return
         val padding = BackgroundConfig.padding
+        val borderOffset = if (BackgroundConfig.borderEnabled) BackgroundConfig.borderSize else 0
 
-        val x = position.first - padding
-        val y = position.second - padding
-        val width = dimensions.first + padding * 2
-        val height = dimensions.second + padding * 2
+        val x = position.first - padding - borderOffset
+        val y = position.second - padding - borderOffset
+        val width = dimensions.first + padding * 2 + borderOffset * 2
+        val height = dimensions.second + padding * 2 + borderOffset * 2
 
         if (BackgroundConfig.imageBackground) {
             event.graphics.drawTexture(
@@ -153,16 +154,17 @@ object CustomScoreboardRenderer {
         with(BackgroundConfig) {
             val width = display?.width ?: 0
             val height = display?.height ?: 0
+            val borderSize = if (borderEnabled) this.borderSize else 0
 
             val newX = when (MainConfig.horizontalAlignment) {
-                HorizontalAlignment.LEFT -> padding + margin
+                HorizontalAlignment.LEFT -> padding + margin + borderSize
                 HorizontalAlignment.CENTER -> (screenWidth - width) / 2
-                HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin
+                HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin - borderSize
             }
             val newY = when (MainConfig.verticalAlignment) {
-                VerticalAlignment.TOP -> padding + margin
+                VerticalAlignment.TOP -> padding + margin + borderSize
                 VerticalAlignment.CENTER -> (screenHeight - height) / 2
-                VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin
+                VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin - borderSize
             }
             position = newX to newY
             dimensions = width to height

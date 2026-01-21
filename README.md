@@ -22,7 +22,6 @@ Elements that are in both mods are not listed for obvious reasons.
 |-------------------------------------------------------------------------------------|--------------|-----------------------|
 | Hypixel Lines                                                                       | ✅            | ✅                     |
 | Rounded Background                                                                  | ✅            | ✅                     |
-| Rounded Background with Outline                                                     | ✅            | ❌                     |
 | Rounded Textured Background                                                         | ✅            | ✅                     |
 | Custom Lines in [Scoreboard Overhaul](https://modrinth.com/mod/scoreboard-overhaul) | ❌            | ✅                     |
 | Ingame Background Texture Adder                                                     | ❌            | ✅                     |
