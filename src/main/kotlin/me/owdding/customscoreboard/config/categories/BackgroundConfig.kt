@@ -59,8 +59,55 @@ object BackgroundConfig : CategoryKt("Background") {
 
     init {
         separator {
-            this.title = "customscoreboard.config.background.separator"
-            this.description = "customscoreboard.config.background.separator.desc"
+            this.title = "customscoreboard.config.background.border.separator"
+            this.description = "customscoreboard.config.background.border.separator.desc"
+        }
+    }
+
+    val borderEnabled by boolean(false) {
+        this.translation = "customscoreboard.config.background.border.enabled"
+        this.shPath = "background.outline.enabled"
+    }
+
+    val borderSize by int(3) {
+        this.translation = "customscoreboard.config.background.border.size"
+        this.range = 0..10
+        this.slider = true
+        this.shPath = "background.outline.thickness"
+    }
+
+    val borderColorTopLeft by color(0xFF32A1DB.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.topleft"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorTop"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    val borderColorTopRight by color(0xFF32DBC2.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.topright"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorTop"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    val borderColorBottomLeft by color(0xFF29C4AE.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.bottomleft"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorBottom"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    val borderColorBottomRight by color(0xFF2BCF7A.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.bottomright"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorBottom"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    init {
+        separator {
+            this.title = "customscoreboard.config.background.image.separator"
+            this.description = "customscoreboard.config.background.image.separator.desc"
         }
     }
 
@@ -116,7 +163,6 @@ object CustomBackgroundModal {
                     context.x + (context.width - realWidth) / 2, context.y,
                     realWidth, context.height,
                     CustomScoreboardBackground.getTexture(),
-                    radius = BackgroundConfig.radius,
                     alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
                 )
             }

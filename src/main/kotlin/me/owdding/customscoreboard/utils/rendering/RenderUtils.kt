@@ -9,11 +9,23 @@ import net.minecraft.util.ARGB
 
 object RenderUtils {
     fun GuiGraphics.drawRec(x: Int, y: Int, width: Int, height: Int) {
-        RoundedRectangle.draw(
-            this, x, y, width, height,
-            BackgroundConfig.backgroundColor, BackgroundConfig.backgroundColor,
-            BackgroundConfig.radius.toFloat(), 0,
-        )
+        with(BackgroundConfig) {
+            if (BackgroundConfig.borderEnabled) {
+                RoundedRectangle.draw(
+                    this@drawRec, x, y, width, height,
+                    backgroundColor,
+                    borderColorTopLeft, borderColorTopRight,
+                    borderColorBottomLeft, borderColorBottomRight,
+                    radius, borderSize,
+                )
+            } else {
+                RoundedRectangle.draw(
+                    this@drawRec, x, y, width, height,
+                    backgroundColor, backgroundColor,
+                    radius.toFloat(), 0,
+                )
+            }
+        }
     }
 
     fun GuiGraphics.drawTexture(
