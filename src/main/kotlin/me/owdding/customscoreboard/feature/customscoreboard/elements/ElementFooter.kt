@@ -1,14 +1,14 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
 
 @ScoreboardElement
 object ElementFooter : Element() {
-    override fun getDisplay() = MainConfig.footer.let { f ->
-        if (f.useCustomText) f.text.formatFooter().map { it align f.alignment } else "§ewww.hypixel.net" align f.alignment
+    override fun getDisplay() = with(CustomizationConfig) {
+        if (footerUseCustomText) footerText.formatFooter().map { it align footerAlignment } else "§ewww.hypixel.net" align footerAlignment
     }
 
     override val configLine = "§ewww.hypixel.net"

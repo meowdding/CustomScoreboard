@@ -5,6 +5,7 @@ import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.components.compound.LayoutWidget
 import earth.terrarium.olympus.client.components.string.TextWidget
 import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.mixins.accessor.TextWidgetAccessor
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
@@ -13,11 +14,11 @@ import me.owdding.lib.displays.Alignment
 import me.owdding.lib.displays.Display
 import me.owdding.lib.displays.DisplayWidget
 import me.owdding.lib.layouts.Scalable
-import net.minecraft.util.Util
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.layouts.Layout
 import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
+import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
@@ -114,10 +115,10 @@ data class ScoreboardLine(
             this@createColumn.forEach { line ->
                 widget(line.widget, line::applySettings)
             }
-        }).also { (it as Scalable).scale(MainConfig.scale) }
+        }).also { (it as Scalable).scale(CustomizationConfig.scale) }
 
         fun getVanillaLines() = buildList {
-            McClient.scoreboardTitle?.let { add(ScoreboardLine(it, MainConfig.title.alignment)) }
+            McClient.scoreboardTitle?.let { add(ScoreboardLine(it, CustomizationConfig.titleAlignment)) }
             McClient.scoreboard.forEach { add(ScoreboardLine(it)) }
         }
     }

@@ -58,10 +58,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     init {
-        separator {
-            this.title = "customscoreboard.config.background.border.separator"
-            this.description = "customscoreboard.config.background.border.separator.desc"
-        }
+        separator { this.title = "customscoreboard.config.background.sections.border" }
     }
 
     val borderEnabled by boolean(false) {
@@ -105,10 +102,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     init {
-        separator {
-            this.title = "customscoreboard.config.background.image.separator"
-            this.description = "customscoreboard.config.background.image.separator.desc"
-        }
+        separator { this.title = "customscoreboard.config.background.sections.image" }
     }
 
     val imageBackground by boolean(false) {

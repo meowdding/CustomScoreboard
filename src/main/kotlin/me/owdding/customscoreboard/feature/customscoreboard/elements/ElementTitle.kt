@@ -1,7 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.config.MainConfig
-import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
@@ -10,9 +9,9 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 @ScoreboardElement
 object ElementTitle : Element() {
     override fun getDisplay() = when {
-        LinesConfig.useHypixelTitle -> McClient.scoreboardTitle?.align(MainConfig.title.alignment)
-        MainConfig.title.useCustomText -> MainConfig.title.text.formatTitle().map { it align MainConfig.title.alignment }
-        else -> "§e§lSkyBlock" align MainConfig.title.alignment
+        CustomizationConfig.useHypixelTitle -> McClient.scoreboardTitle?.align(CustomizationConfig.titleAlignment)
+        CustomizationConfig.titleUseCustomText -> CustomizationConfig.titleText.formatTitle().map { it align CustomizationConfig.titleAlignment }
+        else -> "§e§lSkyBlock" align CustomizationConfig.titleAlignment
     }
 
     override val configLine = "§e§lSkyBlock"
