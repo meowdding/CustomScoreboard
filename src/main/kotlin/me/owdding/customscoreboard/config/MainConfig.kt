@@ -282,6 +282,11 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         this.shMapper = { valueOfOrNull<NumberFormatType>(it.asString) ?: NumberFormatType.LONG }
     }
 
+    val showCurrencyGain by boolean(true) {
+        this.translation = "customscoreboard.config.show_currency_gain"
+        this.shPath = "display.showNumberDifference"
+    }
+
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
         this.translation = "customscoreboard.config.vertical_alignment"
         this.shPath = "display.alignment.verticalAlignment"

@@ -5,23 +5,18 @@ import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRend
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.currency.PurseType
 
 @ScoreboardElement
-object ElementPurse : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§6"
-
-    private var isPiggy = false
+object ElementPurse : NumberTrackingElement("§6") {
 
     override fun getDisplay(): String {
         checkDifference(CurrencyAPI.purse.toLong())
         val line = CurrencyAPI.purse.format() + temporaryChangeDisplay.orEmpty()
         return CustomScoreboardRenderer.formatNumberDisplayDisplay(
-            if (isPiggy && LinesConfig.showPiggy) "Piggy" else "Purse",
+            if (CurrencyAPI.purseType == PurseType.PIGGY && LinesConfig.showPiggy) "Piggy" else "Purse",
             line,
             numberColor,
         )
@@ -32,10 +27,4 @@ object ElementPurse : Element(), NumberTrackingElement {
 
     override val configLine = "Purse"
     override val id = "PURSE"
-
-    private val piggyRegex = "Piggy: .*".toRegex()
-
-    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        isPiggy = event.new.any { it.matches(piggyRegex) }
-    }
 }

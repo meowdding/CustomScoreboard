@@ -10,10 +10,7 @@ import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.community.CommunityCenterAPI
 
 @ScoreboardElement
-object ElementBits : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§b"
+object ElementBits : NumberTrackingElement("§b") {
 
     fun line() = (CurrencyAPI.bits.format() + if (LinesConfig.showBitsAvailable) "§7/§b${CommunityCenterAPI.bitsAvailable.format()}" else "")
 

@@ -8,10 +8,7 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
 @ScoreboardElement
-object ElementCopper : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§c"
+object ElementCopper : NumberTrackingElement("§c") {
 
     override fun getDisplay(): Any {
         checkDifference(CurrencyAPI.copper)

@@ -8,10 +8,7 @@ import tech.thatgravyboat.skyblockapi.api.area.rift.RiftAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 
 @ScoreboardElement
-object ElementMotes : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§d"
+object ElementMotes : NumberTrackingElement("§d") {
 
     override fun getDisplay(): String {
         checkDifference(RiftAPI.motes)

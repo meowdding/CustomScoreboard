@@ -15,10 +15,7 @@ import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
 @Module
 @ScoreboardElement
-object ElementSoulflow : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§3"
+object ElementSoulflow : NumberTrackingElement("§3") {
 
     override fun getDisplay(): String {
         checkDifference(CurrencyAPI.soulflow)
