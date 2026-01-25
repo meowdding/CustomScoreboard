@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.config.categories
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
@@ -115,6 +116,10 @@ object LinesConfig : CategoryKt("line_modification") {
 
     val bankAlwaysCompact by boolean(false) {
         this.translation = "customscoreboard.config.lines.bank_always_compact"
+    }
+
+    val coopBankLayout by enum(ElementBank.CoopBankLayout.PERSONAL_COOP) {
+        this.translation = "customscoreboard.config.lines.coop_bank_layout"
     }
 
     val petPrefix by boolean(true) {

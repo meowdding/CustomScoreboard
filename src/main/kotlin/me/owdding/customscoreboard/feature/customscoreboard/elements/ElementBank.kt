@@ -19,7 +19,12 @@ object ElementBank : NumberTrackingElement("§6") {
     }
 
     fun line() = when (ProfileAPI.coop) {
-        true -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
+        true -> when (LinesConfig.coopBankLayout) {
+            CoopBankLayout.PERSONAL_COOP -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
+            CoopBankLayout.COOP_PERSONAL -> "${format(CurrencyAPI.coopBank)}§7/§6${format(CurrencyAPI.personalBank)}"
+            CoopBankLayout.COMBINED -> format(CurrencyAPI.personalBank + CurrencyAPI.coopBank)
+        }
+
         false -> format(CurrencyAPI.coopBank)
     }
 
@@ -41,4 +46,12 @@ object ElementBank : NumberTrackingElement("§6") {
     override val configLine = "Bank"
     override val id = "BANK"
     override val configLineHover = listOf("Cannot be accurate enough,", "so it uses whats in the tablist")
+
+    enum class CoopBankLayout(val display: String) {
+        PERSONAL_COOP("Personal/Coop"),
+        COOP_PERSONAL("Coop/Personal"),
+        COMBINED("Combined Value");
+
+        override fun toString() = display
+    }
 }

@@ -233,6 +233,10 @@
                     "@value": "Bank Always Compact",
                     "desc": "Makes the Bank element ignore the main Number Format option, and always shows shortened (like in tablist)."
                 },
+                "coop_bank_layout": {
+                    "@value": "Co-op Bank Layout",
+                    "desc": "When in a co-op, choose the layout of the bank line."
+                },
                 "pet_max": {
                     "@value": "Show Pet Max Level",
                     "desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden."
