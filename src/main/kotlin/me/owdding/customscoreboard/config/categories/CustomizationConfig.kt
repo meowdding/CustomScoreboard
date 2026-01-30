@@ -66,68 +66,60 @@ object CustomizationConfig : CategoryKt("customization") {
         separator { this.title = "$translationPath.sections.structure" }
     }
 
-    val appearance by observable(
-        transform(
-            strings(*default.toTypedArray()) {
-                this.translation = "$translationPath.appearance"
-                this.renderer = CUSTOM_DRAGGABLE_RENDERER
-                this.shPath = "scoreboardEntries"
-                shMapper = { json: JsonElement ->
-                    json.asJsonArray.mapNotNull {
-                        when (val string = it.asString) {
-                            "EMPTY_LINE" -> ElementSeparator.id
-                            "COOKIE" -> ElementCookieBuff.id
-                            "SKYBLOCK_XP" -> ElementSkyblockLevel.id
-                            "PLAYER_AMOUNT" -> ElementPlayerCount.id
-                            "LOBBY_CODE" -> ElementLobby.id
-                            "LOCATION" -> ElementArea.id
-                            else -> string
-                        }
+    val appearance by transform(
+        strings(*default.toTypedArray()) {
+            this.translation = "$translationPath.appearance"
+            this.renderer = CUSTOM_DRAGGABLE_RENDERER
+            this.shPath = "scoreboardEntries"
+            shMapper = { json: JsonElement ->
+                json.asJsonArray.mapNotNull {
+                    when (val string = it.asString) {
+                        "EMPTY_LINE" -> ElementSeparator.id
+                        "COOKIE" -> ElementCookieBuff.id
+                        "SKYBLOCK_XP" -> ElementSkyblockLevel.id
+                        "PLAYER_AMOUNT" -> ElementPlayerCount.id
+                        "LOBBY_CODE" -> ElementLobby.id
+                        "LOCATION" -> ElementArea.id
+                        else -> string
                     }
-                }
-            },
-            { it.toConfigStrings() },
-            { it.asList().toBaseElements() },
-        ),
-    ) { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
-
-    val events by observable(
-        draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
-            this.translation = "$translationPath.events"
-            this.shPath = "display.events.eventEntries"
-            this.shMapper = { json: JsonElement ->
-                json.asJsonArray.mapNotNull { line ->
-                    val name = line.asString
-                    val changes = mapOf("SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART, "MINING_EVENTS" to ScoreboardEventEntry.MINING)
-                    changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
                 }
             }
         },
-    ) { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+        { it.toConfigStrings() },
+        { it.asList().toBaseElements() },
+    ).observable { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+
+    val events by draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
+        this.translation = "$translationPath.events"
+        this.shPath = "display.events.eventEntries"
+        this.shMapper = { json: JsonElement ->
+            json.asJsonArray.mapNotNull { line ->
+                val name = line.asString
+                val changes = mapOf("SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART, "MINING_EVENTS" to ScoreboardEventEntry.MINING)
+                changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
+            }
+        }
+    }.observable { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
 
     init {
         separator { this.title = "$translationPath.sections.tablist" }
     }
 
-    val tablistLines by observable(
-        draggable<TabWidget> {
-            this.translation = "$translationPath.tablist_lines"
-        },
-    ) { _, _ -> TabWidgetHelper.updateTablistLineCache() }
+    val tablistLines by draggable<TabWidget> {
+        this.translation = "$translationPath.tablist_lines"
+    }.observable { _, _ -> TabWidgetHelper.updateTablistLineCache() }
 
     init {
         separator { this.title = "$translationPath.sections.chunked" }
     }
 
-    val chunkedStats by observable(
-        draggable(*ChunkedStat.entries.toTypedArray()) {
-            this.translation = "$translationPath.chunked_stats"
-            this.shPath = "display.chunkedStats.chunkedStats"
-            this.shMapper = { json: JsonElement ->
-                json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } }
-            }
-        },
-    ) { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+    val chunkedStats by draggable(*ChunkedStat.entries.toTypedArray()) {
+        this.translation = "$translationPath.chunked_stats"
+        this.shPath = "display.chunkedStats.chunkedStats"
+        this.shMapper = { json: JsonElement ->
+            json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } }
+        }
+    }.observable { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
 
     val statsPerLine by int(3) {
         this.translation = "$translationPath.chunked_stats_per_line"
