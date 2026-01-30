@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.BaseElement
 import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ActionBuilder
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.getElementsFromAny
@@ -41,7 +42,7 @@ abstract class Element : BaseElement {
     open fun getLines(): List<ScoreboardLine> = if (isVisible()) getElementsFromAny(getDisplay()) else listOf()
 
     private fun isVisible(): Boolean {
-        if (MainConfig.showActiveOnly && !isLineActive()) return false
+        if (LinesConfig.showActiveOnly && !isLineActive()) return false
         return showWhen()
     }
 

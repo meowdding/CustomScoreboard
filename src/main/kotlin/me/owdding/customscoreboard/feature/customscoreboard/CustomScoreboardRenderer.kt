@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.feature.customscoreboard
 
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
 import me.owdding.customscoreboard.feature.ModCompat
@@ -120,8 +121,8 @@ object CustomScoreboardRenderer {
     }
 
     fun updateIslandCache() {
-        currentIslandElements = MainConfig.appearance.filter { it.showIsland() }
-        currentIslandEvents = MainConfig.events.filter { it.event.showIsland() }
+        currentIslandElements = CustomizationConfig.appearance.filter { it.showIsland() }
+        currentIslandEvents = CustomizationConfig.events.filter { it.event.showIsland() }
     }
 
     private fun updateDisplay() {
@@ -156,12 +157,12 @@ object CustomScoreboardRenderer {
             val height = display?.height ?: 0
             val borderSize = if (borderEnabled) this.borderSize else 0
 
-            val newX = when (MainConfig.horizontalAlignment) {
+            val newX = when (CustomizationConfig.horizontalAlignment) {
                 HorizontalAlignment.LEFT -> padding + margin + borderSize
                 HorizontalAlignment.CENTER -> (screenWidth - width) / 2
                 HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin - borderSize
             }
-            val newY = when (MainConfig.verticalAlignment) {
+            val newY = when (CustomizationConfig.verticalAlignment) {
                 VerticalAlignment.TOP -> padding + margin + borderSize
                 VerticalAlignment.CENTER -> (screenHeight - height) / 2
                 VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin - borderSize
@@ -184,14 +185,14 @@ object CustomScoreboardRenderer {
         updateIslandCache()
     }
 
-    fun formatNumberDisplayDisplay(text: String, number: String, color: String) = when (MainConfig.numberDisplayFormat) {
+    fun formatNumberDisplayDisplay(text: String, number: String, color: String) = when (LinesConfig.numberDisplayFormat) {
         NumberDisplayFormat.TEXT_COLOR_NUMBER -> "§f$text: $color$number"
         NumberDisplayFormat.COLOR_TEXT_NUMBER -> "$color$text: $number"
         NumberDisplayFormat.COLOR_NUMBER_TEXT -> "$color$number $text"
         NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> "$color$number §f$text"
     }
 
-    fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (MainConfig.numberDisplayFormat) {
+    fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (LinesConfig.numberDisplayFormat) {
         NumberDisplayFormat.TEXT_COLOR_NUMBER -> Text.join(text, Text.of(": "), number.copy().withColor(color))
         NumberDisplayFormat.COLOR_TEXT_NUMBER -> Text.join(text, Text.of(": "), number).withColor(color)
         NumberDisplayFormat.COLOR_NUMBER_TEXT -> Text.join(number, Text.of(" "), text).withColor(color)

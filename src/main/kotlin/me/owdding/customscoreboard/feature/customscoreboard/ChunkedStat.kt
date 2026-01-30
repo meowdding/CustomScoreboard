@@ -1,6 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
-import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBits
@@ -34,6 +34,6 @@ enum class ChunkedStat(val display: () -> String, val element: Element) {
     override fun toString(): String = element.configLine
 
     companion object {
-        fun getActive() = MainConfig.chunkedStats.filter { it.element.showWhen() && it.element.showIsland() }.toList()
+        fun getActive() = CustomizationConfig.chunkedStats.filter { it.element.showWhen() && it.element.showIsland() }.toList()
     }
 }

@@ -9,112 +9,118 @@
     "customscoreboard": {
         "@value": "Custom Scoreboard",
         "config": {
-            "enabled": {
-                "@value": "Main Toggle",
-                "desc": "Enable or disable the custom scoreboard"
-            },
-            "appearance": {
-                "@value": "Appearance",
-                "desc": "Edit this list to change the order of appearance of the scoreboard."
-            },
-            "events": {
-                "@value": "Events Priority",
-                "desc": "Edit this list to change the order of appearance of the events."
-            },
-            "tablist_lines": {
-                "@value": "Select Tablist Lines",
-                "desc": "Select Tablist Lines which will be able to be selected in the \"Appearance\" list and rendered inbetween Scoreboard lines."
-            },
-            "chunked_stats": {
-                "@value": "Chunked Stats",
-                "desc": "Enable having multiple currencies and other stuff in one line to save space."
-            },
-            "chunked_stats_per_line": {
-                "@value": "Chunked Stats Per Line",
-                "desc": "Choose how many chunked stats are shown per line."
-            },
-            "scale": {
-                "@value": "Scale",
-                "desc": "Choose the scale of the scoreboard."
-            },
-            "title_options": {
-                "@value": "Title Options",
-                "desc": "Edit the title of the scoreboard."
-            },
-            "footer_options": {
-                "@value": "Footer Options",
-                "desc": "Edit the footer of the scoreboard."
-            },
-            "number_format": {
-                "@value": "Number Format",
-                "desc": "Choose the format of the numbers in the scoreboard."
-            },
-            "number_display_format": {
-                "@value": "Number Display Format",
-                "desc": "Choose the format numbers with their prefix are displayed in the scoreboard."
-            },
-            "show_currency_gain": {
-                "@value": "Show Currency Gain",
-                "desc": "Show the gain of currencies (like Purse, Motes, etc.) on the scoreboard."
-            },
-            "vertical_alignment": {
-                "@value": "Vertical Alignment",
-                "desc": "Choose the vertical alignment of the scoreboard."
-            },
-            "horizontal_alignment": {
-                "@value": "Horizontal Alignment",
-                "desc": "Choose the horizontal alignment of the scoreboard."
-            },
-            "hide_when_tab": {
-                "@value": "Hide While Tablist Open",
-                "desc": "Hide the Custom Scoreboard while the tablist is open."
-            },
-            "hide_when_chat": {
-                "@value": "Hide While Chat Open",
-                "desc": "Hide the Custom Scoreboard while the chat is open."
-            },
-            "hide_hypixel": {
-                "@value": "Hide Hypixel Scoreboard",
-                "desc": "Enable or disable the Hypixel scoreboard."
-            },
-            "text_shadow": {
-                "@value": "Text Shadow",
-                "desc": "Enable or disable the text shadow on the scoreboard."
-            },
-            "custom_lines": {
-                "@value": "Custom Lines",
-                "desc": "Instead of displaying the Hypixel's scoreboard lines, it will display the custom lines you selected in appearance & events."
-            },
-            "outside_skyblock": {
-                "@value": "Outside SkyBlock",
-                "desc": [
-                    "Show the Custom Scoreboard outside SkyBlock.",
-                    "If enabled, it will use that servers lines without adding any other special lines."
-                ]
-            },
-            "show_active_only": {
-                "@value": "Show Active Elements Only",
-                "desc": "Hides Elements where the currency of the line is zero (like having no Purse) or other lines like the Booster Cookie Line if no cookie is active."
-            },
-            "update_notification": {
-                "@value": "Update Notification",
-                "desc": "Enable the update notification."
-            },
-            "title_footer": {
-                "alignment": {
-                    "@value": "Alignment",
-                    "desc": "Choose the alignment of the title and footer."
+            "main": {
+                "enabled": {
+                    "@value": "Main Toggle",
+                    "desc": "Enable or disable the custom scoreboard"
                 },
-                "use_custom_text": {
-                    "@value": "Use Custom Text",
-                    "desc": "Enable or disable custom text for the title and footer."
+                "hide_when_tab": {
+                    "@value": "Hide While Tablist Open",
+                    "desc": "Hide the Custom Scoreboard while the tablist is open."
                 },
-                "custom_text": {
-                    "@value": "Custom Text",
-                    "desc": "Edit the custom text for the title and footer. Use && for colors and \\n for new line."
+                "hide_when_chat": {
+                    "@value": "Hide While Chat Open",
+                    "desc": "Hide the Custom Scoreboard while the chat is open."
+                },
+                "hide_hypixel": {
+                    "@value": "Hide Hypixel Scoreboard",
+                    "desc": "Enable or disable the Hypixel scoreboard."
+                },
+                "text_shadow": {
+                    "@value": "Text Shadow",
+                    "desc": "Enable or disable the text shadow on the scoreboard."
+                },
+                "custom_lines": {
+                    "@value": "Custom Lines",
+                    "desc": "Instead of displaying the Hypixel's scoreboard lines, it will display the custom lines you selected in appearance & events."
+                },
+                "outside_skyblock": {
+                    "@value": "Outside SkyBlock",
+                    "desc": [
+                        "Show the Custom Scoreboard outside SkyBlock.",
+                        "If enabled, it will use that servers lines without adding any other special lines."
+                    ]
+                },
+                "update_notification": {
+                    "@value": "Update Notification",
+                    "desc": "Enable the update notification."
+                }
+            },
+            "customization": {
+                "sections": {
+                    "structure": "Scoreboard Structure",
+                    "tablist": "Tablist Lines",
+                    "chunked": "Chunked Stats",
+                    "title": "Title Settings",
+                    "footer": "Footer Settings",
+                    "layout": "Layout & Scaling"
+                },
+                "appearance": {
+                    "@value": "Appearance",
+                    "desc": "Edit this list to change the order of appearance of the scoreboard."
+                },
+                "events": {
+                    "@value": "Events Priority",
+                    "desc": "Edit this list to change the order of appearance of the events."
+                },
+                "tablist_lines": {
+                    "@value": "Select Tablist Lines",
+                    "desc": "Select Tablist Lines which will be able to be selected in the \"Appearance\" list and rendered inbetween Scoreboard lines."
+                },
+                "chunked_stats": {
+                    "@value": "Chunked Stats",
+                    "desc": "Enable having multiple currencies and other stuff in one line to save space."
+                },
+                "chunked_stats_per_line": {
+                    "@value": "Chunked Stats Per Line",
+                    "desc": "Choose how many chunked stats are shown per line."
+                },
+                "use_hypixel_title": {
+                    "@value": "Use Hypixel Title",
+                    "desc": "Use Hypixel's Scoreboard Title. §cWill override the Custom Title if enabled."
+                },
+                "title_alignment": {
+                    "@value": "Title Alignment",
+                    "desc": "Choose the alignment of the title."
+                },
+                "title_use_custom_text": {
+                    "@value": "Title Use Custom Text",
+                    "desc": "Enable or disable custom text for the title."
+                },
+                "title_custom_text": {
+                    "@value": "Title Custom Text",
+                    "desc": "Edit the custom text for the title. Use && for colors and \\n for new line."
+                },
+                "footer_alignment": {
+                    "@value": "Footer Alignment",
+                    "desc": "Choose the alignment of the footer."
+                },
+                "footer_use_custom_text": {
+                    "@value": "Footer Use Custom Text",
+                    "desc": "Enable or disable custom text for the footer."
+                },
+                "footer_custom_text": {
+                    "@value": "Footer Custom Text",
+                    "desc": "Edit the custom text for the footer. Use && for colors and \\n for new line."
+                },
+                "scale": {
+                    "@value": "Scale",
+                    "desc": "Choose the scale of the scoreboard."
+                },
+                "vertical_alignment": {
+                    "@value": "Vertical Alignment",
+                    "desc": "Choose the vertical alignment of the scoreboard."
+                },
+                "horizontal_alignment": {
+                    "@value": "Horizontal Alignment",
+                    "desc": "Choose the horizontal alignment of the scoreboard."
                 }
             },
             "background": {
+                "sections": {
+                    "border": "Border Settings",
+                    "image": "Custom Image Background"
+                },
                 "enabled": {
                     "@value": "Toggle Background",
                     "desc": "Enable or disable the background of the scoreboard."
@@ -135,6 +141,34 @@
                     "@value": "Radius",
                     "desc": "Choose the radius of the rounded corner of the background."
                 },
+                "border": {
+                    "enabled": {
+                        "@value": "Toggle Border",
+                        "desc": "Enable a border around the colored background."
+                    },
+                    "size": {
+                        "@value": "Border Size",
+                        "desc": "Choose the size of the border."
+                    },
+                    "color": {
+                        "topleft": {
+                            "@value": "Top Left Color",
+                            "desc": "Choose the color of the top left corner of the border."
+                        },
+                        "topright": {
+                            "@value": "Top Right Color",
+                            "desc": "Choose the color of the top right corner of the border."
+                        },
+                        "bottomleft": {
+                            "@value": "Bottom Left Color",
+                            "desc": "Choose the color of the bottom left corner of the border."
+                        },
+                        "bottomright": {
+                            "@value": "Bottom Right Color",
+                            "desc": "Choose the color of the bottom right corner of the border."
+                        }
+                    }
+                },
                 "image": {
                     "@value": "Custom Image Background",
                     "desc": "Use a custom image as the background.\nMake sure you have your texturepack enabled."
@@ -142,10 +176,6 @@
                 "transparency": {
                     "@value": "Transparency of the Background",
                     "desc": "Choose the transparency of the background."
-                },
-                "separator": {
-                    "@value": "Background Options",
-                    "desc": "Edit the background options."
                 },
                 "website": {
                     "@value": "Image Creator Website",
@@ -156,7 +186,32 @@
                     "desc": "Click to open the custom background image editor."
                 }
             },
-            "lines": {
+            "line_modification": {
+                "sections": {
+                    "time": "Time & Calendar",
+                    "economy": "Economy & Bank",
+                    "progression": "Progression Stats",
+                    "social": "Social & Party",
+                    "pets": "Pets",
+                    "mayor": "Mayor & Events",
+                    "cleanup": "Cleanup & Spacing"
+                },
+                "number_format": {
+                    "@value": "Number Format",
+                    "desc": "Choose the format of the numbers in the scoreboard."
+                },
+                "number_display_format": {
+                    "@value": "Number Display Format",
+                    "desc": "Choose the format numbers with their prefix are displayed in the scoreboard."
+                },
+                "show_currency_gain": {
+                    "@value": "Show Currency Gain",
+                    "desc": "Show the gain of currencies (like Purse, Motes, etc.) on the scoreboard."
+                },
+                "show_active_only": {
+                    "@value": "Show Active Elements Only",
+                    "desc": "Hides Elements where the currency of the line is zero (like having no Purse) or other lines like the Booster Cookie Line if no cookie is active."
+                },
                 "date_format": {
                     "@value": "Date Format",
                     "desc": "Choose the format of the date in the scoreboard."

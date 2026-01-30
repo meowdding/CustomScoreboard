@@ -5,7 +5,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.owdding.customscoreboard.Main
-import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -21,7 +21,7 @@ abstract class NumberTrackingElement(val numberColor: String) : Element() {
     open fun format(number: Number): String = number.format()
 
     open fun checkDifference(currentAmount: Long) {
-        if (!MainConfig.showCurrencyGain) return
+        if (!LinesConfig.showCurrencyGain) return
         if (previousAmount == -1L) {
             previousAmount = currentAmount
             return

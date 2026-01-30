@@ -1,6 +1,5 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -45,7 +44,7 @@ object ElementPowder : Element() {
             PowderDisplay.TOTAL -> total.format()
             PowderDisplay.BOTH -> "${current.format()}/${total.format()}"
         }
-        if (MainConfig.showActiveOnly && !isCurrencyActive(current, total)) return
+        if (LinesConfig.showActiveOnly && !isCurrencyActive(current, total)) return
 
         add(" §7- ${CustomScoreboardRenderer.formatNumberDisplayDisplay(name, value, color)}")
     }

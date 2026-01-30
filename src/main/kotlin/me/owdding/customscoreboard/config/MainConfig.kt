@@ -1,61 +1,21 @@
 package me.owdding.customscoreboard.config
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
-import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
-import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
-import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
-import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
-import me.owdding.customscoreboard.feature.customscoreboard.ChunkedStat
-import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
-import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementArea
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBits
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCold
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCookieBuff
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopper
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementDate
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementEvents
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementFooter
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementGems
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementHeat
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementIsland
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementLobby
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMotes
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementNorthStars
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementObjective
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementParty
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPet
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPlayerCount
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPowder
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementProfile
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementPurse
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementQuiver
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSeparator
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSkyblockLevel
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSlayer
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSoulflow
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
-import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
-import me.owdding.customscoreboard.utils.NumberFormatType
-import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
-import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
-import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
-import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
@@ -133,205 +93,87 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             )
             json
         },
+        5 to UnaryOperator { json ->
+            // Customization Page
+            val customPage = JsonObject()
+
+            val moveToCustom =
+                listOf("appearance", "events", "tablistLines", "scale", "vertical_alignment", "horizontal_alignment", "chunkedStats", "statsPerLine")
+            moveToCustom.forEach { if (json.has(it)) customPage.add(it, json.get(it)) }
+            val oldLineModification = json.getAsJsonObject("line_modification")
+            if (oldLineModification != null && oldLineModification.has("hypixel_title")) {
+                customPage.add("useHypixelTitle", oldLineModification.get("hypixel_title"))
+            }
+
+            json.getAsJsonObject("title_options")?.let { title ->
+                customPage.add("titleAlignment", title.get("alignment"))
+                customPage.add("titleUseCustomText", title.get("use_custom_text"))
+                customPage.add("titleText", title.get("custom_text"))
+            }
+            json.getAsJsonObject("footer_options")?.let { footer ->
+                customPage.add("footerAlignment", footer.get("alignment"))
+                customPage.add("footerUseCustomText", footer.get("use_custom_text"))
+                customPage.add("footerText", footer.get("custom_text"))
+            }
+
+            json.add("customization", customPage)
+
+
+            // Lines Page
+            val lineModification = json.getAsJsonObject("line_modification") ?: JsonObject().also { json.add("line_modification", it) }
+            val moveToLines = listOf("numberFormat", "numberDisplayFormat", "showActiveOnly", "showCurrencyGain")
+            moveToLines.forEach { key ->
+                if (json.has(key)) lineModification.add(key, json.remove(key))
+            }
+
+            json
+        },
     )
 
     override val version = patches.size
     //endregion
 
+    private val translationPath = "customscoreboard.config.main"
+
     init {
+        category(CustomizationConfig)
         category(BackgroundConfig)
         category(LinesConfig)
         category(ModCompatibilityConfig)
     }
 
     var enabled by boolean(true) {
-        this.translation = "customscoreboard.config.enabled"
-    }
-
-    private val default = listOf(
-        ElementTitle,
-        ElementLobby,
-        ElementSeparator,
-        ElementDate,
-        ElementTime,
-        ElementIsland,
-        ElementArea,
-        ElementProfile,
-        ElementSeparator,
-        ElementPurse,
-        ElementMotes,
-        ElementBank,
-        ElementBits,
-        ElementCopper,
-        ElementSowdust,
-        ElementGems,
-        ElementHeat,
-        ElementCold,
-        ElementNorthStars,
-        ElementSoulflow,
-        ElementSeparator,
-        ElementObjective,
-        ElementSlayer,
-        ElementQuiver,
-        ElementEvents,
-        ElementPowder,
-        ElementMayor,
-        ElementParty,
-        ElementPet,
-        ElementFooter,
-    ).map { it.id }
-
-    val appearance by observable(
-        transform(
-            strings(*default.toTypedArray()) {
-                this.translation = "customscoreboard.config.appearance"
-                this.renderer = CUSTOM_DRAGGABLE_RENDERER
-                this.shPath = "scoreboardEntries"
-                shMapper = { json: JsonElement ->
-                    json.asJsonArray.mapNotNull {
-                        when (val string = it.asString) {
-                            "EMPTY_LINE" -> ElementSeparator.id
-                            "COOKIE" -> ElementCookieBuff.id
-                            "SKYBLOCK_XP" -> ElementSkyblockLevel.id
-                            "PLAYER_AMOUNT" -> ElementPlayerCount.id
-                            "LOBBY_CODE" -> ElementLobby.id
-                            "LOCATION" -> ElementArea.id
-                            "EXTRA" -> null
-                            "VISITING" -> null
-                            else -> string
-                        }
-                    }
-                }
-            },
-            { it.toConfigStrings() },
-            { it.asList().toBaseElements() },
-        ),
-    ) { _, _ ->
-        CustomScoreboardRenderer.updateIslandCache()
-    }
-
-    val events by observable(
-        draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
-            this.translation = "customscoreboard.config.events"
-            this.shPath = "display.events.eventEntries"
-            this.shMapper = { json: JsonElement ->
-                json.asJsonArray.mapNotNull {
-                    val name = it.asString
-                    val changes = mapOf(
-                        "SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART,
-                        "MINING_EVENTS" to ScoreboardEventEntry.MINING,
-                        "ACTIVE_TABLIST_EVENTS" to null,
-                        "STARTING_SOON_TABLIST_EVENTS" to null,
-                    )
-                    changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
-                }
-            }
-        },
-    ) { _, _ ->
-        CustomScoreboardRenderer.updateIslandCache()
-    }
-
-    val tablistLines by observable(
-        draggable<TabWidget> {
-            this.translation = "customscoreboard.config.tablist_lines"
-        },
-    ) { _, _ ->
-        TabWidgetHelper.updateTablistLineCache()
-    }
-
-    val chunkedStats by observable(
-        draggable(*ChunkedStat.entries.toTypedArray()) {
-            this.translation = "customscoreboard.config.chunked_stats"
-            this.shPath = "display.chunkedStats.chunkedStats"
-            this.shMapper = { json: JsonElement -> json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } } }
-        },
-    ) { _, _ ->
-        CustomScoreboardRenderer.updateIslandCache()
-    }
-
-    val statsPerLine by int(3) {
-        this.translation = "customscoreboard.config.chunked_stats_per_line"
-        this.range = 1..5
-        this.shPath = "display.chunkedStats.maxStatsPerLine"
-    }
-
-    val scale by double(1.0) {
-        this.translation = "customscoreboard.config.scale"
-        this.range = 0.1..2.0
-        this.slider = true
-    }
-
-    val title = obj("title_options", TitleOrFooterObject("Title")) {
-        this.translation = "customscoreboard.config.title_options"
-    }
-
-    val footer = obj("footer_options", TitleOrFooterObject("Footer")) {
-        this.translation = "customscoreboard.config.footer_options"
-    }
-
-    val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
-        this.translation = "customscoreboard.config.number_display_format"
-        this.shPath = "display.numberDisplayFormat"
-        this.shMapper =
-            { valueOfOrNull<CustomScoreboardRenderer.NumberDisplayFormat>(it.asString) ?: CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER }
-    }
-
-    val numberFormat by enum("number_format", NumberFormatType.LONG) {
-        this.translation = "customscoreboard.config.number_format"
-        this.shPath = "display.numberFormat"
-        this.shMapper = { valueOfOrNull<NumberFormatType>(it.asString) ?: NumberFormatType.LONG }
-    }
-
-    val showCurrencyGain by boolean(true) {
-        this.translation = "customscoreboard.config.show_currency_gain"
-        this.shPath = "display.showNumberDifference"
-    }
-
-    val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
-        this.translation = "customscoreboard.config.vertical_alignment"
-        this.shPath = "display.alignment.verticalAlignment"
-        this.shMapper = { valueOfOrNull<VerticalAlignment>(it.asString) ?: VerticalAlignment.CENTER }
-    }
-
-    val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
-        this.translation = "customscoreboard.config.horizontal_alignment"
-        this.shPath = "display.alignment.horizontalAlignment"
-        this.shMapper = { valueOfOrNull<HorizontalAlignment>(it.asString) ?: HorizontalAlignment.RIGHT }
+        this.translation = "$translationPath.enabled"
     }
 
     val hideWhenTab by boolean(false) {
-        this.translation = "customscoreboard.config.hide_when_tab"
+        this.translation = "$translationPath.hide_when_tab"
     }
 
     val hideWhenChat by boolean(false) {
-        this.translation = "customscoreboard.config.hide_when_chat"
+        this.translation = "$translationPath.hide_when_chat"
     }
 
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
-        this.translation = "customscoreboard.config.hide_hypixel"
+        this.translation = "$translationPath.hide_hypixel"
         this.shPath = "display.hideVanillaScoreboard"
     }
 
     val textShadow by boolean("text_shadow", true) {
-        this.translation = "customscoreboard.config.text_shadow"
+        this.translation = "$translationPath.text_shadow"
     }
 
     val customLines by boolean(true) {
-        this.translation = "customscoreboard.config.custom_lines"
+        this.translation = "$translationPath.custom_lines"
         this.shPath = "display.useCustomLines"
     }
 
     val outsideSkyBlock by boolean(false) {
-        this.translation = "customscoreboard.config.outside_skyblock"
-    }
-
-    val showActiveOnly by boolean(false) {
-        this.translation = "customscoreboard.config.show_active_only"
-        this.shPath = "informationFiltering.hideEmptyLines"
+        this.translation = "$translationPath.outside_skyblock"
     }
 
     val updateNotification by boolean("update_notification", true) {
-        this.translation = "customscoreboard.config.update_notification"
+        this.translation = "$translationPath.update_notification"
     }
 
 }

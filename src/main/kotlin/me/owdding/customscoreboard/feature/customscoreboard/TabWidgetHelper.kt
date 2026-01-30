@@ -1,6 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
-import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
@@ -18,7 +18,7 @@ object TabWidgetHelper {
     val tabWidgetCache = mutableMapOf<TabWidget, List<Component>>()
 
     fun updateTablistLineCache() {
-        tablistLineCache = MainConfig.tablistLines.map {
+        tablistLineCache = CustomizationConfig.tablistLines.map {
             object : Element() {
                 override fun getDisplay(): List<Component>? = tabWidgetCache[it]
 
