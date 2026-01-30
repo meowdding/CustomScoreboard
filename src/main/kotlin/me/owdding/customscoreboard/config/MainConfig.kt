@@ -100,7 +100,10 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             val moveToCustom =
                 listOf("appearance", "events", "tablistLines", "scale", "vertical_alignment", "horizontal_alignment", "chunkedStats", "statsPerLine")
             moveToCustom.forEach { if (json.has(it)) customPage.add(it, json.get(it)) }
-            customPage.add("useHypixelTitle", json.get("line_modification.hypixel_title"))
+            val oldLineModification = json.getAsJsonObject("line_modification")
+            if (oldLineModification != null && oldLineModification.has("hypixel_title")) {
+                customPage.add("useHypixelTitle", oldLineModification.get("hypixel_title"))
+            }
 
             json.getAsJsonObject("title_options")?.let { title ->
                 customPage.add("titleAlignment", title.get("alignment"))
@@ -117,8 +120,11 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
 
             // Lines Page
+            val lineModification = json.getAsJsonObject("line_modification") ?: JsonObject().also { json.add("line_modification", it) }
             val moveToLines = listOf("numberFormat", "numberDisplayFormat", "showActiveOnly", "showCurrencyGain")
-            moveToLines.forEach { if (json.has(it)) json.add("line_modification.$it", json.remove(it)) }
+            moveToLines.forEach { key ->
+                if (json.has(key)) lineModification.add(key, json.remove(key))
+            }
 
             json
         },
