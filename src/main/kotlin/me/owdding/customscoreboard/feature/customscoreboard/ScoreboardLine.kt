@@ -111,7 +111,7 @@ data class ScoreboardLine(
             else -> null
         }
 
-        fun List<ScoreboardLine>.createColumn() = (LayoutFactory.vertical {
+        fun List<ScoreboardLine>.createColumn() = (LayoutFactory.vertical(spacing = CustomizationConfig.lineSpacing) {
             this@createColumn.forEach { line ->
                 widget(line.widget, line::applySettings)
             }

@@ -42,6 +42,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowd
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
+import me.owdding.customscoreboard.utils.Utils.observable
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.lib.displays.Alignment
@@ -189,6 +190,14 @@ object CustomizationConfig : CategoryKt("customization") {
         this.range = 0.1..2.0
         this.slider = true
     }
+
+    val lineSpacing by int(0) {
+        this.translation = "$translationPath.line_spacing"
+        this.range = 0..10
+        this.slider = true
+        this.shPath = "display.lineSpacing"
+        this.shMapper = { (it.asInt - 10).coerceAtLeast(0) }
+    }.observable { _, _ -> CustomScoreboardRenderer.updateDisplay() }
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
         this.translation = "$translationPath.vertical_alignment"

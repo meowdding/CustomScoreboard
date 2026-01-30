@@ -125,7 +125,7 @@ object CustomScoreboardRenderer {
         currentIslandEvents = CustomizationConfig.events.filter { it.event.showIsland() }
     }
 
-    private fun updateDisplay() {
+    fun updateDisplay() {
         if (!isEnabled()) return
         lines = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
         display = lines.takeUnless { it.isEmpty() }?.createColumn()

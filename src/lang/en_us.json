@@ -107,6 +107,10 @@
                     "@value": "Scale",
                     "desc": "Choose the scale of the scoreboard."
                 },
+                "line_spacing": {
+                    "@value": "Line Spacing",
+                    "desc": "Choose the spacing between the lines of the scoreboard."
+                },
                 "vertical_alignment": {
                     "@value": "Vertical Alignment",
                     "desc": "Choose the vertical alignment of the scoreboard."
