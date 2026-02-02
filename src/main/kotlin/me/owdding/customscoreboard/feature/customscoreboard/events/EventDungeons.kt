@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -15,7 +16,7 @@ object EventDungeons : Event() {
     override val configLine = "Dungeons"
 
 
-    private var formattedLines = mutableListOf<Component>()
+    private val formattedLines = mutableListOf<Component>()
 
     private val m7dragonsRegex = ComponentRegex("No Alive Dragons|- [\\w\\s]+Dragon [\\w,.]+❤")
     private val autoCloseRegex = ComponentRegex("Auto-closing in: [\\d+:,.]+")
@@ -42,11 +43,6 @@ object EventDungeons : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        formattedLines.addAll(
-            event.components.filter { component ->
-                patterns.any { it.matches(component) }
-            },
-        )
+        formattedLines.replaceWithMatches(event.components, patterns)
     }
 }

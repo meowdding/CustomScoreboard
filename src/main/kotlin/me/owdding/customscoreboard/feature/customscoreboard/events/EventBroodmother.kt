@@ -10,7 +10,6 @@ import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
-import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 
 @Module
 @AutoElement
@@ -29,8 +28,8 @@ object EventBroodmother : Event() {
     @Subscription
     @OnlyWidget(TabWidget.AREA)
     fun onTabWidgetUpdate(event: TabWidgetChangeEvent) {
-        broodmotherRegex.anyMatch(event.newComponents) {
-            stateString = it.component.trim()
+        event.newComponents.find(broodmotherRegex::matches)?.let {
+            stateString = it.trim()
         }
     }
 }

@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -15,16 +16,15 @@ object EventGarden : Event() {
     override val configLine = "Garden"
 
 
-    private var formattedLines = mutableListOf<Component>()
+    private val formattedLines = mutableListOf<Component>()
 
     private val pastingRegex = ComponentRegex("\\s*(?:Barn )?Pasting: [\\d,.]+%?")
     private val cleanupRegex = ComponentRegex("\\s*Cleanup: [\\d,.]*%?")
 
+    private val regexes = listOf(pastingRegex, cleanupRegex)
+
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        val lines = event.components
-        lines.find { pastingRegex.matches(it) }?.let { formattedLines.add(it) }
-        lines.find { cleanupRegex.matches(it) }?.let { formattedLines.add(it) }
+        formattedLines.replaceWithMatches(event.components, regexes)
     }
 
 }

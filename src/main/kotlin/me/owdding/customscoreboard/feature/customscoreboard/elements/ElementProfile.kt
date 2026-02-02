@@ -1,20 +1,25 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileType
+import tech.thatgravyboat.skyblockapi.utils.text.CommonText
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
-@AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementProfile : Element() {
-    override fun getDisplay() = buildString {
+    override fun getDisplay() = Text.of {
         val profile = ProfileAPI.profileType
-        append(profileSymbol[profile] ?: "§c")
-        if (LinesConfig.showProfileName) {
-            append(ProfileAPI.profileName)
-        } else {
-            append(profile)
+        append(profileSymbol[profile] ?: CommonText.EMPTY) {
+            if (LinesConfig.showProfileName) {
+                append(ProfileAPI.profileName ?: "Unknown")
+            } else {
+                append(profile.toString())
+            }
         }
     }.withActions {
         hover = listOf("§7Click to open the profile switcher")
@@ -24,13 +29,14 @@ object ElementProfile : Element() {
     override fun showWhen() = ProfileAPI.profileType != ProfileType.UNKNOWN
 
     override val configLine = "Profile"
+    override val id = "PROFILE"
+    override val group = ElementGroup.HEADER
 
 
     private val profileSymbol = mapOf(
-        ProfileType.IRONMAN to "§7♲ ",
-        ProfileType.STRANDED to "§a☀ ",
-        // todo: get actual color using bingoapi
-        ProfileType.BINGO to "§bⒷ ",
-        ProfileType.NORMAL to "§e",
+        ProfileType.IRONMAN to Text.of("♲ ").withColor(TextColor.GRAY),
+        ProfileType.STRANDED to Text.of("☀ ").withColor(TextColor.GREEN),
+        ProfileType.BINGO to Text.of("Ⓑ ").withColor(ProfileAPI.bingoRank?.color ?: TextColor.AQUA),
+        ProfileType.NORMAL to Text.of("").withColor(TextColor.YELLOW),
     )
 }

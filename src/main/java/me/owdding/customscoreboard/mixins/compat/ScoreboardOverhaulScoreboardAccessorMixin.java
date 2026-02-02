@@ -6,6 +6,7 @@ import me.jfenn.scoreboardoverhaul.common.data.ObjectiveInfo;
 import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo;
 import me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor;
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer;
+import me.owdding.customscoreboard.utils.ScoreboardOverhaulUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
@@ -13,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static tech.thatgravyboat.skyblockapi.utils.time.InstantExtensionsKt.currentInstant;
 
 @Pseudo
 @IfModLoaded("scoreboard-overhaul")
@@ -58,14 +57,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         ArrayList<ScoreInfo> scores = new ArrayList<>();
 
         for (int i = lines.size() - 2; i >= 0; i--) {
-            scores.add(
-                new ScoreInfo(
-                    "Line " + i,
-                    lines.get(lines.size() - i - 1).getComponent(),
-                    i,
-                    currentInstant()
-                )
-            );
+            scores.add(ScoreboardOverhaulUtils.createInfo("Line" + i, lines.get(lines.size() - i - 1).getComponent(), i));
         }
 
         return scores;

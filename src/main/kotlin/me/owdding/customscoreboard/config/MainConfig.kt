@@ -1,20 +1,21 @@
 package me.owdding.customscoreboard.config
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLink
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.config.categories.BackgroundConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
-import me.owdding.customscoreboard.config.objects.TitleOrFooterObject
-import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
+import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
-import me.owdding.customscoreboard.generated.ScoreboardEntry
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
-import me.owdding.customscoreboard.utils.NumberFormatType
-import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
-import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
@@ -23,7 +24,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     override val description = TranslatableValue("by j10a1n15. Version ${Main.VERSION}")
     override val links: Array<ResourcefulConfigLink> = arrayOf(
         ResourcefulConfigLink.create(
-            "https://discord.gg/FsRc2GUwZR",
+            "https://meowdd.ing/discord",
             "discord",
             TranslatableValue("Discord"),
         ),
@@ -39,7 +40,6 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         ),
     )
 
-    override val version = 3
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         0 to UnaryOperator { json ->
@@ -64,119 +64,116 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             lines.add("line_modification", lines)
 
             json
-        }
+        },
+        3 to UnaryOperator { json ->
+            val items = json.getAsJsonArray("appearance").toMutableList()
+            val copperIndex = items.indexOfFirst { it.asString == ElementCopper.id }
+            val newElement = JsonPrimitive(ElementSowdust.id)
+
+            if (copperIndex != -1) {
+                items.add(copperIndex + 1, newElement)
+            } else {
+                items.add(newElement)
+            }
+
+            val newAppearance = JsonArray()
+            items.forEach { newAppearance.add(it) }
+            json.add("appearance", newAppearance)
+
+            json
+        },
+        4 to UnaryOperator { json ->
+            val overhaul = json["scoreboardOverhaul"].asBoolean
+            json.remove("scoreboardOverhaul")
+            json.add(
+                "compatibility",
+                JsonObject().apply {
+                    addProperty("scoreboardOverhaul", overhaul)
+                },
+            )
+            json
+        },
+        5 to UnaryOperator { json ->
+            // Customization Page
+            val customPage = JsonObject()
+
+            val moveToCustom =
+                listOf("appearance", "events", "tablistLines", "scale", "vertical_alignment", "horizontal_alignment", "chunkedStats", "statsPerLine")
+            moveToCustom.forEach { if (json.has(it)) customPage.add(it, json.get(it)) }
+            val oldLineModification = json.getAsJsonObject("line_modification")
+            if (oldLineModification != null && oldLineModification.has("hypixel_title")) {
+                customPage.add("useHypixelTitle", oldLineModification.get("hypixel_title"))
+            }
+
+            json.getAsJsonObject("title_options")?.let { title ->
+                customPage.add("titleAlignment", title.get("alignment"))
+                customPage.add("titleUseCustomText", title.get("use_custom_text"))
+                customPage.add("titleText", title.get("custom_text"))
+            }
+            json.getAsJsonObject("footer_options")?.let { footer ->
+                customPage.add("footerAlignment", footer.get("alignment"))
+                customPage.add("footerUseCustomText", footer.get("use_custom_text"))
+                customPage.add("footerText", footer.get("custom_text"))
+            }
+
+            json.add("customization", customPage)
+
+
+            // Lines Page
+            val lineModification = json.getAsJsonObject("line_modification") ?: JsonObject().also { json.add("line_modification", it) }
+            val moveToLines = listOf("numberFormat", "numberDisplayFormat", "showActiveOnly", "showCurrencyGain")
+            moveToLines.forEach { key ->
+                if (json.has(key)) lineModification.add(key, json.remove(key))
+            }
+
+            json
+        },
     )
+
+    override val version = patches.size
     //endregion
 
+    private val translationPath = "customscoreboard.config.main"
+
     init {
+        category(CustomizationConfig)
         category(BackgroundConfig)
         category(LinesConfig)
+        category(ModCompatibilityConfig)
     }
 
     var enabled by boolean(true) {
-        this.translation = "customscoreboard.config.enabled"
+        this.translation = "$translationPath.enabled"
     }
 
-    private val default = listOf<ScoreboardEntry>(
-        ScoreboardEntry.TITLE,
-        ScoreboardEntry.LOBBY,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.DATE,
-        ScoreboardEntry.TIME,
-        ScoreboardEntry.ISLAND,
-        ScoreboardEntry.AREA,
-        ScoreboardEntry.PROFILE,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.PURSE,
-        ScoreboardEntry.MOTES,
-        ScoreboardEntry.BANK,
-        ScoreboardEntry.BITS,
-        ScoreboardEntry.COPPER,
-        ScoreboardEntry.GEMS,
-        ScoreboardEntry.HEAT,
-        ScoreboardEntry.COLD,
-        ScoreboardEntry.NORTH_STARS,
-        ScoreboardEntry.SOULFLOW,
-        ScoreboardEntry.SEPARATOR,
-        ScoreboardEntry.OBJECTIVE,
-        ScoreboardEntry.SLAYER,
-        ScoreboardEntry.QUIVER,
-        ScoreboardEntry.EVENTS,
-        ScoreboardEntry.POWDER,
-        ScoreboardEntry.MAYOR,
-        ScoreboardEntry.PARTY,
-        ScoreboardEntry.PET,
-        ScoreboardEntry.FOOTER,
-    )
-
-    var appearance by observable(
-        draggable(*default.toTypedArray()) {
-            this.translation = "customscoreboard.config.appearance"
-            this.duplicatable = listOf(ScoreboardEntry.SEPARATOR).toTypedArray()
-        },
-    ) { old, new ->
-        CustomScoreboardRenderer.updateIslandCache()
+    val hideWhenTab by boolean(false) {
+        this.translation = "$translationPath.hide_when_tab"
     }
 
-    val events by observable(
-        draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
-            this.translation = "customscoreboard.config.events"
-        },
-    ) { old, new ->
-        CustomScoreboardRenderer.updateIslandCache()
-    }
-
-    val scale by double(1.0) {
-        this.translation = "customscoreboard.config.scale"
-        this.range = 0.1..2.0
-        this.slider = true
-    }
-
-    val title = obj("title_options", TitleOrFooterObject()) {
-        this.translation = "customscoreboard.config.title_options"
-    }
-
-    val footer = obj("footer_options", TitleOrFooterObject()) {
-        this.translation = "customscoreboard.config.footer_options"
-    }
-
-    val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
-        this.translation = "customscoreboard.config.number_display_format"
-    }
-
-    val numberFormat by enum("number_format", NumberFormatType.LONG) {
-        this.translation = "customscoreboard.config.number_format"
-    }
-
-    val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
-        this.translation = "customscoreboard.config.vertical_alignment"
-    }
-
-    val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
-        this.translation = "customscoreboard.config.horizontal_alignment"
+    val hideWhenChat by boolean(false) {
+        this.translation = "$translationPath.hide_when_chat"
     }
 
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
-        this.translation = "customscoreboard.config.hide_hypixel"
+        this.translation = "$translationPath.hide_hypixel"
+        this.shPath = "display.hideVanillaScoreboard"
     }
 
     val textShadow by boolean("text_shadow", true) {
-        this.translation = "customscoreboard.config.text_shadow"
+        this.translation = "$translationPath.text_shadow"
     }
 
     val customLines by boolean(true) {
-        this.translation = "customscoreboard.config.custom_lines"
+        this.translation = "$translationPath.custom_lines"
+        this.shPath = "display.useCustomLines"
     }
 
     val outsideSkyBlock by boolean(false) {
-        this.translation = "customscoreboard.config.outside_skyblock"
+        this.translation = "$translationPath.outside_skyblock"
     }
 
     val updateNotification by boolean("update_notification", true) {
-        this.translation = "customscoreboard.config.update_notification"
+        this.translation = "$translationPath.update_notification"
     }
 
-    val scoreboardOverhaul by boolean(false) {
-        this.translation = "customscoreboard.config.scoreboard_overhaul"
-    }
 }

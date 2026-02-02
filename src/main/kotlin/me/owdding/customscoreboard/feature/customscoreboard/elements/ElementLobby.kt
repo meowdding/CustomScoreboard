@@ -1,12 +1,13 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.ElementGroup
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
+import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyFound
 
-@AutoElement(ElementGroup.HEADER)
+@ScoreboardElement
 object ElementLobby : Element() {
     private var lobbyCode: String? = null
     private var roomId: String? = null
@@ -16,16 +17,17 @@ object ElementLobby : Element() {
     override fun showWhen() = lobbyCode != null
 
     override val configLine = "Lobby"
+    override val id = "LOBBY"
+    override val group = ElementGroup.HEADER
 
 
     private val roomIdRegex = "\\d+/\\d+/\\d+ \\w+ (?<roomId>[\\w,-]+)".toRegex()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        for (line in event.new) {
-            roomId = roomIdRegex.find(line)?.groups["roomId"]?.value ?: continue
-            return
+        val found = roomIdRegex.anyFound(event.new, "roomId") { (roomId) ->
+            this.roomId = roomId
         }
-        roomId = null
+        if (!found) roomId = null
     }
 
     override fun onServerChange(event: ServerChangeEvent) {

@@ -2,15 +2,18 @@ package me.owdding.customscoreboard.config.categories
 
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
-import com.teamresourceful.resourcefullib.client.utils.ScreenUtils
 import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
+import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
+import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
-import net.minecraft.Util
 import net.minecraft.client.gui.layouts.LayoutElement
+import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McFont
+import tech.thatgravyboat.skyblockapi.platform.showTooltip
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -23,40 +26,88 @@ object BackgroundConfig : CategoryKt("Background") {
 
     val enabled by boolean(true) {
         this.translation = "customscoreboard.config.background.enabled"
+        this.shPath = "background.enabled"
     }
 
     val backgroundColor by color("color", 0xA0000000.toInt()) {
         this.translation = "customscoreboard.config.background.color"
         this.allowAlpha = true
+        this.shPath = "background.color"
+        this.shMapper = { it.asString.moulConfigColor() }
     }
 
     val padding by int(5) {
         this.translation = "customscoreboard.config.background.padding"
         this.range = 0..20
         this.slider = true
+        this.shPath = "background.borderSize"
     }
 
     val margin by int(0) {
         this.translation = "customscoreboard.config.background.margin"
         this.range = 0..20
         this.slider = true
+        this.shPath = "display.alignment.margin"
     }
 
     val radius by int(5) {
         this.translation = "customscoreboard.config.background.radius"
         this.range = 0..20
         this.slider = true
+        this.shPath = "background.roundedCornerSmoothness"
     }
 
     init {
-        separator {
-            this.title = "customscoreboard.config.background.separator"
-            this.description = "customscoreboard.config.background.separator.desc"
-        }
+        separator { this.title = "customscoreboard.config.background.sections.border" }
+    }
+
+    val borderEnabled by boolean(false) {
+        this.translation = "customscoreboard.config.background.border.enabled"
+        this.shPath = "background.outline.enabled"
+    }
+
+    val borderSize by int(3) {
+        this.translation = "customscoreboard.config.background.border.size"
+        this.range = 0..10
+        this.slider = true
+        this.shPath = "background.outline.thickness"
+    }
+
+    val borderColorTopLeft by color(0xFF32A1DB.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.topleft"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorTop"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    val borderColorTopRight by color(0xFF32DBC2.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.topright"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorTop"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    val borderColorBottomLeft by color(0xFF29C4AE.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.bottomleft"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorBottom"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    val borderColorBottomRight by color(0xFF2BCF7A.toInt()) {
+        this.translation = "customscoreboard.config.background.border.color.bottomright"
+        this.allowAlpha = true
+        this.shPath = "background.outline.colorBottom"
+        this.shMapper = { it.asString.moulConfigColor() }
+    }
+
+    init {
+        separator { this.title = "customscoreboard.config.background.sections.image" }
     }
 
     val imageBackground by boolean(false) {
         this.translation = "customscoreboard.config.background.image"
+        this.shPath = "background.useCustomBackgroundImage"
     }
 
     init {
@@ -85,6 +136,7 @@ object BackgroundConfig : CategoryKt("Background") {
         this.translation = "customscoreboard.config.background.transparency"
         this.range = 5..100
         this.slider = true
+        this.shPath = "background.customBackgroundImageOpacity"
     }
 
     var customImageFile by string("") {
@@ -97,7 +149,7 @@ object CustomBackgroundModal {
     private const val PADDING = 10
 
     private fun getDisplay(width: Int, height: Int): LayoutElement {
-        return Widgets.button { it ->
+        return Widgets.button {
             it.withTexture(null)
             it.withRenderer { graphics, context, _ ->
                 val realWidth = (width * 1/3f).toInt()
@@ -105,7 +157,6 @@ object CustomBackgroundModal {
                     context.x + (context.width - realWidth) / 2, context.y,
                     realWidth, context.height,
                     CustomScoreboardBackground.getTexture(),
-                    radius = BackgroundConfig.radius,
                     alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
                 )
             }
@@ -125,16 +176,18 @@ object CustomBackgroundModal {
                         this.color = TextColor.RED
                     }
                     hovered -> {
-                        ScreenUtils.setTooltip(listOf(
-                            Text.of(BackgroundConfig.customImageFile) {
-                                this.color = TextColor.GRAY
-                                this.underlined = true
-                            },
-                            CommonText.EMPTY,
-                            Text.of("Click to open file location") {
-                                this.color = TextColor.YELLOW
-                            }
-                        ))
+                        graphics.showTooltip(
+                            Text.multiline(
+                                Text.of(BackgroundConfig.customImageFile) {
+                                    this.color = TextColor.GRAY
+                                    this.underlined = true
+                                },
+                                CommonText.EMPTY,
+                                Text.of("Click to open file location") {
+                                    this.color = TextColor.YELLOW
+                                },
+                            ),
+                        )
 
                         Text.of("Hover to view file") {
                             this.color = TextColor.WHITE

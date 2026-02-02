@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -15,7 +16,7 @@ object EventCarnival : Event() {
     override val configLine = "Carnival"
 
 
-    private var formattedLines = mutableListOf<Component>()
+    private val formattedLines = mutableListOf<Component>()
 
     private val timeRegex = ComponentRegex("Carnival [\\d:,.]+")
     private val tokensRegex = ComponentRegex("Carnival Tokens: [\\d,.]+")
@@ -32,11 +33,6 @@ object EventCarnival : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        formattedLines.addAll(
-            event.components.filter { component ->
-                patterns.any { it.matches(component) }
-            },
-        )
+        formattedLines.replaceWithMatches(event.components, patterns)
     }
 }

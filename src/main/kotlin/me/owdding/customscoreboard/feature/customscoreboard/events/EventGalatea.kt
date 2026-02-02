@@ -1,12 +1,14 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.utils.Utils.nextAfter
+import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.utils.CommonRegexes
+import me.owdding.customscoreboard.utils.Utils.replaceWith
+import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
-import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 
 @AutoElement
 object EventGalatea : Event() {
@@ -20,26 +22,17 @@ object EventGalatea : Event() {
     private val whisperRegex = ComponentRegex("Whispers: [\\w,.]+.*")
     private val hotfRegex = ComponentRegex("\\s*HOTF: [\\w,.]+.*")
     private val contestRegex = ComponentRegex("Agatha's Contest.*")
-    private val hypixelFooterRegex = "(?:www|alpha).hypixel.net".toRegex()
 
     private val formattedLines = mutableListOf<Component>()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-
-        whisperRegex.anyMatch(event.components) {
-            formattedLines.add(it.component)
+        formattedLines.replaceWith {
+            if (LinesConfig.showHypixelPowder) {
+                event.components.find(whisperRegex::matches)?.let(::add)
+            }
+            event.components.find(hotfRegex::matches)?.let(::add)
+            addAll(event.components.sublistFromFirst(3, contestRegex::matches))
+            removeIf(CommonRegexes.hypixelFooterRegex::matches)
         }
-        hotfRegex.anyMatch(event.components) {
-            formattedLines.add(it.component)
-        }
-
-        contestRegex.anyMatch(event.components) {
-            formattedLines.add(it.component)
-            event.components.nextAfter(it.component)?.let { formattedLines.add(it) }
-            event.components.nextAfter(it.component, 2)?.let { formattedLines.add(it) }
-        }
-
-        formattedLines.removeIf { hypixelFooterRegex.matches(it.string) }
     }
 }

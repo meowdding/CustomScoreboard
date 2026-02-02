@@ -1,7 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
-import me.owdding.customscoreboard.utils.TextUtils.toComponent
+import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.rift.RiftAPI
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -9,6 +9,10 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @AutoElement
 object EventRift : Event() {
@@ -19,7 +23,7 @@ object EventRift : Event() {
     override val configLine = "Rift"
 
 
-    private var formattedLines = mutableListOf<Component>()
+    private val formattedLines = mutableListOf<Component>()
 
     private val hotdogContestRegex = ComponentRegex("Hot Dog Contest|Eaten: \\d+/\\d+")
     private val aveikxRegex = ComponentRegex("Time spent sitting|with Ävaeìkx: .*")
@@ -30,12 +34,7 @@ object EventRift : Event() {
     private val patterns = listOf(hotdogContestRegex, aveikxRegex, cluesRegex, barryProtestRegex, protestorsHandledRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.clear()
-        formattedLines.addAll(
-            event.components.filter { component ->
-                patterns.any { it.matches(component) }
-            },
-        )
+        formattedLines.replaceWithMatches(event.components, patterns)
 
         if (
             SkyBlockArea.inAnyArea(
@@ -45,18 +44,14 @@ object EventRift : Event() {
                 SkyBlockAreas.FAIRYLOSOPHER_TOWER,
             )
         ) {
-            val string = buildString {
-                append("Effigies: ")
-                RiftAPI.effieges.map { effigy ->
-                    append("§")
-                    append(
-                        if (effigy.enabled) "c"
-                        else "7",
-                    )
-                    append("⧯")
+            val component = Text.of("Effigies: ") {
+                RiftAPI.effieges.forEach { effigy ->
+                    append("⧯") {
+                        this.color = if (effigy.enabled) TextColor.RED else TextColor.GRAY
+                    }
                 }
             }
-            formattedLines.add(string.toComponent())
+            formattedLines.add(component)
         }
     }
 }

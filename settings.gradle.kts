@@ -1,24 +1,41 @@
-rootProject.name = "Custom Scoreboard"
+rootProject.name = "CustomScoreboard"
 
 pluginManagement {
     repositories {
-        maven("https://maven.fabricmc.net/")
-        maven("https://maven.teamresourceful.com/repository/maven-private/")
-        maven("https://maven.teamresourceful.com/repository/maven-public/")
-        maven("https://api.modrinth.com/maven") {
-            content {
-                includeGroup("maven.modrinth")
-            }
-        }
-
         gradlePluginPortal()
-        mavenLocal()
+        maven(url = "https://maven.teamresourceful.com/repository/maven-public/")
+        maven("https://maven.kikugie.dev/snapshots")
+        maven("https://maven.fabricmc.net/")
     }
 }
 
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+    id("dev.kikugie.stonecutter") version "0.7.10"
+}
+
+val versions = listOf("1.21.11", "1.21.10")
+
+stonecutter {
+    create(rootProject) {
+        versions(versions)
+        vcsVersion = versions.first()
+    }
+}
+
+
 dependencyResolutionManagement {
     versionCatalogs {
-        create("libs")
+        versions.forEach {
+            val name = it.replace(".", "")
+            create("libs$name") {
+                from(
+                    files(
+                        rootProject.projectDir.resolve("gradle/${it.replace(".", "_")}.versions.toml")
+                    )
+                )
+            }
+        }
     }
 }
 

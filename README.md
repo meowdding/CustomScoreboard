@@ -1,5 +1,5 @@
 <h1 align="center">
-    Custom Scoreboards
+    Custom Scoreboard
 </h1>
 <div align="center">
 
@@ -22,13 +22,18 @@ Elements that are in both mods are not listed for obvious reasons.
 |-------------------------------------------------------------------------------------|--------------|-----------------------|
 | Hypixel Lines                                                                       | ✅            | ✅                     |
 | Rounded Background                                                                  | ✅            | ✅                     |
-| Rounded Background with Outline                                                     | ✅            | ❌                     |
 | Rounded Textured Background                                                         | ✅            | ✅                     |
 | Custom Lines in [Scoreboard Overhaul](https://modrinth.com/mod/scoreboard-overhaul) | ❌            | ✅                     |
 | Ingame Background Texture Adder                                                     | ❌            | ✅                     |
 | Click and Hover Actions                                                             | ❌            | ✅                     |
 | Infinite Separators                                                                 | ❌            | ✅                     |
 | Active Pet                                                                          | ❌            | ✅                     |
-| Chunked Stats                                                                       | ✅            | ❌                     |
-| Maxwell Lines                                                                       | ✅            | ❌                     |
+| Slayer Xp and Meter                                                                 | ❌            | ✅                     |
+| Forest Whispers Permanent on screen                                                 | ❌            | ✅                     |
+| Hide while Tablist/Chat is Open                                                     | ❌            | ✅                     |
+| Tablist lines in Scoreboard                                                         | ❌            | ✅                     |
 
+### Transferring from SkyHanni
+
+You can easily transfer your config by using the ``Transfer`` button under `/cs` -> `Mod Compatibility`.
+Your old SkyHanni Custom Scoreboard Background Texturepack will work fine, you won't need to update it. 

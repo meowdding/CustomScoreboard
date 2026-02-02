@@ -3,34 +3,29 @@
     "id": "customscoreboard",
     "version": "${version}",
     "name": "Custom Scoreboard",
-    "description": "",
+    "license": "",
     "icon": "assets/customscoreboard/icon.png",
-    "authors": [
-        "j10a1n15"
-    ],
-    "contact": { },
-    "environment": "client",
-    "entrypoints": {
-        "main": [
-            {
-                "adapter": "kotlin",
-                "value": "me.owdding.customscoreboard.Main"
-            }
-        ]
-    },
     "mixins": [
         "customscoreboard.mixins.json"
     ],
+    "entrypoints": {
+        "client": [
+            {
+                "value": "me.owdding.customscoreboard.Main",
+                "adapter": "kotlin"
+            }
+        ]
+    },
     "depends": {
+        "fabricloader": ">=0.16.10",
+        "minecraft": ">=${minecraft_start} <=${minecraft_end}",
         "fabric": "*",
-        "minecraft": "${minecraft}",
-        "fabricloader": ">=${fabricLoader}",
-        "fabric-language-kotlin": ">=${fabricLanguageKotlin}",
-        "resourcefulconfigkt": ">=${resourcefulconfigkt}",
-        "resourcefulconfig": ">=${resourcefulconfig}",
-        "meowdding-lib": ">=${meowddingLib}",
-        "skyblock-api": ">=${skyblockApi}",
-        "resourcefullib": ">=${resourcefullib}",
-        "olympus": ">=${olympus}"
+        "fabric-language-kotlin": ">=${fabric_lang_kotlin}",
+        "resourcefullib": ">=${rlib}",
+        "olympus": ">=${olympus}",
+        "skyblock-api": ">=${sbapi}",
+        "meowdding-lib": ">=${mlib}",
+        "resourcefulconfigkt": ">=${rconfigkt}",
+        "resourcefulconfig": ">=${rconfig}"
     }
 }

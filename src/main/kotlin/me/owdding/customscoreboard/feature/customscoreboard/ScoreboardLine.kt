@@ -5,6 +5,7 @@ import earth.terrarium.olympus.client.components.Widgets
 import earth.terrarium.olympus.client.components.compound.LayoutWidget
 import earth.terrarium.olympus.client.components.string.TextWidget
 import me.owdding.customscoreboard.config.MainConfig
+import me.owdding.customscoreboard.config.categories.CustomizationConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.mixins.accessor.TextWidgetAccessor
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
@@ -13,12 +14,13 @@ import me.owdding.lib.displays.Alignment
 import me.owdding.lib.displays.Display
 import me.owdding.lib.displays.DisplayWidget
 import me.owdding.lib.layouts.Scalable
-import net.minecraft.Util
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.layouts.Layout
 import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
+import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McClient
+import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import java.time.Duration
@@ -55,7 +57,7 @@ data class ScoreboardLine(
                 actions.forEach { (k, v) ->
                     when (k) {
                         Element.Actions.COMMAND -> McClient.sendCommand((v as String).removePrefix("/"))
-                        Element.Actions.CLICK -> (v as (() -> Unit))()
+                        Element.Actions.CLICK -> @Suppress("UNCHECKED_CAST") (v as (() -> Unit))()
                         Element.Actions.LINK -> Util.getPlatform().openUri(v as String)
                         else -> {}
                     }
@@ -89,7 +91,7 @@ data class ScoreboardLine(
 
         internal fun getElementsFromAny(element: Any?): List<ScoreboardLine> = when (element) {
             null -> listOf()
-            is List<*> -> element.mapNotNull { it?.toScoreboardElement() }
+            is Collection<*> -> element.mapNotNull { it?.toScoreboardElement() }
             else -> listOfNotNull(element.toScoreboardElement())
         }
 
@@ -109,14 +111,14 @@ data class ScoreboardLine(
             else -> null
         }
 
-        fun List<ScoreboardLine>.createColumn() = (LayoutFactory.vertical {
+        fun List<ScoreboardLine>.createColumn() = (LayoutFactory.vertical(spacing = CustomizationConfig.lineSpacing) {
             this@createColumn.forEach { line ->
                 widget(line.widget, line::applySettings)
             }
-        }).also { (it as Scalable).scale(MainConfig.scale) }
+        }).also { (it as Scalable).scale(CustomizationConfig.scale) }
 
         fun getVanillaLines() = buildList {
-            McClient.scoreboardTitle?.let { add(ScoreboardLine(it, MainConfig.title.alignment)) }
+            McClient.scoreboardTitle?.let { add(ScoreboardLine(it, CustomizationConfig.titleAlignment)) }
             McClient.scoreboard.forEach { add(ScoreboardLine(it)) }
         }
     }
@@ -133,7 +135,7 @@ class ActionBuilder() {
         Element.Actions.COMMAND to command,
         Element.Actions.CLICK to click,
         Element.Actions.LINK to link,
-    ).mapNotNull { (key, value) -> value?.let { key to it } }.toMap()
+    ).filterValuesNotNull()
 }
 
 private fun String.asTextWidget() = toComponent().asTextWidget()

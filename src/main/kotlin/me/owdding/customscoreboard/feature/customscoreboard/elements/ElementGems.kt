@@ -1,17 +1,14 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
-@AutoElement
-object ElementGems : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§a"
+@ScoreboardElement
+object ElementGems : NumberTrackingElement("§a") {
 
     override fun getDisplay(): String {
         checkDifference(CurrencyAPI.gems)
@@ -20,7 +17,9 @@ object ElementGems : Element(), NumberTrackingElement {
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Gems", line, numberColor)
     }
 
-    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT, SkyBlockIsland.THE_CATACOMBS, SkyBlockIsland.KUUDRA)
+    override fun isLineActive() = CurrencyAPI.gems > 0
 
     override val configLine = "Gems"
+    override val id = "GEMS"
 }

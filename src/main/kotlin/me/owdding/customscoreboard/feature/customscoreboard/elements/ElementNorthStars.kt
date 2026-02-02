@@ -1,17 +1,14 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
-import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 
-@AutoElement
-object ElementNorthStars : Element(), NumberTrackingElement {
-    override var previousAmount: Long = -1
-    override var temporaryChangeDisplay: String? = null
-    override val numberColor = "§d"
+@ScoreboardElement
+object ElementNorthStars : NumberTrackingElement("§d") {
 
     override fun getDisplay(): String {
         checkDifference(CurrencyAPI.northStars)
@@ -21,6 +18,8 @@ object ElementNorthStars : Element(), NumberTrackingElement {
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.JERRYS_WORKSHOP)
+    override fun isLineActive() = CurrencyAPI.northStars > 0
 
     override val configLine = "North Stars"
+    override val id = "NORTH_STARS"
 }
