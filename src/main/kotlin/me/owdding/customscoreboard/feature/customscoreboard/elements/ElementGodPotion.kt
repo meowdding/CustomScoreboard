@@ -15,7 +15,7 @@ object ElementGodPotion : Element() {
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("God Potion", line, "§c")
     }
 
-    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT, SkyBlockIsland.THE_CATACOMBS)
     override fun isLineActive() = EffectsAPI.godPotionDuration.isPositive()
 
     override val configLine: String = "God Potion"

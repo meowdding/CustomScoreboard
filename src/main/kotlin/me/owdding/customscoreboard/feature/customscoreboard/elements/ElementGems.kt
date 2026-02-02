@@ -17,7 +17,7 @@ object ElementGems : NumberTrackingElement("§a") {
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Gems", line, numberColor)
     }
 
-    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT, SkyBlockIsland.THE_CATACOMBS, SkyBlockIsland.KUUDRA)
     override fun isLineActive() = CurrencyAPI.gems > 0
 
     override val configLine = "Gems"
