@@ -40,6 +40,7 @@ object ElementBank : NumberTrackingElement("§6") {
         }
     }
 
+    override fun showWhen() = LinesConfig.hidePurseInDungeons && SkyBlockIsland.THE_CATACOMBS.inIsland()
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
     override fun isLineActive() = CurrencyAPI.coopBank > 0 || CurrencyAPI.personalBank > 0
 

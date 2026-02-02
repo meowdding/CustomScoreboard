@@ -288,6 +288,10 @@
                     "@value": "Piggy Bank",
                     "desc": "Use \"Piggy\" instead of \"Purse\" as your Purse prefix when a piggy bank is active."
                 },
+                "hide_purse_dungeons": {
+                    "@value": "Hide Purse and Bank in Dungeons",
+                    "desc": "While you normally need the purse in dungeons when buying Chests, using Croesus makes this obsolete."
+                },
                 "bank_always_compact": {
                     "@value": "Bank Always Compact",
                     "desc": "Makes the Bank element ignore the main Number Format option, and always shows shortened (like in tablist)."
