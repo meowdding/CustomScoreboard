@@ -25,7 +25,7 @@ object ElementBits : NumberTrackingElement("§b") {
         }
     }
 
-    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_CATACOMBS)
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_CATACOMBS, SkyBlockIsland.KUUDRA)
     override fun isLineActive() = CurrencyAPI.bits > 0 || (LinesConfig.showBitsAvailable && CommunityCenterAPI.bitsAvailable > 0)
 
     override val configLine = "Bits"
