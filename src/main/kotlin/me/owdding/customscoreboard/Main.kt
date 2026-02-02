@@ -16,6 +16,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
+import me.owdding.customscoreboard.utils.RegisterCustomScoreboardCommandEvent
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
 import me.owdding.lib.utils.MeowddingLogger
@@ -30,7 +31,6 @@ import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.ResourceManager
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
-import tech.thatgravyboat.skyblockapi.api.events.misc.LiteralCommandBuilder
 import tech.thatgravyboat.skyblockapi.api.events.misc.RegisterCommandsEvent
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -98,19 +98,16 @@ object Main : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResol
     fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
 
     @Subscription
-    fun onRegisterCommands(event: RegisterCommandsEvent) {
-        val builder: (LiteralCommandBuilder.() -> Unit) = {
-            thenCallback("version") {
-                Text.of("Version: $VERSION").withColor(TextColor.GRAY).sendWithPrefix()
-            }
+    fun onCommand(event: RegisterCommandsEvent) = RegisterCustomScoreboardCommandEvent(event).post(SkyBlockAPI.eventBus)
 
-            callback {
-                McClient.setScreen(ResourcefulConfigScreen.getFactory("customscoreboard").apply(null))
-            }
+    @Subscription
+    fun onRegisterCommands(event: RegisterCustomScoreboardCommandEvent) {
+        event.registerBaseCallback {
+            McClient.setScreenAsync { ResourcefulConfigScreen.getFactory("customscoreboard").apply(null) }
         }
 
-        event.register("customscoreboard") { builder() }
-        event.register("csb") { builder() }
-        event.register("cs") { builder() }
+        event.registerWithCallback("version") {
+            Text.of("Version: $VERSION").withColor(TextColor.GRAY).sendWithPrefix()
+        }
     }
 }
