@@ -8,7 +8,7 @@ kotlin-symbol-processor = "2.2.0-2.0.2"
 kotlin_poet = "1.0.1"
 kotlin_poet_ksp = "1.0.1"
 
-skyblockapi = "4.0.4"
+skyblockapi = "4.0.7"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
