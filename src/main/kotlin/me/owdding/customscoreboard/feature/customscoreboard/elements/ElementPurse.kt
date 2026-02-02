@@ -22,7 +22,7 @@ object ElementPurse : NumberTrackingElement("§6") {
         )
     }
 
-    override fun showWhen() = LinesConfig.hidePurseInDungeons && SkyBlockIsland.THE_CATACOMBS.inIsland()
+    override fun showWhen() = !(LinesConfig.hidePurseInDungeons && SkyBlockIsland.THE_CATACOMBS.inIsland())
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
     override fun isLineActive() = CurrencyAPI.purse > 0
 
