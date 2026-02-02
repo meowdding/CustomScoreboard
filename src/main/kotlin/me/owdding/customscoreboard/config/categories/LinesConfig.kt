@@ -77,6 +77,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "$translationPath.piggy"
     }
 
+    val hidePurseInDungeons by boolean(false) {
+        this.translation = "$translationPath.hide_purse_dungeons"
+    }
+
     init {
         separator { this.title = "$translationPath.sections.progression" }
     }
