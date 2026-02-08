@@ -34,9 +34,9 @@ object ElementProfile : Element() {
 
 
     private val profileSymbol = mapOf(
-        ProfileType.IRONMAN to Text.of("♲ ").withColor(TextColor.GRAY),
-        ProfileType.STRANDED to Text.of("☀ ").withColor(TextColor.GREEN),
-        ProfileType.BINGO to Text.of("Ⓑ ").withColor(ProfileAPI.bingoRank?.color ?: TextColor.AQUA),
-        ProfileType.NORMAL to Text.of("").withColor(TextColor.YELLOW),
+        ProfileType.IRONMAN to Text.of("♲ ", TextColor.GRAY),
+        ProfileType.STRANDED to Text.of("☀ ", TextColor.GREEN),
+        ProfileType.BINGO to Text.of("Ⓑ ", ProfileAPI.bingoRank?.color ?: TextColor.AQUA),
+        ProfileType.NORMAL to Text.of("", TextColor.YELLOW),
     )
 }

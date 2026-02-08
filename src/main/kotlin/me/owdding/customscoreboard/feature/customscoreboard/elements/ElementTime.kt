@@ -6,12 +6,16 @@ import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import kotlin.time.Duration.Companion.seconds
 
 @ScoreboardElement
 object ElementTime : Element() {
-    override fun getDisplay() = buildString {
-        append("§7")
+    override fun getDisplay() = Text.of {
+        color = TextColor.GRAY
 
         var rawHour: Int
         val minutes: Int
@@ -35,16 +39,16 @@ object ElementTime : Element() {
             if (rawHour >= 12) append("pm") else append("am")
         }
 
-        val symbol = if (McLevel.hasLevel) {
+        val (symbol, color) = if (McLevel.hasLevel) {
             when {
-                McLevel.self.isRaining -> "§3☔"
-                McLevel.self.isThundering -> "§e⚡"
-                DateTimeAPI.isDay -> "§e☀"
-                else -> "§b☽"
+                McLevel.self.isRaining -> "☔" to TextColor.DARK_AQUA
+                McLevel.self.isThundering -> "⚡" to TextColor.YELLOW
+                DateTimeAPI.isDay -> "☀" to TextColor.YELLOW
+                else -> "☽" to TextColor.AQUA
             }
-        } else "§c⚠"
+        } else "⚠" to TextColor.RED
 
-        append(" $symbol")
+        append(" $symbol", color)
     }
 
     override val configLine = "Time"
@@ -59,7 +63,7 @@ object ElementTime : Element() {
             season.ordinal + 1,
             DateTimeAPI.day,
             DateTimeAPI.hour,
-            DateTimeAPI.minute + instant.minute%10,
+            DateTimeAPI.minute + instant.minute % 10,
         )
 
         val diff = (realInstant - instant).absoluteValue

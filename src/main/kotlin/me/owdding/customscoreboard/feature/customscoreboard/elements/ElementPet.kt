@@ -14,7 +14,7 @@ object ElementPet : Element() {
     override fun getDisplay() = buildList {
         val pet = PetsAPI.pet ?: return@buildList
 
-        val petColor = PetsAPI.rarity?.color ?: 0xFFFFFF
+        val petColor = PetsAPI.rarity?.color ?: TextColor.WHITE
         val petLine = Text.of(pet) { this.color = petColor }
         if (LinesConfig.petPrefix) {
             add(CustomScoreboardRenderer.formatNumberDisplayDisplay(Text.of("Pet"), petLine, petColor))
@@ -23,14 +23,10 @@ object ElementPet : Element() {
         }
 
         if (PetsAPI.isMaxLevel && LinesConfig.showPetMax) {
-            add(Text.of(" MAX") { this.color = TextColor.GREEN })
+            add(Text.of(" MAX", TextColor.GREEN))
         }
         if (!PetsAPI.isMaxLevel) {
-            add(
-                Text.of(" Lvl. ${PetsAPI.level} (${String.format("%.1f", ((PetsAPI.xp / PetsAPI.xpToNextLevel) * 100))}%)") {
-                    this.color = TextColor.YELLOW
-                },
-            )
+            add(Text.of(" Lvl. ${PetsAPI.level} (${String.format("%.1f", ((PetsAPI.xp / PetsAPI.xpToNextLevel) * 100))}%)", TextColor.YELLOW))
         }
     }.map {
         it.withActions {
