@@ -21,7 +21,7 @@ object ElementSlayer : Element() {
     override val id = "SLAYER"
 
 
-    private val slayerQuestRegex = ComponentRegex("Slayer Quest")
+    private val slayerQuestRegex = ComponentRegex("Slayer(?::| Quest)")
 
     private var formattedLines = emptyList<Component>()
 
