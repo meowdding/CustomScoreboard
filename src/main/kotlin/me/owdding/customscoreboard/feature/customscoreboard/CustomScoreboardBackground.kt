@@ -18,8 +18,9 @@ object CustomScoreboardBackground {
 
     fun load() {
         runCatching {
-            val file = File(BackgroundConfig.customImageFile)
-            if (file.exists()) {
+            val path = BackgroundConfig.customImageFile
+            val file = File(path)
+            if (path.isNotBlank() && file.exists() && file.isFile) {
                 file.inputStream().use { stream ->
                     val image = NativeImage.read(NativeImage.Format.RGBA, stream)
                     McClient.runNextTick {
@@ -36,7 +37,5 @@ object CustomScoreboardBackground {
 
     fun getTexture(): Identifier = dynamicTexture.takeIf { dynamic } ?: texturepackTexture.takeIf { doesTextureExist(it) } ?: skyhanniTexture
 
-    fun doesTextureExist(texture: Identifier): Boolean {
-        return McClient.self.resourceManager.getResource(texture).getOrNull()?.let { true } == true
-    }
+    fun doesTextureExist(texture: Identifier): Boolean = McClient.self.resourceManager.getResource(texture).getOrNull() != null
 }
