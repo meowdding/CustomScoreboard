@@ -10,7 +10,19 @@ import net.minecraft.util.ARGB
 object RenderUtils {
     fun GuiGraphics.drawRec(x: Int, y: Int, width: Int, height: Int) {
         with(BackgroundConfig) {
-            if (BackgroundConfig.borderEnabled) {
+
+            if (imageBackground) {
+                if (borderEnabled) {
+                    RoundedRectangle.draw(
+                        this@drawRec, x, y, width, height,
+                        // required to render because in Olympus it checks if it's not invisible to not render but the border also doesnt render.
+                        0x0e000000,
+                        borderColorTopLeft, borderColorTopRight,
+                        borderColorBottomLeft, borderColorBottomRight,
+                        radius - borderSize / 2, borderSize,
+                    )
+                }
+            } else if (borderEnabled) {
                 RoundedRectangle.draw(
                     this@drawRec, x, y, width, height,
                     backgroundColor,

@@ -115,9 +115,8 @@ object CustomScoreboardRenderer {
                 CustomScoreboardBackground.getTexture(),
                 alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
             )
-        } else {
-            event.graphics.drawRec(x, y, width, height)
         }
+        event.graphics.drawRec(x, y, width, height)
     }
 
     fun updateIslandCache() {
