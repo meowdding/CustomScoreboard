@@ -14,7 +14,7 @@ import kotlin.time.Duration
 @ScoreboardElement
 object ElementMayor : Element() {
     override fun getDisplay() = buildList {
-        val jerryActive = Candidate.JERRY.isActive && LinesConfig.showJerryInMinister
+        val jerryActive = Candidate.JERRY.isActive && LinesConfig.showJerryInMinister && ElectionAPI.jerryCandidate != null
         val mayor = ElectionAPI.currentMayor ?: return@buildList
 
         val perksDisplay = LinesConfig.mayorPerksDisplay
