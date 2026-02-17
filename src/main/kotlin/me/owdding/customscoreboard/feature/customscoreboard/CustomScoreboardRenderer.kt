@@ -109,6 +109,10 @@ object CustomScoreboardRenderer {
         val width = dimensions.first + padding * 2 + borderOffset * 2
         val height = dimensions.second + padding * 2 + borderOffset * 2
 
+        if (BackgroundConfig.blurEnabled) {
+            BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
+        }
+
         if (BackgroundConfig.imageBackground) {
             event.graphics.drawTexture(
                 x, y, width, height,

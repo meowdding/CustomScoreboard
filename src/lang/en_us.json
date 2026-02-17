@@ -145,6 +145,10 @@
                     "@value": "Radius",
                     "desc": "Choose the radius of the rounded corner of the background."
                 },
+                "blur": {
+                    "@value": "Blur",
+                    "desc": "Blur the background behind the scoreboard."
+                },
                 "border": {
                     "enabled": {
                         "@value": "Toggle Border",

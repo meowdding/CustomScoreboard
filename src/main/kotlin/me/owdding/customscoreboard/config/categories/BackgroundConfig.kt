@@ -57,6 +57,10 @@ object BackgroundConfig : CategoryKt("Background") {
         this.shPath = "background.roundedCornerSmoothness"
     }
 
+    val blurEnabled by boolean(false) {
+        this.translation = "customscoreboard.config.background.blur"
+    }
+
     init {
         separator { this.title = "customscoreboard.config.background.sections.border" }
     }
@@ -220,7 +224,7 @@ object CustomBackgroundModal {
                 .withChild(Layouts.row()
                     .withGap(PADDING)
                     .withChild(ResourcefulConfigUI.button(0, 0, buttonWidth, 20, Text.of("Select Image")) {
-                        OlympusDialogs.openFileSystemDialog(OlympusDialogs.FileSystemDialogType.OPEN_FILE, null, "*.png").thenAccept { files ->
+                        OlympusDialogs.openFileSystemDialog(OlympusDialogs.FileSystemDialogType.OPEN_FILE, null, "*.png", "*.gif").thenAccept { files ->
                             val file = files.getOrNull()?.firstOrNull() ?: return@thenAccept
                             val path = file.toAbsolutePath().toString()
                             BackgroundConfig.customImageFile = path
