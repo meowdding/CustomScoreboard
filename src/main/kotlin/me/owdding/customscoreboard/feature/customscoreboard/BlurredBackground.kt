@@ -66,11 +66,13 @@ object BlurredBackground {
 
         setup = TextureSetup.singleTexture(
             RenderSystem.getDevice().createTextureView(target!!.colorTexture!!),
+            //? if =1.21.11 {
             RenderSystem.getSamplerCache().getSampler(
                 AddressMode.CLAMP_TO_EDGE, AddressMode.CLAMP_TO_EDGE,
                 FilterMode.NEAREST, FilterMode.NEAREST,
                 false,
             ),
+            //?}
         )
     }
 
