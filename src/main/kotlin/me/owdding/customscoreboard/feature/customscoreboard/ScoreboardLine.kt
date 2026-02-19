@@ -36,9 +36,9 @@ data class ScoreboardLine(
 
     private var actions: Map<Element.Actions, Any> = emptyMap()
 
-    val component = (layout as? TextWidgetAccessor)?.text ?: "fail".toComponent()
+    val component: Component = (layout as? TextWidgetAccessor)?.text ?: "fail".toComponent()
 
-    val widget by lazy {
+    val widget: AbstractWidget by lazy {
         Widgets.button {
             it.setSize(layout.width, layout.height)
             it.withTexture(null)
@@ -79,7 +79,7 @@ data class ScoreboardLine(
     }
 
     companion object {
-        private val DEFAULT_ALIGNMENT get() = Alignment.START//displayConfig.textAlignment
+        private val DEFAULT_ALIGNMENT get() = CustomizationConfig.defaultTextAlignment
 
         fun String.align(): ScoreboardLine = this.toComponent().align()
 

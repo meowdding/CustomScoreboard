@@ -118,6 +118,10 @@
                 "horizontal_alignment": {
                     "@value": "Horizontal Alignment",
                     "desc": "Choose the horizontal alignment of the scoreboard."
+                },
+                "default_text_alignment": {
+                    "@value": "Default Text Alignment",
+                    "desc": "Choose the alignment of the text in the scoreboard, if not overridden by other options like the title or footer alignment."
                 }
             },
             "background": {

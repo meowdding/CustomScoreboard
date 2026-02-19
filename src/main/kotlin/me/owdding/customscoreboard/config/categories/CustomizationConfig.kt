@@ -202,4 +202,17 @@ object CustomizationConfig : CategoryKt("customization") {
         this.shPath = "display.alignment.horizontalAlignment"
         this.shMapper = { valueOfOrNull<HorizontalAlignment>(it.asString) ?: HorizontalAlignment.RIGHT }
     }
+
+    val defaultTextAlignment by enum(Alignment.START) {
+        this.translation = "$translationPath.default_text_alignment"
+        this.shPath = "display.textAlignment"
+        this.shMapper = {
+            when (it.asString) {
+                "LEFT" -> Alignment.START
+                "CENTER" -> Alignment.CENTER
+                "RIGHT" -> Alignment.END
+                else -> Alignment.START
+            }
+        }
+    }
 }
