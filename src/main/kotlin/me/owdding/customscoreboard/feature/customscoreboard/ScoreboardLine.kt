@@ -133,7 +133,7 @@ class ActionBuilder {
     var click: (() -> Unit)? = null
     var link: String? = null
 
-    fun build() = LineActions(hover, command, click, link)
+    fun build() = if (MainConfig.actions) LineActions(hover, command, click, link) else LineActions()
 }
 
 private fun String.asTextWidget() = toComponent().asTextWidget()

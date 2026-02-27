@@ -34,6 +34,10 @@
                     "@value": "Custom Lines",
                     "desc": "Instead of displaying the Hypixel's scoreboard lines, it will display the custom lines you selected in appearance & events."
                 },
+                "actions": {
+                    "@value": "Click and Hover Actions",
+                    "desc": "Use multiple predefined hover or clickable actions dependent on the line."
+                },
                 "outside_skyblock": {
                     "@value": "Outside SkyBlock",
                     "desc": [

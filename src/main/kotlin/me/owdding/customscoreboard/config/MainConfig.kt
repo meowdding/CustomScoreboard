@@ -16,6 +16,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopp
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
+import me.owdding.customscoreboard.utils.Utils.updateDisplay
 import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
@@ -166,7 +167,11 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     val customLines by boolean(true) {
         this.translation = "$translationPath.custom_lines"
         this.shPath = "display.useCustomLines"
-    }
+    }.updateDisplay()
+
+    val actions by boolean(true) {
+        this.translation = "$translationPath.actions"
+    }.updateDisplay()
 
     val outsideSkyBlock by boolean(false) {
         this.translation = "$translationPath.outside_skyblock"

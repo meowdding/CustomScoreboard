@@ -3,7 +3,7 @@ package me.owdding.customscoreboard.utils
 import com.teamresourceful.resourcefulconfigkt.api.ConfigDelegateProvider
 import com.teamresourceful.resourcefulconfigkt.api.ObservableEntry
 import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
-import com.teamresourceful.resourcefulconfigkt.api.builders.CategoryBuilder
+import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.ktmodules.AutoCollect
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
@@ -75,8 +75,10 @@ object Utils {
         (it[1] shl 24) or (it[2] shl 16) or (it[3] shl 8) or it[4]
     }
 
-    fun <T> CategoryBuilder.observable(entry: ConfigDelegateProvider<RConfigKtEntry<T>>, onChange: () -> Unit) = this.observable(entry) { _, _ -> onChange() }
     fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.observable(onChange: (T, T) -> Unit) = ObservableEntry(this, onChange)
+
+    fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.updateDisplay() = ObservableEntry(this) { _, _ -> CustomScoreboardRenderer.updateDisplay() }
+    fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.updateIslandCache() = ObservableEntry(this) { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
 }
 
 

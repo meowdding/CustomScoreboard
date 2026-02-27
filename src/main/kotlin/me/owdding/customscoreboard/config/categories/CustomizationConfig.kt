@@ -8,7 +8,6 @@ import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfig
 import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.ChunkedStat
-import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.TabWidgetHelper
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementArea
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementBank
@@ -43,6 +42,8 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTime
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementTitle
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.Utils.observable
+import me.owdding.customscoreboard.utils.Utils.updateDisplay
+import me.owdding.customscoreboard.utils.Utils.updateIslandCache
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.lib.displays.Alignment
@@ -87,7 +88,7 @@ object CustomizationConfig : CategoryKt("customization") {
         },
         { it.toConfigStrings() },
         { it.asList().toBaseElements() },
-    ).observable { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+    ).updateIslandCache()
 
     val events by draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
         this.translation = "$translationPath.events"
@@ -99,7 +100,7 @@ object CustomizationConfig : CategoryKt("customization") {
                 changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
             }
         }
-    }.observable { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+    }.updateIslandCache()
 
     init {
         separator { this.title = "$translationPath.sections.tablist" }
@@ -119,7 +120,7 @@ object CustomizationConfig : CategoryKt("customization") {
         this.shMapper = { json: JsonElement ->
             json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } }
         }
-    }.observable { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+    }.updateIslandCache()
 
     val statsPerLine by int(3) {
         this.translation = "$translationPath.chunked_stats_per_line"
@@ -189,7 +190,7 @@ object CustomizationConfig : CategoryKt("customization") {
         this.slider = true
         this.shPath = "display.lineSpacing"
         this.shMapper = { (it.asInt - 10).coerceAtLeast(0) }
-    }.observable { _, _ -> CustomScoreboardRenderer.updateDisplay() }
+    }.updateDisplay()
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
         this.translation = "$translationPath.vertical_alignment"
