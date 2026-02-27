@@ -1,7 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.BaseElement
-import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ActionBuilder
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine
@@ -30,7 +29,7 @@ abstract class Element : BaseElement {
     open fun showWhen(): Boolean = true
 
     /**
-     * Uses the [MainConfig.showActiveOnly] option to hide/show lines, should only be used on currency like and booster cookie/god potion like elements.
+     * Uses the [LinesConfig.showActiveOnly] option to hide/show lines, should only be used on currency like and booster cookie/god potion like elements.
      */
     open fun isLineActive(): Boolean = true
     abstract val configLine: String
@@ -50,14 +49,4 @@ abstract class Element : BaseElement {
     open fun onServerChange(event: ServerChangeEvent) {}
 
     fun MutableList<Any>.add(element: Any, actions: ActionBuilder.() -> Unit = {}) = add(element to ActionBuilder().apply(actions))
-
-    infix fun Any.withActions(actions: ActionBuilder.() -> Unit) = this to ActionBuilder().apply(actions)
-
-    enum class Actions {
-        HOVER,
-        COMMAND,
-        CLICK,
-        LINK,
-        ;
-    }
 }

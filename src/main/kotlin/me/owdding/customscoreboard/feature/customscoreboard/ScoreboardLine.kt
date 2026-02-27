@@ -6,7 +6,6 @@ import earth.terrarium.olympus.client.components.compound.LayoutWidget
 import earth.terrarium.olympus.client.components.string.TextWidget
 import me.owdding.customscoreboard.config.MainConfig
 import me.owdding.customscoreboard.config.categories.CustomizationConfig
-import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.mixins.accessor.TextWidgetAccessor
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
 import me.owdding.lib.builder.LayoutFactory
@@ -20,7 +19,6 @@ import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McClient
-import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import java.time.Duration
@@ -30,43 +28,37 @@ data class ScoreboardLine(
     private val layout: AbstractWidget,
     val alignment: Alignment = DEFAULT_ALIGNMENT,
     val isBlank: Boolean = false,
+    val actions: LineActions = LineActions(),
 ) {
     constructor(component: Component, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(component.asTextWidget(), alignment, isBlank)
     constructor(string: String, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(string.asTextWidget(), alignment, isBlank)
 
-    private var actions: Map<Element.Actions, Any> = emptyMap()
-
     val component: Component = (layout as? TextWidgetAccessor)?.text ?: "fail".toComponent()
 
     val widget: AbstractWidget by lazy {
-        Widgets.button {
-            it.setSize(layout.width, layout.height)
-            it.withTexture(null)
-            it.withRenderer { graphics, ctx, ticks ->
-                graphics.translated(it.x, it.y) {
+        Widgets.button { button ->
+            button.setSize(layout.width, layout.height)
+            button.withTexture(null)
+            button.withRenderer { graphics, ctx, ticks ->
+                graphics.translated(button.x, button.y) {
                     layout.render(graphics, ctx.mouseX, ctx.mouseY, ticks)
                 }
             }
 
-            if (Element.Actions.HOVER in actions) {
-                it.withTooltip(Text.multiline(actions[Element.Actions.HOVER]))
-                it.setTooltipDelay(Duration.of(-1, ChronoUnit.SECONDS))
+            actions.hover?.let {
+                button.withTooltip(Text.multiline(it))
+                button.setTooltipDelay(Duration.of(-1, ChronoUnit.SECONDS))
             }
 
-            it.withCallback {
-                actions.forEach { (k, v) ->
-                    when (k) {
-                        Element.Actions.COMMAND -> McClient.sendCommand((v as String).removePrefix("/"))
-                        Element.Actions.CLICK -> @Suppress("UNCHECKED_CAST") (v as (() -> Unit))()
-                        Element.Actions.LINK -> Util.getPlatform().openUri(v as String)
-                        else -> {}
-                    }
-                }
+            button.withCallback {
+                actions.command?.let { McClient.sendCommand(it.removePrefix("/")) }
+                actions.link?.let { Util.getPlatform().openUri(it) }
+                actions.click?.invoke()
             }
-
         }
     }
 
+    fun withActions(block: ActionBuilder.() -> Unit): ScoreboardLine = this.copy(actions = ActionBuilder().apply(block).build())
 
     fun applySettings(settings: LayoutSettings) {
         settings.alignHorizontally(
@@ -82,12 +74,12 @@ data class ScoreboardLine(
         private val DEFAULT_ALIGNMENT get() = CustomizationConfig.defaultTextAlignment
 
         fun String.align(): ScoreboardLine = this.toComponent().align()
-
         fun Component.align(): ScoreboardLine = ScoreboardLine(this.asTextWidget(), DEFAULT_ALIGNMENT)
-
         infix fun String.align(alignment: Alignment): ScoreboardLine = this.toComponent().align(alignment)
-
         infix fun Component.align(alignment: Alignment): ScoreboardLine = ScoreboardLine(this.asTextWidget(), alignment)
+
+        fun String.withActions(block: ActionBuilder.() -> Unit): ScoreboardLine = this.align().withActions(block)
+        fun Component.withActions(block: ActionBuilder.() -> Unit): ScoreboardLine = this.align().withActions(block)
 
         internal fun getElementsFromAny(element: Any?): List<ScoreboardLine> = when (element) {
             null -> listOf()
@@ -96,16 +88,18 @@ data class ScoreboardLine(
         }
 
         private fun Any.toScoreboardElement(): ScoreboardLine? = when (this) {
-            is String -> this.toComponent().align()
+            is String -> this.align()
             is Component -> this.align()
             is ScoreboardLine -> this
             is Layout -> ScoreboardLine(LayoutWidget(this))
             is AbstractWidget -> ScoreboardLine(this)
             is Display -> ScoreboardLine(DisplayWidget(this))
             is Pair<*, *> -> {
-                (this.second as? ActionBuilder)?.let { action ->
-                    this.first!!.toScoreboardElement()?.apply { this.actions = action.toMap() }
-                }
+                val element = this.first?.toScoreboardElement()
+                val actionBuilder = this.second as? ActionBuilder
+
+                if (element != null && actionBuilder != null) element.copy(actions = actionBuilder.build())
+                else element
             }
 
             else -> null
@@ -124,18 +118,22 @@ data class ScoreboardLine(
     }
 }
 
-class ActionBuilder() {
+data class LineActions(
+    val hover: List<String>? = null,
+    val command: String? = null,
+    val click: (() -> Unit)? = null,
+    val link: String? = null,
+) {
+    fun isEmpty() = hover == null && command == null && click == null && link == null
+}
+
+class ActionBuilder {
     var hover: List<String>? = null
     var command: String? = null
     var click: (() -> Unit)? = null
     var link: String? = null
 
-    fun toMap() = mapOf(
-        Element.Actions.HOVER to hover,
-        Element.Actions.COMMAND to command,
-        Element.Actions.CLICK to click,
-        Element.Actions.LINK to link,
-    ).filterValuesNotNull()
+    fun build() = LineActions(hover, command, click, link)
 }
 
 private fun String.asTextWidget() = toComponent().asTextWidget()

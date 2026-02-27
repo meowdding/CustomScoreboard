@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland

@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
+import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import me.owdding.lib.extensions.shorten
