@@ -20,6 +20,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.underlined
 import kotlin.io.path.Path
+import kotlin.io.path.absolute
 import kotlin.jvm.optionals.getOrNull
 
 object BackgroundConfig : CategoryKt("Background") {
@@ -206,8 +207,10 @@ object CustomBackgroundModal {
             }
             it.withCallback {
                 if (BackgroundConfig.customImageFile.isNotEmpty()) {
-                    val path = Path(BackgroundConfig.customImageFile).parent
-                    Util.getPlatform().openPath(path)
+                    Path(BackgroundConfig.customImageFile)
+                        .absolute()
+                        .parent
+                        ?.let(Util.getPlatform()::openPath)
                 }
             }
             it.withSize(width, McFont.height)
