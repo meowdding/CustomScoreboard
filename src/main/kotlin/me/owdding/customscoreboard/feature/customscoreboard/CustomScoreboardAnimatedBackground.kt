@@ -46,7 +46,9 @@ object CustomScoreboardAnimatedBackground {
                     if (frames > MAX_FRAMES) {
                         println("Animated background has $frames frames, but only $frames can fit in a single texture. Some frames will be ignored.")
                     } else {
+                        // Minecraft doesnt clear the buffer from previously closed images, so we need to do it ourselves to prevent artifacts from showing up in the first frame.
                         val background = reader.createBackground()
+                        background.clear()
 
                         for (i in 0 until frames) {
                             val metadata = reader.getImageMetadata(i)
@@ -60,14 +62,25 @@ object CustomScoreboardAnimatedBackground {
                             val x = descriptor.getAttribute("imageLeftPosition").toInt()
                             val y = descriptor.getAttribute("imageTopPosition").toInt()
 
-                            reader.read(i).copyTo(background, x, y, width, height)
+                            val disposalMethod = control.getAttribute("disposalMethod")
+
+                            val image = background.copy()
+                            reader.read(i).copyTo(image, x, y, width, height)
+
+                            when (disposalMethod) {
+                                "restoreToBackgroundColor" -> background.clear()
+                                "restoreToPrevious" -> {} // Do nothing, keep the previous frame
+                                else -> background.copyFrom(image) // Keep the current frame for the next one
+                            }
 
                             this._frames.add(Frame(
                                 sprite = Identifier.fromNamespaceAndPath("customscoreboard", "dynamic/scoreboard/$i"),
-                                image = background.copy(),
+                                image = image,
                                 duration = control.getAttribute("delayTime").toLongOrNull()?.times(10) ?: DEFAULT_FRAME_DELAY
                             ))
                         }
+
+                        background.close()
                     }
                 }
             }
@@ -90,6 +103,10 @@ object CustomScoreboardAnimatedBackground {
         }
 
         return NativeImage(width, height, false)
+    }
+
+    private fun NativeImage.clear() {
+        this.fillRect(0, 0, this.width, this.height, 0)
     }
 
     private fun NativeImage.copy(): NativeImage {
