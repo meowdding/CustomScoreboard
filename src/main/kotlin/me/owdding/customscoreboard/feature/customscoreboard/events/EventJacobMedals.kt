@@ -1,11 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.area.hub.FarmhouseAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedString
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventJacobMedals : Event() {
@@ -21,5 +22,5 @@ object EventJacobMedals : Event() {
 
     override val configLine = "Jacob Medals"
 
-    private val medalRegex = ComponentRegex(".* medals: \\d+")
+    private val medalRegex by RemoteStrings.resolve().componentRegex(".* medals: \\d+")
 }

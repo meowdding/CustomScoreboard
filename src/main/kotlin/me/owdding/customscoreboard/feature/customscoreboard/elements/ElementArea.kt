@@ -1,12 +1,13 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.trim
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyMatch
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 
 @ScoreboardElement
@@ -17,10 +18,10 @@ object ElementArea : Element() {
 
     override fun getDisplay() = listOfNotNull(formattedLocation, formattedGardenPlot, formattedVisiting)
 
-
-    private val locationComponentRegex = ComponentRegex("\\s*[⏣ф] .+")
-    private val gardenPlotComponentRegex = ComponentRegex("\\s*Plot -.+")
-    private val visitingComponentRegex = ComponentRegex("\\s*✌ \\(\\d+/\\d+\\)")
+    private val remote = RemoteStrings.resolve()
+    private val locationComponentRegex by remote.componentRegex("\\s*[⏣ф] .+")
+    private val gardenPlotComponentRegex by remote.componentRegex("\\s*Plot -.+")
+    private val visitingComponentRegex by remote.componentRegex("\\s*✌ \\(\\d+/\\d+\\)")
 
     private val gardenPlotRegex = gardenPlotComponentRegex.regex()
     private val visitingRegex = visitingComponentRegex.regex()

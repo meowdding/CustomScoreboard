@@ -1,11 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventDamage : Event() {
@@ -18,8 +19,9 @@ object EventDamage : Event() {
 
     private val formattedLines = mutableListOf<Component>()
 
-    private val hpRegex = ComponentRegex("(?:Protector|Dragon) HP: [\\d,.]* ❤")
-    private val damageRegex = ComponentRegex("Your Damage: [\\d,.]+")
+    private val remote = RemoteStrings.resolve()
+    private val hpRegex by remote.componentRegex("(?:Protector|Dragon) HP: [\\d,.]* ❤")
+    private val damageRegex by remote.componentRegex("Your Damage: [\\d,.]+")
 
     private val patterns = listOf(hpRegex, damageRegex)
 

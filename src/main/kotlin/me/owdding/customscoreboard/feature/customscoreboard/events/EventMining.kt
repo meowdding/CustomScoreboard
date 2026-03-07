@@ -3,11 +3,12 @@ package me.owdding.customscoreboard.feature.customscoreboard.events
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.align
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.lib.displays.Alignment
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventMining : Event() {
@@ -21,24 +22,25 @@ object EventMining : Event() {
 
     private val formattedLines = mutableListOf<Any>()
 
-    private val powderRegex = ComponentRegex("᠅ (?:Gemstone|Mithril|Glacite)(?: Powder)?.*")
-    private val eventRegex = ComponentRegex("Event: .*")
-    private val eventZoneRegex = ComponentRegex("Zone: .*")
-    private val raffleUselessRegex = ComponentRegex("Find tickets on the|ground and bring them|to the raffle box")
-    private val raffleTicketsRegex = ComponentRegex("Tickets: \\d+ \\([\\d.,]+%\\)")
-    private val rafflePoolRegex = ComponentRegex("Pool: [\\d.,]+")
-    private val donUseless = ComponentRegex("Give Tasty Mithril to Don!")
-    private val donRemaining = ComponentRegex("Remaining: (?:\\d+ Tasty Mithril|FULL)")
-    private val donYourMithril = ComponentRegex("Your Tasty Mithril: \\d+.*")
-    private val nearbyPlayers = ComponentRegex("Nearby Players: .*")
-    private val goblinUseless = ComponentRegex("Kill goblins!")
-    private val goblinRemaining = ComponentRegex("Remaining: \\d+ goblins?")
-    private val goblinYourKills = ComponentRegex("Your kills: \\d+ ☠.*")
-    private val mineshaftNotStartedRegex = ComponentRegex("Not started.*")
-    private val mineshaftFortunateFreezingRegex = ComponentRegex("Event Bonus: \\+\\d+☘")
-    private val fossilDustRegex = ComponentRegex("Fossil Dust: [\\d.,]+.*")
-    private val compassRegex = ComponentRegex("Wind Compass")
-    private val compassArrowRegex = ComponentRegex("\\s*[⋖⋗≈]+\\s*[⋖⋗≈]*\\s*")
+    private val remote = RemoteStrings.resolve()
+    private val powderRegex by remote.componentRegex("᠅ (?:Gemstone|Mithril|Glacite)(?: Powder)?.*")
+    private val eventRegex by remote.componentRegex("Event: .*")
+    private val eventZoneRegex by remote.componentRegex("Zone: .*")
+    private val raffleUselessRegex by remote.componentRegex("Find tickets on the|ground and bring them|to the raffle box")
+    private val raffleTicketsRegex by remote.componentRegex("Tickets: \\d+ \\([\\d.,]+%\\)")
+    private val rafflePoolRegex by remote.componentRegex("Pool: [\\d.,]+")
+    private val donUseless by remote.componentRegex("Give Tasty Mithril to Don!")
+    private val donRemaining by remote.componentRegex("Remaining: (?:\\d+ Tasty Mithril|FULL)")
+    private val donYourMithril by remote.componentRegex("Your Tasty Mithril: \\d+.*")
+    private val nearbyPlayers by remote.componentRegex("Nearby Players: .*")
+    private val goblinUseless by remote.componentRegex("Kill goblins!")
+    private val goblinRemaining by remote.componentRegex("Remaining: \\d+ goblins?")
+    private val goblinYourKills by remote.componentRegex("Your kills: \\d+ ☠.*")
+    private val mineshaftNotStartedRegex by remote.componentRegex("Not started.*")
+    private val mineshaftFortunateFreezingRegex by remote.componentRegex("Event Bonus: \\+\\d+☘")
+    private val fossilDustRegex by remote.componentRegex("Fossil Dust: [\\d.,]+.*")
+    private val compassRegex by remote.componentRegex("Wind Compass")
+    private val compassArrowRegex by remote.componentRegex("\\s*[⋖⋗≈]+\\s*[⋖⋗≈]*\\s*")
 
     private val patterns = listOf(
         eventRegex, eventZoneRegex, raffleUselessRegex, raffleTicketsRegex, rafflePoolRegex, donUseless,

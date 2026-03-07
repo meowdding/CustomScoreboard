@@ -1,12 +1,13 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventTrapper : Event() {
@@ -19,9 +20,9 @@ object EventTrapper : Event() {
 
     private val formattedLines = mutableListOf<Component>()
 
-    private val peltsRegex = ComponentRegex("Pelts: [\\d,.]+.*")
-    private val mobLocationRegex = ComponentRegex("Tracker Mob Location:")
-
+    private val remote = RemoteStrings.resolve()
+    private val peltsRegex by remote.componentRegex("Pelts: [\\d,.]+.*")
+    private val mobLocationRegex by remote.componentRegex("Tracker Mob Location:")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {

@@ -1,6 +1,8 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.trim
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import me.owdding.ktmodules.Module
@@ -10,7 +12,6 @@ import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @Module
 @ScoreboardElement
@@ -21,7 +22,7 @@ object ElementSlayer : Element() {
     override val id = "SLAYER"
 
 
-    private val slayerQuestRegex = ComponentRegex("Slayer(?::| Quest)")
+    private val slayerQuestRegex by RemoteStrings.resolve().componentRegex("Slayer(?::| Quest)")
 
     private var formattedLines = emptyList<Component>()
 

@@ -1,10 +1,11 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventRedstone : Event() {
@@ -17,7 +18,7 @@ object EventRedstone : Event() {
 
     private var formattedLine: Component? = null
 
-    private val redstoneRegex = ComponentRegex(" ⚡ Redstone: [\\d.,]+%")
+    private val redstoneRegex by RemoteStrings.resolve().componentRegex(" ⚡ Redstone: [\\d.,]+%")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLine = event.components.find(redstoneRegex::matches)
