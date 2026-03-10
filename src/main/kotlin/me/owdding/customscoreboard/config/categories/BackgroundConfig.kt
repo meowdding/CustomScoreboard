@@ -122,7 +122,7 @@ object BackgroundConfig : CategoryKt("Background") {
             this.text = "Open Website"
 
             onClick {
-                Util.getPlatform().openUri("https://j10a1n15.github.io/j10a1n15/pages/background.html")
+                Util.getPlatform().openUri("https://meowdd.ing/scoreboard")
             }
         }
 
