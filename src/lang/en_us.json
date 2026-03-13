@@ -199,7 +199,10 @@
                 },
                 "editor": {
                     "@value": "Custom Background Image",
-                    "desc": "Click to open the custom background image editor."
+                    "desc": [
+                        "Click to open the background image editor",
+                        "<green><italic>You can also place a <gray>scoreboard.png</gray> inside the <gray>.minecraft/config/customscoreboard</gray> folder."
+                    ]
                 }
             },
             "line_modification": {
