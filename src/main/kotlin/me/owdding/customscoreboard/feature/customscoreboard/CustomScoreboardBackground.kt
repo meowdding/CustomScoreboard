@@ -14,17 +14,19 @@ object CustomScoreboardBackground {
     private val skyhanniTexture = Identifier.fromNamespaceAndPath("skyhanni", "scoreboard.png")
     private val dynamicTexture = Identifier.fromNamespaceAndPath("customscoreboard", "dynamic/scoreboard")
 
-    private val configFolderFile = McClient.config.resolve("customscoreboard/scoreboard.png").toFile()
+    private val configFolderFilePng = McClient.config.resolve("customscoreboard/scoreboard.png").toFile()
+    private val configFolderFileGif = McClient.config.resolve("customscoreboard/scoreboard.gif").toFile()
 
     private var dynamic = false
     private var animated = false
 
     fun load() {
         runCatching {
-            val customPath = BackgroundConfig.customImageFile
-            val file = if (customPath.isNotBlank()) File(customPath) else configFolderFile
+            val file = BackgroundConfig.customImageFile.takeUnless(String::isEmpty)?.let(::File)?.takeIf(File::exists)
+                ?: configFolderFileGif.takeIf(File::exists)
+                ?: configFolderFilePng.takeIf(File::exists)
 
-            if (file.exists() && file.isFile) {
+            if (file != null && file.isFile) {
                 val isGif = file.extension.equals("gif", ignoreCase = true)
                 file.inputStream().use { stream ->
                     if (isGif) {
