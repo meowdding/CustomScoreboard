@@ -7,6 +7,7 @@ import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
 import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
+import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
@@ -59,7 +60,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val blurEnabled by boolean(false) {
-        this.translation = "customscoreboard.config.background.blur"
+        this.translation = if (BlurredBackground.vulkanInstalled) "customscoreboard.config.background.blur_vulk" else "customscoreboard.config.background.blur"
     }
 
     init {

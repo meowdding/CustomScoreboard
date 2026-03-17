@@ -109,7 +109,7 @@ object CustomScoreboardRenderer {
         val width = dimensions.first + padding * 2 + borderOffset * 2
         val height = dimensions.second + padding * 2 + borderOffset * 2
 
-        if (BackgroundConfig.blurEnabled) {
+        if (BackgroundConfig.blurEnabled && !BlurredBackground.vulkanInstalled) {
             BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
         }
 

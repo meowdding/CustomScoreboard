@@ -157,6 +157,13 @@
                     "@value": "Blur",
                     "desc": "Blur the background behind the scoreboard."
                 },
+                "blur_vulk": {
+                    "@value": "Blur",
+                    "desc": [
+                        "Blur the background behind the scoreboard.",
+                        "<red>This is disabled because you have vulkan mod installed. Remove the mod to use this feature.</red>"
+                    ]
+                },
                 "border": {
                     "enabled": {
                         "@value": "Toggle Border",
