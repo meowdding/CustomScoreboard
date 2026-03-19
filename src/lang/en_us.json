@@ -157,6 +157,13 @@
                     "@value": "Blur",
                     "desc": "Blur the background behind the scoreboard."
                 },
+                "blur_vulk": {
+                    "@value": "Blur",
+                    "desc": [
+                        "Blur the background behind the scoreboard.",
+                        "<red>This is disabled because you have vulkan mod installed. Remove the mod to use this feature.</red>"
+                    ]
+                },
                 "border": {
                     "enabled": {
                         "@value": "Toggle Border",
@@ -199,7 +206,10 @@
                 },
                 "editor": {
                     "@value": "Custom Background Image",
-                    "desc": "Click to open the custom background image editor."
+                    "desc": [
+                        "Click to open the background image editor",
+                        "<green><italic>You can also place a <gray>scoreboard.png</gray> inside the <gray>.minecraft/config/customscoreboard</gray> folder."
+                    ]
                 }
             },
             "line_modification": {

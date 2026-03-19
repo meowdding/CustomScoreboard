@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.blaze3d.vertex.VertexFormat
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform
 import me.owdding.customscoreboard.Main
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.navigation.ScreenRectangle
 import net.minecraft.client.gui.render.TextureSetup
@@ -36,6 +37,8 @@ object BlurredBackground {
         .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)
         .build()
 
+    val vulkanInstalled = FabricLoader.getInstance().isModLoaded("vulkanmod")
+
     init {
         RenderPipelines.register(pipeline)
     }
@@ -57,6 +60,10 @@ object BlurredBackground {
 
     @JvmStatic
     fun init(width: Int, height: Int) {
+        if (vulkanInstalled) {
+            Main.warn("Vulkan mod detected, blurred background will not work!")
+            return
+        }
         if (target == null) {
             target = TextureTarget(null, width, height, false)
         } else {
