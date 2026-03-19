@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
@@ -34,9 +35,9 @@ object ElementProfile : Element() {
 
 
     private val profileSymbol = mapOf(
-        ProfileType.IRONMAN to Text.of("♲ ").withColor(TextColor.GRAY),
-        ProfileType.STRANDED to Text.of("☀ ").withColor(TextColor.GREEN),
-        ProfileType.BINGO to Text.of("Ⓑ ").withColor(ProfileAPI.bingoRank?.color ?: TextColor.AQUA),
-        ProfileType.NORMAL to Text.of("").withColor(TextColor.YELLOW),
+        ProfileType.IRONMAN to Text.of("♲ ", TextColor.GRAY),
+        ProfileType.STRANDED to Text.of("☀ ", TextColor.GREEN),
+        ProfileType.BINGO to Text.of("Ⓑ ", ProfileAPI.bingoRank?.color ?: TextColor.AQUA),
+        ProfileType.NORMAL to Text.of("", TextColor.YELLOW),
     )
 }

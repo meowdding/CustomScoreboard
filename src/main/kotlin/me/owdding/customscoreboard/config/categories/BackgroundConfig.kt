@@ -7,6 +7,7 @@ import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
 import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
+import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
@@ -20,6 +21,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.underlined
 import kotlin.io.path.Path
+import kotlin.io.path.absolute
 import kotlin.jvm.optionals.getOrNull
 
 object BackgroundConfig : CategoryKt("Background") {
@@ -55,6 +57,10 @@ object BackgroundConfig : CategoryKt("Background") {
         this.range = 0..20
         this.slider = true
         this.shPath = "background.roundedCornerSmoothness"
+    }
+
+    val blurEnabled by boolean(false) {
+        this.translation = if (BlurredBackground.vulkanInstalled) "customscoreboard.config.background.blur_vulk" else "customscoreboard.config.background.blur"
     }
 
     init {
@@ -117,7 +123,7 @@ object BackgroundConfig : CategoryKt("Background") {
             this.text = "Open Website"
 
             onClick {
-                Util.getPlatform().openUri("https://j10a1n15.github.io/j10a1n15/pages/background.html")
+                Util.getPlatform().openUri("https://meowdd.ing/scoreboard")
             }
         }
 
@@ -202,8 +208,10 @@ object CustomBackgroundModal {
             }
             it.withCallback {
                 if (BackgroundConfig.customImageFile.isNotEmpty()) {
-                    val path = Path(BackgroundConfig.customImageFile).parent
-                    Util.getPlatform().openPath(path)
+                    Path(BackgroundConfig.customImageFile)
+                        .absolute()
+                        .parent
+                        ?.let(Util.getPlatform()::openPath)
                 }
             }
             it.withSize(width, McFont.height)
@@ -220,7 +228,7 @@ object CustomBackgroundModal {
                 .withChild(Layouts.row()
                     .withGap(PADDING)
                     .withChild(ResourcefulConfigUI.button(0, 0, buttonWidth, 20, Text.of("Select Image")) {
-                        OlympusDialogs.openFileSystemDialog(OlympusDialogs.FileSystemDialogType.OPEN_FILE, null, "*.png").thenAccept { files ->
+                        OlympusDialogs.openFileSystemDialog(OlympusDialogs.FileSystemDialogType.OPEN_FILE, null, "*.png", "*.gif").thenAccept { files ->
                             val file = files.getOrNull()?.firstOrNull() ?: return@thenAccept
                             val path = file.toAbsolutePath().toString()
                             BackgroundConfig.customImageFile = path

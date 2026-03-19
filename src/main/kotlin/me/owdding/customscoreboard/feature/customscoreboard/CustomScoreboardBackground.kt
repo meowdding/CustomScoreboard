@@ -14,29 +14,61 @@ object CustomScoreboardBackground {
     private val skyhanniTexture = Identifier.fromNamespaceAndPath("skyhanni", "scoreboard.png")
     private val dynamicTexture = Identifier.fromNamespaceAndPath("customscoreboard", "dynamic/scoreboard")
 
+    private val configFolderFilePng = McClient.config.resolve("customscoreboard/scoreboard.png").toFile()
+    private val configFolderFileGif = McClient.config.resolve("customscoreboard/scoreboard.gif").toFile()
+
     private var dynamic = false
+    private var animated = false
 
     fun load() {
         runCatching {
-            val file = File(BackgroundConfig.customImageFile)
-            if (file.exists()) {
+            val file = BackgroundConfig.customImageFile.takeUnless(String::isEmpty)?.let(::File)?.takeIf(File::exists)
+                ?: configFolderFileGif.takeIf(File::exists)
+                ?: configFolderFilePng.takeIf(File::exists)
+
+            if (file != null && file.isFile) {
+                val isGif = file.extension.equals("gif", ignoreCase = true)
                 file.inputStream().use { stream ->
-                    val image = NativeImage.read(NativeImage.Format.RGBA, stream)
-                    McClient.runNextTick {
-                        val texture = DynamicTexture({ "Custom Scoreboard Background" }, image)
-                        McClient.self.textureManager.register(dynamicTexture, texture)
+                    if (isGif) {
+                        this.animated = true
+                        this.dynamic = false
+                        CustomScoreboardAnimatedBackground.load(stream)
+
+                        McClient.runNextTick {
+                            for (frame in CustomScoreboardAnimatedBackground.frames) {
+                                McClient.self.textureManager.register(frame.sprite, frame.load())
+                            }
+                        }
+                    } else {
+                        this.animated = false
+                        this.dynamic = true
+
+                        val image = NativeImage.read(NativeImage.Format.RGBA, stream)
+                        McClient.runNextTick {
+                            val texture = DynamicTexture({ "Custom Scoreboard Background" }, image)
+                            McClient.self.textureManager.register(dynamicTexture, texture)
+                        }
                     }
-                    dynamic = true
                 }
             } else {
-                dynamic = false
+                this.dynamic = false
+                this.animated = false
             }
         }.onFailure(Throwable::printStackTrace)
     }
 
-    fun getTexture(): Identifier = dynamicTexture.takeIf { dynamic } ?: texturepackTexture.takeIf { doesTextureExist(it) } ?: skyhanniTexture
+    fun getTexture(): Identifier {
+        if (animated) {
+            val frame = CustomScoreboardAnimatedBackground.frame
+            if (frame != null) return frame.sprite
+        }
 
-    fun doesTextureExist(texture: Identifier): Boolean {
-        return McClient.self.resourceManager.getResource(texture).getOrNull()?.let { true } == true
+        return when {
+            dynamic -> dynamicTexture
+            doesTextureExist(texturepackTexture) -> texturepackTexture
+            else -> skyhanniTexture
+        }
     }
+
+    fun doesTextureExist(texture: Identifier): Boolean = McClient.self.resourceManager.getResource(texture).getOrNull() != null
 }

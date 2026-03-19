@@ -4,9 +4,13 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.TextUtils.toComponent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.hotf.WhispersAPI
 import tech.thatgravyboat.skyblockapi.api.profile.hotm.PowderAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object ElementPowder : Element() {
@@ -17,36 +21,45 @@ object ElementPowder : Element() {
     override fun getDisplay() = buildList {
         when {
             SkyBlockIsland.inAnyIsland(foragingIsland) -> {
-                add("§9Whispers") {
+                add(Text.of("Whispers", TextColor.BLUE)) {
                     hover = listOf("§7Click to open your Hotf.")
                     command = "/hotf"
                 }
 
-                addLine("Forest", WhispersAPI.forest, WhispersAPI.forestTotal, "§3")
+                addLine("Forest", WhispersAPI.forest, WhispersAPI.forestTotal, TextColor.DARK_AQUA)
             }
 
             SkyBlockIsland.inAnyIsland(miningIslands) -> {
-                add("§9Powder") {
+                add(Text.of("Powder", TextColor.BLUE)) {
                     hover = listOf("§7Click to open your Hotm.")
                     command = "/hotm"
                 }
 
-                addLine("Mithril", PowderAPI.mithril, PowderAPI.mithrilTotal, "§2")
-                addLine("Gemstone", PowderAPI.gemstone, PowderAPI.gemstoneTotal, "§d")
-                addLine("Glacite", PowderAPI.glacite, PowderAPI.glaciteTotal, "§b")
+                addLine("Mithril", PowderAPI.mithril, PowderAPI.mithrilTotal, TextColor.DARK_GREEN)
+                addLine("Gemstone", PowderAPI.gemstone, PowderAPI.gemstoneTotal, TextColor.PINK)
+                addLine("Glacite", PowderAPI.glacite, PowderAPI.glaciteTotal, TextColor.AQUA)
             }
         }
     }
 
-    private fun MutableList<Any>.addLine(name: String, current: Long, total: Long, color: String) {
-        val value = when (LinesConfig.powderDisplay) {
-            PowderDisplay.CURRENT -> current.format()
-            PowderDisplay.TOTAL -> total.format()
-            PowderDisplay.BOTH -> "${current.format()}/${total.format()}"
-        }
+    private fun MutableList<Any>.addLine(name: String, current: Long, total: Long, color: Int) {
         if (LinesConfig.showActiveOnly && !isCurrencyActive(current, total)) return
 
-        add(" §7- ${CustomScoreboardRenderer.formatNumberDisplayDisplay(name, value, color)}")
+        val value = when (LinesConfig.powderDisplay) {
+            PowderDisplay.CURRENT -> current.format().toComponent()
+            PowderDisplay.TOTAL -> total.format().toComponent()
+            PowderDisplay.BOTH -> Text.of {
+                append(current.format())
+                append("/", TextColor.GRAY)
+                append(total.format())
+            }
+        }
+        add(
+            Text.of {
+                append(" - ", TextColor.GRAY)
+                append(CustomScoreboardRenderer.formatNumberDisplayDisplay(name.toComponent(), value, color))
+            },
+        )
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(allIslands)

@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.feature.customscoreboard.elements
 
+import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.CommonRegexes
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.TextUtils.isBlank

@@ -34,6 +34,10 @@
                     "@value": "Custom Lines",
                     "desc": "Instead of displaying the Hypixel's scoreboard lines, it will display the custom lines you selected in appearance & events."
                 },
+                "actions": {
+                    "@value": "Click and Hover Actions",
+                    "desc": "Use multiple predefined hover or clickable actions dependent on the line."
+                },
                 "outside_skyblock": {
                     "@value": "Outside SkyBlock",
                     "desc": [
@@ -118,6 +122,10 @@
                 "horizontal_alignment": {
                     "@value": "Horizontal Alignment",
                     "desc": "Choose the horizontal alignment of the scoreboard."
+                },
+                "default_text_alignment": {
+                    "@value": "Default Text Alignment",
+                    "desc": "Choose the alignment of the text in the scoreboard, if not overridden by other options like the title or footer alignment."
                 }
             },
             "background": {
@@ -144,6 +152,17 @@
                 "radius": {
                     "@value": "Radius",
                     "desc": "Choose the radius of the rounded corner of the background."
+                },
+                "blur": {
+                    "@value": "Blur",
+                    "desc": "Blur the background behind the scoreboard."
+                },
+                "blur_vulk": {
+                    "@value": "Blur",
+                    "desc": [
+                        "Blur the background behind the scoreboard.",
+                        "<red>This is disabled because you have vulkan mod installed. Remove the mod to use this feature.</red>"
+                    ]
                 },
                 "border": {
                     "enabled": {
@@ -187,7 +206,10 @@
                 },
                 "editor": {
                     "@value": "Custom Background Image",
-                    "desc": "Click to open the custom background image editor."
+                    "desc": [
+                        "Click to open the background image editor",
+                        "<green><italic>You can also place a <gray>scoreboard.png</gray> inside the <gray>.minecraft/config/customscoreboard</gray> folder."
+                    ]
                 }
             },
             "line_modification": {

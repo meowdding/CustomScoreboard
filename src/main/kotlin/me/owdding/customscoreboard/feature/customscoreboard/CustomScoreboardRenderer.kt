@@ -109,15 +109,18 @@ object CustomScoreboardRenderer {
         val width = dimensions.first + padding * 2 + borderOffset * 2
         val height = dimensions.second + padding * 2 + borderOffset * 2
 
+        if (BackgroundConfig.blurEnabled && !BlurredBackground.vulkanInstalled) {
+            BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
+        }
+
         if (BackgroundConfig.imageBackground) {
             event.graphics.drawTexture(
                 x, y, width, height,
                 CustomScoreboardBackground.getTexture(),
                 alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
             )
-        } else {
-            event.graphics.drawRec(x, y, width, height)
         }
+        event.graphics.drawRec(x, y, width, height)
     }
 
     fun updateIslandCache() {
