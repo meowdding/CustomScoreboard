@@ -7,8 +7,8 @@ import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Compa
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.community.CommunityCenterAPI
+import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 
 @ScoreboardElement
 object ElementBits : NumberTrackingElement("§b") {

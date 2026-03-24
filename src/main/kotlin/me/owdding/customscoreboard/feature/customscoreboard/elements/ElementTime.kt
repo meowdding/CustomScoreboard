@@ -41,8 +41,8 @@ object ElementTime : Element() {
 
         val (symbol, color) = if (McLevel.hasLevel) {
             when {
-                McLevel.self.isRaining -> "☔" to TextColor.DARK_AQUA
-                McLevel.self.isThundering -> "⚡" to TextColor.YELLOW
+                McLevel.self?.isRaining == true -> "☔" to TextColor.DARK_AQUA
+                McLevel.self?.isThundering == true -> "⚡" to TextColor.YELLOW
                 DateTimeAPI.isDay -> "☀" to TextColor.YELLOW
                 else -> "☽" to TextColor.AQUA
             }

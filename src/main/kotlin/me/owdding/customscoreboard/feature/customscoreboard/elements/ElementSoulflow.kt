@@ -11,7 +11,7 @@ import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 
 @Module
 @ScoreboardElement

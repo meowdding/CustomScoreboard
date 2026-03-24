@@ -5,7 +5,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Compa
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.Utils.toFormatYears
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
-import tech.thatgravyboat.skyblockapi.utils.time.until
+import tech.thatgravyboat.skyblockapi.utils.extentions.until
 
 @ScoreboardElement
 object ElementCookieBuff : Element() {
