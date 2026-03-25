@@ -185,7 +185,7 @@ dependencies {
         capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
     }
     "include"(versionedCatalog["skyblockapi"]) {
-        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}${"-remapped".takeUnless { isUnobfuscated() } ?: ""}".apply(::println)) }
+        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}${"-remapped".takeUnless { isUnobfuscated() } ?: ""}") }
     }
     api(versionedCatalog["meowdding.lib"]) {
         capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}") }
