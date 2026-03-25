@@ -185,13 +185,13 @@ dependencies {
         capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
     }
     "include"(versionedCatalog["skyblockapi"]) {
-        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}${if (isUnobfuscated()) "-remapped" else ""}") }
+        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}${"-remapped".takeUnless { isUnobfuscated() } ?: ""}".apply(::println)) }
     }
     api(versionedCatalog["meowdding.lib"]) {
         capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}") }
     }
     "include"(versionedCatalog["meowdding.lib"]) {
-        capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}${if (isUnobfuscated()) "-remapped" else ""}") }
+        capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}${"-remapped".takeUnless { isUnobfuscated() } ?: ""}") }
     }
     "compileOnly"(project(":annotations"))
     "ksp"(project(":annotations"))
