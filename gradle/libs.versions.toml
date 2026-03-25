@@ -11,7 +11,7 @@ kotlin-symbol-processor = "2.3.5"
 kotlin_poet = "1.0.1"
 kotlin_poet_ksp = "1.0.1"
 
-skyblockapi = "4.0.13+26.1-rc2+build.2"
+skyblockapi = "4.0.13+26.1+build.3"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
@@ -21,7 +21,6 @@ meowdding-lib = "4.0.10-beta.2"
 meowdding-ktmodules = "1.0.8"
 meowdding-auto-mixins = "1.0.5"
 
-terrarium-cloche = "0.13.5"
 fabric-loom = "1.15-SNAPSHOT"
 
 [libraries]
