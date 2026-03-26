@@ -99,7 +99,7 @@ object BlurredBackground {
                 Vector2f(x * scale + scaledWidth / 2f, y * scale + scaledHeight / 2f),
                 scale,
             )
-            //~ if >= 26.1 'add' -> 'submit'
+            //~ if >= 26.1 'submit' -> 'add'
             graphics.guiRenderState.addGuiElement(
                 State(Matrix3x2f(graphics.pose()), ScreenRectangle(x, y, width, height), graphics.scissorStack.peek())
             )

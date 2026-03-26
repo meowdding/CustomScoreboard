@@ -178,8 +178,9 @@ dependencies {
     maybeModImplementation(versionedCatalog["fabric.api"])
 
     maybeModRuntimeOnly(versionedCatalog["placeholders"])
-    if (versionedCatalog.has("scoreboard.overhaul"))
-        maybeModRuntimeOnly(versionedCatalog["scoreboard.overhaul"])
+    if (versionedCatalog.has("scoreboard.overhaul")) {
+        maybeModCompileOnly(versionedCatalog["scoreboard.overhaul"])
+    }
 
     api(versionedCatalog["skyblockapi"]) {
         capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
