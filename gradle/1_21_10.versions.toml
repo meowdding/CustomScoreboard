@@ -10,7 +10,7 @@ resourceful-config = "3.9.2"
 olympus = "1.6.3"
 placeholders = "2.8.1+1.21.10"
 
-scoreboard-overhaul = "1.4.1-mc1.21.6"
+scoreboard-overhaul = "1.4.2-mc1.21.9"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -24,4 +24,4 @@ iris = { module = "maven.modrinth:iris", version = "1.9.1+1.21.7-fabric" }
 olympus = { module = "earth.terrarium.olympus:olympus-fabric-1.21.9", version.ref = "olympus" }
 placeholders = { module = "eu.pb4:placeholder-api", version.ref = "placeholders" }
 
-scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" } # todo correct version
+scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" }

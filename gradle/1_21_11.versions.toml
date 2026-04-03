@@ -11,7 +11,7 @@ resourceful-config = "3.11.0"
 olympus = "1.7.1"
 placeholders = "2.8.1+1.21.10"
 
-scoreboard-overhaul = "1.4.1-mc1.21.6"
+scoreboard-overhaul = "1.4.2-mc1.21.9"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }

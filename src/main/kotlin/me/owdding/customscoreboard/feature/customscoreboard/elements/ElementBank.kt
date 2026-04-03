@@ -8,7 +8,7 @@ import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import me.owdding.lib.extensions.shorten
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 
 @ScoreboardElement

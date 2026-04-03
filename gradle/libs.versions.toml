@@ -4,21 +4,24 @@ fabric-loader = "0.17.3"
 fabric-language-kotlin = "1.13.4+kotlin.2.2.0"
 fabric-api = "0.133.4"
 
-kotlin-symbol-processor = "2.2.0-2.0.2"
+kotlin = "2.3.0"
+kotlin-gradle-plugin = "2.3.0"
+kotlin-symbol-processor = "2.3.5"
+
 kotlin_poet = "1.0.1"
 kotlin_poet_ksp = "1.0.1"
 
-skyblockapi = "4.0.12"
+skyblockapi = "4.1.0"
 hypixelapi = "1.0.1+build.1+mc1.21"
 mixinconstraints = "1.0.7"
 
 rconfigkt = "3.5.16"
 
-meowdding-lib = "4.0.4"
+meowdding-lib = "4.0.10-beta.2"
 meowdding-ktmodules = "1.0.8"
 meowdding-auto-mixins = "1.0.5"
 
-terrarium-cloche = "0.13.5"
+fabric-loom = "1.15-SNAPSHOT"
 
 [libraries]
 
@@ -35,6 +38,12 @@ meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref =
 
 mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "mixinconstraints" }
 
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
+kotlin-gradle-plugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin-gradle-plugin" }
+
+
 # Codegen
 kotlin_poet = { module = "me.owdding.kotlinpoet:kotlinpoet-jvm", version.ref = "kotlin_poet" }
 kotlin_poet_ksp = { module = "me.owdding.kotlinpoet:ksp", version.ref = "kotlin_poet_ksp" }
@@ -44,3 +53,6 @@ ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = 
 meowdding-auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "meowdding-auto-mixins" }
 
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }
+
+fabric-loom-remap = { id = "net.fabricmc.fabric-loom-remap", version.ref = "fabric-loom" }
+fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric-loom" }

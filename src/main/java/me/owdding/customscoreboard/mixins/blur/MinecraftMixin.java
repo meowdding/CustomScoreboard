@@ -22,7 +22,12 @@ public class MinecraftMixin {
         BlurredBackground.init(this.window.getWidth(), this.window.getHeight());
     }
 
-    @Inject(method = "resizeDisplay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resize(II)V"))
+    @Inject(
+        //~ if >= 26.1 'resizeDisplay' -> 'resizeGui'
+        method = "resizeGui",
+        //~ if >= 26.1 'Lnet/minecraft/client/renderer/GameRenderer;resize(II)V' -> 'Lcom/mojang/blaze3d/platform/Window;setGuiScale(I)V'
+        at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setGuiScale(I)V")
+    )
     private void onResize(CallbackInfo ci) {
         BlurredBackground.init(this.window.getWidth(), this.window.getHeight());
     }

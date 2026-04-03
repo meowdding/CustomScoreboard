@@ -204,7 +204,8 @@ object CustomBackgroundModal {
                     }
                 }
 
-                graphics.drawCenteredString(McFont.self, text, centerX, context.y, -1)
+                //~ if >= 26.1 'drawCenteredString' -> 'centeredText'
+                graphics.centeredText(McFont.self, text, centerX, context.y, -1)
             }
             it.withCallback {
                 if (BackgroundConfig.customImageFile.isNotEmpty()) {
