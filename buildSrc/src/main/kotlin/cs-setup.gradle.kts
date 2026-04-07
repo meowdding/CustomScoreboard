@@ -177,6 +177,8 @@ dependencies {
     maybeModImplementation(versionedCatalog["fabric.language.kotlin"])
     maybeModImplementation(versionedCatalog["fabric.api"])
 
+    if (!isUnobfuscated()) maybeModRuntimeOnly(versionedCatalog["hypixel.modapi.fabric"])
+
     maybeModRuntimeOnly(versionedCatalog["placeholders"])
     if (versionedCatalog.has("scoreboard.overhaul")) {
         maybeModCompileOnly(versionedCatalog["scoreboard.overhaul"])
