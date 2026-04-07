@@ -14,10 +14,11 @@ import com.mojang.blaze3d.vertex.VertexFormat
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform
 import me.owdding.customscoreboard.Main
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.navigation.ScreenRectangle
 import net.minecraft.client.gui.render.TextureSetup
-import net.minecraft.client.gui.render.state.GuiElementRenderState
+//~ if >= 26.1 'gui.render.state' -> 'renderer.state.gui'
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState
 import net.minecraft.client.renderer.RenderPipelines
 import org.joml.Matrix3x2f
 import org.joml.Vector2f
@@ -73,7 +74,7 @@ object BlurredBackground {
 
         setup = TextureSetup.singleTexture(
             RenderSystem.getDevice().createTextureView(target!!.colorTexture!!),
-            //? if =1.21.11 {
+            //? if >=1.21.11 {
             RenderSystem.getSamplerCache().getSampler(
                 AddressMode.CLAMP_TO_EDGE, AddressMode.CLAMP_TO_EDGE,
                 FilterMode.NEAREST, FilterMode.NEAREST,
@@ -83,7 +84,7 @@ object BlurredBackground {
         )
     }
 
-    fun render(graphics: GuiGraphics, x: Int, y: Int, width: Int, height: Int, radius: Int) {
+    fun render(graphics: GuiGraphicsExtractor, x: Int, y: Int, width: Int, height: Int, radius: Int) {
         if (this._uniform != null) {
             if (!this.multiUseError) Main.warn("BlurredBackground.render was called multiple times in the same frame!")
             this.multiUseError = true
@@ -98,7 +99,8 @@ object BlurredBackground {
                 Vector2f(x * scale + scaledWidth / 2f, y * scale + scaledHeight / 2f),
                 scale,
             )
-            graphics.guiRenderState.submitGuiElement(
+            //~ if >= 26.1 'submit' -> 'add'
+            graphics.guiRenderState.addGuiElement(
                 State(Matrix3x2f(graphics.pose()), ScreenRectangle(x, y, width, height), graphics.scissorStack.peek())
             )
         }

@@ -9,6 +9,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform;
 import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground;
+import me.owdding.customscoreboard.hooks.CommandEncoderHook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.GuiRenderer;
@@ -40,9 +41,9 @@ public class GuiRendererMixin {
         var target = Minecraft.getInstance().getMainRenderTarget();
         var uniform = BlurredBackground.getUniform();
 
-        if (!(encoder instanceof GlCommandEncoderAccessor accessor)) return;
+        if (!(encoder instanceof CommandEncoderHook hook)) return;
 
-        accessor.cs$setInRenderPass(false);
+        hook.cs$setInRenderPass(false);
 
         encoder.copyTextureToTexture(
             target.getColorTexture(),
@@ -54,7 +55,7 @@ public class GuiRendererMixin {
         );
 
         var uniformBuffer = uniform != null ? RoundedTextureUniform.STORAGE.get().writeUniform(uniform) : null;
-        accessor.cs$setInRenderPass(true);
+        hook.cs$setInRenderPass(true);
 
         if (uniformBuffer != null) {
             pass.setUniform(RoundedTextureUniform.NAME, uniformBuffer);

@@ -87,9 +87,11 @@ object CustomScoreboardRenderer {
             setPosition(position.first, position.second)
         }.visitWidgets { widget ->
             if (isAllowedScreen()) {
-                widget.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f)
+                //~ if >= 26.1 'render' -> 'extractRenderState'
+                widget.extractRenderState(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f)
             } else {
-                widget.render(event.graphics, 0, 0, 0f)
+                //~ if >= 26.1 'render' -> 'extractRenderState'
+                widget.extractRenderState(event.graphics, 0, 0, 0f)
             }
         }
     }

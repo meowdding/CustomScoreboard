@@ -38,3 +38,11 @@ type = "string"
 condition = "< 1.21.11"
 from = "net.minecraft.util.Util"
 to = "net.minecraft.Util"
+
+[gui_graphics_unnamed]
+type = "regex"
+condition = "< 26.1"
+regex = "import net.minecraft.client.gui.GuiGraphicsExtractor(?!;)"
+to = "import net.minecraft.client.gui.GuiGraphics as GuiGraphicsExtractor"
+reverseRegex = "import net.minecraft.client.gui.GuiGraphics as GuiGraphicsExtractor"
+reverse = "import net.minecraft.client.gui.GuiGraphicsExtractor"
