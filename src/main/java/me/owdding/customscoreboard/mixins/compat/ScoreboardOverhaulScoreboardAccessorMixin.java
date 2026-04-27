@@ -1,4 +1,5 @@
-package me.owdding.customscoreboard.mixins.compat;
+//? scoreboard_overhaul {
+/*package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
@@ -63,3 +64,4 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         return scores;
     }
 }
+*///? }
