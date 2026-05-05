@@ -149,7 +149,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         },
     )
 
-    override val version = patches.size + 1
+    override val version = patches.maxOf { it.key }
     //endregion
 
     private val translationPath = "customscoreboard.config.main"
