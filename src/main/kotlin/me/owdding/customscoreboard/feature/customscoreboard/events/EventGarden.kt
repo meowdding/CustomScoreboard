@@ -1,11 +1,12 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventGarden : Event() {
@@ -18,8 +19,9 @@ object EventGarden : Event() {
 
     private val formattedLines = mutableListOf<Component>()
 
-    private val pastingRegex = ComponentRegex("\\s*(?:Barn )?Pasting: [\\d,.]+%?")
-    private val cleanupRegex = ComponentRegex("\\s*Cleanup: [\\d,.]*%?")
+    private val remote = RemoteStrings.resolve()
+    private val pastingRegex by remote.componentRegex("\\s*(?:Barn )?Pasting: [\\d,.]+%?")
+    private val cleanupRegex by remote.componentRegex("\\s*Cleanup: [\\d,.]*%?")
 
     private val regexes = listOf(pastingRegex, cleanupRegex)
 

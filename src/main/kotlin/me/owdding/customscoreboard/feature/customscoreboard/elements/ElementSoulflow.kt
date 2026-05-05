@@ -3,7 +3,9 @@ package me.owdding.customscoreboard.feature.customscoreboard.elements
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.anyMatch
 import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -33,7 +35,7 @@ object ElementSoulflow : NumberTrackingElement("§3") {
     override val configLineHover = listOf("Requires the Soulflow option enabled in the Profile category in /tablist.", "Will not show if disabled.")
 
     private var soulflowInTablist = false
-    private val soulflowRegex = " Soulflow: .*".toRegex()
+    private val soulflowRegex by RemoteStrings.resolve().regex(" Soulflow: .*")
 
     @Subscription
     @OnlyWidget(TabWidget.PROFILE)
