@@ -5,8 +5,6 @@ import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElemen
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.data.MayorPerks
-import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
-import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 
 @ScoreboardElement
@@ -18,11 +16,9 @@ object ElementKernels : NumberTrackingElement("§e") {
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Kernels", line, numberColor)
     }
 
-    override fun showWhen(): Boolean = MayorPerks.GRAND_FEAST.active && isHarvestFeastActive()
+    override fun showWhen(): Boolean = MayorPerks.GRAND_FEAST.active
     override fun isLineActive() = CurrencyAPI.kernels > 0
 
     override val configLine = "Kernels"
     override val id = "KERNELS"
-
-    private fun isHarvestFeastActive() = DateTimeAPI.season in listOf(SkyBlockSeason.EARLY_AUTUMN, SkyBlockSeason.AUTUMN, SkyBlockSeason.LATE_AUTUMN)
 }
