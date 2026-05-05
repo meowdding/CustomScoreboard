@@ -13,6 +13,7 @@ import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementCopper
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementKernels
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
@@ -43,15 +44,15 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
-        0 to UnaryOperator { json ->
+        1 to UnaryOperator { json ->
             json.getAsJsonArray("events").add(ScoreboardEventEntry.GALATEA.name)
             json
         },
-        1 to UnaryOperator { json ->
+        3 to UnaryOperator { json ->
             json.getAsJsonArray("events").add(ScoreboardEventEntry.ANNIVERSARY.name)
             json
         },
-        2 to UnaryOperator { json ->
+        4 to UnaryOperator { json ->
             val lines = json.getAsJsonObject("Line Modification")
 
             val perksEnum = if (lines.get("mayor_perks").asBoolean) ElementMayor.PerkDisplay.ALL
@@ -66,7 +67,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
             json
         },
-        3 to UnaryOperator { json ->
+        4 to UnaryOperator { json ->
             val items = json.getAsJsonArray("appearance").toMutableList()
             val copperIndex = items.indexOfFirst { it.asString == ElementCopper.id }
             val newElement = JsonPrimitive(ElementSowdust.id)
@@ -83,7 +84,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
 
             json
         },
-        4 to UnaryOperator { json ->
+        5 to UnaryOperator { json ->
             val overhaul = json["scoreboardOverhaul"].asBoolean
             json.remove("scoreboardOverhaul")
             json.add(
@@ -94,7 +95,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             )
             json
         },
-        5 to UnaryOperator { json ->
+        6 to UnaryOperator { json ->
             // Customization Page
             val customPage = JsonObject()
 
@@ -126,6 +127,23 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             moveToLines.forEach { key ->
                 if (json.has(key)) lineModification.add(key, json.remove(key))
             }
+
+            json
+        },
+        7 to UnaryOperator { json ->
+            val items = json.getAsJsonObject("customization").getAsJsonArray("appearance").toMutableList()
+            val copperIndex = items.indexOfFirst { it.asString == ElementSowdust.id }
+            val newElement = JsonPrimitive(ElementKernels.id)
+
+            if (copperIndex != -1) {
+                items.add(copperIndex + 1, newElement)
+            } else {
+                items.add(newElement)
+            }
+
+            val newAppearance = JsonArray()
+            items.forEach { newAppearance.add(it) }
+            json.add("appearance", newAppearance)
 
             json
         },

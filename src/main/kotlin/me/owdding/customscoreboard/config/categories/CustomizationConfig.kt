@@ -21,6 +21,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementFoot
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementGems
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementHeat
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementIsland
+import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementKernels
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementLobby
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayor
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMotes
@@ -57,7 +58,7 @@ object CustomizationConfig : CategoryKt("customization") {
     private val default = listOf(
         ElementTitle, ElementLobby, ElementSeparator, ElementDate, ElementTime,
         ElementIsland, ElementArea, ElementProfile, ElementSeparator, ElementPurse,
-        ElementMotes, ElementBank, ElementBits, ElementCopper, ElementSowdust,
+        ElementMotes, ElementBank, ElementBits, ElementCopper, ElementSowdust, ElementKernels,
         ElementGems, ElementHeat, ElementCold, ElementNorthStars, ElementSoulflow,
         ElementSeparator, ElementObjective, ElementSlayer, ElementQuiver, ElementEvents,
         ElementPowder, ElementMayor, ElementParty, ElementPet, ElementFooter,
