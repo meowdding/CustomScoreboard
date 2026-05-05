@@ -6,13 +6,15 @@ import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.data.MayorPerks
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementKernels : NumberTrackingElement("§e") {
+object ElementKernels : NumberTrackingElement(TextColor.YELLOW) {
     override fun getDisplay(): Any {
         val kernels = CurrencyAPI.kernels
         checkDifference(kernels)
-        val line = kernels.format() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(kernels.format(), temporaryChangeDisplay)
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Kernels", line, numberColor)
     }
 

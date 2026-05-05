@@ -34,6 +34,7 @@ import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 
 @Module
 object CustomScoreboardRenderer {
@@ -196,6 +197,8 @@ object CustomScoreboardRenderer {
         NumberDisplayFormat.COLOR_NUMBER_TEXT -> "$color$number $text"
         NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> "$color$number §f$text"
     }
+
+    fun formatNumberDisplayDisplay(text: String, number: Component, color: Int): Component = formatNumberDisplayDisplay(text.asComponent(), number, color)
 
     fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (LinesConfig.numberDisplayFormat) {
         NumberDisplayFormat.TEXT_COLOR_NUMBER -> Text.join(text, Text.of(": "), number.copy().withColor(color))

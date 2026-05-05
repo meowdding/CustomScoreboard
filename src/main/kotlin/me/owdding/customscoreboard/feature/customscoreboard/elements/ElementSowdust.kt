@@ -6,13 +6,15 @@ import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementSowdust : NumberTrackingElement("§2") {
+object ElementSowdust : NumberTrackingElement(TextColor.DARK_GREEN) {
     override fun getDisplay(): Any {
         val sowdust = CurrencyAPI.sowdust
         checkDifference(sowdust)
-        val line = sowdust.format() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(sowdust.format(), temporaryChangeDisplay)
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Sowdust", line, numberColor)
     }
 

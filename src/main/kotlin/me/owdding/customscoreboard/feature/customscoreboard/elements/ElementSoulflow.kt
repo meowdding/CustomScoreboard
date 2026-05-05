@@ -6,20 +6,23 @@ import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.TextUtils.anyMatch
 import me.owdding.ktmodules.Module
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @Module
 @ScoreboardElement
-object ElementSoulflow : NumberTrackingElement("§3") {
+object ElementSoulflow : NumberTrackingElement(TextColor.DARK_AQUA) {
 
-    override fun getDisplay(): String {
+    override fun getDisplay(): Component {
         checkDifference(CurrencyAPI.soulflow)
-        val line = CurrencyAPI.soulflow.format() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(CurrencyAPI.soulflow.format(), temporaryChangeDisplay)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Soulflow", line, numberColor)
     }

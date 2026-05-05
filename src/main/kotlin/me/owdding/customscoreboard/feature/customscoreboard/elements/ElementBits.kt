@@ -9,16 +9,18 @@ import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.community.CommunityCenterAPI
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementBits : NumberTrackingElement("§b") {
+object ElementBits : NumberTrackingElement(TextColor.AQUA) {
 
     fun line() = (CurrencyAPI.bits.format() + if (LinesConfig.showBitsAvailable) "§7/§b${CommunityCenterAPI.bitsAvailable.format()}" else "")
 
     override fun getDisplay(): Any {
         val bits = CurrencyAPI.bits
         checkDifference(bits)
-        val line = line() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(line(), temporaryChangeDisplay)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Bits", line, numberColor).withActions {
             hover = listOf("§7Click to open the SkyBlock menu to resync your bits.")

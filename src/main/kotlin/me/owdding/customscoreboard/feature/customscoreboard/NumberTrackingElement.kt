@@ -8,12 +8,17 @@ import me.owdding.customscoreboard.Main
 import me.owdding.customscoreboard.config.categories.LinesConfig
 import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.profile.ProfileChangeEvent
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
-abstract class NumberTrackingElement(val numberColor: String) : Element() {
+abstract class NumberTrackingElement(val numberColor: Int) : Element() {
     open var previousAmount: Long = -1
-    open var temporaryChangeDisplay: String? = null
+    open var temporaryChangeDisplay: Component? = null
     open var temporaryChangeAmount: Long = 0
     open var currentJob: Job? = null
 
@@ -38,8 +43,20 @@ abstract class NumberTrackingElement(val numberColor: String) : Element() {
         temporaryChangeAmount = changeAmount
 
         temporaryChangeDisplay = when {
-            changeAmount > 0 -> " §7($numberColor+${format(changeAmount)}§7)$numberColor"
-            changeAmount < 0 -> " §7($numberColor${format(changeAmount)}§7)$numberColor"
+            changeAmount > 0 -> Text.of(" ") {
+                color = TextColor.GRAY
+                append("(")
+                append("+${format(changeAmount)}", numberColor)
+                append(")")
+            }
+
+            changeAmount < 0 -> Text.of(" ") {
+                color = TextColor.GRAY
+                append("(")
+                append(format(changeAmount), numberColor)
+                append(")")
+            }
+
             else -> null
         }
 

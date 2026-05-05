@@ -4,15 +4,18 @@ import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRend
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementNorthStars : NumberTrackingElement("§d") {
+object ElementNorthStars : NumberTrackingElement(TextColor.PINK) {
 
-    override fun getDisplay(): String {
+    override fun getDisplay(): Component {
         checkDifference(CurrencyAPI.northStars)
-        val line = CurrencyAPI.northStars.format() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(CurrencyAPI.northStars.format(), temporaryChangeDisplay)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("North Stars", line, numberColor)
     }

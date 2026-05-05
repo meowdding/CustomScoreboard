@@ -5,16 +5,19 @@ import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRend
 import me.owdding.customscoreboard.feature.customscoreboard.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.currency.PurseType
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementPurse : NumberTrackingElement("§6") {
+object ElementPurse : NumberTrackingElement(TextColor.GOLD) {
 
-    override fun getDisplay(): String {
+    override fun getDisplay(): Component {
         checkDifference(CurrencyAPI.purse.toLong())
-        val line = CurrencyAPI.purse.format() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(CurrencyAPI.purse.format(), temporaryChangeDisplay)
         return CustomScoreboardRenderer.formatNumberDisplayDisplay(
             if (CurrencyAPI.purseType == PurseType.PIGGY && LinesConfig.showPiggy) "Piggy" else "Purse",
             line,

@@ -10,9 +10,11 @@ import me.owdding.lib.extensions.shorten
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementBank : NumberTrackingElement("§6") {
+object ElementBank : NumberTrackingElement(TextColor.GOLD) {
 
     override fun format(number: Number): String {
         return if (LinesConfig.bankAlwaysCompact) number.shorten()
@@ -32,7 +34,7 @@ object ElementBank : NumberTrackingElement("§6") {
 
     override fun getDisplay(): Any {
         checkDifference(CurrencyAPI.coopBank)
-        val line = line() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(line(), temporaryChangeDisplay)
 
         val element = CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
         return if (!hasCookieActive()) element else element.withActions {
