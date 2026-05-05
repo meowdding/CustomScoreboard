@@ -132,11 +132,11 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         },
         7 to UnaryOperator { json ->
             val items = json.getAsJsonObject("customization").getAsJsonArray("appearance").toMutableList()
-            val copperIndex = items.indexOfFirst { it.asString == ElementSowdust.id }
+            val sowdustIndex = items.indexOfFirst { it.asString == ElementSowdust.id }
             val newElement = JsonPrimitive(ElementKernels.id)
 
-            if (copperIndex != -1) {
-                items.add(copperIndex + 1, newElement)
+            if (sowdustIndex != -1) {
+                items.add(sowdustIndex + 1, newElement)
             } else {
                 items.add(newElement)
             }
@@ -149,7 +149,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
         },
     )
 
-    override val version = patches.size
+    override val version = patches.size + 1
     //endregion
 
     private val translationPath = "customscoreboard.config.main"
