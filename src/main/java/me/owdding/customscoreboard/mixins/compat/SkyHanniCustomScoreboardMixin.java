@@ -19,7 +19,8 @@ public class SkyHanniCustomScoreboardMixin {
         at = @At(
             value = "RETURN"
         ),
-        remap = false
+        remap = false,
+        require = 0
     )
     boolean customscoreboard$isEnabled(boolean original) {
         ModCompat.INSTANCE.setSkyhanniCustomScoreboardEnabled(original);
