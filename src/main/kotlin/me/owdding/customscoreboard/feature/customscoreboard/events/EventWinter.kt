@@ -23,7 +23,7 @@ object EventWinter : Event() {
     private val waveRegex = ComponentRegex("Wave \\d+")
     private val magmaLeftRegex = ComponentRegex("Magma Cubes Left: -?\\d+")
     private val totalDamageRegex = ComponentRegex("Your Total Damage: [\\d+,.]+.*")
-    private val cubeDamageRegex = ComponentRegex("Your Cube Damage: §.[\\d+,.]+")
+    private val cubeDamageRegex = ComponentRegex("Your Cube Damage: [\\d+,.]+")
 
     private val patterns = listOf(startRegex, nextWaveRegex, waveRegex, magmaLeftRegex, totalDamageRegex, cubeDamageRegex)
 

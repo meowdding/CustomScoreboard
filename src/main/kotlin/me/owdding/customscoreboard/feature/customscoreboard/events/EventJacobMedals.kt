@@ -1,18 +1,39 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.lib.builder.ComponentFactory
 import tech.thatgravyboat.skyblockapi.api.area.hub.FarmhouseAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedString
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.bold
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @AutoElement
 object EventJacobMedals : Event() {
-    override fun getDisplay() = buildList {
-        add("§6§lGOLD §fmedals: §6${FarmhouseAPI.goldMedals.toFormattedString()}")
-        add("§lSILVER §fmedals: ${FarmhouseAPI.silverMedals.toFormattedString()}")
-        add("§c§lBRONZE §fmedals: §c${FarmhouseAPI.bronzeMedals.toFormattedString()}")
+    override fun getDisplay() = ComponentFactory.multiline {
+        component {
+            color = TextColor.GOLD
+            append("GOLD ") { bold = true }
+            append("medals: ", TextColor.WHITE)
+            append(FarmhouseAPI.goldMedals.toFormattedString())
+        }
+
+        component {
+            append("SILVER ") { bold = true }
+            append("medals: ")
+            append(FarmhouseAPI.silverMedals.toFormattedString())
+        }
+
+        component {
+            color = TextColor.RED
+            append("BRONZE ") { bold = true }
+            append("medals: ", TextColor.WHITE)
+            append(FarmhouseAPI.bronzeMedals.toFormattedString())
+        }
     }
 
     override fun showWhen() = McClient.scoreboard.any(medalRegex::matches)
