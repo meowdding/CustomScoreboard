@@ -12,7 +12,7 @@ placeholders = "3.0.0-beta.2+26.1"
 
 rconfigkt = "4.0.0-beta.1"
 
-scoreboard-overhaul = "1.4.2-mc26.1"
+scoreboard-overhaul = "1.4.3-mc26.1"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -26,4 +26,4 @@ resourceful-config = { module = "com.teamresourceful.resourcefulconfig:resourcef
 olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.1", version.ref = "olympus" }
 placeholders = { module = "eu.pb4:placeholder-api", version.ref = "placeholders" }
 
-#scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" } # todo correct version
+scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" } # todo correct version

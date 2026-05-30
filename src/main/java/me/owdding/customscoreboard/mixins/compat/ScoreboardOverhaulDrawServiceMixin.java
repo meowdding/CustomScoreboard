@@ -1,5 +1,5 @@
 //? scoreboard_overhaul {
-/*package me.owdding.customscoreboard.mixins.compat;
+package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -36,4 +36,4 @@ public class ScoreboardOverhaulDrawServiceMixin {
         }
     }
 }
-*///? }
+//? }
