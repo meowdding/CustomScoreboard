@@ -30,7 +30,7 @@ object EventDojo : Event() {
     private val patterns = listOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.components, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, patterns)
     }
 
 }

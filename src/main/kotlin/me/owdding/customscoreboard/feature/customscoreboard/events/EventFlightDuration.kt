@@ -20,6 +20,6 @@ object EventFlightDuration : Event() {
     private val flightRegex = ComponentRegex("Flight Duration: [\\d:]+")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLine = event.components.find(flightRegex::matches)
+        formattedLine = event.newComponents.find(flightRegex::matches)
     }
 }

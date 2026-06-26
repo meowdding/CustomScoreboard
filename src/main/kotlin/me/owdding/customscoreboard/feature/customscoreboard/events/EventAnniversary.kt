@@ -17,6 +17,6 @@ object EventAnniversary : Event() {
     private val restartRegex = ComponentRegex("\\d+th Anniversary [\\d:]+")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLine = event.components.find(restartRegex::matches)
+        formattedLine = event.newComponents.find(restartRegex::matches)
     }
 }

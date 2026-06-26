@@ -50,10 +50,10 @@ object EventMining : Event() {
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {
             val patterns = powderRegex.takeIf { LinesConfig.showHypixelPowder }?.let { patterns + it } ?: patterns
-            event.components.filterTo(this) { component ->
+            event.newComponents.filterTo(this) { component ->
                 patterns.any { it.matches(component) }
             }
-            event.components.find(compassArrowRegex::matches)?.let {
+            event.newComponents.find(compassArrowRegex::matches)?.let {
                 add(it align Alignment.CENTER)
             }
         }

@@ -20,7 +20,7 @@ object EventJacobsContest : Event() {
     private var formattedLines = emptyList<Component>()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines = event.components.sublistFromFirst(4, contestRegex::matches)
+        formattedLines = event.newComponents.sublistFromFirst(4, contestRegex::matches)
             .filterNot(CommonRegexes.hypixelFooterRegex::matches).filterNot { it.isBlank() }
 
     }
