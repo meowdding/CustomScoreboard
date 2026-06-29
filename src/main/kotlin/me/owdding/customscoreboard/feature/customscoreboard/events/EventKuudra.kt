@@ -32,6 +32,6 @@ object EventKuudra : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.components, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, patterns)
     }
 }

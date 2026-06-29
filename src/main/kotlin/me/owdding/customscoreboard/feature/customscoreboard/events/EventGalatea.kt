@@ -28,10 +28,10 @@ object EventGalatea : Event() {
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {
             if (LinesConfig.showHypixelPowder) {
-                event.components.find(whisperRegex::matches)?.let(::add)
+                event.newComponents.find(whisperRegex::matches)?.let(::add)
             }
-            event.components.find(hotfRegex::matches)?.let(::add)
-            addAll(event.components.sublistFromFirst(3, contestRegex::matches))
+            event.newComponents.find(hotfRegex::matches)?.let(::add)
+            addAll(event.newComponents.sublistFromFirst(3, contestRegex::matches))
             removeIf(CommonRegexes.hypixelFooterRegex::matches)
         }
     }

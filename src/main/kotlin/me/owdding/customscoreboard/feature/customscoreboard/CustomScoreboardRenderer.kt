@@ -97,7 +97,7 @@ object CustomScoreboardRenderer {
         }
     }
 
-    fun isAllowedScreen() = when (McClient.self.screen) {
+    fun isAllowedScreen() = when (McScreen.self) {
         is ChatScreen, is ContainerScreen, is InventoryScreen, null -> true
         else -> false
     }
@@ -112,7 +112,7 @@ object CustomScoreboardRenderer {
         val width = dimensions.first + padding * 2 + borderOffset * 2
         val height = dimensions.second + padding * 2 + borderOffset * 2
 
-        if (BackgroundConfig.blurEnabled && !BlurredBackground.vulkanInstalled) {
+        if (BackgroundConfig.blurEnabled/*? < 26.2 {*//* && !BlurredBackground.vulkanInstalled*//*?}*/) {
             BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
         }
 

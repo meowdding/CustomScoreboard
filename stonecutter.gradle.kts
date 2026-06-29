@@ -2,15 +2,11 @@ plugins {
     id("dev.kikugie.stonecutter")
 }
 
-stonecutter active "26.1"
+stonecutter active "26.2"
 
 stonecutter parameters {
     swaps["mod_version"] = "\"" + property("version") + "\";"
     swaps["minecraft"] = "\"" + node.metadata.version + "\";"
-    replacements.string {
-        direction = eval(current.version, "> 1.21.5")
-        replace("// moj_import <", "//!moj_import <")
-    }
     stonecutter.versions.forEach { (_, v) ->
         constants["scoreboard_overhaul"] = versionCatalogs.named("libs" + v.replace(".", "")).findLibrary("scoreboard.overhaul").isPresent
     }

@@ -29,6 +29,6 @@ object EventRift : Event() {
     private val patterns = listOf(effigiesRegex, hotdogContestRegex, aveikxRegex, cluesRegex, barryProtestRegex, protestorsHandledRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.components, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, patterns)
     }
 }

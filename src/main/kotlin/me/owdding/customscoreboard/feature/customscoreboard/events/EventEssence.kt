@@ -17,6 +17,6 @@ object EventEssence : Event() {
     private val essenceRegex = ComponentRegex(".*Essence: [\\d,.]+")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLine = event.components.find(essenceRegex::matches)
+        formattedLine = event.newComponents.find(essenceRegex::matches)
     }
 }

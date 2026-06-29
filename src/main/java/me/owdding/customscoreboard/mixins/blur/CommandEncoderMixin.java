@@ -1,6 +1,5 @@
 package me.owdding.customscoreboard.mixins.blur;
 
-//? if >= 26.1 {
 import com.mojang.blaze3d.systems.CommandEncoder;
 import com.mojang.blaze3d.systems.CommandEncoderBackend;
 import me.owdding.customscoreboard.hooks.CommandEncoderHook;
@@ -15,11 +14,17 @@ public class CommandEncoderMixin implements CommandEncoderHook {
     @Shadow
     private CommandEncoderBackend backend;
 
+    //? >= 26.2 {
+    @Shadow
+    private boolean isInRenderPass;
+    //? }
+
     @Override
     public void cs$setInRenderPass(boolean inRenderPass) {
         if (this.backend instanceof CommandEncoderHook hook) {
             hook.cs$setInRenderPass(inRenderPass);
         }
+        //? >= 26.2
+        this.isInRenderPass = inRenderPass;
     }
 }
-//? }
