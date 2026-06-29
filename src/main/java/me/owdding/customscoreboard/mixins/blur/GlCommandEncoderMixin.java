@@ -4,7 +4,7 @@ import me.owdding.customscoreboard.hooks.CommandEncoderHook;
 import org.spongepowered.asm.mixin.Shadow;
 
 //? 26.1
-//@Mixin(targets = "com.mojang.blaze3d.opengl.GlCommandEncoder")
+//@org.spongepowered.asm.mixin.Mixin(targets = "com.mojang.blaze3d.opengl.GlCommandEncoder")
 public class GlCommandEncoderMixin implements CommandEncoderHook {
 
     @Shadow private boolean inRenderPass;
