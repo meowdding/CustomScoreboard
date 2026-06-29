@@ -1,10 +1,11 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
 //? >= 26.2 {
-//?}
+import com.mojang.blaze3d.pipeline.BindGroupLayout
 import com.mojang.blaze3d.GpuFormat
 import com.mojang.blaze3d.PrimitiveTopology
-import com.mojang.blaze3d.pipeline.BindGroupLayout
+import net.minecraft.client.renderer.BindGroupLayouts
+//?}
 import com.mojang.blaze3d.pipeline.RenderPipeline
 import com.mojang.blaze3d.pipeline.RenderTarget
 import com.mojang.blaze3d.pipeline.TextureTarget
@@ -15,12 +16,12 @@ import com.mojang.blaze3d.textures.FilterMode
 import com.mojang.blaze3d.textures.GpuTexture
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.VertexConsumer
+import com.mojang.blaze3d.vertex.VertexFormat
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform
 import me.owdding.customscoreboard.Main
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.navigation.ScreenRectangle
 import net.minecraft.client.gui.render.TextureSetup
-import net.minecraft.client.renderer.BindGroupLayouts
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.state.gui.GuiElementRenderState
 import org.joml.Matrix3x2f

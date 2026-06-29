@@ -8,6 +8,8 @@ import earth.terrarium.olympus.client.layouts.Layouts
 import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+//? 26.1
+//import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import net.minecraft.client.gui.layouts.LayoutElement
