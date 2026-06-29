@@ -15,7 +15,12 @@ private const val MAX_FRAMES = 100
 
 object CustomScoreboardAnimatedBackground {
 
-    private val maxTextureSize by lazy { RenderSystem.getDevice().maxTextureSize }
+    private val maxTextureSize by lazy {
+        //? >= 26.2 {
+        RenderSystem.getDevice().deviceInfo.limits.maxTextureSize
+        //?} else
+        //RenderSystem.getDevice().maxTextureSize
+    }
     private var index = -1
     private var frameStart = 0L
     private var _frames = mutableListOf<Frame>()

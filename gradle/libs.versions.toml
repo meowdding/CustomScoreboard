@@ -12,12 +12,12 @@ kotlin_poet_ksp = "1.0.1"
 
 hypixel-modapi-fabric = "1.0.2+build.1+mc26.1"
 
-skyblockapi = "4.2.0"
+skyblockapi = "4.2.4"
 mixinconstraints = "1.0.7"
 
 rconfigkt = "4.0.0-beta.1"
 
-meowdding-lib = "4.2.0-beta.1"
+meowdding-lib = "4.2.1"
 meowdding-ktmodules = "1.0.8"
 meowdding-auto-mixins = "1.0.5"
 
