@@ -347,8 +347,8 @@
                     "desc": "Add \"Pet:\" as a prefix/suffix to the pet line."
                 },
                 "time_24h_format": {
-                    "@value": "24h SkyBlock Time",
-                    "desc": "Shows the SkyBlock time in 24h format instead of 12h."
+                    "@value": "24h Time",
+                    "desc": "Shows the SkyBlock and IRL time in 24h format instead of 12h."
                 },
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",
