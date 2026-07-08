@@ -18,7 +18,7 @@ object ElementArea : Element() {
     override fun getDisplay() = listOfNotNull(formattedLocation, formattedGardenPlot, formattedVisiting)
 
 
-    private val locationComponentRegex = ComponentRegex("\\s*[⏣ф] .+")
+    private val locationComponentRegex = ComponentRegex("\\s*[⏣ф\uE067\uE020] .+")
     private val gardenPlotComponentRegex = ComponentRegex("\\s*Plot -.+")
     private val visitingComponentRegex = ComponentRegex("\\s*✌ \\(\\d+/\\d+\\)")
 
