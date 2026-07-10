@@ -1,13 +1,14 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @AutoElement
 object EventDojo : Event() {
@@ -22,10 +23,11 @@ object EventDojo : Event() {
 
     private val formattedLines = mutableListOf<Component>()
 
-    private val challengeRegex = ComponentRegex("Challenge: (?<challenge>.+)")
-    private val difficultyRegex = ComponentRegex("Difficulty: (?<difficulty>.+)")
-    private val pointsRegex = ComponentRegex("Points: -?[\\w.]+.*")
-    private val timeRegex = ComponentRegex("Time: [\\w.]+.*")
+    private val remote = RemoteStrings.resolve()
+    private val challengeRegex by remote.componentRegex("Challenge: (?<challenge>.+)")
+    private val difficultyRegex by remote.componentRegex("Difficulty: (?<difficulty>.+)")
+    private val pointsRegex by remote.componentRegex("Points: -?[\\w.]+.*")
+    private val timeRegex by remote.componentRegex("Time: [\\w.]+.*")
 
     private val patterns = listOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
 

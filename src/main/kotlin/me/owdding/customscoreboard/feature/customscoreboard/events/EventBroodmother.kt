@@ -1,6 +1,8 @@
 package me.owdding.customscoreboard.feature.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.trim
 import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
@@ -9,7 +11,6 @@ import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 
 @Module
 @AutoElement
@@ -23,7 +24,7 @@ object EventBroodmother : Event() {
 
     private var stateString: Component? = null
 
-    private val broodmotherRegex = ComponentRegex(" Broodmother: (?<state>.*)")
+    private val broodmotherRegex by RemoteStrings.resolve().componentRegex(" Broodmother: (?<state>.*)")
 
     @Subscription
     @OnlyWidget(TabWidget.AREA)
