@@ -34,6 +34,6 @@ object EventVoting : Event() {
     private val formattedLines = mutableListOf<Component>()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.components, regexes)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

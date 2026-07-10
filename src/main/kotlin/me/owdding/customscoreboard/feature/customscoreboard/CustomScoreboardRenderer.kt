@@ -34,6 +34,7 @@ import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 
 @Module
 object CustomScoreboardRenderer {
@@ -87,14 +88,16 @@ object CustomScoreboardRenderer {
             setPosition(position.first, position.second)
         }.visitWidgets { widget ->
             if (isAllowedScreen()) {
-                widget.render(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f)
+                //~ if >= 26.1 'render' -> 'extractRenderState'
+                widget.extractRenderState(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f)
             } else {
-                widget.render(event.graphics, 0, 0, 0f)
+                //~ if >= 26.1 'render' -> 'extractRenderState'
+                widget.extractRenderState(event.graphics, 0, 0, 0f)
             }
         }
     }
 
-    fun isAllowedScreen() = when (McClient.self.screen) {
+    fun isAllowedScreen() = when (McScreen.self) {
         is ChatScreen, is ContainerScreen, is InventoryScreen, null -> true
         else -> false
     }
@@ -109,7 +112,7 @@ object CustomScoreboardRenderer {
         val width = dimensions.first + padding * 2 + borderOffset * 2
         val height = dimensions.second + padding * 2 + borderOffset * 2
 
-        if (BackgroundConfig.blurEnabled && !BlurredBackground.vulkanInstalled) {
+        if (BackgroundConfig.blurEnabled/*? < 26.2 {*/ /*&& !BlurredBackground.vulkanInstalled*//*?}*/) {
             BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
         }
 
@@ -194,6 +197,8 @@ object CustomScoreboardRenderer {
         NumberDisplayFormat.COLOR_NUMBER_TEXT -> "$color$number $text"
         NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> "$color$number §f$text"
     }
+
+    fun formatNumberDisplayDisplay(text: String, number: Component, color: Int): Component = formatNumberDisplayDisplay(text.asComponent(), number, color)
 
     fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (LinesConfig.numberDisplayFormat) {
         NumberDisplayFormat.TEXT_COLOR_NUMBER -> Text.join(text, Text.of(": "), number.copy().withColor(color))

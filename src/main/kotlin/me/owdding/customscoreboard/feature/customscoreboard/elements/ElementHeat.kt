@@ -5,14 +5,16 @@ import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.area.mining.HollowsAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object ElementHeat : Element() {
     override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay(
         "Heat",
-        if (HollowsAPI.immuneToHeat) "§6IMMUNE"
-        else "§c${HollowsAPI.heat}♨",
-        "§c",
+        if (HollowsAPI.immuneToHeat) Text.of("IMMUNE", TextColor.GOLD)
+        else Text.of("${HollowsAPI.heat}♨", TextColor.RED),
+        TextColor.RED,
     )
 
     override fun showWhen() = HollowsAPI.heat != 0 || McPlayer.self?.y?.let { it <= 64 } == true

@@ -7,12 +7,12 @@ import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRend
 import me.owdding.ktmodules.AutoCollect
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
+import tech.thatgravyboat.skyblockapi.utils.extentions.until
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.send
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
-import tech.thatgravyboat.skyblockapi.utils.time.until
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 

@@ -6,14 +6,16 @@ import me.owdding.customscoreboard.feature.customscoreboard.ScoreboardLine.Compa
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.api.profile.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
-object ElementCopper : NumberTrackingElement("§c") {
+object ElementCopper : NumberTrackingElement(TextColor.RED) {
 
     override fun getDisplay(): Any {
         checkDifference(CurrencyAPI.copper)
-        val line = CurrencyAPI.copper.format() + temporaryChangeDisplay.orEmpty()
+        val line = Text.join(CurrencyAPI.copper.format(), temporaryChangeDisplay)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Copper", line, numberColor).withActions {
             hover = listOf("§7Click to teleport to your barn.")

@@ -28,7 +28,7 @@ object EventDarkAuction : Event() {
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {
-            val lines = event.components
+            val lines = event.newComponents
             lines.find(startingInRegex::matches)?.let(::add)
             lines.find(timeLeftRegex::matches)?.let(::add)
             addAll(lines.sublistFromFirst(2, currentItemRegex::matches))

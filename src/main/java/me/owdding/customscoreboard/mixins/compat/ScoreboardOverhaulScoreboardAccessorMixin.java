@@ -1,3 +1,4 @@
+//? scoreboard_overhaul {
 package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -63,3 +64,4 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         return scores;
     }
 }
+//? }

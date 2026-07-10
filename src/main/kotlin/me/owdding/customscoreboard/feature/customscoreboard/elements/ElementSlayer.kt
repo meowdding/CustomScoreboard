@@ -27,7 +27,7 @@ object ElementSlayer : Element() {
     private var formattedLines = emptyList<Component>()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines = event.components.sublistFromFirst(3, slayerQuestRegex::matches)
+        formattedLines = event.newComponents.sublistFromFirst(3, slayerQuestRegex::matches)
     }
 
     @Subscription

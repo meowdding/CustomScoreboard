@@ -39,14 +39,14 @@ object ElementTime : Element() {
             if (rawHour >= 12) append("pm") else append("am")
         }
 
-        val (symbol, color) = if (McLevel.hasLevel) {
+        val (symbol, color) = McLevel.selfOrNull?.let {
             when {
-                McLevel.self.isRaining -> "☔" to TextColor.DARK_AQUA
-                McLevel.self.isThundering -> "⚡" to TextColor.YELLOW
+                it.isRaining -> "☔" to TextColor.DARK_AQUA
+                it.isThundering -> "⚡" to TextColor.YELLOW
                 DateTimeAPI.isDay -> "☀" to TextColor.YELLOW
                 else -> "☽" to TextColor.AQUA
             }
-        } else "⚠" to TextColor.RED
+        } ?: ("⚠" to TextColor.RED)
 
         append(" $symbol", color)
     }

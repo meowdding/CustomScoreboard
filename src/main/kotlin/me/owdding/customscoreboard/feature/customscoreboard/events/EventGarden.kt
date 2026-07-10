@@ -26,7 +26,7 @@ object EventGarden : Event() {
     private val regexes = listOf(pastingRegex, cleanupRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.components, regexes)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 
 }

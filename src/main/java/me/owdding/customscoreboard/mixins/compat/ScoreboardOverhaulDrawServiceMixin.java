@@ -1,3 +1,4 @@
+//? scoreboard_overhaul {
 package me.owdding.customscoreboard.mixins.compat;
 
 import com.llamalad7.mixinextras.sugar.Local;
@@ -35,3 +36,4 @@ public class ScoreboardOverhaulDrawServiceMixin {
         }
     }
 }
+//? }

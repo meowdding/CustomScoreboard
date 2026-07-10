@@ -1,5 +1,11 @@
 package me.owdding.customscoreboard.feature.customscoreboard
 
+//? >= 26.2 {
+import com.mojang.blaze3d.pipeline.BindGroupLayout
+import com.mojang.blaze3d.GpuFormat
+import com.mojang.blaze3d.PrimitiveTopology
+import net.minecraft.client.renderer.BindGroupLayouts
+//?}
 import com.mojang.blaze3d.pipeline.RenderPipeline
 import com.mojang.blaze3d.pipeline.RenderTarget
 import com.mojang.blaze3d.pipeline.TextureTarget
@@ -13,12 +19,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.blaze3d.vertex.VertexFormat
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform
 import me.owdding.customscoreboard.Main
-import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.navigation.ScreenRectangle
 import net.minecraft.client.gui.render.TextureSetup
-import net.minecraft.client.gui.render.state.GuiElementRenderState
 import net.minecraft.client.renderer.RenderPipelines
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState
 import org.joml.Matrix3x2f
 import org.joml.Vector2f
 import org.joml.Vector4f
@@ -28,16 +33,29 @@ object BlurredBackground {
 
     private val pipeline: RenderPipeline = RenderPipeline.builder()
         .withLocation(Main.id("blurred_background"))
-        .withSampler("Sampler0")
+        //? >= 26.2 {
+        .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+        .withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
+        .withBindGroupLayout(BindGroupLayouts.GLOBALS)
+        .withBindGroupLayout(BindGroupLayouts.PROJECTION)
+        .withBindGroupLayout(BindGroupLayout.builder().withUniform(RoundedTextureUniform.NAME, UniformType.UNIFORM_BUFFER).build())
+        .withVertexBinding(0, DefaultVertexFormat.POSITION)
+        .withPrimitiveTopology(PrimitiveTopology.QUADS)
+        //?} else {
+        /*.withSampler("Sampler0")
         .withUniform("DynamicTransforms", UniformType.UNIFORM_BUFFER)
         .withUniform("Projection", UniformType.UNIFORM_BUFFER)
         .withUniform(RoundedTextureUniform.NAME, UniformType.UNIFORM_BUFFER)
+        .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)*///?}
         .withFragmentShader(Main.id("core/blurred_background"))
         .withVertexShader(Main.id("core/blurred_background"))
-        .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)
         .build()
 
-    val vulkanInstalled = FabricLoader.getInstance().isModLoaded("vulkanmod")
+    @JvmStatic
+    var needsCopy = false
+
+    //? < 26.2
+    //val vulkanInstalled = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("vulkanmod")
 
     init {
         RenderPipelines.register(pipeline)
@@ -60,12 +78,16 @@ object BlurredBackground {
 
     @JvmStatic
     fun init(width: Int, height: Int) {
-        if (vulkanInstalled) {
+        //? < 26.2 {
+        /*if (vulkanInstalled) {
             Main.warn("Vulkan mod detected, blurred background will not work!")
             return
-        }
+        }*///?}
         if (target == null) {
-            target = TextureTarget(null, width, height, false)
+            //? >= 26.2 {
+            target = TextureTarget(null, width, height, false, GpuFormat.RGBA8_UNORM) // TODO: confirm format
+            //?} else
+            //target = TextureTarget(null, width, height, false)
         } else {
             target!!.resize(width, height)
             setup.texure0?.close()
@@ -73,17 +95,15 @@ object BlurredBackground {
 
         setup = TextureSetup.singleTexture(
             RenderSystem.getDevice().createTextureView(target!!.colorTexture!!),
-            //? if =1.21.11 {
             RenderSystem.getSamplerCache().getSampler(
                 AddressMode.CLAMP_TO_EDGE, AddressMode.CLAMP_TO_EDGE,
                 FilterMode.NEAREST, FilterMode.NEAREST,
                 false,
             ),
-            //?}
         )
     }
 
-    fun render(graphics: GuiGraphics, x: Int, y: Int, width: Int, height: Int, radius: Int) {
+    fun render(graphics: GuiGraphicsExtractor, x: Int, y: Int, width: Int, height: Int, radius: Int) {
         if (this._uniform != null) {
             if (!this.multiUseError) Main.warn("BlurredBackground.render was called multiple times in the same frame!")
             this.multiUseError = true
@@ -98,7 +118,8 @@ object BlurredBackground {
                 Vector2f(x * scale + scaledWidth / 2f, y * scale + scaledHeight / 2f),
                 scale,
             )
-            graphics.guiRenderState.submitGuiElement(
+            this.needsCopy = true
+            graphics.guiRenderState.addGuiElement(
                 State(Matrix3x2f(graphics.pose()), ScreenRectangle(x, y, width, height), graphics.scissorStack.peek())
             )
         }

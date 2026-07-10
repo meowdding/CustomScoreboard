@@ -1,12 +1,15 @@
 package me.owdding.customscoreboard.mixins.blur;
 
+//? 26.1 {
+/*import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import me.owdding.customscoreboard.hooks.CommandEncoderHook;
+*///?}
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform;
 import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground;
 import net.minecraft.client.Minecraft;
@@ -29,7 +32,40 @@ public class GuiRendererMixin {
     @Nullable
     private TextureSetup previousTextureSetup;
 
+    //? >= 26.2 {
+    @Inject(method = "draw", at = @At("HEAD"))
+    private void copyBackgroundBeforePass(CallbackInfo ci) {
+        if (BlurredBackground.getNeedsCopy()) {
+            var encoder = RenderSystem.getDevice().createCommandEncoder();
+            var target = Minecraft.getInstance().gameRenderer.mainRenderTarget();
+
+            encoder.copyTextureToTexture(
+                target.getColorTexture(),
+                BlurredBackground.INSTANCE.getSetup().texure0().texture(),
+                0, 0, 0, 0, 0, target.width, target.height
+            );
+
+            BlurredBackground.setNeedsCopy(false);
+        }
+    }
+
     @Inject(
+        method = "executeDraw",
+        at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderPass;setIndexBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/IndexType;)V")
+    )
+    private void copyBackground(GuiRenderer.Draw draw, RenderPass renderPass, CallbackInfo ci) {
+        if (draw.textureSetup() != BlurredBackground.getSetup()) return;
+
+        var uniform = BlurredBackground.getUniform();
+        if (uniform != null) {
+            var uniformBuffer = RoundedTextureUniform.STORAGE.get().writeUniform(uniform);
+            if (uniformBuffer != null) {
+                renderPass.setUniform(RoundedTextureUniform.NAME, uniformBuffer);
+            }
+        }
+    }
+    //?} else {
+    /*@Inject(
         method = "executeDraw(Lnet/minecraft/client/gui/render/GuiRenderer$Draw;Lcom/mojang/blaze3d/systems/RenderPass;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderPass;setIndexBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;)V")
     )
@@ -40,9 +76,9 @@ public class GuiRendererMixin {
         var target = Minecraft.getInstance().getMainRenderTarget();
         var uniform = BlurredBackground.getUniform();
 
-        if (!(encoder instanceof GlCommandEncoderAccessor accessor)) return;
+        if (!(encoder instanceof CommandEncoderHook hook)) return;
 
-        accessor.cs$setInRenderPass(false);
+        hook.cs$setInRenderPass(false);
 
         encoder.copyTextureToTexture(
             target.getColorTexture(),
@@ -54,12 +90,12 @@ public class GuiRendererMixin {
         );
 
         var uniformBuffer = uniform != null ? RoundedTextureUniform.STORAGE.get().writeUniform(uniform) : null;
-        accessor.cs$setInRenderPass(true);
+        hook.cs$setInRenderPass(true);
 
         if (uniformBuffer != null) {
             pass.setUniform(RoundedTextureUniform.NAME, uniformBuffer);
         }
-    }
+    }*///?}
 
     @WrapOperation(method = "addElementToMesh", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/render/GuiRenderer;scissorChanged(Lnet/minecraft/client/gui/navigation/ScreenRectangle;Lnet/minecraft/client/gui/navigation/ScreenRectangle;)Z"))
     private boolean forceMeshRecording(GuiRenderer instance, ScreenRectangle scissorArea, ScreenRectangle oldScissorArea, Operation<Boolean> original, @Local TextureSetup setup) {

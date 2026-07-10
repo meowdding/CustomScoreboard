@@ -32,11 +32,12 @@ object EventSpooky : Event() {
         } else formattedLines = emptyList()
     }
 
-    private fun getTime(): String {
-        val totalSeconds = SpookyFestivalAPI.duration.inWholeSeconds
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return "%02d:%02d".format(minutes, seconds)
+    private fun getTime(): String = SpookyFestivalAPI.duration.toComponents { hours, minutes, seconds, _ ->
+        if (hours > 0) {
+            "%d:%02d:%02d".format(hours, minutes, seconds)
+        } else {
+            "%02d:%02d".format(minutes, seconds)
+        }
     }
 
     private fun getCandy() = Text.of {

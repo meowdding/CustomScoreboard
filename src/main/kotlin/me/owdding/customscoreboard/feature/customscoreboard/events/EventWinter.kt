@@ -25,13 +25,13 @@ object EventWinter : Event() {
     private val waveRegex by remote.componentRegex("Wave \\d+")
     private val magmaLeftRegex by remote.componentRegex("Magma Cubes Left: -?\\d+")
     private val totalDamageRegex by remote.componentRegex("Your Total Damage: [\\d+,.]+.*")
-    private val cubeDamageRegex by remote.componentRegex("Your Cube Damage: §.[\\d+,.]+")
+    private val cubeDamageRegex by remote.componentRegex("Your Cube Damage: [\\d+,.]+")
 
     private val patterns = listOf(startRegex, nextWaveRegex, waveRegex, magmaLeftRegex, totalDamageRegex, cubeDamageRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.components, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, patterns)
     }
 
 }

@@ -1,15 +1,15 @@
 package me.owdding.customscoreboard.config
 
+import com.mojang.blaze3d.platform.InputConstants
 import me.owdding.ktmodules.Module
 import me.owdding.lib.utils.MeowddingKeybind
 import net.minecraft.resources.Identifier
-import org.lwjgl.glfw.GLFW
 
 @Module
 object CustomScoreboardKeybinds {
     val TOGGLE_KEY = CustomScoreboardKeybind(
         "customscoreboard.keybinds.toggle",
-        GLFW.GLFW_KEY_I,
+        InputConstants.UNKNOWN.value,
     )
 }
 

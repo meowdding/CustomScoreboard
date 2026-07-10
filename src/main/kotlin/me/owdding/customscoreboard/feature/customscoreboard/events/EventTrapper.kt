@@ -26,8 +26,8 @@ object EventTrapper : Event() {
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {
-            event.components.find(peltsRegex::matches)?.let(::add)
-            addAll(event.components.sublistFromFirst(2, mobLocationRegex::matches))    
+            event.newComponents.find(peltsRegex::matches)?.let(::add)
+            addAll(event.newComponents.sublistFromFirst(2, mobLocationRegex::matches))
         }
     }
 

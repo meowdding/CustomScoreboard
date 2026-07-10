@@ -32,7 +32,7 @@ object ElementObjective : Element() {
         objectiveLines.clear()
         var objective = false
 
-        for (component in event.components) {
+        for (component in event.newComponents) {
             if (objective) {
                 if (component.isBlank()) break
                 if (CommonRegexes.hypixelFooterRegex.matches(component)) break

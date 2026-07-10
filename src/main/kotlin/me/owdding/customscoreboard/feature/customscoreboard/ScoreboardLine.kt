@@ -21,6 +21,7 @@ import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitLines
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
@@ -41,7 +42,8 @@ data class ScoreboardLine(
             button.withTexture(null)
             button.withRenderer { graphics, ctx, ticks ->
                 graphics.translated(button.x, button.y) {
-                    layout.render(graphics, ctx.mouseX, ctx.mouseY, ticks)
+                    //~ if >= 26.1 'render' -> 'extractRenderState'
+                    layout.extractRenderState(graphics, ctx.mouseX, ctx.mouseY, ticks)
                 }
             }
 
@@ -84,6 +86,7 @@ data class ScoreboardLine(
         internal fun getElementsFromAny(element: Any?): List<ScoreboardLine> = when (element) {
             null -> listOf()
             is Collection<*> -> element.mapNotNull { it?.toScoreboardElement() }
+            is Component -> element.splitLines().mapNotNull { it.toScoreboardElement() }
             else -> listOfNotNull(element.toScoreboardElement())
         }
 

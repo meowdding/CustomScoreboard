@@ -1,3 +1,4 @@
+//? scoreboard_overhaul {
 package me.owdding.customscoreboard.utils
 
 import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo
@@ -9,3 +10,4 @@ object ScoreboardOverhaulUtils {
     fun createInfo(string: String, component: Component, int: Int): ScoreInfo = ScoreInfo(string, component, int)
 
 }
+//? }

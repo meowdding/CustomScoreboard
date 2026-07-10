@@ -7,8 +7,9 @@ import earth.terrarium.olympus.client.dialog.OlympusDialogs
 import earth.terrarium.olympus.client.layouts.Layouts
 import me.owdding.customscoreboard.feature.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.feature.SkyHanniOption.shPath
-import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground
 import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardBackground
+//? 26.1
+//import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import net.minecraft.client.gui.layouts.LayoutElement
@@ -60,7 +61,10 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val blurEnabled by boolean(false) {
-        this.translation = if (BlurredBackground.vulkanInstalled) "customscoreboard.config.background.blur_vulk" else "customscoreboard.config.background.blur"
+        //? >= 26.2 {
+        this.translation = "customscoreboard.config.background.blur"
+        //?} else
+        //this.translation = if (BlurredBackground.vulkanInstalled) "customscoreboard.config.background.blur_vulk" else "customscoreboard.config.background.blur"
     }
 
     init {
@@ -204,7 +208,8 @@ object CustomBackgroundModal {
                     }
                 }
 
-                graphics.drawCenteredString(McFont.self, text, centerX, context.y, -1)
+                //~ if >= 26.1 'drawCenteredString' -> 'centeredText'
+                graphics.centeredText(McFont.self, text, centerX, context.y, -1)
             }
             it.withCallback {
                 if (BackgroundConfig.customImageFile.isNotEmpty()) {

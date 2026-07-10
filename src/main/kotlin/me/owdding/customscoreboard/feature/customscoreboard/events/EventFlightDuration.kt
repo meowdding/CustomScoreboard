@@ -21,6 +21,6 @@ object EventFlightDuration : Event() {
     private val flightRegex by RemoteStrings.resolve().componentRegex("Flight Duration: [\\d:]+")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLine = event.components.find(flightRegex::matches)
+        formattedLine = event.newComponents.find(flightRegex::matches)
     }
 }

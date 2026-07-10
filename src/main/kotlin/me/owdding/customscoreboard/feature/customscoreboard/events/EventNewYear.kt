@@ -18,6 +18,6 @@ object EventNewYear : Event() {
     private val newYearRegex by RemoteStrings.resolve().componentRegex("New Year Event! [\\d:]*")
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLine = event.components.find(newYearRegex::matches)
+        formattedLine = event.newComponents.find(newYearRegex::matches)
     }
 }
