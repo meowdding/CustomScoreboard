@@ -20,7 +20,7 @@ object EventDamage : Event() {
     private val formattedLines = mutableListOf<Component>()
 
     private val remote = RemoteStrings.resolve()
-    private val hpRegex by remote.componentRegex("(?:Protector|Dragon) HP: [\\d,.]* ❤")
+    private val hpRegex by remote.componentRegex("(?:Protector|Dragon) HP: [\\d,.]* .")
     private val damageRegex by remote.componentRegex("Your Damage: [\\d,.]+")
 
     private val patterns = listOf(hpRegex, damageRegex)
