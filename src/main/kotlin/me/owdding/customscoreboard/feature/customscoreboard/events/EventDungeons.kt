@@ -20,7 +20,7 @@ object EventDungeons : Event() {
     private val formattedLines = mutableListOf<Component>()
 
     private val remote = RemoteStrings.resolve()
-    private val m7dragonsRegex by remote.componentRegex("No Alive Dragons|- [\\w\\s]+Dragon [\\w,.]+❤")
+    private val m7dragonsRegex by remote.componentRegex("No Alive Dragons|- [\\w\\s]+Dragon [\\w,.]+.")
     private val autoCloseRegex by remote.componentRegex("Auto-closing in: [\\d+:,.]+")
     private val startingInRegex by remote.componentRegex("Starting in: [\\d+:,.]+")
     private val keyRegex by remote.componentRegex("Keys: ■ [✗✓] ■ .x")
@@ -28,7 +28,7 @@ object EventDungeons : Event() {
     private val clearedRegex by remote.componentRegex("Cleared: (?<percent>[\\w,.]+)% \\((?<score>[\\w,.]+)\\)")
     private val soloRegex by remote.componentRegex("Solo")
     private val teammatesRegex by remote.componentRegex("(?<classAbbv>\\[\\w]) (?<username>\\w{2,16}) ((?<classLevel>\\[Lvl?(?<level>[\\w,.]+)?]?)|(?<health>[\\w,.]+).?)")
-    private val f3guardianRegex by remote.componentRegex(" - (?:Healthy|Reinforced|Laser|Chaos) [\\w,.]*❤?")
+    private val f3guardianRegex by remote.componentRegex(" - (?:Healthy|Reinforced|Laser|Chaos) [\\w,.]*.")
 
     private val patterns = listOf(
         m7dragonsRegex,
