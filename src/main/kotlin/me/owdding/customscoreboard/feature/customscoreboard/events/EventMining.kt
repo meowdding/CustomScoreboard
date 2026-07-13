@@ -37,7 +37,7 @@ object EventMining : Event() {
     private val goblinRemaining by remote.componentRegex("Remaining: \\d+ goblins?")
     private val goblinYourKills by remote.componentRegex("Your kills: \\d+ ☠.*")
     private val mineshaftNotStartedRegex by remote.componentRegex("Not started.*")
-    private val mineshaftFortunateFreezingRegex by remote.componentRegex("Event Bonus: \\+\\d+☘")
+    private val mineshaftFortunateFreezingRegex by remote.componentRegex("Event Bonus: \\+\\d+.")
     private val fossilDustRegex by remote.componentRegex("Fossil Dust: [\\d.,]+.*")
     private val compassRegex by remote.componentRegex("Wind Compass")
     private val compassArrowRegex by remote.componentRegex("\\s*[⋖⋗≈]+\\s*[⋖⋗≈]*\\s*")
