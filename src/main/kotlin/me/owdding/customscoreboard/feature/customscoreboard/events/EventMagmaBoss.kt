@@ -29,7 +29,7 @@ object EventMagmaBoss : Event() {
     private val killMagmasRegex by remote.componentRegex("Kill the Magmas:")
     private val formingRegex by remote.componentRegex("The boss is (?:re)?forming!")
     private val healthRegex by remote.componentRegex("Boss Health:")
-    private val healthBarRegex by remote.componentRegex("(?:\\d+(?:\\.\\d)?M|\\d+k)/10M❤")
+    private val healthBarRegex by remote.componentRegex("(?:\\d+(?:\\.\\d)?M|\\d+k)/10M.")
     private val barRegex by remote.componentRegex("▎+")
 
     private val patterns = listOf(bossRegex, damageSoakedRegex, killMagmasRegex, formingRegex, healthRegex, healthBarRegex, barRegex)
