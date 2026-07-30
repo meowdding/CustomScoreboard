@@ -18,6 +18,7 @@ import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementMayo
 import me.owdding.customscoreboard.feature.customscoreboard.elements.ElementSowdust
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.Utils.updateDisplay
+import tech.thatgravyboat.skyblockapi.utils.json.getPath
 import java.util.function.UnaryOperator
 
 object MainConfig : ConfigKt("customscoreboard/config") {
@@ -45,7 +46,7 @@ object MainConfig : ConfigKt("customscoreboard/config") {
     //region Patches
     override val patches: Map<Int, UnaryOperator<JsonObject>> = mapOf(
         1 to UnaryOperator { json ->
-            json.getAsJsonArray("events").add(ScoreboardEventEntry.GALATEA.name)
+            json.getAsJsonArray("events").add(ScoreboardEventEntry.FORAGING.name)
             json
         },
         3 to UnaryOperator { json ->
@@ -144,6 +145,16 @@ object MainConfig : ConfigKt("customscoreboard/config") {
             val newAppearance = JsonArray()
             items.forEach { newAppearance.add(it) }
             json.add("appearance", newAppearance)
+
+            json
+        },
+        8 to UnaryOperator { json -> // GALATEA -> FORAGING
+            val items = json.getAsJsonObject("customization").getAsJsonArray("events").toMutableList()
+            val newArray = JsonArray()
+            items.forEach { item ->
+                if (item.asString == "GALATEA") newArray.add(ScoreboardEventEntry.FORAGING.name) else newArray.add(item)
+            }
+            json.getAsJsonObject("customization").add("events", newArray)
 
             json
         },

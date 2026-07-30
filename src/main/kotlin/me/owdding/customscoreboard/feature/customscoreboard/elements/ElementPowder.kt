@@ -27,6 +27,7 @@ object ElementPowder : Element() {
                 }
 
                 addLine("Forest", WhispersAPI.forest, WhispersAPI.forestTotal, TextColor.DARK_AQUA)
+                addLine("Desert", WhispersAPI.desert, WhispersAPI.desertTotal, TextColor.GOLD)
             }
 
             SkyBlockIsland.inAnyIsland(miningIslands) -> {

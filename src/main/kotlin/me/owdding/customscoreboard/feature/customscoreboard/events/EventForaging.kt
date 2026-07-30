@@ -12,18 +12,19 @@ import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 
 @AutoElement
-object EventGalatea : Event() {
+object EventForaging : Event() {
     override fun getDisplay() = formattedLines
 
-    override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GALATEA)
+    override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GALATEA, SkyBlockIsland.TORRHUS_CANYON, SkyBlockIsland.SAFARI)
 
-    override val configLine = "Galatea"
+    override val configLine = "Foraging"
 
 
     private val remote = RemoteStrings.resolve()
-    private val whisperRegex by remote.componentRegex("Whispers: [\\w,.]+.*")
+    private val whisperRegex by remote.componentRegex(".*Whispers: [\\w,.]+.*")
     private val hotfRegex by remote.componentRegex("\\s*HOTF: [\\w,.]+.*")
-    private val contestRegex by remote.componentRegex("Agatha's Contest.*")
+    private val contestRegex by remote.componentRegex("(?:Agatha|Miria)'s Contest.*")
+    private val capturedMobsRegex by remote.componentRegex("Captured Mobs: [\\d,m]+")
 
     private val formattedLines = mutableListOf<Component>()
 
@@ -33,6 +34,7 @@ object EventGalatea : Event() {
                 event.newComponents.find(whisperRegex::matches)?.let(::add)
             }
             event.newComponents.find(hotfRegex::matches)?.let(::add)
+            event.newComponents.find(capturedMobsRegex::matches)?.let(::add)
             addAll(event.newComponents.sublistFromFirst(3, contestRegex::matches))
             removeIf(CommonRegexes.hypixelFooterRegex::matches)
         }
