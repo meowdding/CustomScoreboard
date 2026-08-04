@@ -13,9 +13,9 @@ object ElementCold : Element() {
         command = "/warp basecamp"
     }
 
-    override fun showWhen() = GlaciteAPI.inGlaciteTunnels() && (GlaciteAPI.cold > 0)
+    override fun showWhen() = GlaciteAPI.inColdArea() && (GlaciteAPI.cold > 0)
 
-    override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.MINESHAFT)
+    override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.SAFARI, SkyBlockIsland.MINESHAFT)
 
     override val configLine = "Cold"
     override val id = "COLD"
