@@ -90,8 +90,9 @@ object LinesConfig : CategoryKt("line_modification") {
     }
 
     val magicalPower by boolean(true) {
-        this.translation = "$translationPath.magical_power"
+        this.translation = "$translationPath.accessory_power"
         this.shPath = "display.maxwell.showMagicalPower"
+        this.searchTerms += "magical"
     }
 
     val colorArrowAmount by boolean("color_arrow", true) {

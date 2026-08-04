@@ -326,9 +326,9 @@
                     "@value": "Show Pet Max Level",
                     "desc": "Show \"Max\" when the pet is at max level.\nWhen disabled, the level will be hidden."
                 },
-                "magical_power": {
-                    "@value": "Magical Power",
-                    "desc": "Show your Magical Power next to selected power."
+                "accessory_power": {
+                    "@value": "Accessory Power",
+                    "desc": "Show your Accessory Power next to selected power."
                 },
                 "slayer_level": {
                     "@value": "Slayer Level",
