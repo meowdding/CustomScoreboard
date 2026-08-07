@@ -1,10 +1,12 @@
 package me.owdding.customscoreboard.core
 
 //? >= 26.2 {
-//?}
+import net.minecraft.client.renderer.BindGroupLayouts
 import com.mojang.blaze3d.GpuFormat
 import com.mojang.blaze3d.PrimitiveTopology
 import com.mojang.blaze3d.pipeline.BindGroupLayout
+//?} else
+//import com.mojang.blaze3d.vertex.VertexFormat
 import com.mojang.blaze3d.pipeline.RenderPipeline
 import com.mojang.blaze3d.pipeline.RenderTarget
 import com.mojang.blaze3d.pipeline.TextureTarget
@@ -20,7 +22,6 @@ import me.owdding.customscoreboard.CustomScoreboardMod
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.navigation.ScreenRectangle
 import net.minecraft.client.gui.render.TextureSetup
-import net.minecraft.client.renderer.BindGroupLayouts
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.state.gui.GuiElementRenderState
 import org.joml.Matrix3x2f
@@ -79,7 +80,7 @@ object BlurredBackground {
     fun init(width: Int, height: Int) {
         //? < 26.2 {
         /*if (vulkanInstalled) {
-            Main.warn("Vulkan mod detected, blurred background will not work!")
+            CustomScoreboardMod.warn("Vulkan mod detected, blurred background will not work!")
             return
         }*///?}
         if (target == null) {
