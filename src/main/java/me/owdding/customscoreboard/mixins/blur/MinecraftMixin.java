@@ -1,7 +1,7 @@
 package me.owdding.customscoreboard.mixins.blur;
 
 import com.mojang.blaze3d.platform.Window;
-import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground;
+import me.owdding.customscoreboard.core.BlurredBackground;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,0 +1,52 @@
+package me.owdding.customscoreboard.elements
+
+import me.owdding.customscoreboard.config.BaseElement
+import me.owdding.customscoreboard.config.category.LinesConfig
+import me.owdding.customscoreboard.core.ActionBuilder
+import me.owdding.customscoreboard.core.ScoreboardLine
+import me.owdding.customscoreboard.core.ScoreboardLine.Companion.getElementsFromAny
+import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
+import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
+import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
+
+abstract class Element : BaseElement {
+    init {
+        SkyBlockAPI.eventBus.register<ScoreboardUpdateEvent> { event -> onScoreboardUpdate(event) }
+        SkyBlockAPI.eventBus.register<ServerChangeEvent> { event -> onServerChange(event) }
+    }
+
+    /**
+     * Must be specified as one of the following:
+     * - [String]
+     * - [ScoreboardLine][ScoreboardLine]
+     * - [Component][net.minecraft.network.chat.Component]
+     *
+     * It can also be a [Collection] of the above.
+     *
+     * `null` values will be treated as empty lines/lists.
+     */
+    protected abstract fun getDisplay(): Any?
+    open fun showWhen(): Boolean = true
+
+    /**
+     * Uses the [LinesConfig.showActiveOnly] option to hide/show lines, should only be used on currency like and booster cookie/god potion like elements.
+     */
+    open fun isLineActive(): Boolean = true
+    abstract val configLine: String
+
+    override fun toString() = configLine
+
+    open fun showIsland(): Boolean = true
+
+    open fun getLines(): List<ScoreboardLine> = if (isVisible()) getElementsFromAny(getDisplay()) else listOf()
+
+    private fun isVisible(): Boolean {
+        if (LinesConfig.showActiveOnly && !isLineActive()) return false
+        return showWhen()
+    }
+
+    open fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {}
+    open fun onServerChange(event: ServerChangeEvent) {}
+
+    fun MutableList<Any>.add(element: Any, actions: ActionBuilder.() -> Unit = {}) = add(element to ActionBuilder().apply(actions))
+}

@@ -103,12 +103,12 @@ internal class Processor(
 internal enum class Kind(val enumName: String, val packageName: String, val typeName: String) {
     EVENT(
         "ScoreboardEventEntry",
-        "me.owdding.customscoreboard.feature.customscoreboard.events",
+        "me.owdding.customscoreboard.events",
         "Event",
     ),
     ;
 
-    fun fix(name: String) = name.replace(Regex("^(Element|Event)"), "").replace(Regex("([a-z])([A-Z])"), "$1_$2").uppercase()
+    fun fix(name: String) = name.replace(Regex("(Element|Event)$"), "").replace(Regex("([a-z])([A-Z])"), "$1_$2").uppercase()
 
     companion object {
         fun getByName(name: String?) = entries.firstOrNull { it.name.equals(name, true) }

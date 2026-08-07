@@ -11,7 +11,7 @@
     "entrypoints": {
         "client": [
             {
-                "value": "me.owdding.customscoreboard.Main",
+                "value": "me.owdding.customscoreboard.CustomScoreboardMod",
                 "adapter": "kotlin"
             }
         ]

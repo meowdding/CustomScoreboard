@@ -2,7 +2,7 @@ package me.owdding.customscoreboard.utils.rendering
 
 import earth.terrarium.olympus.client.pipelines.RoundedRectangle
 import earth.terrarium.olympus.client.pipelines.RoundedTexture
-import me.owdding.customscoreboard.config.categories.BackgroundConfig
+import me.owdding.customscoreboard.config.category.BackgroundConfig
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.resources.Identifier
 import net.minecraft.util.ARGB

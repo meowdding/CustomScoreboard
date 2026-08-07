@@ -11,7 +11,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform;
-import me.owdding.customscoreboard.feature.customscoreboard.BlurredBackground;
+import me.owdding.customscoreboard.core.BlurredBackground;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.GuiRenderer;

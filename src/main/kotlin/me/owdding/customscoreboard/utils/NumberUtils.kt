@@ -1,6 +1,6 @@
 package me.owdding.customscoreboard.utils
 
-import me.owdding.customscoreboard.config.categories.LinesConfig
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.lib.extensions.shorten
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedString
 

@@ -3,7 +3,7 @@ package me.owdding.customscoreboard.utils
 import com.teamresourceful.resourcefulconfigkt.api.ConfigDelegateProvider
 import com.teamresourceful.resourcefulconfigkt.api.ObservableEntry
 import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
-import me.owdding.customscoreboard.feature.customscoreboard.CustomScoreboardRenderer
+import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.ktmodules.AutoCollect
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI

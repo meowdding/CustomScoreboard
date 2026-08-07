@@ -10,8 +10,8 @@ import com.teamresourceful.resourcefulconfig.api.types.options.data.DraggableOpt
 import com.teamresourceful.resourcefulconfig.client.UIConstants
 import com.teamresourceful.resourcefulconfig.client.components.ModSprites
 import com.teamresourceful.resourcefulconfig.client.components.base.SpriteButton
-import me.owdding.customscoreboard.Main
-import me.owdding.customscoreboard.feature.customscoreboard.elements.Element
+import me.owdding.customscoreboard.CustomScoreboardMod
+import me.owdding.customscoreboard.elements.Element
 import me.owdding.customscoreboard.utils.ElementGroup
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component
@@ -19,7 +19,7 @@ import net.minecraft.network.chat.MutableComponent
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 
-val CUSTOM_DRAGGABLE_RENDERER = Main.id("custom_draggable_list")
+val CUSTOM_DRAGGABLE_RENDERER = CustomScoreboardMod.id("custom_draggable_list")
 
 class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulConfigElementRenderer {
     val entry get() = (element as ResourcefulConfigEntryElement).entry() as ResourcefulConfigValueEntry
@@ -31,7 +31,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
         return listOf(
             ResourcefulConfigOptionUI.draggable(
                 entry.options().title().toComponent(),
-                Main.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }.sortedBy { it.value().group.ordinal },
+                CustomScoreboardMod.allPossibleScoreboardElements.map { it.toDraggableOptionEntry() }.sortedBy { it.value().group.ordinal },
                 {
                     @Suppress("UNCHECKED_CAST")
                     (entry.array as Array<String>).asList().toBaseElements()
@@ -51,7 +51,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
 
     companion object {
         fun List<String>.toBaseElements(): List<Element> = mapNotNull { id ->
-            Main.allPossibleScoreboardElements.find { it.id == id }
+            CustomScoreboardMod.allPossibleScoreboardElements.find { it.id == id }
         }
 
         fun List<BaseElement>.toConfigStrings(): Array<String> = map { it.id }.toTypedArray()

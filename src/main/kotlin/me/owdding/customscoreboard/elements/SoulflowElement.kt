@@ -1,0 +1,48 @@
+package me.owdding.customscoreboard.elements
+
+import me.owdding.customscoreboard.core.CustomScoreboardRenderer
+import me.owdding.customscoreboard.core.NumberTrackingElement
+import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import me.owdding.customscoreboard.utils.TextUtils.anyMatch
+import me.owdding.ktmodules.Module
+import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
+import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
+import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+
+@Module
+@ScoreboardElement
+object SoulflowElement : NumberTrackingElement(TextColor.DARK_AQUA) {
+
+    override fun getDisplay(): Component {
+        checkDifference(CurrencyAPI.soulflow)
+        val line = Text.join(CurrencyAPI.soulflow.format(), temporaryChangeDisplay)
+
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Soulflow", line, numberColor)
+    }
+
+    override fun showWhen() = soulflowInTablist
+    override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
+    override fun isLineActive() = CurrencyAPI.soulflow > 0
+
+    override val configLine = "Soulflow"
+    override val id = "SOULFLOW"
+    override val configLineHover = listOf("Requires the Soulflow option enabled in the Profile category in /tablist.", "Will not show if disabled.")
+
+    private var soulflowInTablist = false
+    private val soulflowRegex by RemoteStrings.resolve().regex(" Soulflow: .*")
+
+    @Subscription
+    @OnlyWidget(TabWidget.PROFILE)
+    fun onTab(event: TabWidgetChangeEvent) {
+        soulflowInTablist = soulflowRegex.anyMatch(event.new)
+    }
+}

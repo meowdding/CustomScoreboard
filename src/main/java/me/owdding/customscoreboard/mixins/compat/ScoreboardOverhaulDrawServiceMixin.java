@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
 import me.jfenn.scoreboardoverhaul.impl.DrawService;
-import me.owdding.customscoreboard.config.categories.ModCompatibilityConfig;
+import me.owdding.customscoreboard.config.category.ModCompatibilityConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
