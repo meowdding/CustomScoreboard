@@ -42,7 +42,6 @@ data class ScoreboardLine(
             button.withTexture(null)
             button.withRenderer { graphics, ctx, ticks ->
                 graphics.translated(button.x, button.y) {
-                    //~ if >= 26.1 'render' -> 'extractRenderState'
                     layout.extractRenderState(graphics, ctx.mouseX, ctx.mouseY, ticks)
                 }
             }
