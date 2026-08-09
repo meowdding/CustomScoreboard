@@ -17,6 +17,7 @@ import me.owdding.customscoreboard.elements.KernelsElement
 import me.owdding.customscoreboard.elements.MayorElement
 import me.owdding.customscoreboard.elements.SowdustElement
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
+import me.owdding.customscoreboard.utils.Utils.convertLegacyToPlaceholder
 import me.owdding.customscoreboard.utils.Utils.updateDisplay
 import java.util.function.UnaryOperator
 
@@ -157,9 +158,23 @@ object Config : ConfigKt("customscoreboard/config") {
 
             json
         },
+        9 to UnaryOperator { json ->
+            json.getAsJsonObject("customization")?.let { customPage ->
+                customPage.get("titleText")?.asString?.let { oldTitle ->
+                    customPage.add("titleText", JsonArray().apply { oldTitle.lines().map(::convertLegacyToPlaceholder).forEach(::add) })
+                }
+                customPage.get("footerText")?.asString?.let { oldFooter ->
+                    customPage.add("footerText", JsonArray().apply { oldFooter.lines().map(::convertLegacyToPlaceholder).forEach(::add) })
+                }
+                customPage.get("alphaFooterText")?.asString?.let { oldFooter ->
+                    customPage.add("alphaFooterText", JsonArray().apply { oldFooter.lines().map(::convertLegacyToPlaceholder).forEach(::add) })
+                }
+            }
+            json
+        },
     )
 
-    override val version = patches.maxOf { it.key }
+    override val version = patches.maxOf { it.key } + 1
     //endregion
 
     private val translationPath = "customscoreboard.config.main"

@@ -55,7 +55,21 @@
                     "structure": "Scoreboard Structure",
                     "tablist": "Tablist Lines",
                     "chunked": "Chunked Stats",
-                    "title": "Title Settings",
+                    "title": {
+                        "@value": "Title Settings",
+                        "desc": [
+                            "How to create a custom title/footer:",
+                            "The custom text uses an xml-like syntax, meaning you need to open and close specific elements to have them modified.",
+                            "\\<bold>Hello</bold> for example makes \"Hello\" bold.",
+                            "Use \\<bold>/\\<strikethrough>/\\<italic>/\\<underlined>/\\<obfuscated> to modify the text.",
+                            "Use \\<green> etc to get the predefined vanilla colors.",
+                            "Use \\<color #f38ba8> for custom colors.",
+                            "Use \\<gradient #color1 #color2> for gradients.",
+                            "You can also customize speed and directions by defining dir:[LEFT/DOWN_RIGHT/...] or speed:[number] inside the \\<gradient>.",
+                            "",
+                            "There will soon be a website that helps you generating this."
+                        ]
+                    },
                     "footer": "Footer Settings",
                     "layout": "Layout & Scaling"
                 },
@@ -93,7 +107,7 @@
                 },
                 "title_custom_text": {
                     "@value": "Title Custom Text",
-                    "desc": "Edit the custom text for the title. Use && for colors and \\n for new line."
+                    "desc": "Edit the custom text for the title."
                 },
                 "use_custom_title_outside_skyblock": {
                     "@value": "Use Custom Title Outside SkyBlock",
@@ -109,11 +123,11 @@
                 },
                 "footer_custom_text": {
                     "@value": "Footer Custom Text",
-                    "desc": "Edit the custom text for the footer. Use && for colors and \\n for new line."
+                    "desc": "Edit the custom text for the footer."
                 },
                 "custom_alpha_footer": {
                     "@value": "Custom Alpha Footer",
-                    "desc": "What should be displayed as the footer of the scoreboard when on the Alpha Server. Use && for colors and \\n for new line."
+                    "desc": "What should be displayed as the footer of the scoreboard when on the Alpha Server."
                 },
                 "scale": {
                     "@value": "Scale",

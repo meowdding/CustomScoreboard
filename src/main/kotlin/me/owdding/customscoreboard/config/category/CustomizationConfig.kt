@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.config.category
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.compat.SkyHanniOption.shMapper
@@ -44,6 +45,7 @@ import me.owdding.customscoreboard.elements.SowdustElement
 import me.owdding.customscoreboard.elements.TimeElement
 import me.owdding.customscoreboard.elements.TitleElement
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
+import me.owdding.customscoreboard.utils.Utils.convertLegacyToPlaceholder
 import me.owdding.customscoreboard.utils.Utils.observable
 import me.owdding.customscoreboard.utils.Utils.updateDisplay
 import me.owdding.customscoreboard.utils.Utils.updateIslandCache
@@ -138,7 +140,10 @@ object CustomizationConfig : CategoryKt("customization") {
     }
 
     init {
-        separator { this.title = "$translationPath.sections.title" }
+        separator {
+            this.title = "$translationPath.sections.title"
+            this.description = "$translationPath.sections.title.desc"
+        }
     }
 
     val useHypixelTitle by boolean(true) {
@@ -163,9 +168,10 @@ object CustomizationConfig : CategoryKt("customization") {
         this.shPath = "display.titleAndFooter.useCustomTitleOutsideSkyBlock"
     }
 
-    val titleText by string("") {
+    val titleText by strings("") {
         this.translation = "$translationPath.title_custom_text"
         this.shPath = "display.titleAndFooter.customTitle"
+        this.shMapper = { JsonArray().apply { it.asString.lines().map(::convertLegacyToPlaceholder).forEach(::add) } }
     }
 
     init {
@@ -183,12 +189,13 @@ object CustomizationConfig : CategoryKt("customization") {
         this.shPath = "display.titleAndFooter.useCustomFooter"
     }
 
-    val footerText by string("") {
+    val footerText by strings("") {
         this.translation = "$translationPath.footer_custom_text"
         this.shPath = "display.titleAndFooter.customFooter"
+        this.shMapper = { JsonArray().apply { it.asString.lines().map(::convertLegacyToPlaceholder).forEach(::add) } }
     }
 
-    val alphaFooterText by string("") {
+    val alphaFooterText by strings("") {
         this.translation = "$translationPath.custom_alpha_footer"
         this.shPath = "display.titleAndFooter.customAlphaFooter"
     }

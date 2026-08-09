@@ -4,7 +4,9 @@ import com.teamresourceful.resourcefulconfigkt.api.ConfigDelegateProvider
 import com.teamresourceful.resourcefulconfigkt.api.ObservableEntry
 import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
+import me.owdding.dfu.item.LegacyTextFixer
 import me.owdding.ktmodules.AutoCollect
+import me.owdding.lib.rendering.text.serialization.TagComponentSerialization
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
@@ -80,6 +82,11 @@ object Utils {
 
     fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.updateDisplay() = ObservableEntry(this) { _, _ -> CustomScoreboardRenderer.updateDisplay() }
     fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.updateIslandCache() = ObservableEntry(this) { _, _ -> CustomScoreboardRenderer.updateIslandCache() }
+
+    fun convertLegacyToPlaceholder(string: String): String {
+        val comp = LegacyTextFixer.parse(string.replace("&&", "§"))
+        return TagComponentSerialization.serialize(comp)
+    }
 }
 
 
