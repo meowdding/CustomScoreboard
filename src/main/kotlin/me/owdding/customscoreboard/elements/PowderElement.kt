@@ -14,32 +14,60 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object PowderElement : Element() {
-    private val foragingIsland = setOf(SkyBlockIsland.GALATEA, SkyBlockIsland.TORRHUS_CANYON)
-    private val miningIslands = setOf(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT)
-    private val allIslands = foragingIsland + miningIslands
+
+    private class Currency(
+        val name: String,
+        val color: Int,
+        val current: () -> Long,
+        val total: () -> Long,
+    )
+
+    private class Region(
+        val islands: Set<SkyBlockIsland>,
+        val title: String,
+        val hoverText: String,
+        val command: String,
+        val currencies: List<Currency>,
+    )
+
+    private val regions = listOf(
+        Region(
+            islands = setOf(SkyBlockIsland.GALATEA, SkyBlockIsland.TORRHUS_CANYON),
+            title = "Whispers",
+            hoverText = "§7Click to open your Hotf.",
+            command = "/hotf",
+            currencies = listOf(
+                Currency("Forest", TextColor.DARK_AQUA, { WhispersAPI.forest }, { WhispersAPI.forestTotal }),
+                Currency("Desert", TextColor.GOLD, { WhispersAPI.desert }, { WhispersAPI.desertTotal }),
+            ),
+        ),
+        Region(
+            islands = setOf(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT),
+            title = "Powder",
+            hoverText = "§7Click to open your Hotm.",
+            command = "/hotm",
+            currencies = listOf(
+                Currency("Mithril", TextColor.DARK_GREEN, { PowderAPI.mithril }, { PowderAPI.mithrilTotal }),
+                Currency("Gemstone", TextColor.PINK, { PowderAPI.gemstone }, { PowderAPI.gemstoneTotal }),
+                Currency("Glacite", TextColor.AQUA, { PowderAPI.glacite }, { PowderAPI.glaciteTotal }),
+            ),
+        ),
+    )
+
+    private val allIslands = regions.flatMap { it.islands }.toSet()
+
+    private val activeRegion: Region? get() = regions.firstOrNull { SkyBlockIsland.inAnyIsland(it.islands) }
 
     override fun getDisplay() = buildList {
-        when {
-            SkyBlockIsland.inAnyIsland(foragingIsland) -> {
-                add(Text.of("Whispers", TextColor.BLUE)) {
-                    hover = listOf("§7Click to open your Hotf.")
-                    command = "/hotf"
-                }
+        val region = activeRegion ?: return@buildList
 
-                addLine("Forest", WhispersAPI.forest, WhispersAPI.forestTotal, TextColor.DARK_AQUA)
-                addLine("Desert", WhispersAPI.desert, WhispersAPI.desertTotal, TextColor.GOLD)
-            }
+        add(Text.of(region.title, TextColor.BLUE)) {
+            hover = listOf(region.hoverText)
+            command = region.command
+        }
 
-            SkyBlockIsland.inAnyIsland(miningIslands) -> {
-                add(Text.of("Powder", TextColor.BLUE)) {
-                    hover = listOf("§7Click to open your Hotm.")
-                    command = "/hotm"
-                }
-
-                addLine("Mithril", PowderAPI.mithril, PowderAPI.mithrilTotal, TextColor.DARK_GREEN)
-                addLine("Gemstone", PowderAPI.gemstone, PowderAPI.gemstoneTotal, TextColor.PINK)
-                addLine("Glacite", PowderAPI.glacite, PowderAPI.glaciteTotal, TextColor.AQUA)
-            }
+        region.currencies.forEach { currency ->
+            addLine(currency.name, currency.current(), currency.total(), currency.color)
         }
     }
 
@@ -64,16 +92,8 @@ object PowderElement : Element() {
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(allIslands)
-    override fun isLineActive() = when {
-        SkyBlockIsland.inAnyIsland(foragingIsland) -> isCurrencyActive(WhispersAPI.forest, WhispersAPI.forestTotal)
-        SkyBlockIsland.inAnyIsland(miningIslands) -> {
-            isCurrencyActive(PowderAPI.mithril, PowderAPI.mithrilTotal) ||
-                isCurrencyActive(PowderAPI.gemstone, PowderAPI.gemstoneTotal) ||
-                isCurrencyActive(PowderAPI.glacite, PowderAPI.glaciteTotal)
-        }
 
-        else -> false
-    }
+    override fun isLineActive(): Boolean = activeRegion?.currencies?.any { isCurrencyActive(it.current(), it.total()) } ?: false
 
     private fun isCurrencyActive(current: Long, total: Long): Boolean = when (LinesConfig.powderDisplay) {
         PowderDisplay.CURRENT -> current > 0
