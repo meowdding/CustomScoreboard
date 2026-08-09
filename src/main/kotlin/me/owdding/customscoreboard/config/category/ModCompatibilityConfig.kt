@@ -3,6 +3,9 @@ package me.owdding.customscoreboard.config.category
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.ConfigTransfer
+import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 object ModCompatibilityConfig : CategoryKt("compatibility") {
 
@@ -38,6 +41,7 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
                     ConfigTransfer.transfer()
                 }.exceptionOrNull()?.let {
                     CustomScoreboardMod.error("Failed to transfer config", it)
+                    Text.of("Failed to transfer SkyHanni config: ${it.message}. Report this in the Discords", TextColor.RED).sendWithPrefix()
                 }
             }
         }
