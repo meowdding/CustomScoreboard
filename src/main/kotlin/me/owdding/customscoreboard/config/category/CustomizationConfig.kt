@@ -16,6 +16,7 @@ import me.owdding.customscoreboard.elements.ColdElement
 import me.owdding.customscoreboard.elements.CookieBuffElement
 import me.owdding.customscoreboard.elements.CopperElement
 import me.owdding.customscoreboard.elements.DateElement
+import me.owdding.customscoreboard.elements.ElementMaxwellPower
 import me.owdding.customscoreboard.elements.EventsElement
 import me.owdding.customscoreboard.elements.FooterElement
 import me.owdding.customscoreboard.elements.GemsElement
@@ -23,6 +24,7 @@ import me.owdding.customscoreboard.elements.HeatElement
 import me.owdding.customscoreboard.elements.IslandElement
 import me.owdding.customscoreboard.elements.KernelsElement
 import me.owdding.customscoreboard.elements.LobbyElement
+import me.owdding.customscoreboard.elements.MaxwellTuningsElement
 import me.owdding.customscoreboard.elements.MayorElement
 import me.owdding.customscoreboard.elements.MotesElement
 import me.owdding.customscoreboard.elements.NorthStarsElement
@@ -81,6 +83,8 @@ object CustomizationConfig : CategoryKt("customization") {
                         "PLAYER_AMOUNT" -> PlayerCountElement.id
                         "LOBBY_CODE" -> LobbyElement.id
                         "LOCATION" -> AreaElement.id
+                        "POWER" -> ElementMaxwellPower.id
+                        "TUNING" -> MaxwellTuningsElement.id
                         else if string.startsWith("EMPTY_LINE") -> SeparatorElement.id
                         else -> string
                     }
