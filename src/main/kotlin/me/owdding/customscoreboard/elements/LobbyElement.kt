@@ -14,7 +14,10 @@ object LobbyElement : Element() {
     private var lobbyCode: String? = null
     private var roomId: String? = null
 
-    override fun getDisplay() = "§7" + LinesConfig.dateFormat + " §8$lobbyCode" + if (roomId != null) " §8$roomId" else ""
+    override fun getDisplay(): String {
+        val dateString = if (LinesConfig.dateInLobbyCode) "§7${LinesConfig.dateFormat} " else ""
+        return "$dateString§8$lobbyCode" + if (roomId != null) " §8$roomId" else ""
+    }
 
     override fun showWhen() = lobbyCode != null
 

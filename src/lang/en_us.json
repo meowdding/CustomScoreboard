@@ -95,6 +95,10 @@
                     "@value": "Title Custom Text",
                     "desc": "Edit the custom text for the title. Use && for colors and \\n for new line."
                 },
+                "use_custom_title_outside_skyblock": {
+                    "@value": "Use Custom Title Outside SkyBlock",
+                    "desc": "Use a custom title outside of SkyBlock."
+                },
                 "footer_alignment": {
                     "@value": "Footer Alignment",
                     "desc": "Choose the alignment of the footer."
@@ -106,6 +110,10 @@
                 "footer_custom_text": {
                     "@value": "Footer Custom Text",
                     "desc": "Edit the custom text for the footer. Use && for colors and \\n for new line."
+                },
+                "custom_alpha_footer": {
+                    "@value": "Custom Alpha Footer",
+                    "desc": "What should be displayed as the footer of the scoreboard when on the Alpha Server. Use && for colors and \\n for new line."
                 },
                 "scale": {
                     "@value": "Scale",
@@ -241,6 +249,10 @@
                 "date_format": {
                     "@value": "Date Format",
                     "desc": "Choose the format of the date in the scoreboard."
+                },
+                "date_in_lobby_code": {
+                    "@value": "Date in Lobby Code",
+                    "desc": "Show the current date in front of the server name, like Hypixel does."
                 },
                 "bits_available": {
                     "@value": "Bits Available",

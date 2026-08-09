@@ -158,6 +158,11 @@ object CustomizationConfig : CategoryKt("customization") {
         this.shPath = "display.titleAndFooter.useCustomTitle"
     }
 
+    val useCustomTitleOutsideSkyBlock by boolean(false) {
+        this.translation = "$translationPath.use_custom_title_outside_skyblock"
+        this.shPath = "display.titleAndFooter.useCustomTitleOutsideSkyBlock"
+    }
+
     val titleText by string("") {
         this.translation = "$translationPath.title_custom_text"
         this.shPath = "display.titleAndFooter.customTitle"
@@ -181,6 +186,11 @@ object CustomizationConfig : CategoryKt("customization") {
     val footerText by string("") {
         this.translation = "$translationPath.footer_custom_text"
         this.shPath = "display.titleAndFooter.customFooter"
+    }
+
+    val alphaFooterText by string("") {
+        this.translation = "$translationPath.custom_alpha_footer"
+        this.shPath = "display.titleAndFooter.customAlphaFooter"
     }
 
     init {

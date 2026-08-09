@@ -4,12 +4,14 @@ import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 
 @ScoreboardElement
 object TitleElement : Element() {
     override fun getDisplay() = when {
         CustomizationConfig.useHypixelTitle -> McClient.scoreboardTitle?.align(CustomizationConfig.titleAlignment)
+        !LocationAPI.isOnSkyBlock && !CustomizationConfig.useCustomTitleOutsideSkyBlock -> McClient.scoreboardTitle?.align(CustomizationConfig.titleAlignment)
         CustomizationConfig.titleUseCustomText -> CustomizationConfig.titleText.formatTitle().map { it align CustomizationConfig.titleAlignment }
         else -> "§e§lSkyBlock" align CustomizationConfig.titleAlignment
     }

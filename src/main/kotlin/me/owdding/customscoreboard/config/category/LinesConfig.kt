@@ -26,6 +26,11 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shMapper = { valueOfOrNull<DateFormat>(it.asString) ?: DateFormat.US_SLASH_MMDDYYYY }
     }
 
+    val dateInLobbyCode by boolean(true) {
+        this.translation = "$translationPath.date_in_lobby_code"
+        this.shPath = "display.dateInLobbyCode"
+    }
+
     val time24hFormat by boolean(false) {
         this.translation = "$translationPath.time_24h_format"
         this.shPath = "display.skyblockTime24hFormat"
