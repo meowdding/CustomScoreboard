@@ -76,12 +76,12 @@ object CustomizationConfig : CategoryKt("customization") {
             shMapper = { json: JsonElement ->
                 json.asJsonArray.mapNotNull {
                     when (val string = it.asString) {
-                        "EMPTY_LINE" -> SeparatorElement.id
                         "COOKIE" -> CookieBuffElement.id
                         "SKYBLOCK_XP" -> SkyblockLevelElement.id
                         "PLAYER_AMOUNT" -> PlayerCountElement.id
                         "LOBBY_CODE" -> LobbyElement.id
                         "LOCATION" -> AreaElement.id
+                        else if string.startsWith("EMPTY_LINE") -> SeparatorElement.id
                         else -> string
                     }
                 }
@@ -97,7 +97,11 @@ object CustomizationConfig : CategoryKt("customization") {
         this.shMapper = { json: JsonElement ->
             json.asJsonArray.mapNotNull { line ->
                 val name = line.asString
-                val changes = mapOf("SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART, "MINING_EVENTS" to ScoreboardEventEntry.MINING)
+                val changes = mapOf(
+                    "SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART,
+                    "MINING_EVENTS" to ScoreboardEventEntry.MINING,
+                    "GALATEA" to ScoreboardEventEntry.FORAGING,
+                )
                 changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
             }
         }

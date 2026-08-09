@@ -53,6 +53,9 @@ object LinesConfig : CategoryKt("line_modification") {
     val numberDisplayFormat by enum("number_display_format", CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER) {
         this.translation = "$translationPath.number_display_format"
         this.shPath = "display.numberDisplayFormat"
+        this.shMapper = {
+            valueOfOrNull<CustomScoreboardRenderer.NumberDisplayFormat>(it.asString) ?: CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER
+        }
     }
 
     val showCurrencyGain by boolean(true) {

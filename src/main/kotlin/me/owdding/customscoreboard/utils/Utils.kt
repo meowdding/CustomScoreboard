@@ -6,6 +6,7 @@ import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.ktmodules.AutoCollect
 import net.minecraft.network.chat.Component
+import net.minecraft.util.ARGB
 import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
 import tech.thatgravyboat.skyblockapi.utils.extentions.until
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
@@ -71,8 +72,8 @@ object Utils {
     @Suppress("UNCHECKED_CAST", "NOTHING_TO_INLINE")
     inline fun <T> Any?.unsafeCast(): T = this as T
 
-    fun String.moulConfigColor(): Int = split(":").map { part -> part.toInt() }.let {
-        (it[1] shl 24) or (it[2] shl 16) or (it[3] shl 8) or it[4]
+    fun String.moulConfigColor(): Int = split(":").map(String::toInt).let {
+        ARGB.color(it[4], it[1], it[2], it[3])
     }
 
     fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.observable(onChange: (T, T) -> Unit) = ObservableEntry(this, onChange)
