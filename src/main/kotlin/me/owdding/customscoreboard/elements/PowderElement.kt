@@ -14,7 +14,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object PowderElement : Element() {
-    private val foragingIsland = setOf(SkyBlockIsland.GALATEA)
+    private val foragingIsland = setOf(SkyBlockIsland.GALATEA, SkyBlockIsland.TORRHUS_CANYON)
     private val miningIslands = setOf(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT)
     private val allIslands = foragingIsland + miningIslands
 
