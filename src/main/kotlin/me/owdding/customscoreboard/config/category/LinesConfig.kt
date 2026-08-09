@@ -84,6 +84,12 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "$translationPath.hide_purse_dungeons"
     }
 
+    // Used for storing if the profile is actually a coop based on the bank
+    //  Solo Coops only have one bank available
+    var isActuallyCoopProfile by boolean(false) {
+        this.condition = { false }
+    }
+
     init {
         separator { this.title = "$translationPath.sections.progression" }
     }

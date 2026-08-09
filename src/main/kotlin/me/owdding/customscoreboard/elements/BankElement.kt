@@ -1,18 +1,26 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.Utils.hasCookieActive
+import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.shorten
+import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.base.predicates.InventoryTitle
+import tech.thatgravyboat.skyblockapi.api.events.screen.ContainerInitializedEvent
+import tech.thatgravyboat.skyblockapi.api.events.screen.InventoryChangeEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
+import tech.thatgravyboat.skyblockapi.utils.extentions.cleanName
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
+@Module
 @ScoreboardElement
 object BankElement : NumberTrackingElement(TextColor.GOLD) {
 
@@ -21,15 +29,13 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
         else super.format(number)
     }
 
-    fun line() = when (ProfileAPI.coop) {
-        true -> when (LinesConfig.coopBankLayout) {
+    fun line() = if (ProfileAPI.coop && LinesConfig.isActuallyCoopProfile) {
+        when (LinesConfig.coopBankLayout) {
             CoopBankLayout.PERSONAL_COOP -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
             CoopBankLayout.COOP_PERSONAL -> "${format(CurrencyAPI.coopBank)}§7/§6${format(CurrencyAPI.personalBank)}"
             CoopBankLayout.COMBINED -> format(CurrencyAPI.personalBank + CurrencyAPI.coopBank)
         }
-
-        false -> format(CurrencyAPI.coopBank)
-    }
+    } else format(CurrencyAPI.coopBank)
 
 
     override fun getDisplay(): Any {
@@ -57,5 +63,13 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
         COMBINED("Combined Value");
 
         override fun toString() = display
+    }
+
+    @Subscription
+    @InventoryTitle("Bank")
+    fun onContainer(event: InventoryChangeEvent) {
+        if (event.slot.index != 15) return
+        LinesConfig.isActuallyCoopProfile = event.item.cleanName == "Personal Bank Account"
+        CustomScoreboardMod.info("Determined Profile as actually coop: ${LinesConfig.isActuallyCoopProfile}")
     }
 }
