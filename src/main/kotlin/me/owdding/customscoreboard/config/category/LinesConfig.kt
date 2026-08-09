@@ -177,6 +177,7 @@ object LinesConfig : CategoryKt("line_modification") {
 
     val mayorPerksDisplay by enum(MayorElement.PerkDisplay.ALL) {
         this.translation = "$translationPath.mayor_perks"
+        this.shPath = "display.mayor.showMayorPerks"
         this.shMapper = { if (it.asBoolean) MayorElement.PerkDisplay.ALL else MayorElement.PerkDisplay.OFF }
     }
 
