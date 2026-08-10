@@ -75,7 +75,7 @@ object Utils {
     inline fun <T> Any?.unsafeCast(): T = this as T
 
     fun String.moulConfigColor(): Int = split(":").map(String::toInt).let {
-        ARGB.color(it[4], it[1], it[2], it[3])
+        ARGB.color(it[1], it[2], it[3], it[4])
     }
 
     fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.observable(onChange: (T, T) -> Unit) = ObservableEntry(this, onChange)
