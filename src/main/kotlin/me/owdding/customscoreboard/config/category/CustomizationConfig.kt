@@ -171,7 +171,7 @@ object CustomizationConfig : CategoryKt("customization") {
     val titleText by strings("") {
         this.translation = "$translationPath.title_custom_text"
         this.shPath = "display.titleAndFooter.customTitle"
-        this.shMapper = { JsonArray().apply { it.asString.lines().map(::convertLegacyToPlaceholder).forEach(::add) } }
+        this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
     }
 
     init {
@@ -192,12 +192,13 @@ object CustomizationConfig : CategoryKt("customization") {
     val footerText by strings("") {
         this.translation = "$translationPath.footer_custom_text"
         this.shPath = "display.titleAndFooter.customFooter"
-        this.shMapper = { JsonArray().apply { it.asString.lines().map(::convertLegacyToPlaceholder).forEach(::add) } }
+        this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
     }
 
     val alphaFooterText by strings("") {
         this.translation = "$translationPath.custom_alpha_footer"
         this.shPath = "display.titleAndFooter.customAlphaFooter"
+        this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
     }
 
     init {
