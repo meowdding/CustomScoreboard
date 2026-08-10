@@ -46,15 +46,17 @@ data class ScoreboardLine(
                 }
             }
 
-            actions.hover?.let {
-                button.withTooltip(Text.multiline(it))
-                button.setTooltipDelay(Duration.of(-1, ChronoUnit.SECONDS))
-            }
+            if (Config.actions) {
+                actions.hover?.let {
+                    button.withTooltip(Text.multiline(it))
+                    button.setTooltipDelay(Duration.of(-1, ChronoUnit.SECONDS))
+                }
 
-            button.withCallback {
-                actions.command?.let { McClient.sendCommand(it.removePrefix("/")) }
-                actions.link?.let { Util.getPlatform().openUri(it) }
-                actions.click?.invoke()
+                button.withCallback {
+                    actions.command?.let { McClient.sendCommand(it.removePrefix("/")) }
+                    actions.link?.let { Util.getPlatform().openUri(it) }
+                    actions.click?.invoke()
+                }
             }
         }
     }
