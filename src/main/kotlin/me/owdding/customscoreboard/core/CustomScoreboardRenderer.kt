@@ -96,7 +96,7 @@ object CustomScoreboardRenderer {
     }
 
     fun isAllowedScreen() = when (McScreen.self) {
-        is ChatScreen, is ContainerScreen, is InventoryScreen, null -> true
+        is ChatScreen, null -> true
         else -> false
     }
 
