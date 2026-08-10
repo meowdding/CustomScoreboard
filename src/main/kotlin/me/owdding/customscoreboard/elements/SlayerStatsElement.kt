@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
+import me.owdding.customscoreboard.elements.SlayerElement.isInSlayerRegion
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerAPI
@@ -20,6 +21,8 @@ object SlayerStatsElement : Element() {
         add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Xp", data.value.xp.format(), "§c")}")
         add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Meter", data.value.meterXp.format(), "§d")}")
     }
+
+    override fun showWhen(): Boolean = !LinesConfig.hideSlayerOutsideSlayerAreas || isInSlayerRegion()
 
     override val configLine: String = "Slayer Stats"
     override val id = "SLAYER_STATS"

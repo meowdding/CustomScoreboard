@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
@@ -12,6 +13,9 @@ import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 
 @Module
 @ScoreboardElement
@@ -21,6 +25,27 @@ object SlayerElement : Element() {
     override val configLine = "Slayer"
     override val id = "SLAYER"
 
+    override fun showWhen(): Boolean = !LinesConfig.hideSlayerOutsideSlayerAreas || isInSlayerRegion()
+
+    private val slayerAreas = setOf(
+        // Rev
+        SkyBlockAreas.GRAVEYARD, SkyBlockArea("Crypts"),
+        // Spider
+        SkyBlockAreas.BURNING_DESERT,
+        // Blaze
+        SkyBlockAreas.SMOLDERING_TOMB, SkyBlockAreas.THE_WASTELAND,
+        SkyBlockArea("Stronghold"),
+        // Sven
+        SkyBlockAreas.RUINS, SkyBlockAreas.SPIRIT_CAVE,
+        SkyBlockAreas.SOUL_CAVE, SkyBlockAreas.HOWLING_CAVE,
+        // Vampire
+        SkyBlockAreas.STILLGORE_CHATEAU, SkyBlockAreas.PHOTON_PATHWAY,
+        SkyBlockAreas.OUBLIETTE, SkyBlockAreas.FAIRYLOSOPHER_TOWER,
+    )
+
+    private val slayerIslands = setOf(SkyBlockIsland.THE_END, SkyBlockIsland.SPIDERS_DEN)
+
+    fun isInSlayerRegion() = SkyBlockIsland.inAnyIsland(slayerIslands) || SkyBlockArea.inAnyArea(slayerAreas)
 
     private val slayerQuestRegex by RemoteStrings.resolve().componentRegex("Slayer(?::| Quest)")
 

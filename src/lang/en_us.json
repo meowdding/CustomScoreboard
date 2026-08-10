@@ -260,6 +260,18 @@
                     "@value": "Show Active Elements Only",
                     "desc": "Hides Elements where the currency of the line is zero (like having no Purse) or other lines like the Booster Cookie Line if no cookie is active."
                 },
+                "slayer_outside_slayerareas": {
+                    "@value": "Hide Slayer Outside Slayer Areas",
+                    "desc": [
+                        "Hides the two Slayer Elements when outside slayer specific areas:",
+                        "- Rev: Graveyard, Crypts",
+                        "- Tarantula: Spiders Den Island, Burning Desert",
+                        "- Sven: Ruins, Spirit/Howling/Soul Cave",
+                        "- Voidgloom: The End Island",
+                        "- Blaze: Stronghold, The Wasteland, Smoldering Tomb",
+                        "- Vampire: Stillgore Chateau, Photon Pathway, Oubliette"
+                    ]
+                },
                 "date_format": {
                     "@value": "Date Format",
                     "desc": "Choose the format of the date in the scoreboard."

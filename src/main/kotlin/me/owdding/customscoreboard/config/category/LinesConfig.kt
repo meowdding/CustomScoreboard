@@ -211,6 +211,11 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shPath = "informationFiltering.hideEmptyLines"
     }
 
+    val hideSlayerOutsideSlayerAreas by boolean(false) {
+        this.translation = "$translationPath.slayer_outside_slayerareas"
+        this.shPath = "informationFiltering.hideIrrelevantLines"
+    }
+
     val condenseConsecutiveSeparators by boolean("consecutive_separator", true) {
         this.translation = "$translationPath.consecutive_separator"
         this.shPath = "informationFiltering.hideConsecutiveEmptyLines"
