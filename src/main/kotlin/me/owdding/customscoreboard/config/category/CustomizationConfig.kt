@@ -77,7 +77,7 @@ object CustomizationConfig : CategoryKt("customization") {
             this.renderer = CUSTOM_DRAGGABLE_RENDERER
             this.shPath = "scoreboardEntries"
             shMapper = { json: JsonElement ->
-                json.asJsonArray.mapNotNull {
+                val list = json.asJsonArray.mapNotNull {
                     when (val string = it.asString) {
                         "COOKIE" -> CookieBuffElement.id
                         "SKYBLOCK_XP" -> SkyblockLevelElement.id
@@ -89,7 +89,14 @@ object CustomizationConfig : CategoryKt("customization") {
                         else if string.startsWith("EMPTY_LINE") -> SeparatorElement.id
                         else -> string
                     }
+                }.toMutableList()
+
+                val copperIndex = list.indexOf(CopperElement.id)
+                if (copperIndex != -1 && !list.contains(KernelsElement.id)) {
+                    list.add(copperIndex + 1, KernelsElement.id)
                 }
+
+                list
             }
         },
         { it.toConfigStrings() },
