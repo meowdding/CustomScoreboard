@@ -3,40 +3,61 @@ package me.owdding.customscoreboard.elements
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.utils.KnownMods
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.party.PartyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object PartyElement : Element() {
     override fun getDisplay() = buildList {
         val list = PartyAPI.members.distinctBy { it.name }
-        add("§9Party (${list.size})") {
+
+        add(Text.of("Party (${list.size})", TextColor.BLUE)) {
             this.hover = listOf("§7Click to view party info")
             this.command = "/party list"
         }
+
         if (LinesConfig.showPartyLeader) {
-            PartyAPI.leader?.let {
-                addMember("§7- §f${it.name ?: "§cUnknown"} §e♚", it.name)
+            PartyAPI.leader?.let { leader ->
+                val (name, color) = leader.name?.to(TextColor.WHITE) ?: ("Unknown Name" to TextColor.RED)
+                val leaderLine = Text.of {
+                    append("- ", TextColor.GRAY)
+                    append(name, color)
+                    append(" ♚", TextColor.YELLOW)
+                }
+                addMember(leaderLine, name)
             }
         }
 
         list
             .take(LinesConfig.maxPartyMembers)
-            .filter { LinesConfig.showPartyLeader && it != PartyAPI.leader && it.name != null }
-            .forEach {
-                addMember("§7- §f${it.name}", it.name)
+            .filter { it.name != null && (!LinesConfig.showPartyLeader || it != PartyAPI.leader) }
+            .forEach { member ->
+                val (name, color) = member.name?.to(TextColor.WHITE) ?: ("Unknown Name" to TextColor.RED)
+                val memberLine = Text.of {
+                    append("- ", TextColor.GRAY)
+                    append(name, color)
+                }
+                addMember(memberLine, name)
             }
 
         if (list.any { it.name == null }) {
-            add("§fRun §7/pl §fto fix your party") {
+            val fixLine = Text.of("Run ") {
+                append("/pl", TextColor.GRAY)
+                append(" to fix your party")
+            }
+            add(fixLine) {
                 this.hover = listOf("§7Click to run the /pl")
                 this.command = "/pl"
             }
         }
     }
 
-    private fun MutableList<Any>.addMember(line: String, name: String?) {
+    private fun MutableList<Any>.addMember(line: Component, name: String?) {
         if ((KnownMods.SKYBLOCK_PV.installed || KnownMods.SKYBLOCKER.installed)) {
             add(line) {
                 this.hover = listOf("§7Click to view ${name}'s profile")
