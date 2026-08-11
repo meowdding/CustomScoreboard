@@ -1,6 +1,5 @@
 package me.owdding.customscoreboard.config.category
 
-import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.compat.SkyHanniOption.shMapper
@@ -97,7 +96,7 @@ object CustomizationConfig : CategoryKt("customization") {
         { it.asList().toBaseElements() },
     ).updateIslandCache()
 
-    val events by draggable(*ScoreboardEventEntry.entries.toTypedArray()) {
+    val events by draggable(*ScoreboardEventEntry.entries.filter { it != ScoreboardEventEntry.STARTING_SOON_TABLIST }.toTypedArray()) {
         this.translation = "$translationPath.events"
         this.shPath = "display.events.eventEntries"
         this.shMapper = { json: JsonElement ->
@@ -107,6 +106,8 @@ object CustomizationConfig : CategoryKt("customization") {
                     "SERVER_CLOSE" to ScoreboardEventEntry.SERVER_RESTART,
                     "MINING_EVENTS" to ScoreboardEventEntry.MINING,
                     "GALATEA" to ScoreboardEventEntry.FORAGING,
+                    "ACTIVE_TABLIST_EVENTS" to ScoreboardEventEntry.ACTIVE_TABLIST,
+                    "STARTING_SOON_TABLIST_EVENTS" to ScoreboardEventEntry.STARTING_SOON_TABLIST,
                 )
                 changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
             }
