@@ -42,7 +42,7 @@ object MiningEvent : Event() {
     private val mineshaftFortunateFreezingRegex by remote.componentRegex("Event Bonus: \\+\\d+.")
     private val fossilDustRegex by remote.componentRegex("Fossil Dust: [\\d.,]+.*")
     private val compassRegex by remote.componentRegex("Wind Compass")
-    private val compassArrowRegex by remote.componentRegex("\\s*[⋖⋗≈]+\\s*[⋖⋗≈]*\\s*")
+    private val compassArrowRegex by remote.componentRegex("\\s*[⋖⋗\uE060\uE061≈]+\\s*[⋖⋗\uE060\uE061≈]*\\s*")
 
     private val patterns = listOf(
         eventRegex, eventZoneRegex, raffleUselessRegex, raffleTicketsRegex, rafflePoolRegex, donUseless,
