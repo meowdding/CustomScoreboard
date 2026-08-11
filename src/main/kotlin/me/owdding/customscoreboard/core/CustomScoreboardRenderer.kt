@@ -19,11 +19,8 @@ import me.owdding.lib.platform.screens.MouseButtonInfo
 import me.owdding.lib.platform.screens.mouseClicked
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
-import net.minecraft.client.gui.screens.inventory.ContainerScreen
-import net.minecraft.client.gui.screens.inventory.InventoryScreen
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
-import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.HudElement
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudElementEvent
@@ -33,8 +30,12 @@ import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
+import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
+import tech.thatgravyboat.skyblockapi.utils.extentions.isInPast
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Instant
 
 @Module
 object CustomScoreboardRenderer {
@@ -42,6 +43,7 @@ object CustomScoreboardRenderer {
     var lines: List<ScoreboardLine> = emptyList()
         private set
     private var display: LayoutElement? = null
+    private var nextPlannedUpdate = Instant.DISTANT_FUTURE
     private var currentIslandElements = emptyList<Element>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
@@ -52,13 +54,22 @@ object CustomScoreboardRenderer {
     private val screenWidth get() = McClient.window.guiScaledWidth
     private val screenHeight get() = McClient.window.guiScaledHeight
 
+    fun tryUpdate(force: Boolean = false) {
+        if (!isEnabled()) return
+        if (force || nextPlannedUpdate.isInPast()) {
+            updateDisplay()
+            nextPlannedUpdate = currentInstant() + 250.milliseconds
+        }
+    }
 
     @Subscription(event = [TickEvent::class])
-    @TimePassed("10t")
     fun onTick() {
-        if (!isEnabled()) return
+        tryUpdate(Config.updateEveryTick)
+    }
 
-        updateDisplay()
+    @Subscription(event = [TickEvent::class])
+    fun onScoreboardUpdate() {
+        tryUpdate(true)
     }
 
     @Subscription

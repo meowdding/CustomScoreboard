@@ -45,6 +45,14 @@
                         "If enabled, it will use that servers lines without adding any other special lines."
                     ]
                 },
+                "update_every_tick": {
+                    "@value": "Update Every Tick",
+                    "desc": [
+                        "Makes the Scoreboard Update every Game Tick (50ms).",
+                        "If not it updates every 250ms",
+                        "<red>Enabling this can greatly reduce your FPS!</red>"
+                    ]
+                },
                 "update_notification": {
                     "@value": "Update Notification",
                     "desc": "Enable the update notification."

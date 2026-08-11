@@ -220,6 +220,10 @@ object Config : ConfigKt("customscoreboard/config") {
         this.translation = "$translationPath.outside_skyblock"
     }
 
+    val updateEveryTick by boolean(false) {
+        this.translation = "$translationPath.update_every_tick"
+    }
+
     val updateNotification by boolean("update_notification", true) {
         this.translation = "$translationPath.update_notification"
     }
