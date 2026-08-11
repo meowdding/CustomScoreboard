@@ -380,6 +380,10 @@
                     "@value": "Show Hypixel's Powder/Whisper Line",
                     "desc": "Show Hypixel's Powder/Whisper Line on the scoreboard."
                 },
+                "better_together_title": {
+                    "@value": "Add Better Together Title",
+                    "desc": "Adds a title to the Better Together event, this is not in default Hypixel & SkyHanni Users might miss this."
+                },
                 "pet_prefix": {
                     "@value": "Add Pet Prefix/Suffix",
                     "desc": "Add \"Pet:\" as a prefix/suffix to the pet line."

@@ -9,6 +9,8 @@ import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.lib.displays.Alignment
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @AutoElement
 object MiningEvent : Event() {
@@ -52,9 +54,16 @@ object MiningEvent : Event() {
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {
             val patterns = powderRegex.takeIf { LinesConfig.showHypixelPowder }?.let { patterns + it } ?: patterns
-            event.newComponents.filterTo(this) { component ->
-                patterns.any { it.matches(component) }
+
+            event.newComponents.forEach { component ->
+                if (patterns.any { it.matches(component) }) {
+                    if (LinesConfig.addBetterTogetherTitle && nearbyPlayers.matches(component)) {
+                        add(Text.of("Better Together", TextColor.PINK))
+                    }
+                    add(component)
+                }
             }
+
             event.newComponents.find(compassArrowRegex::matches)?.let {
                 add(it align Alignment.CENTER)
             }

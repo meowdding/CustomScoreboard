@@ -133,6 +133,12 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "$translationPath.hypixel_powder"
     }
 
+    val addBetterTogetherTitle by boolean(false) {
+        this.translation = "$translationPath.better_together_title"
+        // This is a Fake Line added in sh and if youre coming from that youre used to it
+        this.shPath = "enabled"
+    }
+
     init {
         separator { this.title = "$translationPath.sections.social" }
     }
