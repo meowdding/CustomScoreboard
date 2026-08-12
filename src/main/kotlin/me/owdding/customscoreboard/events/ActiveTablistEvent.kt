@@ -30,7 +30,7 @@ object ActiveTablistEvent : Event() {
 
         return buildList {
             add(nameComponent) {
-                hover = listOf(" 7Click to open the calendar.")
+                hover = listOf("§7Click to open the calendar.")
                 command = "/calendar"
             }
             add(
@@ -38,7 +38,7 @@ object ActiveTablistEvent : Event() {
                     append(time, TextColor.YELLOW)
                 },
             ) {
-                hover = listOf(" 7Click to open the calendar.")
+                hover = listOf("§7Click to open the calendar.")
                 command = "/calendar"
             }
         }
