@@ -19,7 +19,9 @@ import me.owdding.customscoreboard.elements.SowdustElement
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.Utils.convertLegacyToPlaceholder
 import me.owdding.customscoreboard.utils.Utils.updateDisplay
+import net.minecraft.util.ARGB
 import java.util.function.UnaryOperator
+import kotlin.math.pow
 
 object Config : ConfigKt("customscoreboard/config") {
 
@@ -169,6 +171,13 @@ object Config : ConfigKt("customscoreboard/config") {
                 customPage.get("alphaFooterText")?.asString?.let { oldFooter ->
                     customPage.add("alphaFooterText", JsonArray().apply { oldFooter.lines().map(::convertLegacyToPlaceholder).forEach(::add) })
                 }
+            }
+            json
+        },
+        10 to UnaryOperator { json ->
+            json.getAsJsonObject("Background").apply {
+                val color = get("backgroundColor").asInt
+                addProperty("backgroundColor", ARGB.color(ARGB.alpha(color).toFloat().pow(2), color))
             }
             json
         },

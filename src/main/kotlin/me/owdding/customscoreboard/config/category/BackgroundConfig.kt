@@ -32,7 +32,7 @@ object BackgroundConfig : CategoryKt("Background") {
         this.shPath = "background.enabled"
     }
 
-    val backgroundColor by color("color", 0xA0000000.toInt()) {
+    val backgroundColor by color("color", 0x55000000) {
         this.translation = "customscoreboard.config.background.color"
         this.allowAlpha = true
         this.shPath = "background.color"

@@ -8,7 +8,7 @@ fabric-api = "0.152.0+26.2"
 resourceful-lib = "5.0.2"
 resourceful-config = "5.0.0"
 resourceful-config-kotlin = "4.0.0-beta.1"
-olympus = "1.9.0"
+olympus = "1.9.3"
 placeholders = "3.1.0-beta.1+26.2"
 
 scoreboard-overhaul = "1.4.4-mc26.2"
