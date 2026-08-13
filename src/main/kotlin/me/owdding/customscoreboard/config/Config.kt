@@ -176,8 +176,8 @@ object Config : ConfigKt("customscoreboard/config") {
         },
         10 to UnaryOperator { json ->
             json.getAsJsonObject("Background").apply {
-                val color = get("backgroundColor").asInt
-                addProperty("backgroundColor", ARGB.color(ARGB.alpha(color).toFloat().pow(2), color))
+                val color = get("color").asInt
+                addProperty("color", ARGB.color(ARGB.alphaFloat(color).pow(2), color))
             }
             json
         },
