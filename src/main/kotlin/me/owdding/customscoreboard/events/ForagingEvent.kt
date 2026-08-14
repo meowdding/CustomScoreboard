@@ -24,7 +24,7 @@ object ForagingEvent : Event() {
     private val whisperRegex by remote.componentRegex(".*Whispers: [\\w,.]+.*")
     private val hotfRegex by remote.componentRegex("\\s*HOTF: [\\w,.]+.*")
     private val contestRegex by remote.componentRegex("(?:Agatha|Miria)'s Contest.*")
-    private val capturedMobsRegex by remote.componentRegex("Captured Mobs: [\\d,m]+")
+    private val capturedMobsRegex by remote.componentRegex("Captured Mobs: [\\d,.]+")
 
     private val formattedLines = mutableListOf<Component>()
 
