@@ -324,6 +324,10 @@
                     "@value": "All Events",
                     "desc": "Show all events instead of the first one. Uses the \"Events Priority\" list."
                 },
+                "show_event_prefix" : {
+                    "@value": "Show Event Prefix",
+                    "desc": "Whether to show the \"§eEvent: \"§r prefix before an event name"
+                },
                 "hypixel_title": {
                     "@value": "Use Hypixel Title",
                     "desc": "Use Hypixel's Scoreboard Title. §cWill override the Custom Title if enabled."
