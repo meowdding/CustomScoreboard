@@ -260,6 +260,10 @@
                     "@value": "Number Display Format",
                     "desc": "Choose the format numbers with their prefix are displayed in the scoreboard."
                 },
+                "forced_number_format_locale": {
+                    "@value": "Number Format Override",
+                    "desc": "Forces the number format to use the en_US locale."
+                },
                 "show_currency_gain": {
                     "@value": "Show Currency Gain",
                     "desc": "Show the gain of currencies (like Purse, Motes, etc.) on the scoreboard."

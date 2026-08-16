@@ -67,6 +67,10 @@ object LinesConfig : CategoryKt("line_modification") {
         }
     }
 
+    val forcedLocale by boolean (false) {
+        this.translation = "$translationPath.forced_number_format_locale"
+    }
+
     val showCurrencyGain by boolean(true) {
         this.translation = "$translationPath.show_currency_gain"
         this.shPath = "display.showNumberDifference"
