@@ -16,10 +16,11 @@ enum class NumberFormatType(val format: String) {
 
 object NumberUtils {
 
-    fun Number.format() = when (LinesConfig.numberFormat) {
-        NumberFormatType.LONG -> if (LinesConfig.forcedLocale) NumberFormat.getNumberInstance(Locale.US).format(this)
-                                 else toDouble().toFormattedString() // Formats to Locale.US if LinesConfig.forcedLocale
+    fun Number.formatLong() = if (LinesConfig.forcedLocale) NumberFormat.getNumberInstance(Locale.US).format(this)
+    else toDouble().toFormattedString() // Formats to Locale.US if LinesConfig.forcedLocale
 
+    fun Number.format() = when (LinesConfig.numberFormat) {
+        NumberFormatType.LONG -> formatLong()
         NumberFormatType.SHORT -> shorten()
     }
 }
