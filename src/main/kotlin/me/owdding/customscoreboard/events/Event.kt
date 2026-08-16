@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.events
 
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.ScoreboardLine
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.elements.Element
@@ -10,6 +11,7 @@ abstract class Event : Element() {
     override val id = "USELESS"
 
     override fun getLines(): List<ScoreboardLine> = super.getLines().map { line ->
-        (line.component.removePrefix("Event: ") align line.alignment).copy(actions = line.actions)
+        if (LinesConfig.showEventPrefix) line
+        else (line.component.removePrefix("Event: ") align line.alignment).copy(actions = line.actions)
     }
 }
