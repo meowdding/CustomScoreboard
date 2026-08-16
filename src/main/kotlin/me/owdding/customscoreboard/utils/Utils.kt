@@ -20,8 +20,6 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 object Utils {
-    fun hasCookieActive() = EffectsAPI.boosterCookieExpireTime.until() > 1.seconds
-
     fun Duration.toFormatYears(maxUnits: Int = 2): String {
         val years = inWholeDays / 365
         val days = inWholeDays % 365
