@@ -6,15 +6,14 @@ import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.shorten
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.InventoryTitle
-import tech.thatgravyboat.skyblockapi.api.events.screen.ContainerInitializedEvent
 import tech.thatgravyboat.skyblockapi.api.events.screen.InventoryChangeEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.utils.extentions.cleanName
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -43,7 +42,7 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
         val line = Text.join(line(), temporaryChangeDisplay)
 
         val element = CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
-        return if (!hasCookieActive()) element else element.withActions {
+        return if (!EffectsAPI.isBoosterCookieActive) element else element.withActions {
             hover = listOf("§7Click to open the bank")
             command = "/bank"
         }

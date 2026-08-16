@@ -5,8 +5,8 @@ import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.TextUtils.toComponent
-import me.owdding.customscoreboard.utils.Utils.hasCookieActive
 import net.minecraft.world.item.Items
+import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
 import tech.thatgravyboat.skyblockapi.api.profile.quiver.QuiverAPI
 import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId
 import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId.Companion.getSkyBlockId
@@ -48,7 +48,7 @@ object QuiverElement : Element() {
         }.toComponent()
 
         val element = CustomScoreboardRenderer.formatNumberDisplayDisplay(type, amountLine, color)
-        return if (!hasCookieActive()) element else element.withActions {
+        return if (!EffectsAPI.isBoosterCookieActive) element else element.withActions {
             hover = listOf("§7Click to open the quiver")
             command = "/quiver"
         }
