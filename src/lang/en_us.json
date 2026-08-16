@@ -326,7 +326,7 @@
                 },
                 "show_event_prefix" : {
                     "@value": "Show Event Prefix",
-                    "desc": "Whether to show the \"§eEvent: \"§r prefix before an event name"
+                    "desc": "Whether to show the \"<yellow>Event: </yellow>\" prefix before an event name"
                 },
                 "hypixel_title": {
                     "@value": "Use Hypixel Title",
