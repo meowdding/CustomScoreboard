@@ -36,6 +36,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shPath = "display.skyblockTime24hFormat"
     }
 
+    val includeMinutes by boolean(true) {
+        this.translation = "$translationPath.include_minutes"
+    }
+
     val smoothTime by boolean(true) {
         this.translation = "$translationPath.smooth_time"
         this.shPath = "display.skyblockTimeExactMinutes"
@@ -61,6 +65,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shMapper = {
             valueOfOrNull<CustomScoreboardRenderer.NumberDisplayFormat>(it.asString) ?: CustomScoreboardRenderer.NumberDisplayFormat.TEXT_COLOR_NUMBER
         }
+    }
+
+    val forcedLocale by boolean (false) {
+        this.translation = "$translationPath.forced_number_format_locale"
     }
 
     val showCurrencyGain by boolean(true) {
@@ -206,6 +214,10 @@ object LinesConfig : CategoryKt("line_modification") {
     val showAllActiveEvents by boolean("all_events", true) {
         this.translation = "$translationPath.all_events"
         this.shPath = "display.events.showAllActiveEvents"
+    }
+
+    val showEventPrefix by boolean (true) {
+        this.translation = "$translationPath.show_event_prefix"
     }
 
     init {
