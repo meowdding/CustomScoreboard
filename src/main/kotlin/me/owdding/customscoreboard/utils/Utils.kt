@@ -22,20 +22,23 @@ import kotlin.time.Duration.Companion.seconds
 object Utils {
     fun hasCookieActive() = EffectsAPI.boosterCookieExpireTime.until() > 1.seconds
 
-    fun Duration.toFormatYears() = buildString {
+    fun Duration.toFormatYears(maxUnits: Int = 2): String {
         val years = inWholeDays / 365
         val days = inWholeDays % 365
         val hours = inWholeHours % 24
         val minutes = inWholeMinutes % 60
         val seconds = inWholeSeconds % 60
 
-        if (years > 0) append("${years}y ")
-        if (days > 0) append("${days}d ")
-        if (hours > 0) append("${hours}h ")
-        if (minutes > 0) append("${minutes}m ")
-        if (years <= 0 && days <= 0 && seconds > 0) append("${seconds}s") // Only show seconds if there is no days or years
-        if (isEmpty()) append("0s")
-    }.trim()
+        val parts = buildList {
+            if (years > 0) add("${years}y")
+            if (days > 0) add("${days}d")
+            if (hours > 0) add("${hours}h")
+            if (minutes > 0) add("${minutes}m")
+            if (years <= 0 && days <= 0 && seconds > 0) add("${seconds}s")
+        }
+
+        return if (parts.isEmpty()) "0s" else parts.take(maxUnits).joinToString(" ")
+    }
 
     fun <T> Collection<T>.nextAfter(element: T, skip: Int = 1): T? {
         val index = indexOfFirst { if (it is Component && element is String) it.stripped == element else it == element }
