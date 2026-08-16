@@ -14,7 +14,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
 @AutoElement
 object ActiveTablistEvent : Event() {
-    private val blockedEvents = listOf<String>()//listOf("Spooky Festival", "Carnival", "th SkyBlock Anniversary", "New Year Celebration")
+    private val blockedEvents = listOf("Spooky Festival", "Carnival", "th SkyBlock Anniversary", "New Year Celebration")
     private val endsInRegex by RemoteStrings.resolve().regex("\\s*Ends In: (?<time>.*)")
 
     override fun getDisplay(): List<Any>? {
