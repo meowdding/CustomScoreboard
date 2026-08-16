@@ -5,7 +5,8 @@ import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedName
 enum class HorizontalAlignment {
     LEFT,
     CENTER,
-    RIGHT;
+    RIGHT,
+    FREE_MOVE;
 
     private val formattedName = toFormattedName()
     override fun toString() = formattedName

@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.core
 
+import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.ModCompat
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.category.BackgroundConfig
@@ -14,6 +15,11 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import me.owdding.lib.overlays.EditableProperty
+import me.owdding.lib.overlays.Overlay
+import me.owdding.lib.overlays.OverlayAlignment
+import me.owdding.lib.overlays.Position
+import me.owdding.lib.overlays.Rect
 import me.owdding.lib.platform.screens.MouseButtonEvent
 import me.owdding.lib.platform.screens.MouseButtonInfo
 import me.owdding.lib.platform.screens.mouseClicked
@@ -38,7 +44,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Instant
 
 @Module
-object CustomScoreboardRenderer {
+object CustomScoreboardRenderer : Overlay {
 
     var lines: List<ScoreboardLine> = emptyList()
         private set
@@ -48,8 +54,52 @@ object CustomScoreboardRenderer {
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
         private set
 
-    private var position: Pair<Int, Int> = 0 to 0
-    private var dimensions: Pair<Int, Int> = 0 to 0
+    override var bounds: Pair<Int, Int> = 0 to 0
+    override val modId: String = CustomScoreboardMod.MOD_ID
+    override val name = Text.of("CustomScoreboard")
+
+    var currentX = 0
+        private set
+    var currentY = 0
+        private set
+
+    override val position: Position = object : Position {
+        override var x: Int
+            get() = if (CustomizationConfig.horizontalAlignment == HorizontalAlignment.FREE_MOVE) CustomizationConfig.position.x else currentX
+            set(value) {
+                CustomizationConfig.position.x = value
+            }
+        override var y: Int
+            get() = if (CustomizationConfig.verticalAlignment == VerticalAlignment.FREE_MOVE) CustomizationConfig.position.y else currentY
+            set(value) {
+                CustomizationConfig.position.y = value
+            }
+        override var scale: Float
+            get() = CustomizationConfig.position.scale
+            set(value) {
+                CustomizationConfig.position.scale = value
+            }
+        override var alignment: OverlayAlignment
+            get() = CustomizationConfig.position.alignment
+            set(value) {
+                CustomizationConfig.position.alignment = value
+            }
+
+        override fun resetPosition() = CustomizationConfig.position.resetPosition()
+    }
+
+    override val alignedX: Float
+        get() = currentX.toFloat()
+
+    override val editBounds: Rect
+        get() = Rect(currentX, currentY, bounds.first, bounds.second)
+
+    override val enabled: Boolean get() = isEnabled() && !renderScoreboardOverhaul()
+    override val properties: Collection<EditableProperty>
+        get() = buildList {
+            if (CustomizationConfig.horizontalAlignment == HorizontalAlignment.FREE_MOVE) add(EditableProperty.X)
+            if (CustomizationConfig.verticalAlignment == VerticalAlignment.FREE_MOVE) add(EditableProperty.Y)
+        }
 
     private val screenWidth get() = McClient.window.guiScaledWidth
     private val screenHeight get() = McClient.window.guiScaledHeight
@@ -96,7 +146,7 @@ object CustomScoreboardRenderer {
         renderBackground(event)
 
         display.apply {
-            setPosition(position.first, position.second)
+            setPosition(currentX, currentY)
         }.visitWidgets { widget ->
             if (isAllowedScreen() && Config.actions) {
                 widget.extractRenderState(event.graphics, mouseX.toInt(), mouseY.toInt(), 0f)
@@ -116,10 +166,10 @@ object CustomScoreboardRenderer {
         val padding = BackgroundConfig.padding
         val borderOffset = if (BackgroundConfig.borderEnabled) BackgroundConfig.borderSize else 0
 
-        val x = position.first - padding - borderOffset
-        val y = position.second - padding - borderOffset
-        val width = dimensions.first + padding * 2 + borderOffset * 2
-        val height = dimensions.second + padding * 2 + borderOffset * 2
+        val x = currentX - padding - borderOffset
+        val y = currentY - padding - borderOffset
+        val width = bounds.first + padding * 2 + borderOffset * 2
+        val height = bounds.second + padding * 2 + borderOffset * 2
 
         if (BackgroundConfig.blurEnabled/*? < 26.2 {*/ /*&& !BlurredBackground.vulkanInstalled*//*?}*/) {
             BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
@@ -172,18 +222,27 @@ object CustomScoreboardRenderer {
             val height = display?.height ?: 0
             val borderSize = if (borderEnabled) this.borderSize else 0
 
-            val newX = when (CustomizationConfig.horizontalAlignment) {
+            currentX = when (CustomizationConfig.horizontalAlignment) {
                 HorizontalAlignment.LEFT -> padding + margin + borderSize
                 HorizontalAlignment.CENTER -> (screenWidth - width) / 2
                 HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin - borderSize
+                HorizontalAlignment.FREE_MOVE -> {
+                    val configX = CustomizationConfig.position.x
+                    if (configX < 0) screenWidth + configX else configX
+                }
             }
-            val newY = when (CustomizationConfig.verticalAlignment) {
+
+            currentY = when (CustomizationConfig.verticalAlignment) {
                 VerticalAlignment.TOP -> padding + margin + borderSize
                 VerticalAlignment.CENTER -> (screenHeight - height) / 2
                 VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin - borderSize
+                VerticalAlignment.FREE_MOVE -> {
+                    val configY = CustomizationConfig.position.y
+                    if (configY < 0) screenHeight + configY else configY
+                }
             }
-            position = newX to newY
-            dimensions = width to height
+
+            bounds = width to height
         }
     }
 

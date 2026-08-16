@@ -12,6 +12,7 @@ import me.owdding.customscoreboard.config.CUSTOM_DRAGGABLE_RENDERER
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.CustomDraggableList
 import me.owdding.customscoreboard.core.CustomScoreboardBackground
+import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.TabWidgetHelper
 import me.owdding.customscoreboard.elements.Element
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
@@ -19,6 +20,9 @@ import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
 import me.owdding.customscoreboard.utils.RegisterCustomScoreboardCommandEvent
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
+import me.owdding.lib.events.overlay.FinishOverlayEditingEvent
+import me.owdding.lib.overlays.EditOverlaysScreen
+import me.owdding.lib.overlays.Overlays
 import me.owdding.lib.utils.MeowddingLogger
 import me.owdding.lib.utils.MeowddingUpdateChecker
 import net.fabricmc.api.ClientModInitializer
@@ -93,6 +97,8 @@ object CustomScoreboardMod : ClientModInitializer, MeowddingLogger by MeowddingL
                 Text.of().send()
             }
         }
+
+        Overlays.register(CustomScoreboardRenderer)
     }
 
     fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
@@ -108,6 +114,17 @@ object CustomScoreboardMod : ClientModInitializer, MeowddingLogger by MeowddingL
 
         event.registerWithCallback("version") {
             Text.of("Version: $VERSION").withColor(TextColor.GRAY).sendWithPrefix()
+        }
+
+        event.registerWithCallback("overlays") {
+            McClient.setScreenAsync { EditOverlaysScreen(MOD_ID) }
+        }
+    }
+
+    @Subscription
+    fun finishEditing(event: FinishOverlayEditingEvent) {
+        if (event.modId == MOD_ID) {
+            config.save()
         }
     }
 }
