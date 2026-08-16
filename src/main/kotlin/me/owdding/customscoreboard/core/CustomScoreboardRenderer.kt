@@ -56,7 +56,7 @@ object CustomScoreboardRenderer : Overlay {
 
     override var bounds: Pair<Int, Int> = 0 to 0
     override val modId: String = CustomScoreboardMod.MOD_ID
-    override val name = Text.of("CustomScoreboard")
+    override val name = Text.translatable("customscoreboard")
 
     var currentX = 0
         private set
