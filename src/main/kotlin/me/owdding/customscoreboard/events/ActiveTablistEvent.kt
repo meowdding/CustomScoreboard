@@ -1,9 +1,11 @@
 package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.TabWidgetHelper
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import me.owdding.customscoreboard.utils.TextUtils.removePrefix
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
@@ -12,14 +14,14 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
 @AutoElement
 object ActiveTablistEvent : Event() {
-    private val blockedEvents = listOf("Spooky Festival", "Carnival", "th SkyBlock Anniversary", "New Year Celebration")
+    private val blockedEvents = listOf<String>()//listOf("Spooky Festival", "Carnival", "th SkyBlock Anniversary", "New Year Celebration")
     private val endsInRegex by RemoteStrings.resolve().regex("\\s*Ends In: (?<time>.*)")
 
     override fun getDisplay(): List<Any>? {
         val lines = TabWidgetHelper.tabWidgetCache[TabWidget.EVENT] ?: return null
         if (lines.isEmpty()) return null
 
-        val nameComponent = lines.first()
+        val nameComponent = if (LinesConfig.showEventPrefix) lines.first() else lines.first().removePrefix("Event: ")
         val nameString = nameComponent.stripped.trim()
 
         if (blockedEvents.any { nameString.contains(it) }) return null
