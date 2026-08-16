@@ -400,6 +400,10 @@
                     "@value": "24h Time",
                     "desc": "Shows the SkyBlock and IRL time in 24h format instead of 12h."
                 },
+                "include_minutes": {
+                    "@value": "Include Minutes",
+                    "desc": "Whether to show minutes in timers when days & hours are available"
+                },
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",
                     "desc": "Show the individual minutes of the current SkyBlock time instead of only updating every ~8 seconds.\nWill turn off if the smoothing is too inaccurate"

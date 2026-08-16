@@ -36,6 +36,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shPath = "display.skyblockTime24hFormat"
     }
 
+    val includeMinutes by boolean(true) {
+        this.translation = "$translationPath.include_minutes"
+    }
+
     val smoothTime by boolean(true) {
         this.translation = "$translationPath.smooth_time"
         this.shPath = "display.skyblockTimeExactMinutes"
