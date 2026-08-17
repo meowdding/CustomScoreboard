@@ -9,6 +9,7 @@ import me.owdding.customscoreboard.utils.TextUtils.trim
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import me.owdding.ktmodules.Module
 import net.minecraft.network.chat.Component
+import net.minecraft.world.phys.AABB
 import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerAPI
 import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerType
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -37,6 +38,7 @@ object SlayerElement : Element() {
         SlayerType.TARANTULA_BROODFATHER to LocationData(
             areas = setOf(SkyBlockAreas.BURNING_DESERT),
             islands = setOf(SkyBlockIsland.SPIDERS_DEN),
+            islandBasedAABBs = mapOf(SkyBlockIsland.CRIMSON_ISLE to setOf(AABB(-540.0, 80.0, -646.0, -445.0, 110.0, -895.0))),
         ),
         SlayerType.SVEN_PACKMASTER to LocationData(
             areas = setOf(SkyBlockAreas.RUINS, SkyBlockAreas.SPIRIT_CAVE, SkyBlockAreas.SOUL_CAVE, SkyBlockAreas.HOWLING_CAVE),
