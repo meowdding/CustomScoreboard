@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.utils
 import com.teamresourceful.resourcefulconfigkt.api.ConfigDelegateProvider
 import com.teamresourceful.resourcefulconfigkt.api.ObservableEntry
 import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.dfu.item.LegacyTextFixer
 import me.owdding.ktmodules.AutoCollect
@@ -31,8 +32,8 @@ object Utils {
             if (years > 0) add("${years}y")
             if (days > 0) add("${days}d")
             if (hours > 0) add("${hours}h")
-            if (minutes > 0) add("${minutes}m")
-            if (years <= 0 && days <= 0 && seconds > 0) add("${seconds}s")
+            if (minutes > 0 && (LinesConfig.includeMinutes && days > 0)) add("${minutes}m") // Show minutes unless they're hidden when days are present
+            if (years <= 0 && days <= 0 && seconds > 0) add("${seconds}s") // Only show seconds if there is no days or years
         }
 
         return if (parts.isEmpty()) "0s" else parts.take(maxUnits).joinToString(" ")

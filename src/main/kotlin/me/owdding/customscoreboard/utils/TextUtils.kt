@@ -119,4 +119,27 @@ object TextUtils {
 
     fun Regex.anyMatch(input: List<String>) = input.any { this.matches(it) }
 
+    fun Component.removePrefix(prefix: String): Component {
+        var remaining = prefix
+        val result = Component.empty()
+
+        for ((content, style) in this.spans) {
+            when {
+                remaining.isEmpty() -> result.append(Component.literal(content).setStyle(style))
+                content.length <= remaining.length && remaining.startsWith(content) -> remaining = remaining.removePrefix(content)
+                content.startsWith(remaining) -> {
+                    val trimmed = content.removePrefix(remaining)
+                    remaining = ""
+                    if (trimmed.isNotEmpty()) result.append(Component.literal(trimmed).setStyle(style))
+                }
+
+                else -> {
+                    remaining = ""
+                    result.append(Component.literal(content).setStyle(style))
+                }
+            }
+        }
+
+        return result
+    }
 }

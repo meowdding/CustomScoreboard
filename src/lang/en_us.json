@@ -268,6 +268,10 @@
                     "@value": "Number Display Format",
                     "desc": "Choose the format numbers with their prefix are displayed in the scoreboard."
                 },
+                "forced_number_format_locale": {
+                    "@value": "Number Format Override",
+                    "desc": "Forces the number format to use the en_US locale."
+                },
                 "show_currency_gain": {
                     "@value": "Show Currency Gain",
                     "desc": "Show the gain of currencies (like Purse, Motes, etc.) on the scoreboard."
@@ -327,6 +331,10 @@
                 "all_events": {
                     "@value": "All Events",
                     "desc": "Show all events instead of the first one. Uses the \"Events Priority\" list."
+                },
+                "show_event_prefix" : {
+                    "@value": "Show Event Prefix",
+                    "desc": "Whether to show the \"<yellow>Event: </yellow>\" prefix before an event name"
                 },
                 "hypixel_title": {
                     "@value": "Use Hypixel Title",
@@ -407,6 +415,10 @@
                 "time_24h_format": {
                     "@value": "24h Time",
                     "desc": "Shows the SkyBlock and IRL time in 24h format instead of 12h."
+                },
+                "include_minutes": {
+                    "@value": "Include Minutes",
+                    "desc": "Whether to show minutes in timers when days & hours are available"
                 },
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",

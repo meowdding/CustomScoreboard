@@ -1,9 +1,11 @@
 package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.TabWidgetHelper
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import me.owdding.customscoreboard.utils.TextUtils.removePrefix
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
@@ -18,7 +20,7 @@ object StartingSoonTablistEvent : Event() {
         val lines = TabWidgetHelper.tabWidgetCache[TabWidget.EVENT] ?: return null
         if (lines.isEmpty()) return null
 
-        val nameComponent = lines.first()
+        val nameComponent = if (LinesConfig.showEventPrefix) lines.first() else lines.first().removePrefix("Event: ")
 
         val time = lines.firstNotNullOfOrNull { line ->
             startsInRegex.find(line.stripped)?.groups?.get("time")?.value
