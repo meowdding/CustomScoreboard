@@ -232,6 +232,9 @@ object CustomScoreboardRenderer : Overlay {
                     if (configX < 0) screenWidth + configX else configX
                 }
             }
+            if (CustomizationConfig.horizontalAlignment != HorizontalAlignment.FREE_MOVE && CustomizationConfig.position.x != currentX) {
+                CustomizationConfig.position.x = currentX
+            }
 
             currentY = when (CustomizationConfig.verticalAlignment) {
                 VerticalAlignment.TOP -> padding + margin + borderSize
@@ -241,6 +244,9 @@ object CustomScoreboardRenderer : Overlay {
                     val configY = CustomizationConfig.position.y
                     if (configY < 0) screenHeight + configY else configY
                 }
+            }
+            if (CustomizationConfig.verticalAlignment != VerticalAlignment.FREE_MOVE && CustomizationConfig.position.y != currentY) {
+                CustomizationConfig.position.y = currentY
             }
 
             bounds = width to height
