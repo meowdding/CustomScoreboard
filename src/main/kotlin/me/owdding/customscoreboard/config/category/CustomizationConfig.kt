@@ -51,6 +51,7 @@ import me.owdding.customscoreboard.utils.Utils.updateIslandCache
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.lib.displays.Alignment
+import me.owdding.lib.overlays.ConfigPosition
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 
@@ -238,6 +239,10 @@ object CustomizationConfig : CategoryKt("customization") {
         this.translation = "$translationPath.horizontal_alignment"
         this.shPath = "display.alignment.horizontalAlignment"
         this.shMapper = { valueOfOrNull<HorizontalAlignment>(it.asString) ?: HorizontalAlignment.RIGHT }
+    }
+
+    val position by obj(ConfigPosition(0, 0)) {
+        condition = { false }
     }
 
     val defaultTextAlignment by enum(Alignment.START) {

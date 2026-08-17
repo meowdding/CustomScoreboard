@@ -6,6 +6,7 @@
         "objectAsKeys": true
     },
     "key.category.customscoreboard.main": "Custom Scoreboard",
+    "mlib.overlay.mod.customscoreboard": "Custom Scoreboard",
     "customscoreboard": {
         "@value": "Custom Scoreboard",
         "config": {
@@ -147,11 +148,18 @@
                 },
                 "vertical_alignment": {
                     "@value": "Vertical Alignment",
-                    "desc": "Choose the vertical alignment of the scoreboard."
+                    "desc": [
+                        "Choose the vertical alignment of the scoreboard.",
+                        "Set to \"Free Move\" to be able to move it freely with `/csb overlays`."
+                    ]
                 },
                 "horizontal_alignment": {
                     "@value": "Horizontal Alignment",
-                    "desc": "Choose the horizontal alignment of the scoreboard."
+                    "desc": [
+                        "Choose the horizontal alignment of the scoreboard.",
+                        "If you want to space it away from the side of the screen, use Margin instead.",
+                        "Set to \"Free Move\" to be able to move it freely with `/csb overlays`."
+                    ]
                 },
                 "default_text_alignment": {
                     "@value": "Default Text Alignment",
