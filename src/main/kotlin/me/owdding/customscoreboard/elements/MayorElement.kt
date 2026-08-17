@@ -3,12 +3,16 @@ package me.owdding.customscoreboard.elements
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.toReadableTime
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
 import tech.thatgravyboat.skyblockapi.api.data.MayorCandidate
 import tech.thatgravyboat.skyblockapi.api.data.MayorCandidates
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.extentions.until
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.splitToWidth
 import kotlin.time.Duration
 
@@ -19,21 +23,33 @@ object MayorElement : Element() {
         val mayor = ElectionAPI.mayor ?: return@buildList
 
         val perksDisplay = LinesConfig.mayorPerksDisplay
-        val count = if (perksDisplay == PerkDisplay.COUNT) " §e(${mayor.activePerks.size})" else ""
-
         val ministerDisplay = LinesConfig.ministerDisplay
         val minister = ElectionAPI.minister ?: if (jerryActive) ElectionAPI.currentJerryCandidate?.first else null
-        val ministerCompact = if (ministerDisplay == MinisterDisplay.COMPACT && minister != null) {
-            "§7, ${minister.formatName()}"
-        } else ""
 
-        val time = if (LinesConfig.showMayorTime) buildString {
-            append(" §7(§e${timeUntilNextMayor().toReadableTime()}")
-            if (jerryActive && ministerDisplay == MinisterDisplay.COMPACT) append("§7, §e${timeUntilJerryMayor()?.toReadableTime()}")
-            append("§7)")
-        } else ""
+        val mainLine = Text.of {
+            append(mayor.formatName())
 
-        add("${mayor.formatName()}$count$ministerCompact$time") {
+            if (perksDisplay == PerkDisplay.COUNT) {
+                append(" (${mayor.activePerks.size})", TextColor.YELLOW)
+            }
+
+            if (ministerDisplay == MinisterDisplay.COMPACT && minister != null) {
+                append(", ", TextColor.GRAY)
+                append(minister.formatName())
+            }
+
+            if (LinesConfig.showMayorTime) {
+                append(" (", TextColor.GRAY)
+                append(timeUntilNextMayor().toReadableTime(), TextColor.YELLOW)
+                if (jerryActive && ministerDisplay == MinisterDisplay.COMPACT) {
+                    append(", ", TextColor.GRAY)
+                    append(timeUntilJerryMayor()?.toReadableTime() ?: "", TextColor.YELLOW)
+                }
+                append(")", TextColor.GRAY)
+            }
+        }
+
+        add(mainLine) {
             hover = if (perksDisplay != PerkDisplay.ALL) buildList {
                 addHoverPerks(mayor)
                 if (minister != null && ministerDisplay == MinisterDisplay.COMPACT) {
@@ -52,11 +68,16 @@ object MayorElement : Element() {
         }
 
         if (minister != null && ministerDisplay == MinisterDisplay.FULL) {
-            val name = buildString {
+            val ministerLine = Text.of {
                 append(minister.formatName())
-                if (jerryActive) append(" §7(§e${timeUntilJerryMayor()?.toReadableTime()}§7)")
+                if (jerryActive) {
+                    append(" (", TextColor.GRAY)
+                    append(timeUntilJerryMayor()?.toReadableTime() ?: "", TextColor.YELLOW)
+                    append(")", TextColor.GRAY)
+                }
             }
-            add(name) {
+
+            add(ministerLine) {
                 if (perksDisplay == PerkDisplay.OFF) {
                     hover = buildList { addHoverPerks(minister) }
                 }
@@ -69,16 +90,21 @@ object MayorElement : Element() {
     }
 
     private fun MutableList<Any>.addPerks(candidate: MayorCandidate) {
-        val color = candidateColor[candidate] ?: "§e"
+        val color = candidateColor[candidate]?.first ?: TextColor.YELLOW
         candidate.activePerks.forEach { perk ->
-            add(" §7- $color${perk.perkName}") {
+            val perkLine = Text.of {
+                append(" - ", TextColor.GRAY)
+                append(perk.perkName, color)
+            }
+
+            add(perkLine) {
                 hover = perk.description.splitToWidth(" ", 140).map { "§7$it" }
             }
         }
     }
 
     private fun MutableList<String>.addHoverPerks(candidate: MayorCandidate) {
-        val color = candidateColor[candidate] ?: "§e"
+        val color = candidateColor[candidate]?.second ?: "§e"
         candidate.activePerks.forEachIndexed { i, perk ->
             if (i != 0) add("")
             add("$color${perk.perkName}:")
@@ -111,20 +137,20 @@ object MayorElement : Element() {
         return SkyBlockInstant(mayorYear, 3, 27) - instant
     }
 
-    private fun MayorCandidate.formatName(): String = (candidateColor[this] ?: "§e") + candidateName
+    private fun MayorCandidate.formatName(): Component = Text.of(candidateName, candidateColor[this]?.first ?: TextColor.YELLOW)
 
     private val candidateColor = mapOf(
-        MayorCandidates.AATROX to "§3",
-        MayorCandidates.COLE to "§e",
-        MayorCandidates.DIANA to "§2",
-        MayorCandidates.DIAZ to "§6",
-        MayorCandidates.FINNEGAN to "§c",
-        MayorCandidates.FOXY to "§d",
-        MayorCandidates.MARINA to "§b",
-        MayorCandidates.PAUL to "§c",
-        MayorCandidates.SCORPIUS to "§d",
-        MayorCandidates.JERRY to "§d",
-        MayorCandidates.DERPY to "§d",
+        MayorCandidates.AATROX to (TextColor.DARK_AQUA to "§3"),
+        MayorCandidates.COLE to (TextColor.YELLOW to "§e"),
+        MayorCandidates.DIANA to (TextColor.DARK_GREEN to "§2"),
+        MayorCandidates.DIAZ to (TextColor.GOLD to "§6"),
+        MayorCandidates.FINNEGAN to (TextColor.RED to "§c"),
+        MayorCandidates.FOXY to (TextColor.PINK to "§d"),
+        MayorCandidates.MARINA to (TextColor.AQUA to "§b"),
+        MayorCandidates.PAUL to (TextColor.RED to "§c"),
+        MayorCandidates.SCORPIUS to (TextColor.PINK to "§d"),
+        MayorCandidates.JERRY to (TextColor.PINK to "§d"),
+        MayorCandidates.DERPY to (TextColor.PINK to "§d"),
     )
 
     enum class PerkDisplay(private val display: String) {
