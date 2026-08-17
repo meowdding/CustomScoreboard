@@ -115,6 +115,7 @@ object CustomizationConfig : CategoryKt("customization") {
                     "GALATEA" to ScoreboardEventEntry.FORAGING,
                     "ACTIVE_TABLIST_EVENTS" to ScoreboardEventEntry.ACTIVE_TABLIST,
                     "STARTING_SOON_TABLIST_EVENTS" to ScoreboardEventEntry.STARTING_SOON_TABLIST,
+                    "JACOB_CONTEST" to ScoreboardEventEntry.JACOBS_CONTEST,
                 )
                 changes[name] ?: ScoreboardEventEntry.entries.find { it.name == name }
             }
