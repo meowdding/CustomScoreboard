@@ -332,7 +332,7 @@
                     "@value": "All Events",
                     "desc": "Show all events instead of the first one. Uses the \"Events Priority\" list."
                 },
-                "show_event_prefix" : {
+                "show_event_prefix": {
                     "@value": "Show Event Prefix",
                     "desc": "Whether to show the \"<yellow>Event: </yellow>\" prefix before an event name"
                 },
@@ -382,7 +382,10 @@
                 },
                 "coop_bank_layout": {
                     "@value": "Co-op Bank Layout",
-                    "desc": "When in a co-op, choose the layout of the bank line."
+                    "desc": [
+                        "When in a co-op, choose the layout of the bank line.",
+                        "<red>To know you're in a co-op, open the Bank Menu</red>"
+                    ]
                 },
                 "pet_max": {
                     "@value": "Show Pet Max Level",
