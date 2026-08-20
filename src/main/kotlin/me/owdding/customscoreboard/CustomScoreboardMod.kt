@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard
 
+import com.mojang.serialization.Codec
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
@@ -15,16 +16,19 @@ import me.owdding.customscoreboard.core.CustomScoreboardBackground
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.TabWidgetHelper
 import me.owdding.customscoreboard.elements.Element
+import me.owdding.customscoreboard.generated.CustomScoreboardCodecs
 import me.owdding.customscoreboard.generated.CustomScoreboardModules
 import me.owdding.customscoreboard.generated.CustomScoreboardScoreboardElements
 import me.owdding.customscoreboard.utils.RegisterCustomScoreboardCommandEvent
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
+import me.owdding.customscoreboard.utils.Utils.unsafeCast
 import me.owdding.ktmodules.Module
 import me.owdding.lib.events.overlay.FinishOverlayEditingEvent
 import me.owdding.lib.overlays.EditOverlaysScreen
 import me.owdding.lib.overlays.Overlays
 import me.owdding.lib.utils.MeowddingLogger
 import me.owdding.lib.utils.MeowddingUpdateChecker
+import me.owdding.lib.utils.mod.MeowddingMod
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
@@ -44,11 +48,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
-object CustomScoreboardMod : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResolve() {
-
-    val SELF = FabricLoader.getInstance().getModContainer("customscoreboard").get()
-    val MOD_ID: String = SELF.metadata.id
-    val VERSION: String = SELF.metadata.version.friendlyString
+object CustomScoreboardMod : MeowddingMod("customscoreboard") {
 
     private val globalJob: Job = Job(null)
     val coroutineScope = CoroutineScope(CoroutineName("CustomScoreboard") + SupervisorJob(globalJob))
@@ -101,8 +101,6 @@ object CustomScoreboardMod : ClientModInitializer, MeowddingLogger by MeowddingL
         Overlays.register(CustomScoreboardRenderer)
     }
 
-    fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
-
     @Subscription
     fun onCommand(event: RegisterCommandsEvent) = RegisterCustomScoreboardCommandEvent(event).post(SkyBlockAPI.eventBus)
 
@@ -127,4 +125,6 @@ object CustomScoreboardMod : ClientModInitializer, MeowddingLogger by MeowddingL
             config.save()
         }
     }
+
+    override fun <T : Any> getCodec(clazz: Class<T>): Codec<T> = CustomScoreboardCodecs.getCodec(clazz).unsafeCast()
 }

@@ -202,6 +202,9 @@ dependencies {
     "compileOnly"(versionedCatalog["meowdding.ktmodules"])
     "ksp"(versionedCatalog["meowdding.ktmodules"])
 
+    "compileOnly"(versionedCatalog["meowdding.ktcodecs"])
+    "ksp"(versionedCatalog["meowdding.ktcodecs"])
+
     maybeModImplementation(versionedCatalog["mixinconstraints"])
 
     includeImplementation(versionedCatalog["resourceful.lib"])

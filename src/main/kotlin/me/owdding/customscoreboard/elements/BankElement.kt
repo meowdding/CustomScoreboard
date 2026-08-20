@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.config.category.LinesConfig
+import me.owdding.customscoreboard.config.storage.CoopBankStorage
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
@@ -28,7 +29,7 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
         else super.format(number)
     }
 
-    fun line() = if (ProfileAPI.coop && LinesConfig.isActuallyCoopProfile) {
+    fun line() = if (ProfileAPI.coop && CoopBankStorage.getCurrentProfile()) {
         when (LinesConfig.coopBankLayout) {
             CoopBankLayout.PERSONAL_COOP -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
             CoopBankLayout.COOP_PERSONAL -> "${format(CurrencyAPI.coopBank)}§7/§6${format(CurrencyAPI.personalBank)}"
@@ -68,7 +69,8 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
     @InventoryTitle("Bank")
     fun onContainer(event: InventoryChangeEvent) {
         if (event.slot.index != 15) return
-        LinesConfig.isActuallyCoopProfile = event.item.cleanName == "Personal Bank Account"
-        CustomScoreboardMod.info("Determined Profile as actually coop: ${LinesConfig.isActuallyCoopProfile}")
+        val state = event.item.cleanName == "Personal Bank Account"
+        CustomScoreboardMod.info("Determined Profile as actually coop: $state")
+        CoopBankStorage.setCurrentProfile(state)
     }
 }
