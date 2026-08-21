@@ -9,6 +9,7 @@ import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.shorten
+import net.minecraft.world.item.ItemStack
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.InventoryTitle
 import tech.thatgravyboat.skyblockapi.api.events.screen.InventoryChangeEvent
@@ -68,7 +69,7 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
     @Subscription
     @InventoryTitle("Bank")
     fun onContainer(event: InventoryChangeEvent) {
-        if (event.slot.index != 15) return
+        if (event.slot.index != 15 || event.item.isEmpty) return
         val state = event.item.cleanName == "Personal Bank Account"
         CustomScoreboardMod.info("Determined Profile as actually coop: $state")
         CoopBankStorage.setCurrentProfile(state)
