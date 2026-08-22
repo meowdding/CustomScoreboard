@@ -29,6 +29,7 @@ object DungeonsEvent : Event() {
     private val soloRegex by remote.componentRegex("Solo")
     private val teammatesRegex by remote.componentRegex("(?<classAbbv>\\[\\w]) (?<username>\\w{2,16}) ((?<classLevel>\\[Lvl?(?<level>[\\w,.]+)?]?)|(?<health>[\\w,.]+).?)")
     private val f3guardianRegex by remote.componentRegex(" - (?:Healthy|Reinforced|Laser|Chaos) [\\w,.]*.")
+    private val spacerRegex by remote.componentRegex("\\s*")
 
     private val patterns = listOf(
         m7dragonsRegex,
@@ -40,10 +41,19 @@ object DungeonsEvent : Event() {
         soloRegex,
         teammatesRegex,
         f3guardianRegex,
+        spacerRegex,
     )
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWithMatches(event.newComponents, patterns)
+
+        // Strip leading/trailing spacers
+        while (formattedLines.isNotEmpty() && formattedLines.first().string.isBlank()) {
+            formattedLines.removeFirst()
+        }
+        while (formattedLines.isNotEmpty() && formattedLines.last().string.isBlank()) {
+            formattedLines.removeLast()
+        }
     }
 }
