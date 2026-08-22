@@ -210,6 +210,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shPath = "display.events.showAllActiveEvents"
     }
 
+    val separatorBetweenEvents by boolean(false) {
+        this.translation = "$translationPath.separator_between_events"
+    }
+
     val showEventPrefix by boolean (true) {
         this.translation = "$translationPath.show_event_prefix"
     }

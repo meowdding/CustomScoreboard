@@ -332,6 +332,10 @@
                     "@value": "All Events",
                     "desc": "Show all events instead of the first one. Uses the \"Events Priority\" list."
                 },
+                "separator_between_events": {
+                    "@value": "Separate Events",
+                    "desc": "Separate different Events by adding a separator line in between."
+                },
                 "show_event_prefix": {
                     "@value": "Show Event Prefix",
                     "desc": "Whether to show the \"<yellow>Event: </yellow>\" prefix before an event name"

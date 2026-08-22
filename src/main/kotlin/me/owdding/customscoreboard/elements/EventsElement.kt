@@ -7,8 +7,23 @@ import me.owdding.customscoreboard.utils.ScoreboardElement
 @ScoreboardElement
 object EventsElement : Element() {
     override fun getDisplay() =
-        if (LinesConfig.showAllActiveEvents) currentIslandEvents.mapNotNull { it.event.getLines().takeIf { !it.isEmpty() } }.flatten()
-        else currentIslandEvents.firstNotNullOfOrNull { it.event.getLines().takeIf { !it.isEmpty() } }
+        if (LinesConfig.showAllActiveEvents) {
+            val activeEvents = currentIslandEvents.mapNotNull { event ->
+                event.event.getLines().takeIf { it.isNotEmpty() }
+            }
+
+            if (LinesConfig.separatorBetweenEvents) {
+                activeEvents.flatMapIndexed { index, lines ->
+                    if (index == 0) lines else listOf("") + lines
+                }
+            } else {
+                activeEvents.flatten()
+            }
+        } else {
+            currentIslandEvents.firstNotNullOfOrNull { event ->
+                event.event.getLines().takeIf { it.isNotEmpty() }
+            }
+        }
 
     override val id = "EVENTS"
     override val configLine = "Events"
