@@ -45,7 +45,7 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shPath = "display.skyblockTimeExactMinutes"
     }
 
-    val coloredMonth by boolean("colored_month", true) {
+    val coloredMonth by boolean("colored_month", false) {
         this.translation = "$translationPath.colored_month"
     }
 
