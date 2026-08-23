@@ -380,6 +380,10 @@
                     "@value": "Hide Purse and Bank in Dungeons",
                     "desc": "While you normally need the purse in dungeons when buying Chests, using Croesus makes this obsolete."
                 },
+                "gems_always_compact": {
+                    "@value": "Gems Always Compact",
+                    "desc": "Makes the Gems element ignore the main Number Format option, and always shows shortened (like in tablist)."
+                },
                 "bank_always_compact": {
                     "@value": "Bank Always Compact",
                     "desc": "Makes the Bank element ignore the main Number Format option, and always shows shortened (like in tablist)."

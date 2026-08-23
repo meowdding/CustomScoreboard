@@ -81,6 +81,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shPath = "display.showUnclaimedBits"
     }
 
+    val gemsAlwaysCompact by boolean(true) {
+        this.translation = "$translationPath.gems_always_compact"
+    }
+
     val bankAlwaysCompact by boolean(true) {
         this.translation = "$translationPath.bank_always_compact"
     }
