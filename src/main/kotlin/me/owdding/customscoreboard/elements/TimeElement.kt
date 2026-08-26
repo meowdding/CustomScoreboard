@@ -2,12 +2,15 @@ package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
-import tech.thatgravyboat.skyblockapi.helpers.McLevel
+import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
+import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
 import tech.thatgravyboat.skyblockapi.utils.text.Text
-import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import kotlin.time.Duration.Companion.seconds
@@ -39,21 +42,24 @@ object TimeElement : Element() {
             if (rawHour >= 12) append("pm") else append("am")
         }
 
-        val (symbol, color) = McLevel.selfOrNull?.let {
-            when {
-                it.isRaining -> "☔" to TextColor.DARK_AQUA
-                it.isThundering -> "⚡" to TextColor.YELLOW
-                DateTimeAPI.isDay -> "☀" to TextColor.YELLOW
-                else -> "☽" to TextColor.AQUA
-            }
-        } ?: ("⚠" to TextColor.RED)
-
-        append(" $symbol", color)
+        currentWeather?.let(::append)
     }
 
     override val configLine = "Time"
     override val id = "TIME"
     override val group = ElementGroup.HEADER
+
+    private val remote = RemoteStrings.resolve()
+    private val weatherRegex by remote.componentRegex("\\s*\\d{1,2}:\\d{2}(?:am|pm) (?<weather>.+)")
+
+    private var currentWeather: Component? = null
+
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+        val match = weatherRegex.anyMatch(event.newComponents, "weather") { (weather) ->
+            currentWeather = weather
+        }
+        if (!match) currentWeather = null
+    }
 
     private fun isInstantAccurate(instant: SkyBlockInstant): Boolean {
         val season = DateTimeAPI.season ?: return false
