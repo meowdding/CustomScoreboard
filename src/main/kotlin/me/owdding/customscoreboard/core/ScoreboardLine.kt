@@ -149,6 +149,7 @@ class ActionBuilder {
         this.hover = texts?.map { it.toComponent() }
     }
 
+    @JvmName("hoverListComponent")
     fun hover(texts: List<Component>?) {
         this.hover = texts
     }
