@@ -17,7 +17,7 @@ object PartyElement : Element() {
         val list = PartyAPI.members.distinctBy { it.name }
 
         add(Text.of("Party (${list.size})", TextColor.BLUE)) {
-            this.hover = listOf("§7Click to view party info")
+            hover(Text.of("Click to view party info", TextColor.GRAY))
             this.command = "/party list"
         }
 
@@ -51,7 +51,7 @@ object PartyElement : Element() {
                 append(" to fix your party")
             }
             add(fixLine) {
-                this.hover = listOf("§7Click to run the /pl")
+                hover(Text.of("Click to run the /pl", TextColor.GRAY))
                 this.command = "/pl"
             }
         }
@@ -60,11 +60,11 @@ object PartyElement : Element() {
     private fun MutableList<Any>.addMember(line: Component, name: String?) {
         if ((KnownMods.SKYBLOCK_PV.installed || KnownMods.SKYBLOCKER.installed)) {
             add(line) {
-                this.hover = listOf("§7Click to view ${name}'s profile")
+                hover(Text.of("Click to view ${name}'s profile", TextColor.GRAY))
                 this.command = "/pv $name"
             }
         } else add(line) {
-            this.hover = listOf("§7Click to open SkyCrypt.")
+            hover(Text.of("Click to open SkyCrypt.", TextColor.GRAY))
             this.link = "https://sky.shiiyu.moe/stats/${name}"
         }
     }

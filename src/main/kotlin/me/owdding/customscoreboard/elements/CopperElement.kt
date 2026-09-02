@@ -18,7 +18,7 @@ object CopperElement : NumberTrackingElement(TextColor.RED) {
         val line = Text.join(CurrencyAPI.copper.format(), temporaryChangeDisplay)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Copper", line, numberColor).withActions {
-            hover = listOf("§7Click to teleport to your barn.")
+            hover(Text.of("Click to teleport to your barn.", TextColor.GRAY))
             command = "/tptoplot barn"
         }
     }

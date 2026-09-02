@@ -45,7 +45,7 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
 
         val element = CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
         return if (!EffectsAPI.isBoosterCookieActive) element else element.withActions {
-            hover = listOf("§7Click to open the bank")
+            hover(Text.of("Click to open the bank"))
             command = "/bank"
         }
     }

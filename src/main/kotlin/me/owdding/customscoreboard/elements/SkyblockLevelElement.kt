@@ -23,7 +23,7 @@ object SkyblockLevelElement : Element() {
             }.wrap("(", ")").withColor(TextColor.GRAY),
         )
     }.withActions {
-        hover = listOf("§7Click to open SkyBlock Level Menu")
+        hover(Text.of("Click to open SkyBlock Level Menu", TextColor.GRAY))
         command = "/skyblocklevels"
     }
 

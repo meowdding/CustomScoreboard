@@ -13,6 +13,7 @@ import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId.Companion.getSky
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedName
 import tech.thatgravyboat.skyblockapi.utils.extentions.toTitleCase
+import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
@@ -49,7 +50,7 @@ object QuiverElement : Element() {
 
         val element = CustomScoreboardRenderer.formatNumberDisplayDisplay(type, amountLine, color)
         return if (!EffectsAPI.isBoosterCookieActive) element else element.withActions {
-            hover = listOf("§7Click to open the quiver")
+            hover(Text.of("Click to open the quiver", TextColor.GRAY))
             command = "/quiver"
         }
     }

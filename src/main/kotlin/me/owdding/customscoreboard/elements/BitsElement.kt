@@ -23,7 +23,7 @@ object BitsElement : NumberTrackingElement(TextColor.AQUA) {
         val line = Text.join(line(), temporaryChangeDisplay)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Bits", line, numberColor).withActions {
-            hover = listOf("§7Click to open the SkyBlock menu to resync your bits.")
+            hover(Text.of("Click to open the SkyBlock menu to resync your bits.", TextColor.GRAY))
             command = "/sbmenu"
         }
     }

@@ -50,16 +50,18 @@ object MayorElement : Element() {
         }
 
         add(mainLine) {
-            hover = if (perksDisplay != PerkDisplay.ALL) buildList {
-                addHoverPerks(mayor)
-                if (minister != null && ministerDisplay == MinisterDisplay.COMPACT) {
+            if (perksDisplay != PerkDisplay.ALL) hover(
+                buildList<String> {
+                    addHoverPerks(mayor)
+                    if (minister != null && ministerDisplay == MinisterDisplay.COMPACT) {
+                        add("")
+                        addHoverPerks(minister)
+                    }
                     add("")
-                    addHoverPerks(minister)
-                }
-                add("")
-                add("")
-                add("§eClick to open the calendar.")
-            } else listOf("§7Click to open the calendar.")
+                    add("")
+                    add("§eClick to open the calendar.")
+                },
+            ) else hover(Text.of("§7Click to open the calendar.", TextColor.GRAY))
             command = "/calendar"
         }
 
@@ -79,7 +81,7 @@ object MayorElement : Element() {
 
             add(ministerLine) {
                 if (perksDisplay == PerkDisplay.OFF) {
-                    hover = buildList { addHoverPerks(minister) }
+                    hover(buildList<String> { addHoverPerks(minister) })
                 }
             }
 
@@ -98,7 +100,7 @@ object MayorElement : Element() {
             }
 
             add(perkLine) {
-                hover = perk.description.splitToWidth(" ", 140).map { "§7$it" }
+                hover(perk.description.splitToWidth(" ", 140).map { Text.of(it, TextColor.GRAY) })
             }
         }
     }

@@ -9,13 +9,15 @@ import me.owdding.customscoreboard.utils.TextUtils.isBlank
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.contains
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 
 @ScoreboardElement
 object ObjectiveElement : Element() {
     override fun getDisplay() = objectiveLines.map {
         it.withActions {
-            hover = listOf("§7Click to view quest details")
+            hover(Text.of("Click to view quest details", TextColor.GRAY))
             command = "/quests"
         }
     }

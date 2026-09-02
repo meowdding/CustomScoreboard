@@ -62,7 +62,7 @@ object PowderElement : Element() {
         val region = activeRegion ?: return@buildList
 
         add(Text.of(region.title, TextColor.BLUE)) {
-            hover = listOf(region.hoverText)
+            hover(region.hoverText)
             command = region.command
         }
 

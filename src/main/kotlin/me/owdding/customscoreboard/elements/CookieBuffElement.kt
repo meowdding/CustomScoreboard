@@ -18,7 +18,7 @@ object CookieBuffElement : Element() {
             ?: Text.of("Expired", TextColor.RED)
 
         return CustomScoreboardRenderer.formatNumberDisplayDisplay("Cookie Buff", line, TextColor.PINK).withActions {
-            hover = listOf("§7Click to open Booster Cookie Menu")
+            hover(Text.of("Click to open Booster Cookie Menu", TextColor.GRAY))
             command = "/boostercookiemenu"
         }
     }

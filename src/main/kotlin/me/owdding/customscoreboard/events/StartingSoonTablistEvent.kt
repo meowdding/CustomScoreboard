@@ -28,7 +28,7 @@ object StartingSoonTablistEvent : Event() {
 
         return buildList {
             add(nameComponent) {
-                hover = listOf("§7Click to open the calendar.")
+                hover(Text.of("Click to open the calendar."), TextColor.GRAY)
                 command = "/calendar"
             }
             add(
@@ -36,7 +36,7 @@ object StartingSoonTablistEvent : Event() {
                     append(time, TextColor.YELLOW)
                 },
             ) {
-                hover = listOf("§7Click to open the calendar.")
+                hover(Text.of("Click to open the calendar.", TextColor.GRAY))
                 command = "/calendar"
             }
         }

@@ -132,7 +132,7 @@ data class LineActions(
 }
 
 class ActionBuilder {
-    var hover: List<Component>? = null
+    private var hover: List<Component>? = null
     var command: String? = null
     var click: (() -> Unit)? = null
     var link: String? = null
@@ -147,6 +147,10 @@ class ActionBuilder {
 
     fun hover(texts: List<String>?) {
         this.hover = texts?.map { it.toComponent() }
+    }
+
+    fun hover(texts: List<Component>?) {
+        this.hover = texts
     }
 
     fun build() = if (Config.actions) LineActions(hover, command, click, link) else LineActions()

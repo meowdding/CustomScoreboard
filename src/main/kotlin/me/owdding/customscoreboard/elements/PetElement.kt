@@ -31,7 +31,7 @@ object PetElement : Element() {
         }
     }.map {
         it.withActions {
-            hover = listOf("§7Click to open the Pets Menu")
+            hover(Text.of("Click to open the Pets Menu", TextColor.GRAY))
             command = "/pets"
         }
     }

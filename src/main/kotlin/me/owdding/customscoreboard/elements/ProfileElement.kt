@@ -23,7 +23,7 @@ object ProfileElement : Element() {
             }
         }
     }.withActions {
-        hover = listOf("§7Click to open the profile switcher")
+        hover(Text.of("Click to open the profile switcher", TextColor.GRAY))
         command = "/profiles"
     }
 
