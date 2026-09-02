@@ -123,7 +123,7 @@ data class ScoreboardLine(
 }
 
 data class LineActions(
-    val hover: List<String>? = null,
+    val hover: List<Component>? = null,
     val command: String? = null,
     val click: (() -> Unit)? = null,
     val link: String? = null,
@@ -132,10 +132,22 @@ data class LineActions(
 }
 
 class ActionBuilder {
-    var hover: List<String>? = null
+    var hover: List<Component>? = null
     var command: String? = null
     var click: (() -> Unit)? = null
     var link: String? = null
+
+    fun hover(component: Component?) {
+        this.hover = component?.splitLines()
+    }
+
+    fun hover(text: String?) {
+        this.hover = text?.split("\n")?.map { it.toComponent() }
+    }
+
+    fun hover(texts: List<String>?) {
+        this.hover = texts?.map { it.toComponent() }
+    }
 
     fun build() = if (Config.actions) LineActions(hover, command, click, link) else LineActions()
 }
