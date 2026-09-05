@@ -222,6 +222,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "$translationPath.show_event_prefix"
     }
 
+    val tablistEventsInDungeon by boolean(true) {
+        this.translation = "$translationPath.tablist_event_dungeons"
+    }
+
     init {
         separator { this.title = "$translationPath.sections.cleanup" }
     }

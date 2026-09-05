@@ -338,7 +338,11 @@
                 },
                 "show_event_prefix": {
                     "@value": "Show Event Prefix",
-                    "desc": "Whether to show the \"<yellow>Event: </yellow>\" prefix before an event name"
+                    "desc": "Whether to show the \"<yellow>Event: </yellow>\" prefix before an event name."
+                },
+                "tablist_event_dungeons": {
+                    "@value": "Hide Tablist Events in Dungeons/Kuudra",
+                    "desc": "Hides the \"Starting Soon\" and \"Active\" Tablist Events from the events priority list while in Dungeons/Kuudra."
                 },
                 "hypixel_title": {
                     "@value": "Use Hypixel Title",

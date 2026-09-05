@@ -7,6 +7,7 @@ import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.removePrefix
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -46,6 +47,7 @@ object ActiveTablistEvent : Event() {
         }
     }
 
+    override fun showIsland() = !(LinesConfig.tablistEventsInDungeon && SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_CATACOMBS, SkyBlockIsland.KUUDRA))
     override fun showWhen() = TabWidget.EVENT.isActive
 
     override val configLine = "Active Tablist Event"
