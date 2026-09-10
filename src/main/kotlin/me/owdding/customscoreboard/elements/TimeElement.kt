@@ -42,7 +42,10 @@ object TimeElement : Element() {
             if (rawHour >= 12) append("pm") else append("am")
         }
 
-        currentWeather?.let(::append)
+        currentWeather?.let {
+            append(" ")
+            append(it)
+        }
     }
 
     override val configLine = "Time"
