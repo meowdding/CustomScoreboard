@@ -80,7 +80,8 @@
                         ]
                     },
                     "footer": "Footer Settings",
-                    "layout": "Layout & Scaling"
+                    "layout": "Layout & Scaling",
+                    "presets": "Preset Settings"
                 },
                 "appearance": {
                     "@value": "Appearance",
@@ -164,6 +165,13 @@
                 "default_text_alignment": {
                     "@value": "Default Text Alignment",
                     "desc": "Choose the alignment of the text in the scoreboard, if not overridden by other options like the title or footer alignment."
+                },
+                "presets": {
+                    "skyblock": {
+                        "@value": "Default SkyBlock Lines",
+                        "desc": "Tries to simulate the default look of the Scoreboard as closely as possible.",
+                        "text": "Apply"
+                    }
                 }
             },
             "background": {

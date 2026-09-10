@@ -2,12 +2,14 @@ package me.owdding.customscoreboard.config.category
 
 import com.google.gson.JsonElement
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
+import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.compat.SkyHanniOption.shPath
 import me.owdding.customscoreboard.config.CUSTOM_DRAGGABLE_RENDERER
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toBaseElements
 import me.owdding.customscoreboard.config.CustomDraggableList.Companion.toConfigStrings
 import me.owdding.customscoreboard.core.ChunkedStat
+import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.TabWidgetHelper
 import me.owdding.customscoreboard.elements.AreaElement
 import me.owdding.customscoreboard.elements.BankElement
@@ -54,6 +56,7 @@ import me.owdding.lib.displays.Alignment
 import me.owdding.lib.overlays.ConfigPosition
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
+import kotlin.collections.toTypedArray
 
 object CustomizationConfig : CategoryKt("customization") {
     override val name = Literal("Layout & Appearance")
@@ -72,7 +75,7 @@ object CustomizationConfig : CategoryKt("customization") {
         separator { this.title = "$translationPath.sections.structure" }
     }
 
-    val appearance by transform(
+    var appearance by transform(
         strings(*default.toTypedArray()) {
             this.translation = "$translationPath.appearance"
             this.renderer = CUSTOM_DRAGGABLE_RENDERER
@@ -104,7 +107,7 @@ object CustomizationConfig : CategoryKt("customization") {
         { it.asList().toBaseElements() },
     ).updateIslandCache()
 
-    val events by draggable(*ScoreboardEventEntry.entries.filter { it != ScoreboardEventEntry.STARTING_SOON_TABLIST }.toTypedArray()) {
+    var events by draggable(*ScoreboardEventEntry.entries.filter { it != ScoreboardEventEntry.STARTING_SOON_TABLIST }.toTypedArray()) {
         this.translation = "$translationPath.events"
         this.shPath = "display.events.eventEntries"
         this.shMapper = { json: JsonElement ->
@@ -254,6 +257,30 @@ object CustomizationConfig : CategoryKt("customization") {
                 "CENTER" -> Alignment.CENTER
                 "RIGHT" -> Alignment.END
                 else -> Alignment.START
+            }
+        }
+    }
+
+    init {
+        separator { this.title = "$translationPath.sections.presets" }
+
+        button {
+            this.title = "$translationPath.preset.skyblock"
+            this.description = "$translationPath.preset.skyblock.desc"
+            this.text = "$translationPath.preset.skyblock.text"
+            onClick {
+                appearance = listOf(
+                    TitleElement, LobbyElement, SeparatorElement, DateElement, TimeElement,
+                    AreaElement, SeparatorElement, PurseElement, MotesElement, BitsElement,
+                    CopperElement, SowdustElement, KernelsElement, HeatElement, ColdElement,
+                    NorthStarsElement, SeparatorElement, ObjectiveElement, SlayerElement,
+                    EventsElement, FooterElement,
+                )
+                events = ScoreboardEventEntry.entries.filter { it != ScoreboardEventEntry.STARTING_SOON_TABLIST }.toTypedArray()
+
+                CustomScoreboardMod.config.save()
+                CustomScoreboardRenderer.updateIslandCache()
+                CustomScoreboardRenderer.updateDisplay()
             }
         }
     }
