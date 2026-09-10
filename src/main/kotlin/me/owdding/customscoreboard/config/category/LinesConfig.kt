@@ -198,6 +198,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.shMapper = { if (it.asBoolean) MayorElement.PerkDisplay.ALL else MayorElement.PerkDisplay.OFF }
     }
 
+    val showFoxyEvent by boolean(true) {
+        this.translation = "$translationPath.foxy_event"
+    }
+
     val ministerDisplay by enum(MayorElement.MinisterDisplay.FULL) {
         this.translation = "$translationPath.mayor_minister"
         this.shPath = "display.mayor.showExtraMayor"

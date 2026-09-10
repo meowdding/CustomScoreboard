@@ -1,14 +1,15 @@
 package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.LinesConfig
-import me.owdding.customscoreboard.elements.MayorElement.addHoverPerks
-import me.owdding.customscoreboard.elements.MayorElement.addPerks
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.toReadableTime
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.hub.ElectionAPI
+import tech.thatgravyboat.skyblockapi.api.data.FoxyExtraEventType
 import tech.thatgravyboat.skyblockapi.api.data.MayorCandidate
 import tech.thatgravyboat.skyblockapi.api.data.MayorCandidates
+import tech.thatgravyboat.skyblockapi.api.data.MayorPerk
+import tech.thatgravyboat.skyblockapi.api.data.MayorPerks
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.extentions.until
@@ -99,7 +100,7 @@ object MayorElement : Element() {
         candidate.activePerks.forEach { perk ->
             val perkLine = Text.of {
                 append(" - ", TextColor.GRAY)
-                append(perk.perkName, color)
+                append(perk.formatName(), color)
             }
 
             add(perkLine) {
@@ -112,9 +113,19 @@ object MayorElement : Element() {
         val color = candidateColor[candidate] ?: TextColor.YELLOW
         candidate.activePerks.forEachIndexed { i, perk ->
             if (i != 0) add(CommonText.EMPTY)
-            add(Text.of("${perk.perkName}:", color))
+            add(Text.of("${perk.formatName()}:", color))
             perk.description.splitToWidth(" ", 140).mapTo(this) { Text.of("  $it", TextColor.GRAY) }
         }
+    }
+
+    private fun MayorPerk.formatName(): String {
+        if (LinesConfig.showFoxyEvent && this == MayorPerks.EXTRA_EVENT) {
+            val eventType = MayorPerks.foxyExtraEventType
+            if (eventType != null && eventType == FoxyExtraEventType.UNKNOWN) {
+                return "Extra Event (${eventType.eventName})"
+            }
+        }
+        return this.perkName
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)
