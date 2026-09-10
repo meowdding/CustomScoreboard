@@ -34,7 +34,7 @@ object PowderElement : Element() {
         Region(
             islands = setOf(SkyBlockIsland.GALATEA, SkyBlockIsland.TORRHUS_CANYON),
             title = "Whispers",
-            hoverText = "§7Click to open your Hotf.",
+            hoverText = "Click to open your Hotf.",
             command = "/hotf",
             currencies = listOf(
                 Currency("Forest", TextColor.DARK_AQUA, { WhispersAPI.forest }, { WhispersAPI.forestTotal }),
@@ -44,7 +44,7 @@ object PowderElement : Element() {
         Region(
             islands = setOf(SkyBlockIsland.DWARVEN_MINES, SkyBlockIsland.CRYSTAL_HOLLOWS, SkyBlockIsland.MINESHAFT),
             title = "Powder",
-            hoverText = "§7Click to open your Hotm.",
+            hoverText = "Click to open your Hotm.",
             command = "/hotm",
             currencies = listOf(
                 Currency("Mithril", TextColor.DARK_GREEN, { PowderAPI.mithril }, { PowderAPI.mithrilTotal }),
@@ -62,7 +62,7 @@ object PowderElement : Element() {
         val region = activeRegion ?: return@buildList
 
         add(Text.of(region.title, TextColor.BLUE)) {
-            hover(region.hoverText)
+            hover(Text.of(region.hoverText, TextColor.GRAY))
             command = region.command
         }
 

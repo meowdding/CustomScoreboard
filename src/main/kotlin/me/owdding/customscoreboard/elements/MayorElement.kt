@@ -1,6 +1,8 @@
 package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.LinesConfig
+import me.owdding.customscoreboard.elements.MayorElement.addHoverPerks
+import me.owdding.customscoreboard.elements.MayorElement.addPerks
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.toReadableTime
 import net.minecraft.network.chat.Component
@@ -10,6 +12,7 @@ import tech.thatgravyboat.skyblockapi.api.data.MayorCandidates
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.extentions.until
+import tech.thatgravyboat.skyblockapi.utils.text.CommonText
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -51,17 +54,17 @@ object MayorElement : Element() {
 
         add(mainLine) {
             if (perksDisplay != PerkDisplay.ALL) hover(
-                buildList<String> {
+                buildList<Component> {
                     addHoverPerks(mayor)
                     if (minister != null && ministerDisplay == MinisterDisplay.COMPACT) {
-                        add("")
+                        add(CommonText.EMPTY)
                         addHoverPerks(minister)
                     }
-                    add("")
-                    add("")
-                    add("§eClick to open the calendar.")
+                    add(CommonText.EMPTY)
+                    add(CommonText.EMPTY)
+                    add(Text.of("Click to open the calendar.", TextColor.YELLOW))
                 },
-            ) else hover(Text.of("§7Click to open the calendar.", TextColor.GRAY))
+            ) else hover(Text.of("Click to open the calendar.", TextColor.GRAY))
             command = "/calendar"
         }
 
@@ -81,7 +84,7 @@ object MayorElement : Element() {
 
             add(ministerLine) {
                 if (perksDisplay == PerkDisplay.OFF) {
-                    hover(buildList<String> { addHoverPerks(minister) })
+                    hover(buildList<Component> { addHoverPerks(minister) })
                 }
             }
 
@@ -92,7 +95,7 @@ object MayorElement : Element() {
     }
 
     private fun MutableList<Any>.addPerks(candidate: MayorCandidate) {
-        val color = candidateColor[candidate]?.first ?: TextColor.YELLOW
+        val color = candidateColor[candidate] ?: TextColor.YELLOW
         candidate.activePerks.forEach { perk ->
             val perkLine = Text.of {
                 append(" - ", TextColor.GRAY)
@@ -105,12 +108,12 @@ object MayorElement : Element() {
         }
     }
 
-    private fun MutableList<String>.addHoverPerks(candidate: MayorCandidate) {
-        val color = candidateColor[candidate]?.second ?: "§e"
+    private fun MutableList<Component>.addHoverPerks(candidate: MayorCandidate) {
+        val color = candidateColor[candidate] ?: TextColor.YELLOW
         candidate.activePerks.forEachIndexed { i, perk ->
-            if (i != 0) add("")
-            add("$color${perk.perkName}:")
-            perk.description.splitToWidth(" ", 140).mapTo(this) { "  §7$it" }
+            if (i != 0) add(CommonText.EMPTY)
+            add(Text.of("${perk.perkName}:", color))
+            perk.description.splitToWidth(" ", 140).mapTo(this) { Text.of("  $it", TextColor.GRAY) }
         }
     }
 
@@ -139,20 +142,20 @@ object MayorElement : Element() {
         return SkyBlockInstant(mayorYear, 3, 27) - instant
     }
 
-    private fun MayorCandidate.formatName(): Component = Text.of(candidateName, candidateColor[this]?.first ?: TextColor.YELLOW)
+    private fun MayorCandidate.formatName(): Component = Text.of(candidateName, candidateColor[this] ?: TextColor.YELLOW)
 
     private val candidateColor = mapOf(
-        MayorCandidates.AATROX to (TextColor.DARK_AQUA to "§3"),
-        MayorCandidates.COLE to (TextColor.YELLOW to "§e"),
-        MayorCandidates.DIANA to (TextColor.DARK_GREEN to "§2"),
-        MayorCandidates.DIAZ to (TextColor.GOLD to "§6"),
-        MayorCandidates.FINNEGAN to (TextColor.RED to "§c"),
-        MayorCandidates.FOXY to (TextColor.PINK to "§d"),
-        MayorCandidates.MARINA to (TextColor.AQUA to "§b"),
-        MayorCandidates.PAUL to (TextColor.RED to "§c"),
-        MayorCandidates.SCORPIUS to (TextColor.PINK to "§d"),
-        MayorCandidates.JERRY to (TextColor.PINK to "§d"),
-        MayorCandidates.DERPY to (TextColor.PINK to "§d"),
+        MayorCandidates.AATROX to TextColor.DARK_AQUA,
+        MayorCandidates.COLE to TextColor.YELLOW,
+        MayorCandidates.DIANA to TextColor.DARK_GREEN,
+        MayorCandidates.DIAZ to TextColor.GOLD,
+        MayorCandidates.FINNEGAN to TextColor.RED,
+        MayorCandidates.FOXY to TextColor.PINK,
+        MayorCandidates.MARINA to TextColor.AQUA,
+        MayorCandidates.PAUL to TextColor.RED,
+        MayorCandidates.SCORPIUS to TextColor.PINK,
+        MayorCandidates.JERRY to TextColor.PINK,
+        MayorCandidates.DERPY to TextColor.PINK,
     )
 
     enum class PerkDisplay(private val display: String) {

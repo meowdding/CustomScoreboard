@@ -104,7 +104,7 @@
                 },
                 "use_hypixel_title": {
                     "@value": "Use Hypixel Title",
-                    "desc": "Use Hypixel's Scoreboard Title. §cWill override the Custom Title if enabled."
+                    "desc": "Use Hypixel's Scoreboard Title. <red>Will override the Custom Title if enabled.</red>"
                 },
                 "title_alignment": {
                     "@value": "Title Alignment",
@@ -346,7 +346,7 @@
                 },
                 "hypixel_title": {
                     "@value": "Use Hypixel Title",
-                    "desc": "Use Hypixel's Scoreboard Title. §cWill override the Custom Title if enabled."
+                    "desc": "Use Hypixel's Scoreboard Title. <red>Will override the Custom Title if enabled.</red>"
                 },
                 "party_everywhere": {
                     "@value": "Party Everywhere",
@@ -444,10 +444,10 @@
                 "scoreboard_overhaul": {
                     "@value": "Scoreboard Overhaul Compatibility",
                     "desc": [
-                        "§6Requires Scoreboard Overhaul to be installed.",
+                        "<gold>Requires Scoreboard Overhaul to be installed.</gold>",
                         "If enabled, the custom lines will render inside the Scoreboard Overhaul scoreboard.",
                         "First line of the appearance option will be used as the title, no more no less.",
-                        "§cThis will only work inside SkyBlock. Click and hover actions, aswell as padding, marging, background, etc. wont work on them."
+                        "<red>This will only work inside SkyBlock. Click and hover actions, aswell as padding, margin, background, etc. wont work on them.</red>"
                     ],
                     "toggle": {
                         "@value": "Override Scoreboard Overhaul",
@@ -465,7 +465,7 @@
                 },
                 "skyhanni": {
                     "@value": "SkyHanni Compatibility",
-                    "desc": "§6Requires SkyHanni to be installed.",
+                    "desc": "<gold>Requires SkyHanni to be installed.</gold>",
                     "button": {
                         "@value": "Transfer SkyHanni Settings",
                         "desc": "Click to transfer SkyHanni's CustomScoreboard settings to this mod's settings.",

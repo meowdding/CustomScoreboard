@@ -8,15 +8,23 @@ import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyFound
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @ScoreboardElement
 object LobbyElement : Element() {
     private var lobbyCode: String? = null
     private var roomId: String? = null
 
-    override fun getDisplay(): String {
-        val dateString = if (LinesConfig.dateInLobbyCode) "§7${LinesConfig.dateFormat} " else ""
-        return "$dateString§8$lobbyCode" + if (roomId != null) " §8$roomId" else ""
+    override fun getDisplay() = Text.of {
+        color = TextColor.DARK_GRAY
+        append(if (LinesConfig.dateInLobbyCode) "${LinesConfig.dateFormat} " else "", TextColor.GRAY)
+        append(lobbyCode ?: "")
+        roomId?.let {
+            append(" $it")
+        }
     }
 
     override fun showWhen() = lobbyCode != null
