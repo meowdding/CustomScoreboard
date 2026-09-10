@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.config.category
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.ConfigTransfer
+import me.owdding.customscoreboard.compat.ScoreboardOverhaulCompat
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -27,6 +28,15 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
     }
 
     init {
+        button {
+            this.title = "customscoreboard.config.compatibility.scoreboard_overhaul.configbutton"
+            this.description = "customscoreboard.config.compatibility.scoreboard_overhaul.configbutton.desc"
+            this.text = "customscoreboard.config.compatibility.scoreboard_overhaul.configbutton.text"
+            this.onClick {
+                ScoreboardOverhaulCompat.openConfig()
+            }
+        }
+
         separator {
             this.title = "customscoreboard.config.compatibility.skyhanni"
             this.description = "customscoreboard.config.compatibility.skyhanni.desc"

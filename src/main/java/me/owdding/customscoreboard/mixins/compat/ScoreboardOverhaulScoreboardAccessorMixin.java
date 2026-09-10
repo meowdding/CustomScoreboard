@@ -7,7 +7,7 @@ import me.jfenn.scoreboardoverhaul.common.data.ObjectiveInfo;
 import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo;
 import me.jfenn.scoreboardoverhaul.impl.ScoreboardAccessor;
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer;
-import me.owdding.customscoreboard.utils.ScoreboardOverhaulUtils;
+import me.owdding.customscoreboard.compat.ScoreboardOverhaulCompat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
@@ -58,7 +58,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         ArrayList<ScoreInfo> scores = new ArrayList<>();
 
         for (int i = lines.size() - 2; i >= 0; i--) {
-            scores.add(ScoreboardOverhaulUtils.createInfo("Line" + i, lines.get(lines.size() - i - 1).getComponent(), i));
+            scores.add(ScoreboardOverhaulCompat.createInfo("Line" + i, lines.get(lines.size() - i - 1).getComponent(), i));
         }
 
         return scores;

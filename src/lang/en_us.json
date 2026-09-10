@@ -456,6 +456,11 @@
                     "skyblock_level_color": {
                         "@value": "SkyBlock Level Color",
                         "desc": "Colors the outline based on your SkyBlock Level."
+                    },
+                    "configbutton": {
+                        "@value": "Open Scoreboard Overhaul Config",
+                        "desc": "Opens the Scoreboard Overhaul configuration menu.",
+                        "text": "Open Config"
                     }
                 },
                 "skyhanni": {
