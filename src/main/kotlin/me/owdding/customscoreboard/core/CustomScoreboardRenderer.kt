@@ -167,23 +167,33 @@ object CustomScoreboardRenderer : Overlay {
         val padding = BackgroundConfig.padding
         val borderOffset = if (BackgroundConfig.borderEnabled) BackgroundConfig.borderSize else 0
 
-        val x = currentX - padding - borderOffset
-        val y = currentY - padding - borderOffset
-        val width = bounds.first + padding * 2 + borderOffset * 2
-        val height = bounds.second + padding * 2 + borderOffset * 2
+        val contentWidth = bounds.first
+        val contentHeight = bounds.second
+
+        val actualBackgroundWidth = contentWidth + padding * 2 + borderOffset * 2
+        val actualBackgroundHeight = contentHeight + padding * 2 + borderOffset * 2
+
+        val backgroundWidth = maxOf(actualBackgroundWidth, BackgroundConfig.minWidth)
+        val backgroundHeight = maxOf(actualBackgroundHeight, BackgroundConfig.minHeight)
+
+        val contentOffsetX = (backgroundWidth - contentWidth) / 2
+        val contentOffsetY = (backgroundHeight - contentHeight) / 2
+
+        val x = currentX - contentOffsetX
+        val y = currentY - contentOffsetY
 
         if (BackgroundConfig.blurEnabled/*? < 26.2 {*/ /*&& !BlurredBackground.vulkanInstalled*//*?}*/) {
-            BlurredBackground.render(event.graphics, x, y, width, height, BackgroundConfig.radius)
+            BlurredBackground.render(event.graphics, x, y, backgroundWidth, backgroundHeight, BackgroundConfig.radius)
         }
 
         if (BackgroundConfig.imageBackground) {
             event.graphics.drawTexture(
-                x, y, width, height,
+                x, y, backgroundWidth, backgroundHeight,
                 CustomScoreboardBackground.getTexture(),
                 alpha = BackgroundConfig.imageBackgroundTransparency / 100f,
             )
         }
-        event.graphics.drawRec(x, y, width, height)
+        event.graphics.drawRec(x, y, backgroundWidth, backgroundHeight)
     }
 
     fun updateIslandCache() {
@@ -219,14 +229,23 @@ object CustomScoreboardRenderer : Overlay {
 
     private fun updatePosition() {
         with(BackgroundConfig) {
-            val width = display?.width ?: 0
-            val height = display?.height ?: 0
+            val contentWidth = display?.width ?: 0
+            val contentHeight = display?.height ?: 0
             val borderSize = if (borderEnabled) this.borderSize else 0
 
+            val actualBackgroundWidth = contentWidth + padding * 2 + borderSize * 2
+            val actualBackgroundHeight = contentHeight + padding * 2 + borderSize * 2
+
+            val backgroundWidth = maxOf(actualBackgroundWidth, minWidth)
+            val backgroundHeight = maxOf(actualBackgroundHeight, minHeight)
+
+            val contentOffsetX = (backgroundWidth - contentWidth) / 2
+            val contentOffsetY = (backgroundHeight - contentHeight) / 2
+
             currentX = when (CustomizationConfig.horizontalAlignment) {
-                HorizontalAlignment.LEFT -> padding + margin + borderSize
-                HorizontalAlignment.CENTER -> (screenWidth - width) / 2
-                HorizontalAlignment.RIGHT -> screenWidth - width - padding - margin - borderSize
+                HorizontalAlignment.LEFT -> margin + contentOffsetX
+                HorizontalAlignment.CENTER -> (screenWidth - backgroundWidth) / 2 + contentOffsetX
+                HorizontalAlignment.RIGHT -> screenWidth - backgroundWidth - margin + contentOffsetX
                 HorizontalAlignment.FREE_MOVE -> {
                     val configX = CustomizationConfig.position.x
                     if (configX < 0) screenWidth + configX else configX
@@ -237,9 +256,9 @@ object CustomScoreboardRenderer : Overlay {
             }
 
             currentY = when (CustomizationConfig.verticalAlignment) {
-                VerticalAlignment.TOP -> padding + margin + borderSize
-                VerticalAlignment.CENTER -> (screenHeight - height) / 2
-                VerticalAlignment.BOTTOM -> screenHeight - height - padding - margin - borderSize
+                VerticalAlignment.TOP -> margin + contentOffsetY
+                VerticalAlignment.CENTER -> (screenHeight - backgroundHeight) / 2 + contentOffsetY
+                VerticalAlignment.BOTTOM -> screenHeight - backgroundHeight - margin + contentOffsetY
                 VerticalAlignment.FREE_MOVE -> {
                     val configY = CustomizationConfig.position.y
                     if (configY < 0) screenHeight + configY else configY
@@ -249,7 +268,7 @@ object CustomScoreboardRenderer : Overlay {
                 CustomizationConfig.position.y = currentY
             }
 
-            bounds = width to height
+            bounds = contentWidth to contentHeight
         }
     }
 

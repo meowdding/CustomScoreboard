@@ -35,7 +35,6 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_25)
     compilerOptions.optIn.add("kotlin.time.ExperimentalTime")
     compilerOptions.freeCompilerArgs.addAll(
-        "-Xcontext-parameters",
         "-Xcontext-sensitive-resolution",
         "-Xnullability-annotations=@org.jspecify.annotations:warn"
     )

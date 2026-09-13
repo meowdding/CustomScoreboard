@@ -67,6 +67,16 @@ object BackgroundConfig : CategoryKt("Background") {
         //this.translation = if (BlurredBackground.vulkanInstalled) "customscoreboard.config.background.blur_vulk" else "customscoreboard.config.background.blur"
     }
 
+    val minWidth by int(0) {
+        this.translation = "customscoreboard.config.background.min_width"
+        this.range = 0..1000
+    }
+
+    val minHeight by int(0) {
+        this.translation = "customscoreboard.config.background.min_height"
+        this.range = 0..1000
+    }
+
     init {
         separator { this.title = "customscoreboard.config.background.sections.border" }
     }
