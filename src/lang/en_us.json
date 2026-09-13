@@ -210,6 +210,14 @@
                         "<red>This is disabled because you have vulkan mod installed. Remove the mod to use this feature.</red>"
                     ]
                 },
+                "min_width": {
+                    "@value": "Minimum Width",
+                    "desc": "Choose a minimum width for the Scoreboard, useful for Textured Background"
+                },
+                "min_height": {
+                    "@value": "Minimum Height",
+                    "desc": "Choose a minimum height for the Scoreboard, useful for Textured Background"
+                },
                 "border": {
                     "enabled": {
                         "@value": "Toggle Border",
