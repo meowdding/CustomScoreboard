@@ -3,10 +3,11 @@ package me.owdding.customscoreboard.elements
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.utils.KnownMods
-import net.minecraft.network.chat.Component
+import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.party.PartyAPI
+import tech.thatgravyboat.skyblockapi.api.profile.party.PartyMember
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -22,28 +23,13 @@ object PartyElement : Element() {
         }
 
         if (LinesConfig.showPartyLeader) {
-            PartyAPI.leader?.let { leader ->
-                val (name, color) = leader.name?.to(TextColor.WHITE) ?: ("Unknown Name" to TextColor.RED)
-                val leaderLine = Text.of {
-                    append("- ", TextColor.GRAY)
-                    append(name, color)
-                    append(" ♚", TextColor.YELLOW)
-                }
-                addMember(leaderLine, name)
-            }
+            PartyAPI.leader?.let { leader -> addMember(leader) }
         }
 
         list
             .take(LinesConfig.maxPartyMembers)
             .filter { it.name != null && (!LinesConfig.showPartyLeader || it != PartyAPI.leader) }
-            .forEach { member ->
-                val (name, color) = member.name?.to(TextColor.WHITE) ?: ("Unknown Name" to TextColor.RED)
-                val memberLine = Text.of {
-                    append("- ", TextColor.GRAY)
-                    append(name, color)
-                }
-                addMember(memberLine, name)
-            }
+            .forEach { member -> addMember(member) }
 
         if (list.any { it.name == null }) {
             val fixLine = Text.of("Run ") {
@@ -57,7 +43,15 @@ object PartyElement : Element() {
         }
     }
 
-    private fun MutableList<Any>.addMember(line: Component, name: String?) {
+    private fun MutableList<Any>.addMember(member: PartyMember) {
+        val (name, color) = member.name?.to(TextColor.WHITE) ?: ("Unknown Name" to TextColor.RED)
+        val line = Text.of {
+            append("- ", TextColor.GRAY)
+            append(name, color)
+            if (!member.isOnline) append(" ●", TextColor.RED)
+            if (member.role == ClientboundPartyInfoPacket.PartyRole.LEADER) append(" ♚", TextColor.YELLOW)
+        }
+
         if ((KnownMods.SKYBLOCK_PV.installed || KnownMods.SKYBLOCKER.installed)) {
             add(line) {
                 hover(Text.of("Click to view ${name}'s profile", TextColor.GRAY))
