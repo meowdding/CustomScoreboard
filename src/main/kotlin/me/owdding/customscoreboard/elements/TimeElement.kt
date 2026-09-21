@@ -5,6 +5,7 @@ import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import me.owdding.customscoreboard.utils.TextUtils.checkDateLocationPrefix
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
@@ -46,7 +47,7 @@ object TimeElement : Element() {
             append(" ")
             append(it)
         }
-    }
+    }.checkDateLocationPrefix()
 
     override val configLine = "Time"
     override val id = "TIME"

@@ -4,6 +4,7 @@ import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import me.owdding.customscoreboard.utils.TextUtils.checkDateLocationPrefix
 import me.owdding.customscoreboard.utils.TextUtils.trim
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -16,7 +17,11 @@ object AreaElement : Element() {
     override val id = "AREA"
     override val group = ElementGroup.HEADER
 
-    override fun getDisplay() = listOfNotNull(formattedLocation, formattedGardenPlot, formattedVisiting)
+    override fun getDisplay() = listOfNotNull(
+        formattedLocation?.checkDateLocationPrefix(),
+        formattedGardenPlot?.checkDateLocationPrefix(),
+        formattedVisiting?.checkDateLocationPrefix()
+    )
 
     private val remote = RemoteStrings.resolve()
     private val locationComponentRegex by remote.componentRegex("\\s*[⏣ф\uE067\uE020] .+")

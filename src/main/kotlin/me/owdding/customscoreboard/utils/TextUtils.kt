@@ -1,8 +1,10 @@
 package me.owdding.customscoreboard.utils
 
+import me.owdding.customscoreboard.config.category.LinesConfig
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import tech.thatgravyboat.skyblockapi.utils.text.Text.prefix
 import java.util.Optional
 
 object TextUtils {
@@ -141,5 +143,10 @@ object TextUtils {
         }
 
         return result
+    }
+
+    fun Component.checkDateLocationPrefix(): Component {
+        val prefix = if (LinesConfig.indentLocationTimeLines) "  " else ""
+        return this.prefix(prefix)
     }
 }

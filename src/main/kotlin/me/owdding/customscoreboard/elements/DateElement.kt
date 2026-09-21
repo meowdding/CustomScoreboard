@@ -4,6 +4,7 @@ import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.TextUtils.checkDateLocationPrefix
 import me.owdding.lib.extensions.ordinal
 import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
@@ -16,7 +17,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 object DateElement : Element() {
     override fun getDisplay() = Text.of("${DateTimeAPI.season} ${DateTimeAPI.day}${DateTimeAPI.day.ordinal()}") {
         color = seasonColors[DateTimeAPI.season]?.takeIf { LinesConfig.coloredMonth } ?: TextColor.WHITE
-    }.withActions {
+    }.checkDateLocationPrefix().withActions {
         hover(atmosphericEffect.entries.find { DateTimeAPI.season in it.key }?.value)
     }
 

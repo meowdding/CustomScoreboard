@@ -454,6 +454,10 @@
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",
                     "desc": "Show the individual minutes of the current SkyBlock time instead of only updating every ~8 seconds.\nWill turn off if the smoothing is too inaccurate"
+                },
+                "indent_location_time": {
+                    "@value": "Indent Island, Area, Time & Date Lines",
+                    "desc": "Adds 2-space indentations to island, area, time and date lines, mimicking the way the original scoreboard shows them."
                 }
             },
             "compatibility": {
