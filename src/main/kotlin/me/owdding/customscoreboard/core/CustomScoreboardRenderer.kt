@@ -20,11 +20,10 @@ import me.owdding.lib.overlays.Overlay
 import me.owdding.lib.overlays.OverlayAlignment
 import me.owdding.lib.overlays.Position
 import me.owdding.lib.overlays.Rect
-import me.owdding.lib.platform.screens.MouseButtonEvent
-import me.owdding.lib.platform.screens.MouseButtonInfo
-import me.owdding.lib.platform.screens.mouseClicked
 import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
+import net.minecraft.client.input.MouseButtonEvent
+import net.minecraft.client.input.MouseButtonInfo
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent

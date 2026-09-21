@@ -29,6 +29,7 @@ repositories {
     scopedMaven("https://maven.nucleoid.xyz/", "eu.pb4")
     scopedMaven(url = "https://maven.shedaniel.me/", "me.shedaniel", "dev.architectury")
     mavenCentral()
+    mavenLocal()
 }
 
 tasks.withType<KotlinCompile>().configureEach {

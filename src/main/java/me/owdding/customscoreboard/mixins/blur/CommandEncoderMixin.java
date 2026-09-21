@@ -1,7 +1,7 @@
 package me.owdding.customscoreboard.mixins.blur;
 
-import com.mojang.blaze3d.systems.CommandEncoder;
-import com.mojang.blaze3d.systems.CommandEncoderBackend;
+import com.mojang.renderpearl.api.commands.CommandEncoder;
+import com.mojang.renderpearl.backend.api.CommandEncoderBackend;
 import me.owdding.customscoreboard.hooks.CommandEncoderHook;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

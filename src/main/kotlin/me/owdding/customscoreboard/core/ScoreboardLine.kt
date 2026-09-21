@@ -54,7 +54,7 @@ data class ScoreboardLine(
 
                 button.withCallback {
                     actions.command?.let { McClient.sendCommand(it.removePrefix("/")) }
-                    actions.link?.let { Util.getPlatform().openUri(it) }
+                    actions.link?.let { McClient.openUri(it) }
                     actions.click?.invoke()
                 }
             }

@@ -2,21 +2,21 @@ package me.owdding.customscoreboard.core
 
 //? >= 26.2 {
 import net.minecraft.client.renderer.BindGroupLayouts
-import com.mojang.blaze3d.GpuFormat
-import com.mojang.blaze3d.PrimitiveTopology
-import com.mojang.blaze3d.pipeline.BindGroupLayout
+import com.mojang.renderpearl.api.GpuFormat
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
+import com.mojang.renderpearl.api.pipeline.BindGroupLayout
 //?} else
-//import com.mojang.blaze3d.vertex.VertexFormat
-import com.mojang.blaze3d.pipeline.RenderPipeline
+//import com.mojang.renderpearl.api.vertex.VertexFormat
+import com.mojang.renderpearl.api.pipeline.RenderPipeline
 import com.mojang.blaze3d.pipeline.RenderTarget
 import com.mojang.blaze3d.pipeline.TextureTarget
-import com.mojang.blaze3d.shaders.UniformType
+import com.mojang.renderpearl.api.pipeline.UniformType
 import com.mojang.blaze3d.systems.RenderSystem
-import com.mojang.blaze3d.textures.AddressMode
-import com.mojang.blaze3d.textures.FilterMode
-import com.mojang.blaze3d.textures.GpuTexture
+import com.mojang.renderpearl.api.textures.FilterMode
+import com.mojang.renderpearl.api.textures.GpuTexture
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.VertexConsumer
+import com.mojang.renderpearl.api.textures.AddressMode
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform
 import me.owdding.customscoreboard.CustomScoreboardMod
 import net.minecraft.client.gui.GuiGraphicsExtractor
@@ -85,7 +85,8 @@ object BlurredBackground {
         }*///?}
         if (target == null) {
             //? >= 26.2 {
-            target = TextureTarget(null, width, height, false, GpuFormat.RGBA8_UNORM) // TODO: confirm format
+            //~ if >= 26.3 ', false, GpuFormat.RGBA8_UNORM' -> ', GpuFormat.RGBA8_UNORM, GpuFormat.RGBA8_UNORM'
+            target = TextureTarget(null, width, height, GpuFormat.RGBA8_UNORM, GpuFormat.RGBA8_UNORM)
             //?} else
             //target = TextureTarget(null, width, height, false)
         } else {
