@@ -1,25 +1,42 @@
 package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.LinesConfig
-import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.elements.SlayerElement.isInSlayerRegion
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.lib.builder.ComponentFactory
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerAPI
 import tech.thatgravyboat.skyblockapi.api.profile.slayer.SlayerProgressAPI
 import tech.thatgravyboat.skyblockapi.api.remote.repo.RepoSlayerData
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object SlayerStatsElement : Element() {
-    override fun getDisplay() = buildList<Any?> {
-        val type = SlayerAPI.type ?: return@buildList
-        val data = SlayerProgressAPI.slayerData.entries.find { it.key == type } ?: return@buildList
+    override fun getDisplay(): Component? {
+        val type = SlayerAPI.type ?: return null
+        val data = SlayerProgressAPI.slayerData.entries.find { it.key == type } ?: return null
         val repo = RepoSlayerData.getData(type)
 
-        val slayerLevel = " §7(§c${repo.getLevel(data.value.xp)}§7)".takeIf { LinesConfig.slayerLevel } ?: ""
-        add("Slayer Stats$slayerLevel")
-        add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Xp", data.value.xp.format(), "§c")}")
-        add(" ${CustomScoreboardRenderer.formatNumberDisplayDisplay("Meter", data.value.meterXp.format(), "§d")}")
+        return ComponentFactory.multiline {
+            string("Slayer Stats") {
+                if (LinesConfig.slayerLevel) {
+                    append(" (", TextColor.GRAY)
+                    append(repo.getLevel(data.value.xp).toString(), TextColor.RED)
+                    append(")", TextColor.GRAY)
+                }
+            }
+
+            string(" Xp: ") {
+                append(data.value.xp.format(), TextColor.RED)
+            }
+
+            string(" Meter: ") {
+                append(data.value.meterXp.format(), TextColor.LIGHT_PURPLE)
+            }
+        }
     }
 
     override fun showWhen(): Boolean = !LinesConfig.hideSlayerOutsideSlayerAreas || isInSlayerRegion()
