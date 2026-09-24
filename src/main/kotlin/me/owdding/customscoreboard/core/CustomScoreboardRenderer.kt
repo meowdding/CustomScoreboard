@@ -27,6 +27,7 @@ import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.HudElement
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudElementEvent
@@ -118,7 +119,7 @@ object CustomScoreboardRenderer : Overlay {
         tryUpdate(Config.updateEveryTick)
     }
 
-    @Subscription(event = [TickEvent::class])
+    @Subscription(event = [ScoreboardUpdateEvent::class])
     fun onScoreboardUpdate() {
         tryUpdate(true)
     }
