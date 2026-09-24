@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.core
 
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.ModCompat
+import me.owdding.customscoreboard.compat.TablistCompat
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.category.BackgroundConfig
 import me.owdding.customscoreboard.config.category.CustomizationConfig
@@ -139,7 +140,7 @@ object CustomScoreboardRenderer : Overlay {
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         if (renderScoreboardOverhaul()) return
-        if (McClient.options.keyPlayerList.isDown && Config.hideWhenTab) return
+        if (Config.hideWhenTab && TablistCompat.isAnyTabRendering) return
         if (McScreen.isOf<ChatScreen>() && Config.hideWhenChat) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse
