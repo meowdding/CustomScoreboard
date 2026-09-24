@@ -3,6 +3,8 @@ package me.owdding.customscoreboard.utils
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import tech.thatgravyboat.skyblockapi.utils.text.CommonText
+import tech.thatgravyboat.skyblockapi.utils.text.Text
 import java.util.Optional
 
 object TextUtils {
@@ -138,6 +140,31 @@ object TextUtils {
                     result.append(Component.literal(content).setStyle(style))
                 }
             }
+        }
+
+        return result
+    }
+
+    fun <T> Iterable<T>.joinToComponent(
+        separator: Component = Text.of(", "),
+        transform: ((T) -> Component)? = null,
+    ): Component {
+        val result = Component.empty()
+        var first = true
+
+        for (element in this) {
+            if (!first) {
+                result.append(separator)
+            }
+            first = false
+
+            val component = if (transform != null) {
+                transform(element)
+            } else {
+                element as? Component ?: Component.literal(element.toString())
+            }
+
+            result.append(component)
         }
 
         return result
