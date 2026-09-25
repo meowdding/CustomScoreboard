@@ -13,22 +13,31 @@ import me.owdding.customscoreboard.elements.NorthStarsElement
 import me.owdding.customscoreboard.elements.PurseElement
 import me.owdding.customscoreboard.elements.SowdustElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.mining.GlaciteAPI
 import tech.thatgravyboat.skyblockapi.api.area.mining.HollowsAPI
 import tech.thatgravyboat.skyblockapi.api.area.rift.RiftAPI
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
-enum class ChunkedStat(val display: () -> String, val element: Element) {
-    PURSE({ "§6${CurrencyAPI.purse.format()}" }, PurseElement),
-    MOTES({ "§d${RiftAPI.motes.format()}" }, MotesElement),
-    BANK({ "§6${BankElement.line()}" }, BankElement),
-    BITS({ "§b${BitsElement.line()}" }, BitsElement),
-    COPPER({ "§c${CurrencyAPI.copper.format()}" }, CopperElement),
-    SOWDUST({ "§2${CurrencyAPI.sowdust.format()}" }, SowdustElement),
-    GEMS({ "§a${CurrencyAPI.gems.format()}" }, GemsElement),
-    HEAT({ if (HollowsAPI.immuneToHeat) "§6IMMUNE" else "§c${HollowsAPI.heat}" }, HeatElement),
-    COLD({ "§b${GlaciteAPI.cold.format()}" }, ColdElement),
-    NORTH_STARS({ "§d${CurrencyAPI.northStars.format()}" }, NorthStarsElement),
+enum class ChunkedStat(val display: () -> Component, val element: Element) {
+    PURSE({ Text.of(CurrencyAPI.purse.format(), TextColor.GOLD) }, PurseElement),
+    MOTES({ Text.of(RiftAPI.motes.format(), TextColor.LIGHT_PURPLE) }, MotesElement),
+    BANK({ Text.of(BankElement.line(), TextColor.GOLD) }, BankElement),
+    BITS({ Text.of(BitsElement.line(), TextColor.AQUA) }, BitsElement),
+    COPPER({ Text.of(CurrencyAPI.copper.format(), TextColor.RED) }, CopperElement),
+    SOWDUST({ Text.of(CurrencyAPI.sowdust.format(), TextColor.DARK_GREEN) }, SowdustElement),
+    GEMS({ Text.of(GemsElement.format(CurrencyAPI.gems), TextColor.GREEN) }, GemsElement),
+    HEAT(
+        {
+            if (HollowsAPI.immuneToHeat) Text.of("IMMUNE", TextColor.GOLD)
+            else Text.of(HollowsAPI.heat.toString(), TextColor.RED)
+        },
+        HeatElement,
+    ),
+    COLD({ Text.of(GlaciteAPI.cold.format(), TextColor.AQUA) }, ColdElement),
+    NORTH_STARS({ Text.of(CurrencyAPI.northStars.format(), TextColor.LIGHT_PURPLE) }, NorthStarsElement),
     ;
 
     override fun toString(): String = element.configLine
