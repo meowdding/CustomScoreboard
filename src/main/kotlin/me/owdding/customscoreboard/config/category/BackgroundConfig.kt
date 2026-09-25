@@ -229,7 +229,7 @@ object CustomBackgroundModal {
                     Path(BackgroundConfig.customImageFile)
                         .absolute()
                         .parent
-                        //~if >= 26.3 'Utils.getPlatform' -> 'Blaze3D'
+                        //~if >= 26.3 'Util.getPlatform()' -> 'Blaze3D'
                         ?.let(Blaze3D::openPath)
                 }
             }
