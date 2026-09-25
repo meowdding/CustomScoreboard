@@ -1,4 +1,4 @@
-#version 150
+#version 330
 
 const float PI2 = 6.28318530718;
 
@@ -6,8 +6,8 @@ const float BLUR_DIRECTIONS = 32.0;
 const float BLUR_QUALITY = 9.0;
 const float BLUR_SIZE = 8.0;
 
-#moj_import <minecraft:dynamictransforms.glsl>
-#moj_import <minecraft:globals.glsl>
+#include <minecraft:dynamictransforms.glsl>
+#include <minecraft:globals.glsl>
 
 
 layout(std140) uniform RoundedTextureUniform {
@@ -18,7 +18,13 @@ layout(std140) uniform RoundedTextureUniform {
 };
 
 uniform sampler2D Sampler0;
+
+#ifdef NO_LAYOUT
 out vec4 fragColor;
+#else
+#extension GL_ARB_separate_shader_objects : require
+layout(location = 0) out vec4 fragColor;
+#endif
 
 // From: https://iquilezles.org/articles/distfunctions2d/
 float sdRoundedBox(vec2 p, vec2 b, vec4 r){

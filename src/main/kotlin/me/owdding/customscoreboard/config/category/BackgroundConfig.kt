@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.config.category
 
+//? >= 26.3
+import com.mojang.blaze3d.Blaze3D
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import earth.terrarium.olympus.client.components.Widgets
@@ -13,7 +15,9 @@ import me.owdding.customscoreboard.core.CustomScoreboardBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import net.minecraft.client.gui.layouts.LayoutElement
-import net.minecraft.util.Util
+//? < 26.3
+//import net.minecraft.util.Util
+import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.platform.showTooltip
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText
@@ -137,7 +141,7 @@ object BackgroundConfig : CategoryKt("Background") {
             this.text = "Open Website"
 
             onClick {
-                Util.getPlatform().openUri("https://meowdd.ing/scoreboard")
+                McClient.openUri("https://meowdd.ing/scoreboard")
             }
         }
 
@@ -218,7 +222,6 @@ object CustomBackgroundModal {
                     }
                 }
 
-                //~ if >= 26.1 'drawCenteredString' -> 'centeredText'
                 graphics.centeredText(McFont.self, text, centerX, context.y, -1)
             }
             it.withCallback {
@@ -226,7 +229,8 @@ object CustomBackgroundModal {
                     Path(BackgroundConfig.customImageFile)
                         .absolute()
                         .parent
-                        ?.let(Util.getPlatform()::openPath)
+                        //~if >= 26.3 'Util.getPlatform()' -> 'Blaze3D'
+                        ?.let(Blaze3D::openPath)
                 }
             }
             it.withSize(width, McFont.height)

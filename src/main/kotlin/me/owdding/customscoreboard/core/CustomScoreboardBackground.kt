@@ -43,7 +43,8 @@ object CustomScoreboardBackground {
                         this.animated = false
                         this.dynamic = true
 
-                        val image = NativeImage.read(NativeImage.Format.RGBA, stream)
+                        //~ if >= 26.3 '(NativeImage.Format.RGBA, ' -> '('
+                        val image = NativeImage.read(stream)
                         McClient.runNextTick {
                             val texture = DynamicTexture({ "Custom Scoreboard Background" }, image)
                             McClient.self.textureManager.register(dynamicTexture, texture)
