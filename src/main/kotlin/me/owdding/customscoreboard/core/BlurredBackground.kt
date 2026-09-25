@@ -47,6 +47,8 @@ object BlurredBackground {
         .withUniform("Projection", UniformType.UNIFORM_BUFFER)
         .withUniform(RoundedTextureUniform.NAME, UniformType.UNIFORM_BUFFER)
         .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)*///?}
+        //? < 26.3
+        //.withShaderDefine("NO_LAYOUT")
         .withFragmentShader(CustomScoreboardMod.id("core/blurred_background"))
         .withVertexShader(CustomScoreboardMod.id("core/blurred_background"))
         .build()

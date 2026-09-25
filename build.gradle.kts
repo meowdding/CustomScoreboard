@@ -50,7 +50,7 @@ loom {
     runConfigs["client"].apply {
         ideConfigGenerated(true)
         runDir = "../../run"
-        vmArg("-Dfabric.modsFolder=" + '"' + rootProject.projectDir.resolve("run/${mcVersion}Mods").absolutePath + '"')
+        vmArg("-Dfabric.modsFolder=${mcVersion}Mods")
     }
 
     if (accessWidenerFile.exists()) {
@@ -130,7 +130,7 @@ idea {
 tasks.withType<ProcessResources>().configureEach {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     filesMatching(listOf("**/*.fsh", "**/*.vsh")) {
-        filter { if (it.startsWith("//!moj_import")) "#${it.substring(3)}" else it }
+        filter { if (it.startsWith("#include") && stonecutter.eval(stonecutter.current.version, "< 26.3")) "#moj_import" else it }
     }
     with(copySpec {
         from(rootProject.file("src/lang")).include("*.json").into("assets/customscoreboard/lang")

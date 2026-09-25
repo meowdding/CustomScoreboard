@@ -23,4 +23,4 @@ resourceful-config = { module = "com.teamresourceful.resourcefulconfig:resourcef
 olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.3", version.ref = "olympus" }
 placeholders = { module = "eu.pb4:placeholder-api", version.ref = "placeholders" }
 
-scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" }
+#scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" }
