@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.core
 
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.ModCompat
+import me.owdding.customscoreboard.compat.TablistCompat
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.category.BackgroundConfig
 import me.owdding.customscoreboard.config.category.CustomizationConfig
@@ -26,6 +27,7 @@ import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.input.MouseButtonInfo
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.events.location.IslandChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.render.HudElement
 import tech.thatgravyboat.skyblockapi.api.events.render.RenderHudElementEvent
@@ -117,7 +119,7 @@ object CustomScoreboardRenderer : Overlay {
         tryUpdate(Config.updateEveryTick)
     }
 
-    @Subscription(event = [TickEvent::class])
+    @Subscription(event = [ScoreboardUpdateEvent::class])
     fun onScoreboardUpdate() {
         tryUpdate(true)
     }
@@ -137,7 +139,7 @@ object CustomScoreboardRenderer : Overlay {
     fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         if (renderScoreboardOverhaul()) return
-        if (McClient.options.keyPlayerList.isDown && Config.hideWhenTab) return
+        if (Config.hideWhenTab && TablistCompat.isAnyTabRendering) return
         if (McScreen.isOf<ChatScreen>() && Config.hideWhenChat) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse

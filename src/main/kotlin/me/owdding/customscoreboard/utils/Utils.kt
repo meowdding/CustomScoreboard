@@ -32,7 +32,7 @@ object Utils {
             if (years > 0) add("${years}y")
             if (days > 0) add("${days}d")
             if (hours > 0) add("${hours}h")
-            if (minutes > 0 && (LinesConfig.includeMinutes && days > 0)) add("${minutes}m") // Show minutes unless they're hidden when days are present
+            if (minutes > 0 && (days <= 0 || LinesConfig.includeMinutes)) add("${minutes}m") // Show minutes unless they're hidden when days are present
             if (years <= 0 && days <= 0 && seconds > 0) add("${seconds}s") // Only show seconds if there is no days or years
         }
 
