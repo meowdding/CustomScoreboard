@@ -29,6 +29,11 @@ import org.joml.Vector2f
 import org.joml.Vector4f
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 
+//? >= 26.3 {
+import com.mojang.renderpearl.api.pipeline.BlendFunction
+import com.mojang.renderpearl.api.pipeline.ColorTargetState
+//? }
+
 object BlurredBackground {
 
     private val pipeline: RenderPipeline = RenderPipeline.builder()
@@ -41,6 +46,8 @@ object BlurredBackground {
         .withBindGroupLayout(BindGroupLayout.builder().withUniform(RoundedTextureUniform.NAME, UniformType.UNIFORM_BUFFER).build())
         .withVertexBinding(0, DefaultVertexFormat.POSITION)
         .withPrimitiveTopology(PrimitiveTopology.QUADS)
+        //? >= 26.3
+        .withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
         //?} else {
         /*.withSampler("Sampler0")
         .withUniform("DynamicTransforms", UniformType.UNIFORM_BUFFER)
