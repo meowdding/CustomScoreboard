@@ -1,12 +1,5 @@
 package me.owdding.customscoreboard.core
 
-//? >= 26.2 {
-import net.minecraft.client.renderer.BindGroupLayouts
-import com.mojang.renderpearl.api.GpuFormat
-import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
-import com.mojang.renderpearl.api.pipeline.BindGroupLayout
-//?} else
-//import com.mojang.renderpearl.api.vertex.VertexFormat
 import com.mojang.renderpearl.api.pipeline.RenderPipeline
 import com.mojang.blaze3d.pipeline.RenderTarget
 import com.mojang.blaze3d.pipeline.TextureTarget
@@ -29,6 +22,13 @@ import org.joml.Vector2f
 import org.joml.Vector4f
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 
+//? >= 26.2 {
+import net.minecraft.client.renderer.BindGroupLayouts
+import com.mojang.renderpearl.api.GpuFormat
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
+import com.mojang.renderpearl.api.pipeline.BindGroupLayout
+//?} else
+//import com.mojang.renderpearl.api.vertex.VertexFormat
 //? >= 26.3 {
 import com.mojang.renderpearl.api.pipeline.BlendFunction
 import com.mojang.renderpearl.api.pipeline.ColorTargetState
