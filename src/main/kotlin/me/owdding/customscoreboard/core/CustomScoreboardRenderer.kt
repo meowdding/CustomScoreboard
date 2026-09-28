@@ -141,7 +141,8 @@ object CustomScoreboardRenderer : Overlay {
         if (!isEnabled()) return
         if (renderScoreboardOverhaul()) return
         if (Config.hideWhenTab && TablistCompat.isAnyTabRendering) return
-        if (McScreen.isOf<ChatScreen>() && Config.hideWhenChat) return
+        if (Config.hideWhenChat && McScreen.isOf<ChatScreen>()) return
+        if (Config.hideWhenF3 && McClient.self.debugEntries.isOverlayVisible) return
         val display = display ?: return
         val (mouseX, mouseY) = McClient.mouse
 

@@ -23,6 +23,10 @@
                     "@value": "Hide While Chat Open",
                     "desc": "Hide the Custom Scoreboard while the chat is open."
                 },
+                "hide_when_f3": {
+                    "@value": "Hide While F3 Debug Screen Open",
+                    "desc": "Hide the Custom Scoreboard while the debug screen is open."
+                },
                 "hide_hypixel": {
                     "@value": "Hide Hypixel Scoreboard",
                     "desc": "Enable or disable the Hypixel scoreboard."

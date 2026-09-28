@@ -207,6 +207,10 @@ object Config : ConfigKt("customscoreboard/config") {
         this.translation = "$translationPath.hide_when_chat"
     }
 
+    val hideWhenF3 by boolean(false) {
+        this.translation = "$translationPath.hide_when_f3"
+    }
+
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
         this.translation = "$translationPath.hide_hypixel"
         this.shPath = "display.hideVanillaScoreboard"
