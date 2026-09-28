@@ -11,7 +11,7 @@ resourceful-config-kotlin = "4.0.0-beta.1"
 olympus = "1.9.4"
 placeholders = "3.1.0-beta.1+26.2"
 
-scoreboard-overhaul = "1.4.4-mc26.2"
+scoreboard-overhaul = "1.5.0-mc26.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }

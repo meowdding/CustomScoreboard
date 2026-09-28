@@ -58,7 +58,7 @@ public class ScoreboardOverhaulScoreboardAccessorMixin {
         ArrayList<ScoreInfo> scores = new ArrayList<>();
 
         for (int i = lines.size() - 2; i >= 0; i--) {
-            scores.add(ScoreboardOverhaulCompat.createInfo("Line" + i, lines.get(lines.size() - i - 1).getComponent(), i));
+            scores.add(ScoreboardOverhaulCompat.createInfo("Line" + i, lines.get(lines.size() - i - 1).getComponent(), i, null));
         }
 
         return scores;
