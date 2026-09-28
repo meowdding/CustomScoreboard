@@ -111,7 +111,6 @@ stonecutter parameters {
                 move(
                     "systems.RenderPass" to "commands.RenderPass",
                     "systems.GpuDevice" to "device.GpuDevice",
-                    "systems.CommandEncoder" to "api.commands.CommandEncoder",
                     "platform.CompareOp" to "pipeline.CompareOp",
                     "IndexType" to "pipeline.IndexType",
                     "PrimitiveTopology" to "pipeline.PrimitiveTopology",
@@ -119,7 +118,7 @@ stonecutter parameters {
                 )
             }
             movePackage("com.mojang.blaze3d", "com.mojang.renderpearl.backend.api") {
-                move("systems.CommandEncoderBackend" to "CommandEncoderBackend",)
+                move("systems.CommandEncoderBackend" to "CommandEncoderBackend")
             }
         }
     }

@@ -1,6 +1,6 @@
 package me.owdding.customscoreboard.mixins.blur;
 
-//~ if >= 26.3 'com.mojang.renderpearl.api.commands.CommandEncoder' -> 'import com.mojang.blaze3d.systems.CommandEncoder;'
+//~ if >= 26.3 'com.mojang.blaze3d.systems.CommandEncoder' -> 'com.mojang.renderpearl.frontend.FrontendCommandEncoder'
 import com.mojang.renderpearl.frontend.FrontendCommandEncoder;
 import com.mojang.renderpearl.backend.api.CommandEncoderBackend;
 import me.owdding.customscoreboard.hooks.CommandEncoderHook;
