@@ -11,7 +11,7 @@ resourceful-config-kotlin = "4.0.0-beta.1"
 olympus = "1.9.5"
 placeholders = "3.2.0+26.3"
 
-scoreboard-overhaul = "1.4.4-mc26.2"
+scoreboard-overhaul = "1.5.0-mc26.3"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -23,4 +23,4 @@ resourceful-config = { module = "com.teamresourceful.resourcefulconfig:resourcef
 olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.3", version.ref = "olympus" }
 placeholders = { module = "eu.pb4:placeholder-api", version.ref = "placeholders" }
 
-#scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" }
+scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" }
