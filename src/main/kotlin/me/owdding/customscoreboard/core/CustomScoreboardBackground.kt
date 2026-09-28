@@ -1,11 +1,13 @@
 package me.owdding.customscoreboard.core
 
 import com.mojang.blaze3d.platform.NativeImage
+import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.config.category.BackgroundConfig
 import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.resources.Identifier
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import java.io.File
+import kotlin.io.path.relativeTo
 import kotlin.jvm.optionals.getOrNull
 
 object CustomScoreboardBackground {
@@ -22,12 +24,16 @@ object CustomScoreboardBackground {
 
     fun load() {
         runCatching {
+            CustomScoreboardMod.info("Loading CustomScoreboard background...")
+
             val file = BackgroundConfig.customImageFile.takeUnless(String::isEmpty)?.let(::File)?.takeIf(File::exists)
                 ?: configFolderFileGif.takeIf(File::exists)
                 ?: configFolderFilePng.takeIf(File::exists)
 
             if (file != null && file.isFile) {
                 val isGif = file.extension.equals("gif", ignoreCase = true)
+                CustomScoreboardMod.info("Found background file: ${file.toPath().normalize().relativeTo(McClient.self.gameDirectory.toPath())} (GIF: $isGif)")
+
                 file.inputStream().use { stream ->
                     if (isGif) {
                         this.animated = true
@@ -35,6 +41,7 @@ object CustomScoreboardBackground {
                         CustomScoreboardAnimatedBackground.load(stream)
 
                         McClient.runNextTick {
+                            CustomScoreboardMod.info("Registering ${CustomScoreboardAnimatedBackground.frames.size} animated frames for background.")
                             for (frame in CustomScoreboardAnimatedBackground.frames) {
                                 McClient.self.textureManager.register(frame.sprite, frame.load())
                             }
@@ -46,16 +53,21 @@ object CustomScoreboardBackground {
                         //~ if >= 26.3 '(NativeImage.Format.RGBA, ' -> '('
                         val image = NativeImage.read(stream)
                         McClient.runNextTick {
+                            CustomScoreboardMod.info("Registering dynamic texture for background.")
                             val texture = DynamicTexture({ "Custom Scoreboard Background" }, image)
                             McClient.self.textureManager.register(dynamicTexture, texture)
                         }
                     }
                 }
             } else {
+                CustomScoreboardMod.info("No custom background file found.")
                 this.dynamic = false
                 this.animated = false
             }
-        }.onFailure(Throwable::printStackTrace)
+        }.onFailure {
+            CustomScoreboardMod.error("Failed to load CustomScoreboard background", it)
+            it.printStackTrace()
+        }
     }
 
     fun getTexture(): Identifier {
