@@ -2,6 +2,7 @@ package me.owdding.customscoreboard.core
 
 import com.mojang.blaze3d.platform.NativeImage
 import com.mojang.blaze3d.systems.RenderSystem
+import me.owdding.customscoreboard.CustomScoreboardMod
 import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.resources.Identifier
 import java.awt.image.BufferedImage
@@ -49,7 +50,7 @@ object CustomScoreboardAnimatedBackground {
                     val frames = reader.getNumImages(true)
 
                     if (frames > MAX_FRAMES) {
-                        println("Animated background has $frames frames, but only $frames can fit in a single texture. Some frames will be ignored.")
+                        CustomScoreboardMod.warn("Animated background has $frames frames, but only $MAX_FRAMES can fit in a single texture. Some frames will be ignored.")
                     } else {
                         // Minecraft doesnt clear the buffer from previously closed images, so we need to do it ourselves to prevent artifacts from showing up in the first frame.
                         val background = reader.createBackground()
