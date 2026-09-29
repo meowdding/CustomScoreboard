@@ -1,14 +1,14 @@
 package me.owdding.customscoreboard.mixins.blur;
 
 //? 26.1 {
-/*import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.vertex.VertexFormat;
+/*import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.vertex.VertexFormat;
 import me.owdding.customscoreboard.hooks.CommandEncoderHook;
 *///?}
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.systems.RenderPass;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform;
 import me.owdding.customscoreboard.core.BlurredBackground;
@@ -51,14 +51,15 @@ public class GuiRendererMixin {
 
     @Inject(
         method = "executeDraw",
-        at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderPass;setIndexBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/IndexType;)V")
+        at = @At(value = "INVOKE", target = "Lcom/mojang/renderpearl/api/commands/RenderPass;setIndexBuffer(Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/pipeline/IndexType;)V")
     )
     private void copyBackground(GuiRenderer.Draw draw, RenderPass renderPass, CallbackInfo ci) {
         if (draw.textureSetup() != BlurredBackground.getSetup()) return;
 
         var uniform = BlurredBackground.getUniform();
         if (uniform != null) {
-            var uniformBuffer = RoundedTextureUniform.STORAGE.get().writeUniform(uniform);
+            //~ if >= 26.3 'writeUniform' -> 'writeData'
+            var uniformBuffer = RoundedTextureUniform.STORAGE.get().writeData(uniform);
             if (uniformBuffer != null) {
                 renderPass.setUniform(RoundedTextureUniform.NAME, uniformBuffer);
             }
@@ -66,8 +67,8 @@ public class GuiRendererMixin {
     }
     //?} else {
     /*@Inject(
-        method = "executeDraw(Lnet/minecraft/client/gui/render/GuiRenderer$Draw;Lcom/mojang/blaze3d/systems/RenderPass;Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;)V",
-        at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderPass;setIndexBuffer(Lcom/mojang/blaze3d/buffers/GpuBuffer;Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;)V")
+        method = "executeDraw(Lnet/minecraft/client/gui/render/GuiRenderer$Draw;Lcom/mojang/renderpearl/api/commands/RenderPass;Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/vertex/VertexFormat$IndexType;)V",
+        at = @At(value = "INVOKE", target = "Lcom/mojang/renderpearl/api/commands/RenderPass;setIndexBuffer(Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/vertex/VertexFormat$IndexType;)V")
     )
     private void copyBackground(GuiRenderer.Draw draw, RenderPass pass, GpuBuffer buffer, VertexFormat.IndexType indexType, CallbackInfo ci) {
         if (draw.textureSetup() != BlurredBackground.getSetup()) return;
