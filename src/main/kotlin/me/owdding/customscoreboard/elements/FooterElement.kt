@@ -16,6 +16,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 object FooterElement : Element() {
     private val footerComponent = Text.of("www.hypixel.net", TextColor.YELLOW)
     private val alphaFooterComponent = Text.of("alpha.hypixel.net", TextColor.YELLOW)
+
     override fun getDisplay() = with(CustomizationConfig) {
         val defaultFooter = if (LocationAPI.onAlpha) alphaFooterComponent else footerComponent
         if (footerUseCustomText) footer() else defaultFooter align footerAlignment
@@ -25,5 +26,5 @@ object FooterElement : Element() {
     override val id = "FOOTER"
     override val group = ElementGroup.FOOTER
 
-    private fun footer() = (if (LocationAPI.onAlpha) alphaFooterText else footerText).map { TagComponentSerialization.deserialize(it) align footerAlignment }
+    private fun footer() = (if (LocationAPI.onAlpha) alphaFooterText else footerText).map { it align footerAlignment }
 }

@@ -31,5 +31,5 @@ object TitleElement : Element() {
     override val id = "TITLE"
     override val group = ElementGroup.HEADER
 
-    private fun title() = CustomizationConfig.titleText.map { TagComponentSerialization.deserialize(it) align titleAlignment }
+    private fun title() = CustomizationConfig.titleText.map { it align titleAlignment }
 }

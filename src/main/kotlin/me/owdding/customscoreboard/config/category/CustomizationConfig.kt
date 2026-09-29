@@ -54,6 +54,7 @@ import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.lib.displays.Alignment
 import me.owdding.lib.overlays.ConfigPosition
+import me.owdding.lib.utils.config.cachedTransformPlaceholderComponents
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 import kotlin.collections.toTypedArray
@@ -185,7 +186,7 @@ object CustomizationConfig : CategoryKt("customization") {
         this.translation = "$translationPath.title_custom_text"
         this.shPath = "display.titleAndFooter.customTitle"
         this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
-    }
+    }.cachedTransformPlaceholderComponents()
 
     init {
         separator { this.title = "$translationPath.sections.footer" }
@@ -206,13 +207,13 @@ object CustomizationConfig : CategoryKt("customization") {
         this.translation = "$translationPath.footer_custom_text"
         this.shPath = "display.titleAndFooter.customFooter"
         this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
-    }
+    }.cachedTransformPlaceholderComponents()
 
     val alphaFooterText by strings("") {
         this.translation = "$translationPath.custom_alpha_footer"
         this.shPath = "display.titleAndFooter.customAlphaFooter"
         this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
-    }
+    }.cachedTransformPlaceholderComponents()
 
     init {
         separator { this.title = "$translationPath.sections.layout" }
