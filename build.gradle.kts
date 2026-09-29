@@ -130,7 +130,7 @@ idea {
 tasks.withType<ProcessResources>().configureEach {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     filesMatching(listOf("**/*.fsh", "**/*.vsh")) {
-        filter { if (it.startsWith("#include") && stonecutter.eval(stonecutter.current.version, "< 26.3")) "#moj_import" else it }
+        filter { if (it.startsWith("#include") && stonecutter.eval(stonecutter.current.version, "< 26.3")) "#moj_import${it.removePrefix("#include")}" else it }
     }
     with(copySpec {
         from(rootProject.file("src/lang")).include("*.json").into("assets/customscoreboard/lang")
