@@ -46,5 +46,5 @@ object SlayerStatsElement : Element() {
     override val configLineHover = listOf(
         "§7The current slayer xp (and level) and meter xp you have.",
         "§7Will only show when Hypixel shows an active slayer quest.",
-    )
+    ).map { Text.of(it, TextColor.GRAY) }
 }

@@ -287,13 +287,7 @@ object CustomScoreboardRenderer : Overlay {
         updateIslandCache()
     }
 
-    fun formatNumberDisplayDisplay(text: String, number: String, color: String) = when (LinesConfig.numberDisplayFormat) {
-        NumberDisplayFormat.TEXT_COLOR_NUMBER -> "§f$text: $color$number"
-        NumberDisplayFormat.COLOR_TEXT_NUMBER -> "$color$text: $number"
-        NumberDisplayFormat.COLOR_NUMBER_TEXT -> "$color$number $text"
-        NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> "$color$number §f$text"
-    }
-
+    fun formatNumberDisplayDisplay(text: String, number: String, color: Int): Component = formatNumberDisplayDisplay(text, number.asComponent(), color)
     fun formatNumberDisplayDisplay(text: String, number: Component, color: Int): Component = formatNumberDisplayDisplay(text.asComponent(), number, color)
 
     fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (LinesConfig.numberDisplayFormat) {

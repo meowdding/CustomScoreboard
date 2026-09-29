@@ -19,7 +19,10 @@ import tech.thatgravyboat.skyblockapi.api.profile.effects.EffectsAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.utils.extentions.cleanName
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @Module
 @ScoreboardElement
@@ -32,11 +35,21 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
 
     fun line() = if (ProfileAPI.coop && CoopBankStorage.getCurrentProfile()) {
         when (LinesConfig.coopBankLayout) {
-            CoopBankLayout.PERSONAL_COOP -> "${format(CurrencyAPI.personalBank)}§7/§6${format(CurrencyAPI.coopBank)}"
-            CoopBankLayout.COOP_PERSONAL -> "${format(CurrencyAPI.coopBank)}§7/§6${format(CurrencyAPI.personalBank)}"
-            CoopBankLayout.COMBINED -> format(CurrencyAPI.personalBank + CurrencyAPI.coopBank)
+            CoopBankLayout.PERSONAL_COOP -> Text.of(format(CurrencyAPI.personalBank)) {
+                color = TextColor.GOLD
+                append("/", TextColor.GRAY)
+                append(format(CurrencyAPI.coopBank))
+            }
+
+            CoopBankLayout.COOP_PERSONAL -> Text.of(format(CurrencyAPI.coopBank)) {
+                color = TextColor.GOLD
+                append("/", TextColor.GRAY)
+                append(format(CurrencyAPI.personalBank))
+            }
+
+            CoopBankLayout.COMBINED -> format(CurrencyAPI.personalBank + CurrencyAPI.coopBank).asComponent()
         }
-    } else format(CurrencyAPI.coopBank)
+    } else format(CurrencyAPI.coopBank).asComponent()
 
 
     override fun getDisplay(): Any {
@@ -56,7 +69,9 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
 
     override val configLine = "Bank"
     override val id = "BANK"
-    override val configLineHover = listOf("Cannot be accurate enough,", "so it uses whats in the tablist")
+    override val configLineHover = listOf("Cannot be accurate enough,", "so it uses whats in the tablist").map {
+        Text.of(it, TextColor.GRAY)
+    }
 
     enum class CoopBankLayout(val display: String) {
         PERSONAL_COOP("Personal/Coop"),

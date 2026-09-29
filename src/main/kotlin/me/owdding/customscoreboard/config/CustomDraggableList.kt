@@ -62,7 +62,7 @@ class CustomDraggableList(val element: ResourcefulConfigElement) : ResourcefulCo
 
 interface BaseElement : TooltipProvider {
     val id: String
-    val configLineHover get() = listOf<String>()
+    val configLineHover get() = listOf<Component>()
     val canDuplicate: Boolean get() = false
     val group: ElementGroup get() = ElementGroup.MIDDLE
 

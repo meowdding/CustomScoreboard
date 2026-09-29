@@ -10,12 +10,20 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.community.CommunityCenterAPI
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @ScoreboardElement
 object BitsElement : NumberTrackingElement(TextColor.AQUA) {
 
-    fun line() = (CurrencyAPI.bits.format() + if (LinesConfig.showBitsAvailable) "§7/§b${CommunityCenterAPI.bitsAvailable.format()}" else "")
+    fun line() = Text.of(CurrencyAPI.bits.format()) {
+        color = TextColor.AQUA
+        if (LinesConfig.showBitsAvailable) {
+            append("/", TextColor.GRAY)
+            append(CurrencyAPI.bits.format())
+        }
+    }
 
     override fun getDisplay(): Any {
         val bits = CurrencyAPI.bits

@@ -35,7 +35,9 @@ object SoulflowElement : NumberTrackingElement(TextColor.DARK_AQUA) {
 
     override val configLine = "Soulflow"
     override val id = "SOULFLOW"
-    override val configLineHover = listOf("Requires the Soulflow option enabled in the Profile category in /tablist.", "Will not show if disabled.")
+    override val configLineHover = listOf("Requires the Soulflow option enabled in the Profile category in /tablist.", "Will not show if disabled.").map {
+        Text.of(it, TextColor.GRAY)
+    }
 
     private var soulflowInTablist = false
     private val soulflowRegex by RemoteStrings.resolve().regex(" Soulflow: .*")

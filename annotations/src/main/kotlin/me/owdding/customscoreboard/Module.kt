@@ -79,8 +79,8 @@ internal class Processor(
                             FunSpec.builder("getTooltip")
                                 .addModifiers(KModifier.OVERRIDE)
                                 .returns(ClassName("net.minecraft.network.chat", "Component"))
-                                .addCode("return $field.configLineHover.joinToString(\"\\n\").toComponent()")
-                                .build()
+                                .addCode("return $field.getTooltip()")
+                                .build(),
                         )
 
                         declarations.forEach {

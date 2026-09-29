@@ -7,6 +7,8 @@ import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @AutoElement
 object KuudraEvent : Event() {
@@ -15,7 +17,9 @@ object KuudraEvent : Event() {
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.KUUDRA)
 
     override val configLine = "Kuudra"
-    override val configLineHover = listOf("These have not been tested as I don't play Kuudra.", "Please report any issues.")
+    override val configLineHover = listOf("These have not been tested as I don't play Kuudra.", "Please report any issues.").map {
+        Text.of(it, TextColor.GRAY)
+    }
 
 
     private val formattedLines = mutableListOf<Component>()

@@ -3,6 +3,8 @@ package me.owdding.customscoreboard.elements
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer.currentIslandEvents
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object EventsElement : Element() {
@@ -33,5 +35,7 @@ object EventsElement : Element() {
         "See the events draggable list below.",
         "",
         "If I see a support question saying \"Why do I not have Dungeon lines\" and you removed this, I will cry.",
-    )
+    ).map {
+        Text.of(it, TextColor.GRAY)
+    }
 }

@@ -2,17 +2,19 @@ package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object PlayerCountElement : Element() {
 
-    override fun getDisplay(): String {
+    override fun getDisplay(): Component {
         val current = LocationAPI.playerCount
         val max = LocationAPI.maxPlayercount
 
         val display = "${current}/${max}".takeIf { max != null } ?: current.toString()
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Players", display, "§9")
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Players", display, TextColor.BLUE)
     }
 
     override val configLine = "Player Count"

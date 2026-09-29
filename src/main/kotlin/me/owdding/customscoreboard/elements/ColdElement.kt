@@ -10,7 +10,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object ColdElement : Element() {
-    override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay("Cold", "${-GlaciteAPI.cold}❄", "§b").withActions {
+    override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay("Cold", "${-GlaciteAPI.cold}❄", TextColor.AQUA).withActions {
         hover(Text.of("Click to warp to the basecamp.", TextColor.GRAY))
         command = "/warp basecamp"
     }

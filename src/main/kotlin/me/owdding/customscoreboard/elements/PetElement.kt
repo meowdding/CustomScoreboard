@@ -42,5 +42,5 @@ object PetElement : Element() {
     override val id = "PET"
     override val configLineHover = listOf(
         "This element currently hard requires the Pet Tabwidget to be in your active to show/update.",
-    )
+    ).map { Text.of(it, TextColor.GRAY) }
 }

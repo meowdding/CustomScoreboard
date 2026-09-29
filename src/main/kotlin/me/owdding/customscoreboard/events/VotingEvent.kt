@@ -8,6 +8,8 @@ import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @AutoElement
 object VotingEvent : Event() {
@@ -22,7 +24,7 @@ object VotingEvent : Event() {
     override val configLineHover = listOf(
         "Shows the current voting event.",
         "Only visible in the election room.",
-    )
+    ).map { Text.of(it, TextColor.GRAY) }
 
 
     private val remote = RemoteStrings.resolve()

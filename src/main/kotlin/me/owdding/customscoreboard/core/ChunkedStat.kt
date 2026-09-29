@@ -24,8 +24,8 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 enum class ChunkedStat(val display: () -> Component, val element: Element) {
     PURSE({ Text.of(CurrencyAPI.purse.format(), TextColor.GOLD) }, PurseElement),
     MOTES({ Text.of(RiftAPI.motes.format(), TextColor.LIGHT_PURPLE) }, MotesElement),
-    BANK({ Text.of(BankElement.line(), TextColor.GOLD) }, BankElement),
-    BITS({ Text.of(BitsElement.line(), TextColor.AQUA) }, BitsElement),
+    BANK({ BankElement.line() }, BankElement),
+    BITS({ BitsElement.line() }, BitsElement),
     COPPER({ Text.of(CurrencyAPI.copper.format(), TextColor.RED) }, CopperElement),
     SOWDUST({ Text.of(CurrencyAPI.sowdust.format(), TextColor.DARK_GREEN) }, SowdustElement),
     GEMS({ Text.of(GemsElement.format(CurrencyAPI.gems), TextColor.GREEN) }, GemsElement),
