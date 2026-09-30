@@ -9,7 +9,6 @@ import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.shorten
-import net.minecraft.world.item.ItemStack
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.InventoryTitle
 import tech.thatgravyboat.skyblockapi.api.events.screen.InventoryChangeEvent
@@ -22,7 +21,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
-import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 
 @Module
 @ScoreboardElement
@@ -36,13 +34,11 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
     fun line() = if (ProfileAPI.coop && CoopBankStorage.getCurrentProfile()) {
         when (LinesConfig.coopBankLayout) {
             CoopBankLayout.PERSONAL_COOP -> Text.of(format(CurrencyAPI.personalBank)) {
-                color = TextColor.GOLD
                 append("/", TextColor.GRAY)
                 append(format(CurrencyAPI.coopBank))
             }
 
             CoopBankLayout.COOP_PERSONAL -> Text.of(format(CurrencyAPI.coopBank)) {
-                color = TextColor.GOLD
                 append("/", TextColor.GRAY)
                 append(format(CurrencyAPI.personalBank))
             }
