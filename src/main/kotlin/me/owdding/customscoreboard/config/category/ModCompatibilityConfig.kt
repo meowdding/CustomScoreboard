@@ -11,41 +11,42 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 object ModCompatibilityConfig : CategoryKt("compatibility") {
 
     override val name = Literal("Mod Compatibility")
+    override val baseTranslation: String = "customscoreboard.config.compatibility"
 
     init {
         separator {
-            this.title = "customscoreboard.config.compatibility.scoreboard_overhaul"
-            this.description = "customscoreboard.config.compatibility.scoreboard_overhaul.desc"
+            this.title = "scoreboard_overhaul"
+            this.description = "scoreboard_overhaul.desc"
         }
     }
 
     val scoreboardOverhaul by boolean(true) {
-        this.translation = "customscoreboard.config.compatibility.scoreboard_overhaul.toggle"
+        this.translation = "scoreboard_overhaul.toggle"
     }
 
     val skyblockLevelColor by boolean(false) {
-        this.translation = "customscoreboard.config.compatibility.scoreboard_overhaul.skyblock_level_color"
+        this.translation = "scoreboard_overhaul.skyblock_level_color"
     }
 
     init {
         button {
-            this.title = "customscoreboard.config.compatibility.scoreboard_overhaul.configbutton"
-            this.description = "customscoreboard.config.compatibility.scoreboard_overhaul.configbutton.desc"
-            this.text = "customscoreboard.config.compatibility.scoreboard_overhaul.configbutton.text"
+            this.title = "scoreboard_overhaul.configbutton"
+            this.description = "scoreboard_overhaul.configbutton.desc"
+            this.text = "scoreboard_overhaul.configbutton.text"
             this.onClick {
                 ScoreboardOverhaulCompat.openConfig()
             }
         }
 
         separator {
-            this.title = "customscoreboard.config.compatibility.skyhanni"
-            this.description = "customscoreboard.config.compatibility.skyhanni.desc"
+            this.title = "skyhanni"
+            this.description = "skyhanni.desc"
         }
 
         button {
-            this.title = "customscoreboard.config.compatibility.skyhanni.button"
-            this.description = "customscoreboard.config.compatibility.skyhanni.button.desc"
-            this.text = "customscoreboard.config.compatibility.skyhanni.button.text"
+            this.title = "skyhanni.button"
+            this.description = "skyhanni.button.desc"
+            this.text = "skyhanni.button.text"
             this.onClick {
                 runCatching {
                     ConfigTransfer.transfer()
@@ -58,7 +59,7 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
     }
 
     val overrideSkyHanniScoreboard by boolean(true) {
-        this.translation = "customscoreboard.config.compatibility.skyhanni.override"
+        this.translation = "skyhanni.override"
     }
 
 }

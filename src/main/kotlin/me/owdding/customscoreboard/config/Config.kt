@@ -186,7 +186,7 @@ object Config : ConfigKt("customscoreboard/config") {
     override val version = patches.maxOf { it.key } + 1
     //endregion
 
-    private val translationPath = "customscoreboard.config.main"
+    override val baseTranslation: String = "customscoreboard.config.main"
 
     init {
         category(CustomizationConfig)
@@ -196,49 +196,49 @@ object Config : ConfigKt("customscoreboard/config") {
     }
 
     var enabled by boolean(true) {
-        this.translation = "$translationPath.enabled"
+        this.translation = "enabled"
     }
 
     val hideWhenTab by boolean(false) {
-        this.translation = "$translationPath.hide_when_tab"
+        this.translation = "hide_when_tab"
     }
 
     val hideWhenChat by boolean(false) {
-        this.translation = "$translationPath.hide_when_chat"
+        this.translation = "hide_when_chat"
     }
 
     val hideWhenF3 by boolean(false) {
-        this.translation = "$translationPath.hide_when_f3"
+        this.translation = "hide_when_f3"
     }
 
     val hideHypixelScoreboard by boolean("hide_hypixel", true) {
-        this.translation = "$translationPath.hide_hypixel"
+        this.translation = "hide_hypixel"
         this.shPath = "display.hideVanillaScoreboard"
     }
 
     val textShadow by boolean("text_shadow", true) {
-        this.translation = "$translationPath.text_shadow"
+        this.translation = "text_shadow"
     }
 
     val customLines by boolean(true) {
-        this.translation = "$translationPath.custom_lines"
+        this.translation = "custom_lines"
         this.shPath = "display.useCustomLines"
     }.updateDisplay()
 
     val actions by boolean(true) {
-        this.translation = "$translationPath.actions"
+        this.translation = "actions"
     }.updateDisplay()
 
     val outsideSkyBlock by boolean(false) {
-        this.translation = "$translationPath.outside_skyblock"
+        this.translation = "outside_skyblock"
     }
 
     val updateEveryTick by boolean(false) {
-        this.translation = "$translationPath.update_every_tick"
+        this.translation = "update_every_tick"
     }
 
     val updateNotification by boolean("update_notification", true) {
-        this.translation = "$translationPath.update_notification"
+        this.translation = "update_notification"
     }
 
 }

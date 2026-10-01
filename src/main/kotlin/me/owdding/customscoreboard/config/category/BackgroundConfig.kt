@@ -31,34 +31,36 @@ import kotlin.jvm.optionals.getOrNull
 
 object BackgroundConfig : CategoryKt("Background") {
 
+    override val baseTranslation: String = "customscoreboard.config.background"
+
     val enabled by boolean(true) {
-        this.translation = "customscoreboard.config.background.enabled"
+        this.translation = "enabled"
         this.shPath = "background.enabled"
     }
 
     val backgroundColor by color("color", 0x55000000) {
-        this.translation = "customscoreboard.config.background.color"
+        this.translation = "color"
         this.allowAlpha = true
         this.shPath = "background.color"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
     val padding by int(5) {
-        this.translation = "customscoreboard.config.background.padding"
+        this.translation = "padding"
         this.range = 0..20
         this.slider = true
         this.shPath = "background.borderSize"
     }
 
     val margin by int(0) {
-        this.translation = "customscoreboard.config.background.margin"
+        this.translation = "margin"
         this.range = 0..20
         this.slider = true
         this.shPath = "display.alignment.margin"
     }
 
     val radius by int(5) {
-        this.translation = "customscoreboard.config.background.radius"
+        this.translation = "radius"
         this.range = 0..20
         this.slider = true
         this.shPath = "background.roundedCornerSmoothness"
@@ -66,78 +68,78 @@ object BackgroundConfig : CategoryKt("Background") {
 
     val blurEnabled by boolean(false) {
         //? >= 26.2 {
-        this.translation = "customscoreboard.config.background.blur"
+        this.translation = "blur"
         //?} else
-        //this.translation = if (BlurredBackground.vulkanInstalled) "customscoreboard.config.background.blur_vulk" else "customscoreboard.config.background.blur"
+        //this.translation = if (BlurredBackground.vulkanInstalled) "blur_vulk" else "blur"
     }
 
     val minWidth by int(0) {
-        this.translation = "customscoreboard.config.background.min_width"
+        this.translation = "min_width"
         this.range = 0..1000
     }
 
     val minHeight by int(0) {
-        this.translation = "customscoreboard.config.background.min_height"
+        this.translation = "min_height"
         this.range = 0..1000
     }
 
     init {
-        separator { this.title = "customscoreboard.config.background.sections.border" }
+        separator { this.title = "sections.border" }
     }
 
     val borderEnabled by boolean(false) {
-        this.translation = "customscoreboard.config.background.border.enabled"
+        this.translation = "border.enabled"
         this.shPath = "background.outline.enabled"
     }
 
     val borderSize by int(3) {
-        this.translation = "customscoreboard.config.background.border.size"
+        this.translation = "border.size"
         this.range = 0..10
         this.slider = true
         this.shPath = "background.outline.thickness"
     }
 
     val borderColorTopLeft by color(0xFF32A1DB.toInt()) {
-        this.translation = "customscoreboard.config.background.border.color.topleft"
+        this.translation = "border.color.topleft"
         this.allowAlpha = true
         this.shPath = "background.outline.colorTop"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
     val borderColorTopRight by color(0xFF32DBC2.toInt()) {
-        this.translation = "customscoreboard.config.background.border.color.topright"
+        this.translation = "border.color.topright"
         this.allowAlpha = true
         this.shPath = "background.outline.colorTop"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
     val borderColorBottomLeft by color(0xFF29C4AE.toInt()) {
-        this.translation = "customscoreboard.config.background.border.color.bottomleft"
+        this.translation = "border.color.bottomleft"
         this.allowAlpha = true
         this.shPath = "background.outline.colorBottom"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
     val borderColorBottomRight by color(0xFF2BCF7A.toInt()) {
-        this.translation = "customscoreboard.config.background.border.color.bottomright"
+        this.translation = "border.color.bottomright"
         this.allowAlpha = true
         this.shPath = "background.outline.colorBottom"
         this.shMapper = { it.asString.moulConfigColor() }
     }
 
     init {
-        separator { this.title = "customscoreboard.config.background.sections.image" }
+        separator { this.title = "sections.image" }
     }
 
     val imageBackground by boolean(false) {
-        this.translation = "customscoreboard.config.background.image"
+        this.translation = "image"
         this.shPath = "background.useCustomBackgroundImage"
     }
 
     init {
         button {
-            this.title = "customscoreboard.config.background.website"
-            this.description = "customscoreboard.config.background.website.desc"
+            this.title = "website"
+            this.description = "website.desc"
             this.text = "Open Website"
 
             onClick {
@@ -146,8 +148,8 @@ object BackgroundConfig : CategoryKt("Background") {
         }
 
         button {
-            this.title = "customscoreboard.config.background.editor"
-            this.description = "customscoreboard.config.background.editor.desc"
+            this.title = "editor"
+            this.description = "editor.desc"
             this.text = "Open Editor"
 
             onClick {
@@ -157,7 +159,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val imageBackgroundTransparency by int(90) {
-        this.translation = "customscoreboard.config.background.transparency"
+        this.translation = "transparency"
         this.range = 5..100
         this.slider = true
         this.shPath = "background.customBackgroundImageOpacity"

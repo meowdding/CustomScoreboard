@@ -61,7 +61,7 @@ import kotlin.collections.toTypedArray
 
 object CustomizationConfig : CategoryKt("customization") {
     override val name = Literal("Layout & Appearance")
-    private val translationPath = "customscoreboard.config.customization"
+    override val baseTranslation: String = "customscoreboard.config.customization"
 
     private val default = listOf(
         TitleElement, LobbyElement, SeparatorElement, DateElement, TimeElement,
@@ -73,12 +73,12 @@ object CustomizationConfig : CategoryKt("customization") {
     ).map { it.id }
 
     init {
-        separator { this.title = "$translationPath.sections.structure" }
+        separator { this.title = "sections.structure" }
     }
 
     var appearance by transform(
         strings(*default.toTypedArray()) {
-            this.translation = "$translationPath.appearance"
+            this.translation = "appearance"
             this.renderer = CUSTOM_DRAGGABLE_RENDERER
             this.shPath = "scoreboardEntries"
             shMapper = { json: JsonElement ->
@@ -109,7 +109,7 @@ object CustomizationConfig : CategoryKt("customization") {
     ).updateIslandCache()
 
     var events by draggable(*ScoreboardEventEntry.entries.filter { it != ScoreboardEventEntry.STARTING_SOON_TABLIST }.toTypedArray()) {
-        this.translation = "$translationPath.events"
+        this.translation = "events"
         this.shPath = "display.events.eventEntries"
         this.shMapper = { json: JsonElement ->
             json.asJsonArray.mapNotNull { line ->
@@ -128,19 +128,19 @@ object CustomizationConfig : CategoryKt("customization") {
     }.updateIslandCache()
 
     init {
-        separator { this.title = "$translationPath.sections.tablist" }
+        separator { this.title = "sections.tablist" }
     }
 
     val tablistLines by draggable<TabWidget> {
-        this.translation = "$translationPath.tablist_lines"
+        this.translation = "tablist_lines"
     }.observable { _, _ -> TabWidgetHelper.updateTablistLineCache() }
 
     init {
-        separator { this.title = "$translationPath.sections.chunked" }
+        separator { this.title = "sections.chunked" }
     }
 
     val chunkedStats by draggable(*ChunkedStat.entries.toTypedArray()) {
-        this.translation = "$translationPath.chunked_stats"
+        this.translation = "chunked_stats"
         this.shPath = "display.chunkedStats.chunkedStats"
         this.shMapper = { json: JsonElement ->
             json.asJsonArray.mapNotNull { line -> ChunkedStat.entries.find { stat -> stat.name == line.asString } }
@@ -148,85 +148,85 @@ object CustomizationConfig : CategoryKt("customization") {
     }.updateIslandCache()
 
     val statsPerLine by int(3) {
-        this.translation = "$translationPath.chunked_stats_per_line"
+        this.translation = "chunked_stats_per_line"
         this.range = 1..5
         this.shPath = "display.chunkedStats.maxStatsPerLine"
     }
 
     init {
         separator {
-            this.title = "$translationPath.sections.title"
-            this.description = "$translationPath.sections.title.desc"
+            this.title = "sections.title"
+            this.description = "sections.title.desc"
         }
     }
 
     val useHypixelTitle by boolean(true) {
-        this.translation = "$translationPath.use_hypixel_title"
+        this.translation = "use_hypixel_title"
         this.shPath = "display.titleAndFooter.useCustomTitle"
         this.shMapper = { !it.asBoolean }
     }
 
     val titleAlignment by enum(Alignment.CENTER) {
-        this.translation = "$translationPath.title_alignment"
+        this.translation = "title_alignment"
         this.shPath = "display.titleAndFooter.alignTitle"
         this.shMapper = { valueOfOrNull<Alignment>(it.asString) ?: Alignment.CENTER }
     }
 
     val titleUseCustomText by boolean(false) {
-        this.translation = "$translationPath.title_use_custom_text"
+        this.translation = "title_use_custom_text"
         this.shPath = "display.titleAndFooter.useCustomTitle"
     }
 
     val useCustomTitleOutsideSkyBlock by boolean(false) {
-        this.translation = "$translationPath.use_custom_title_outside_skyblock"
+        this.translation = "use_custom_title_outside_skyblock"
         this.shPath = "display.titleAndFooter.useCustomTitleOutsideSkyBlock"
     }
 
     val titleText by strings("") {
-        this.translation = "$translationPath.title_custom_text"
+        this.translation = "title_custom_text"
         this.shPath = "display.titleAndFooter.customTitle"
         this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
     }.cachedTransformPlaceholderComponents()
 
     init {
-        separator { this.title = "$translationPath.sections.footer" }
+        separator { this.title = "sections.footer" }
     }
 
     val footerAlignment by enum(Alignment.CENTER) {
-        this.translation = "$translationPath.footer_alignment"
+        this.translation = "footer_alignment"
         this.shPath = "display.titleAndFooter.alignFooter"
         this.shMapper = { valueOfOrNull<Alignment>(it.asString) ?: Alignment.CENTER }
     }
 
     val footerUseCustomText by boolean(false) {
-        this.translation = "$translationPath.footer_use_custom_text"
+        this.translation = "footer_use_custom_text"
         this.shPath = "display.titleAndFooter.useCustomFooter"
     }
 
     val footerText by strings("") {
-        this.translation = "$translationPath.footer_custom_text"
+        this.translation = "footer_custom_text"
         this.shPath = "display.titleAndFooter.customFooter"
         this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
     }.cachedTransformPlaceholderComponents()
 
     val alphaFooterText by strings("") {
-        this.translation = "$translationPath.custom_alpha_footer"
+        this.translation = "custom_alpha_footer"
         this.shPath = "display.titleAndFooter.customAlphaFooter"
         this.shMapper = { it.asString.lines().map(::convertLegacyToPlaceholder).toTypedArray() }
     }.cachedTransformPlaceholderComponents()
 
     init {
-        separator { this.title = "$translationPath.sections.layout" }
+        separator { this.title = "sections.layout" }
     }
 
     val scale by double(1.0) {
-        this.translation = "$translationPath.scale"
+        this.translation = "scale"
         this.range = 0.1..2.0
         this.slider = true
     }
 
     val lineSpacing by int(0) {
-        this.translation = "$translationPath.line_spacing"
+        this.translation = "line_spacing"
         this.range = 0..10
         this.slider = true
         this.shPath = "display.lineSpacing"
@@ -234,13 +234,13 @@ object CustomizationConfig : CategoryKt("customization") {
     }.updateDisplay()
 
     val verticalAlignment by enum("vertical_alignment", VerticalAlignment.CENTER) {
-        this.translation = "$translationPath.vertical_alignment"
+        this.translation = "vertical_alignment"
         this.shPath = "display.alignment.verticalAlignment"
         this.shMapper = { valueOfOrNull<VerticalAlignment>(it.asString) ?: VerticalAlignment.CENTER }
     }
 
     val horizontalAlignment by enum("horizontal_alignment", HorizontalAlignment.RIGHT) {
-        this.translation = "$translationPath.horizontal_alignment"
+        this.translation = "horizontal_alignment"
         this.shPath = "display.alignment.horizontalAlignment"
         this.shMapper = { valueOfOrNull<HorizontalAlignment>(it.asString) ?: HorizontalAlignment.RIGHT }
     }
@@ -250,7 +250,7 @@ object CustomizationConfig : CategoryKt("customization") {
     }
 
     val defaultTextAlignment by enum(Alignment.START) {
-        this.translation = "$translationPath.default_text_alignment"
+        this.translation = "default_text_alignment"
         this.shPath = "display.textAlignment"
         this.shMapper = {
             when (it.asString) {
@@ -263,12 +263,12 @@ object CustomizationConfig : CategoryKt("customization") {
     }
 
     init {
-        separator { this.title = "$translationPath.sections.presets" }
+        separator { this.title = "sections.presets" }
 
         button {
-            this.title = "$translationPath.preset.skyblock"
-            this.description = "$translationPath.preset.skyblock.desc"
-            this.text = "$translationPath.preset.skyblock.text"
+            this.title = "preset.skyblock"
+            this.description = "preset.skyblock.desc"
+            this.text = "preset.skyblock.text"
             onClick {
                 appearance = listOf(
                     TitleElement, LobbyElement, SeparatorElement, DateElement, TimeElement,
