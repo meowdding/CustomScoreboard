@@ -50,7 +50,7 @@ object LinesConfig : CategoryKt("line_modification") {
     }
 
     val indentLocationTimeLines by boolean(false) {
-        this.translation = "$translationPath.indent_location_time"
+        this.translation = "indent_location_time"
     }
 
     init {
