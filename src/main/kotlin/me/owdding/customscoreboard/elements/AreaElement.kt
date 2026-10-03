@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
@@ -17,6 +18,8 @@ object AreaElement : Element() {
     override val group = ElementGroup.HEADER
 
     override fun getDisplay() = listOfNotNull(formattedLocation, formattedGardenPlot, formattedVisiting)
+
+    override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
 
     private val remote = RemoteStrings.resolve()
     private val locationComponentRegex by remote.componentRegex("\\s*[⏣ф\uE067\uE020] .+")

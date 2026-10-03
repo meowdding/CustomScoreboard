@@ -20,6 +20,8 @@ object IrlTimeElement : Element() {
         append(LocalDateTime.now().format(formatter).lowercase())
     }
 
+    override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
+
     override val configLine = "IRL Time"
     override val id = "IRL_TIME"
     override val group = ElementGroup.HEADER

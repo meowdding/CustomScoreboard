@@ -48,6 +48,8 @@ object TimeElement : Element() {
         }
     }
 
+    override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
+
     override val configLine = "Time"
     override val id = "TIME"
     override val group = ElementGroup.HEADER

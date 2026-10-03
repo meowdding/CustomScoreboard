@@ -28,6 +28,7 @@ object ProfileElement : Element() {
     }
 
     override fun showWhen() = ProfileAPI.profileType != ProfileType.UNKNOWN
+    override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
 
     override val configLine = "Profile"
     override val id = "PROFILE"

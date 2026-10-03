@@ -30,6 +30,7 @@ data class ScoreboardLine(
     val alignment: Alignment = DEFAULT_ALIGNMENT,
     val isBlank: Boolean = false,
     val actions: LineActions = LineActions(),
+    var isIndented: Boolean = false,
 ) {
     constructor(component: Component, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(component.asTextWidget(), alignment, isBlank)
     constructor(string: String, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(string.asTextWidget(), alignment, isBlank)
@@ -111,7 +112,14 @@ data class ScoreboardLine(
 
         fun List<ScoreboardLine>.createColumn() = (LayoutFactory.vertical(spacing = CustomizationConfig.lineSpacing) {
             this@createColumn.forEach { line ->
-                widget(line.widget, line::applySettings)
+                if (line.isIndented) {
+                    horizontal {
+                        string(" ")
+                        widget(line.widget, line::applySettings)
+                    }
+                } else {
+                    widget(line.widget, line::applySettings)
+                }
             }
         }).also { (it as Scalable).scale(CustomizationConfig.scale) }
 

@@ -32,13 +32,21 @@ abstract class Element : BaseElement {
      * Uses the [LinesConfig.showActiveOnly] option to hide/show lines, should only be used on currency like and booster cookie/god potion like elements.
      */
     open fun isLineActive(): Boolean = true
-    abstract val configLine: String
 
+    /**
+     * Defines if an element should be indented by one space.
+     */
+    open fun shouldIndent(): Boolean = false
+
+    abstract val configLine: String
     override fun toString() = configLine
 
     open fun showIsland(): Boolean = true
 
-    open fun getLines(): List<ScoreboardLine> = if (isVisible()) getElementsFromAny(getDisplay()) else listOf()
+    fun getLines(): List<ScoreboardLine> = (if (isVisible()) getElementsFromAny(getDisplay()) else listOf()).map {
+        it.isIndented = shouldIndent()
+        it
+    }
 
     private fun isVisible(): Boolean {
         if (LinesConfig.showActiveOnly && !isLineActive()) return false

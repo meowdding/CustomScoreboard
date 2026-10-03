@@ -49,6 +49,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "colored_month"
     }
 
+    val indentLocationTimeLines by boolean(false) {
+        this.translation = "$translationPath.indent_location_time"
+    }
+
     init {
         separator { this.title = "sections.economy" }
     }

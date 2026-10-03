@@ -328,6 +328,10 @@
                     "@value": "Colored Month",
                     "desc": "Show the month in color on the scoreboard."
                 },
+                "indent_location_time": {
+                    "@value": "Indent Island, Area, Time & Date Lines",
+                    "desc": "Adds 1-space indentation to island, area, time and date lines, mimicking the way the original scoreboard shows them."
+                },
                 "profile_name": {
                     "@value": "Profile Name",
                     "desc": "Show your profile name on the scoreboard."

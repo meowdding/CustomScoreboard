@@ -21,6 +21,7 @@ object DateElement : Element() {
     }
 
     override fun showWhen() = DateTimeAPI.season != null
+    override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
 
     override val configLine = "Date"
     override val id = "DATE"

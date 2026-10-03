@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
@@ -19,6 +20,7 @@ object IslandElement : Element() {
     }
 
     override fun showWhen() = LocationAPI.island != null
+    override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
 
     override val configLine = "Island"
     override val id = "ISLAND"
