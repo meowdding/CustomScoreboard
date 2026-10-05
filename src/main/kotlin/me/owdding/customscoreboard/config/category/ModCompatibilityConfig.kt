@@ -32,7 +32,7 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
         button {
             this.title = "scoreboard_overhaul.configbutton"
             this.description = "scoreboard_overhaul.configbutton.desc"
-            this.text = "scoreboard_overhaul.configbutton.text"
+            this.text = "$baseTranslation.scoreboard_overhaul.configbutton.text"
             this.onClick {
                 ScoreboardOverhaulCompat.openConfig()
             }
@@ -46,7 +46,7 @@ object ModCompatibilityConfig : CategoryKt("compatibility") {
         button {
             this.title = "skyhanni.button"
             this.description = "skyhanni.button.desc"
-            this.text = "skyhanni.button.text"
+            this.text = "$baseTranslation.skyhanni.button.text"
             this.onClick {
                 runCatching {
                     ConfigTransfer.transfer()
