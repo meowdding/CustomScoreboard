@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
@@ -19,7 +20,7 @@ object PurseElement : NumberTrackingElement(TextColor.GOLD) {
         checkDifference(CurrencyAPI.purse.toLong())
         val line = Text.join(CurrencyAPI.purse.format(), temporaryChangeDisplay)
         return CustomScoreboardRenderer.formatNumberDisplayDisplay(
-            if (CurrencyAPI.purseType == PurseType.PIGGY && LinesConfig.showPiggy) "Piggy" else "Purse",
+            if (CurrencyAPI.purseType == PurseType.PIGGY && LinesConfig.showPiggy) CustomPrefix.PIGGY else CustomPrefix.PURSE,
             line,
             numberColor,
         )

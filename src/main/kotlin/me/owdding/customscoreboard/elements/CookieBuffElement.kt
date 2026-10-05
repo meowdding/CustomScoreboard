@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
@@ -17,7 +18,7 @@ object CookieBuffElement : Element() {
         val line = EffectsAPI.boosterCookieExpireTime.until().toFormatYears().takeIf { EffectsAPI.isBoosterCookieActive }?.asComponent()
             ?: Text.of("Expired", TextColor.RED)
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Cookie Buff", line, TextColor.PINK).withActions {
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.COOKIE_BUFF, line, TextColor.PINK).withActions {
             hover(Text.of("Click to open Booster Cookie Menu", TextColor.GRAY))
             command = "/boostercookiemenu"
         }

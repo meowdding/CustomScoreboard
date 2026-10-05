@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.NumberUtils.formatLong
@@ -12,7 +13,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 @ScoreboardElement
 object ElementMaxwellPower : Element() {
     override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay(
-        "Power",
+        CustomPrefix.MAXWELL_POWER,
         Text.of(MaxwellAPI.power.name) {
             if (LinesConfig.magicalPower) {
                 append(" (", TextColor.GRAY)

@@ -5,6 +5,7 @@ import me.owdding.customscoreboard.compat.ModCompat
 import me.owdding.customscoreboard.compat.TablistCompat
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.category.BackgroundConfig
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.config.category.ModCompatibilityConfig
@@ -25,6 +26,7 @@ import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.input.MouseButtonInfo
+import net.minecraft.commands.arguments.ComponentArgument.textComponent
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -287,21 +289,34 @@ object CustomScoreboardRenderer : Overlay {
         updateIslandCache()
     }
 
+    fun formatNumberDisplayDisplay(prefix: CustomPrefix, number: String, color: Int): Component =
+        formatNumberDisplayDisplay(prefix, number.asComponent(), color)
+
+    fun formatNumberDisplayDisplay(prefix: CustomPrefix, number: Component, color: Int): Component {
+        return if (CustomizationConfig.enableCustomPrefixes) {
+            formatNumberDisplayDisplay(prefix.prefix, number, color, false)
+        } else {
+            formatNumberDisplayDisplay(Text.of(prefix.default.removeSuffix(":")), number, color)
+        }
+    }
+
     fun formatNumberDisplayDisplay(text: String, number: String, color: Int): Component = formatNumberDisplayDisplay(text, number.asComponent(), color)
     fun formatNumberDisplayDisplay(text: String, number: Component, color: Int): Component = formatNumberDisplayDisplay(text.asComponent(), number, color)
 
-    fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int): Component = when (LinesConfig.numberDisplayFormat) {
-        NumberDisplayFormat.TEXT_COLOR_NUMBER -> Text.join(text, Text.of(": "), number.copy().withColor(color))
-        NumberDisplayFormat.COLOR_TEXT_NUMBER -> Text.join(text, Text.of(": "), number).withColor(color)
-        NumberDisplayFormat.COLOR_NUMBER_TEXT -> Text.join(number, Text.of(" "), text).withColor(color)
-        NumberDisplayFormat.COLOR_NUMBER_RESET_TEXT -> Text.join(number.copy().withColor(color), Text.of(" "), text)
-    }
+    fun formatNumberDisplayDisplay(text: Component, number: Component, color: Int, withColon: Boolean = true): Component =
+        LinesConfig.numberDisplayFormat.component(text, number, color, withColon)
 
-    enum class NumberDisplayFormat(val config: String) {
-        TEXT_COLOR_NUMBER("§fPurse: §6123"),
-        COLOR_TEXT_NUMBER("§6Purse: 123"),
-        COLOR_NUMBER_TEXT("§6123 Purse"),
-        COLOR_NUMBER_RESET_TEXT("§6123 §fPurse"),
+    enum class NumberDisplayFormat(val config: String, val component: (Component, Component, Int, Boolean) -> Component) {
+        TEXT_COLOR_NUMBER(
+            "§fPurse: §6123",
+            { text, number, color, colon -> Text.join(text, if (colon) Text.of(": ") else Text.of(" "), number.copy().withColor(color)) },
+        ),
+        COLOR_TEXT_NUMBER(
+            "§6Purse: 123",
+            { text, number, color, colon -> Text.join(text, if (colon) Text.of(": ") else Text.of(" "), number.copy()).withColor(color) },
+        ),
+        COLOR_NUMBER_TEXT("§6123 Purse", { text, number, color, _ -> Text.join(number, Text.of(" "), text).withColor(color) }),
+        COLOR_NUMBER_RESET_TEXT("§6123 §fPurse", { text, number, color, _ -> Text.join(number.copy().withColor(color), Text.of(" "), text) }),
         ;
 
         override fun toString() = config

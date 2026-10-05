@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
@@ -24,7 +26,7 @@ object GemsElement : NumberTrackingElement(TextColor.GREEN) {
         checkDifference(CurrencyAPI.gems)
         val line = Text.join(format(CurrencyAPI.gems), temporaryChangeDisplay)
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Gems", line, numberColor)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.GEMS, line, numberColor)
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT, SkyBlockIsland.THE_CATACOMBS, SkyBlockIsland.KUUDRA)

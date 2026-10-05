@@ -1,6 +1,8 @@
 package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.CustomScoreboardMod
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.config.storage.CoopBankStorage
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
@@ -52,7 +54,7 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
         checkDifference(CurrencyAPI.coopBank)
         val line = Text.join(line(), temporaryChangeDisplay)
 
-        val element = CustomScoreboardRenderer.formatNumberDisplayDisplay("Bank", line, numberColor)
+        val element = CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.BANK, line, numberColor)
         return if (!EffectsAPI.isBoosterCookieActive) element else element.withActions {
             hover(Text.of("Click to open the bank"))
             command = "/bank"

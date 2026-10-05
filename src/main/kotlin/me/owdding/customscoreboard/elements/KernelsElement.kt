@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -15,7 +17,7 @@ object KernelsElement : NumberTrackingElement(TextColor.YELLOW) {
         val kernels = CurrencyAPI.kernels
         checkDifference(kernels)
         val line = Text.join(kernels.format(), temporaryChangeDisplay)
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Kernels", line, numberColor)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.KERNELS, line, numberColor)
     }
 
     override fun showWhen(): Boolean = MayorPerks.GRAND_FEAST.active

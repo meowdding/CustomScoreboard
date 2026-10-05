@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
@@ -28,7 +30,7 @@ object BitsElement : NumberTrackingElement(TextColor.AQUA) {
         checkDifference(bits)
         val line = Text.join(line(), temporaryChangeDisplay)
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Bits", line, numberColor).withActions {
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.BITS, line, numberColor).withActions {
             hover(Text.of("Click to open the SkyBlock menu to resync your bits.", TextColor.GRAY))
             command = "/sbmenu"
         }

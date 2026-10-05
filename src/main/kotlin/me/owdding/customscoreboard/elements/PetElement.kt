@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
@@ -18,7 +19,7 @@ object PetElement : Element() {
         val petColor = PetsAPI.rarity?.color ?: TextColor.WHITE
         val petLine = Text.of(pet) { this.color = petColor }
         if (LinesConfig.petPrefix) {
-            add(CustomScoreboardRenderer.formatNumberDisplayDisplay(Text.of("Pet"), petLine, petColor))
+            add(CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.PET, petLine, petColor))
         } else {
             add(petLine)
         }

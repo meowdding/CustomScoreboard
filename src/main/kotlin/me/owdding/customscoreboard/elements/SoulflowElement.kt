@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -26,7 +28,7 @@ object SoulflowElement : NumberTrackingElement(TextColor.DARK_AQUA) {
         checkDifference(CurrencyAPI.soulflow)
         val line = Text.join(CurrencyAPI.soulflow.format(), temporaryChangeDisplay)
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Soulflow", line, numberColor)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.SOULFLOW, line, numberColor)
     }
 
     override fun showWhen() = soulflowInTablist

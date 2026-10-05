@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.area.mining.HollowsAPI
@@ -11,7 +13,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 @ScoreboardElement
 object HeatElement : Element() {
     override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay(
-        "Heat",
+        CustomPrefix.HEAT,
         if (HollowsAPI.immuneToHeat) Text.of("IMMUNE", TextColor.GOLD)
         else Text.of("${HollowsAPI.heat}♨", TextColor.RED),
         TextColor.RED,

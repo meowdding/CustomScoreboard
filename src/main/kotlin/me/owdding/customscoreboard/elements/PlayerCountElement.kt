@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import net.minecraft.network.chat.Component
@@ -14,7 +15,7 @@ object PlayerCountElement : Element() {
         val max = LocationAPI.maxPlayercount
 
         val display = "${current}/${max}".takeIf { max != null } ?: current.toString()
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Players", display, TextColor.BLUE)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.PLAYER_COUNT, display, TextColor.BLUE)
     }
 
     override val configLine = "Player Count"

@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
@@ -17,7 +19,7 @@ object CopperElement : NumberTrackingElement(TextColor.RED) {
         checkDifference(CurrencyAPI.copper)
         val line = Text.join(CurrencyAPI.copper.format(), temporaryChangeDisplay)
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Copper", line, numberColor).withActions {
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.COPPER, line, numberColor).withActions {
             hover(Text.of("Click to teleport to your barn.", TextColor.GRAY))
             command = "/tptoplot barn"
         }

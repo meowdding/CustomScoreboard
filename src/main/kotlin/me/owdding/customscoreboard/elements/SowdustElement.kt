@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -15,7 +17,7 @@ object SowdustElement : NumberTrackingElement(TextColor.DARK_GREEN) {
         val sowdust = CurrencyAPI.sowdust
         checkDifference(sowdust)
         val line = Text.join(sowdust.format(), temporaryChangeDisplay)
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Sowdust", line, numberColor)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.SOWDUST, line, numberColor)
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.GARDEN)

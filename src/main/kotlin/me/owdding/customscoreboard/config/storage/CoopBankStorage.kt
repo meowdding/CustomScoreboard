@@ -9,8 +9,7 @@ object CoopBankStorage {
 
     private val storage = CustomScoreboardMod.storage<MutableMap<String, Boolean>>(
         "coop_bank",
-        { mutableMapOf() },
-        CodecUtils.map(Codec.STRING, Codec.BOOL),
+        codec = CodecUtils.map(Codec.STRING, Codec.BOOL),
     )
 
     fun setCurrentProfile(isActualCoop: Boolean) {

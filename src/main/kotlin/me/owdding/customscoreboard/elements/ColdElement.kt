@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ScoreboardElement
@@ -10,10 +12,11 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object ColdElement : Element() {
-    override fun getDisplay() = CustomScoreboardRenderer.formatNumberDisplayDisplay("Cold", "${-GlaciteAPI.cold}❄", TextColor.AQUA).withActions {
-        hover(Text.of("Click to warp to the basecamp.", TextColor.GRAY))
-        command = "/warp basecamp"
-    }
+    override fun getDisplay() =
+        CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.COLD, Text.of("${-GlaciteAPI.cold}❄"), TextColor.AQUA).withActions {
+            hover(Text.of("Click to warp to the basecamp.", TextColor.GRAY))
+            command = "/warp basecamp"
+        }
 
     override fun showWhen() = GlaciteAPI.inColdArea() && (GlaciteAPI.cold > 0)
 

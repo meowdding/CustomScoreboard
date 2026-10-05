@@ -79,13 +79,32 @@
                             "Use \\<color #f38ba8> for custom colors.",
                             "Use \\<gradient #color1 #color2> for gradients.",
                             "You can also customize speed and directions by defining dir:[LEFT/DOWN_RIGHT/...] or speed:[number] inside the \\<gradient>.",
+                            "Use <player name:NAME> for player heads",
+                            "Use <atlas atlas:ATLAS texture:TEXTURE> for custom textures, e.g. ATLAS=minecraft:blocks, TEXTURE=blocks/stone",
                             "",
                             "There will soon be a website that helps you generating this."
                         ]
                     },
                     "footer": "Footer Settings",
                     "layout": "Layout & Scaling",
-                    "presets": "Preset Settings"
+                    "presets": "Preset Settings",
+                    "custom_prefixes": {
+                        "@value": "Custom Prefixes",
+                        "desc": [
+                            "How to create a custom prefixes:",
+                            "The custom text uses an xml-like syntax, meaning you need to open and close specific elements to have them modified.",
+                            "\\<bold>Hello</bold> for example makes \"Hello\" bold.",
+                            "Use \\<bold>/\\<strikethrough>/\\<italic>/\\<underlined>/\\<obfuscated> to modify the text.",
+                            "Use \\<green> etc to get the predefined vanilla colors.",
+                            "Use \\<color #f38ba8> for custom colors.",
+                            "Use \\<gradient #color1 #color2> for gradients.",
+                            "You can also customize speed and directions by defining dir:[LEFT/DOWN_RIGHT/...] or speed:[number] inside the \\<gradient>.",
+                            "Use <player name:NAME> for player heads",
+                            "Use <atlas atlas:ATLAS texture:TEXTURE> for custom textures, e.g. ATLAS=minecraft:blocks, TEXTURE=blocks/stone",
+                            "",
+                            "There will soon be a website that helps you generating this."
+                        ]
+                    }
                 },
                 "appearance": {
                     "@value": "Appearance",
@@ -175,6 +194,15 @@
                         "@value": "Default SkyBlock Lines",
                         "desc": "Tries to simulate the default elements of the Scoreboard as closely as possible.",
                         "text": "Apply"
+                    }
+                },
+                "custom_prefix": {
+                    "enabled": {
+                        "@value": "Enable Custom Prefixes",
+                        "desc": [
+                            "<red>When using a number display format that isn't \"Prefix: Number\" you need to manually remove the colons.</red>",
+                            "<red>It will only use the first line in the element, it uses the multiline element to allow for easier editing.</red>"
+                        ]
                     }
                 }
             },

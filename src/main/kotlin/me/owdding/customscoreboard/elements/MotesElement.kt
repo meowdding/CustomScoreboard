@@ -1,5 +1,7 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
+import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
@@ -17,7 +19,7 @@ object MotesElement : NumberTrackingElement(TextColor.PINK) {
         checkDifference(RiftAPI.motes)
         val line = Text.join(RiftAPI.motes.format(), temporaryChangeDisplay)
 
-        return CustomScoreboardRenderer.formatNumberDisplayDisplay("Motes", line, numberColor)
+        return CustomScoreboardRenderer.formatNumberDisplayDisplay(CustomPrefix.MOTES, line, numberColor)
     }
 
     override fun showIsland() = SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT)

@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.config.category
 
 import com.google.gson.JsonElement
+import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.compat.SkyHanniOption.shMapper
@@ -55,9 +56,10 @@ import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.lib.displays.Alignment
 import me.owdding.lib.overlays.ConfigPosition
 import me.owdding.lib.utils.config.cachedTransformPlaceholderComponents
+import me.owdding.lib.utils.config.transform
+import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
-import kotlin.collections.toTypedArray
 
 object CustomizationConfig : CategoryKt("customization") {
     override val name = Literal("Layout & Appearance")
@@ -284,5 +286,63 @@ object CustomizationConfig : CategoryKt("customization") {
                 CustomScoreboardRenderer.updateDisplay()
             }
         }
+
+        separator {
+            this.title = "sections.custom_prefixes"
+            this.description = "sections.custom_prefixes.desc"
+        }
     }
+
+    val enableCustomPrefixes by boolean(false) {
+        this.translation = "custom_prefix.enabled"
+    }
+
+    private fun prefix(prefix: CustomPrefix) = strings(prefix.default) {
+        this.name = TranslatableValue("${prefix.default.removeSuffix(":")} Prefix")
+    }.cachedTransformPlaceholderComponents().transform({ listOf(it) }, { it.first() })
+
+    val pursePrefix by prefix(CustomPrefix.PURSE)
+    val piggyPrefix by prefix(CustomPrefix.PIGGY)
+    val bankPrefix by prefix(CustomPrefix.BANK)
+    val motesPrefix by prefix(CustomPrefix.MOTES)
+    val bitsPrefix by prefix(CustomPrefix.BITS)
+    val copperPrefix by prefix(CustomPrefix.COPPER)
+    val sowdustPrefix by prefix(CustomPrefix.SOWDUST)
+    val kernelsPrefix by prefix(CustomPrefix.KERNELS)
+    val heatPrefix by prefix(CustomPrefix.HEAT)
+    val coldPrefix by prefix(CustomPrefix.COLD)
+    val northStarsPrefix by prefix(CustomPrefix.NORTH_STARS)
+    val soulflowPrefix by prefix(CustomPrefix.SOULFLOW)
+    val gemsPrefix by prefix(CustomPrefix.GEMS)
+    val cookieBuffPrefix by prefix(CustomPrefix.COOKIE_BUFF)
+    val petPrefix by prefix(CustomPrefix.PET)
+    val godPotionPrefix by prefix(CustomPrefix.GOD_POTION)
+    val maxwellPowerPrefix by prefix(CustomPrefix.MAXWELL_POWER)
+    val maxwellTuningPrefix by prefix(CustomPrefix.MAXWELL_TUNING)
+    val playerCountPrefix by prefix(CustomPrefix.PLAYER_COUNT)
+}
+
+enum class CustomPrefix(val default: String, private val _prefix: () -> Component) {
+    PURSE("Purse:", CustomizationConfig::pursePrefix),
+    PIGGY("Piggy:", CustomizationConfig::piggyPrefix),
+    BANK("Bank:", CustomizationConfig::bankPrefix),
+    MOTES("Motes:", CustomizationConfig::motesPrefix),
+    BITS("Bits:", CustomizationConfig::bitsPrefix),
+    COPPER("Copper:", CustomizationConfig::copperPrefix),
+    SOWDUST("Sowdust:", CustomizationConfig::sowdustPrefix),
+    KERNELS("Kernels:", CustomizationConfig::kernelsPrefix),
+    HEAT("Heat:", CustomizationConfig::heatPrefix),
+    COLD("Cold:", CustomizationConfig::coldPrefix),
+    NORTH_STARS("North Stars:", CustomizationConfig::northStarsPrefix),
+    SOULFLOW("Soulflow:", CustomizationConfig::soulflowPrefix),
+    GEMS("Gems:", CustomizationConfig::gemsPrefix),
+    COOKIE_BUFF("Cookie Buff:", CustomizationConfig::cookieBuffPrefix),
+    PET("Pet:", CustomizationConfig::petPrefix),
+    GOD_POTION("God Potion:", CustomizationConfig::godPotionPrefix),
+    MAXWELL_POWER("Power:", CustomizationConfig::maxwellPowerPrefix),
+    MAXWELL_TUNING("Tunings:", CustomizationConfig::maxwellTuningPrefix),
+    PLAYER_COUNT("Players:", CustomizationConfig::playerCountPrefix),
+    ;
+
+    val prefix get() = _prefix()
 }

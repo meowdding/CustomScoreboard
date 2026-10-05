@@ -1,5 +1,6 @@
 package me.owdding.customscoreboard.elements
 
+import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.profile.maxwell.MaxwellAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -11,17 +12,20 @@ private const val MAX_TUNINGS_PER_LINE = 3
 @ScoreboardElement
 object MaxwellTuningsElement : Element() {
     override fun getDisplay(): Any {
+        val prefix = CustomPrefix.MAXWELL_TUNING.prefix
         val tunings = MaxwellAPI.tunings
         if (tunings.isEmpty()) {
-            return Text.of("Tunings: ") {
+            return Text.of {
+                append(prefix)
                 append("None!", TextColor.RED)
             }
         }
         val tuningComponents = tunings.map { Text.of("${it.stat.icon}${it.value.toInt()}", color = it.stat.color) }
         return tuningComponents.chunked(MAX_TUNINGS_PER_LINE).mapIndexed { i, tunings ->
             Text.join(
-                if (i == 0) "Tunings: " else null,
-                Text.join(tunings, separator = SEPARATOR)
+                if (i == 0) prefix else null,
+                " ",
+                Text.join(tunings, separator = SEPARATOR),
             )
         }
 
