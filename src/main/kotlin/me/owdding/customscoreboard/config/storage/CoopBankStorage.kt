@@ -9,6 +9,7 @@ object CoopBankStorage {
 
     private val storage = CustomScoreboardMod.storage<MutableMap<String, Boolean>>(
         "coop_bank",
+        { mutableMapOf() },
         codec = CodecUtils.map(Codec.STRING, Codec.BOOL),
     )
 
