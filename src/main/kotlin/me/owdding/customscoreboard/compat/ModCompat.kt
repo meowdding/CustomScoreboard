@@ -7,7 +7,6 @@ import me.owdding.customscoreboard.utils.RegisterCustomScoreboardCommandEvent
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
 import me.owdding.lib.builder.ComponentFactory
-import net.fabricmc.loader.api.FabricLoader
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.profile.ProfileChangeEvent
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -19,11 +18,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 object ModCompat {
 
     var isSkyhanniCustomScoreboardEnabled = false
-    var isOverhaulEnabled = false
-
-    val isScoreboardOverhaulLoaded = FabricLoader.getInstance().isModLoaded("scoreboard-overhaul")
-
-    fun isScoreboardOverhaulEnabled() = isScoreboardOverhaulLoaded && isOverhaulEnabled
 
     @Subscription
     fun onProfile(event: ProfileChangeEvent) {
@@ -65,14 +59,16 @@ object ModCompat {
                 string("------------") { color = TextColor.DARK_GRAY }
                 string("- Scoreboard Overhaul Loaded: ") {
                     color = TextColor.YELLOW
-                    append(isScoreboardOverhaulLoaded) {
-                        color = if (isScoreboardOverhaulLoaded) TextColor.GREEN else TextColor.RED
+                    val isLoaded = ScoreboardOverhaulCompat.isInstalled
+                    append(isLoaded) {
+                        color = if (isLoaded) TextColor.GREEN else TextColor.RED
                     }
                 }
                 string("- Scoreboard Overhaul Enabled: ") {
                     color = TextColor.YELLOW
-                    append(isOverhaulEnabled) {
-                        color = if (isOverhaulEnabled) TextColor.GREEN else TextColor.RED
+                    val isEnabled = ScoreboardOverhaulCompat.isEnabled()
+                    append(isEnabled) {
+                        color = if (isEnabled) TextColor.GREEN else TextColor.RED
                     }
                 }
                 string("- Override Scoreboard Overhaul: ") {

@@ -1,25 +1,34 @@
-//? scoreboard_overhaul {
 package me.owdding.customscoreboard.compat
 
-import me.jfenn.scoreboardoverhaul.common.config.ConfigManager
-import me.jfenn.scoreboardoverhaul.common.config.ConfigScreenBuilder
-import me.jfenn.scoreboardoverhaul.common.data.ScoreInfo
-import me.jfenn.scoreboardoverhaul.common.data.ScoreRenderType
+import me.jfenn.scoreboardoverhaul.api.ScoreboardApi
+import me.jfenn.scoreboardoverhaul.api.data.ObjectiveInfo
+import me.jfenn.scoreboardoverhaul.api.data.ScoreInfo
+import me.owdding.customscoreboard.config.category.ModCompatibilityConfig
+import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
-import net.minecraft.network.chat.Component
 import org.slf4j.LoggerFactory
+import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
+import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
+import tech.thatgravyboat.skyblockapi.utils.text.CommonText
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 
+//? scoreboard_overhaul {
+import me.jfenn.scoreboardoverhaul.common.config.ConfigScreenBuilder
+import me.jfenn.scoreboardoverhaul.common.config.ConfigManager
+
+//?}
+
 object ScoreboardOverhaulCompat {
+    //? scoreboard_overhaul
     private val log = LoggerFactory.getLogger(ScoreboardOverhaulCompat::class.java)
 
     val isInstalled = McClient.anyModInstalled("scoreboard-overhaul")
     val yaclInstalled = McClient.anyModInstalled("yet_another_config_lib_v3")
 
-    @JvmStatic
-    fun createInfo(string: String, component: Component, int: Int, renderType: ScoreRenderType?): ScoreInfo = ScoreInfo(string, component, int, renderType)
+    private var isEnabled = false
+    fun isEnabled() = isInstalled && isEnabled
 
     fun openConfig() {
         if (!isInstalled) {
@@ -31,9 +40,48 @@ object ScoreboardOverhaulCompat {
             return
         }
 
+        //? scoreboard_overhaul {
         McClient.setScreenAsync {
             ConfigScreenBuilder(ConfigManager(log), ConfigManager.instance ?: return@setScreenAsync null).create(McScreen.self ?: return@setScreenAsync null)
+        }//?}
+    }
+
+    fun updateApi() {
+        if (!isInstalled) return
+        val api = ScoreboardApi.INSTANCE ?: return
+
+        isEnabled = api.config.isEnabled
+
+        if (CustomScoreboardRenderer.renderScoreboardOverhaul() && CustomScoreboardRenderer.shouldUseCustomLines() && CustomScoreboardRenderer.lines.size > 1) {
+            val lines = CustomScoreboardRenderer.lines
+            val objective = ObjectiveInfo(
+                id = "customscoreboard",
+                displayName = lines.first().component,
+            )
+            val scores = lines.drop(1).mapIndexed { index, line ->
+                val scoreValue = lines.size - 2 - index
+                ScoreInfo(
+                    id = "Line$scoreValue",
+                    displayName = line.component,
+                    value = scoreValue,
+                    score = CommonText.EMPTY,
+                    expandedScore = CommonText.EMPTY,
+                )
+            }
+            api.setScoreboard(objective, scores)
+        } else {
+            resetApi()
         }
+
+        val color = if (ModCompatibilityConfig.skyblockLevelColor && LocationAPI.isOnSkyBlock) {
+            ProfileAPI.getLevelColor()
+        } else null
+        api.setAutoTeamColor(color)
+    }
+
+    fun resetApi() {
+        val api = ScoreboardApi.INSTANCE ?: return
+        api.setScoreboard(null, null)
+        api.setAutoTeamColor(null)
     }
 }
-//? }

@@ -24,6 +24,8 @@ meowdding-auto-mixins = "1.0.5"
 
 fabric-loom = "1.17-SNAPSHOT"
 
+scoreboard-overhaul-api = "1.5.0"
+
 [libraries]
 
 fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
@@ -38,6 +40,8 @@ resourcefulkt-config = { module = "com.teamresourceful.resourcefulconfigkt:resou
 meowdding-lib = { module = "me.owdding.meowdding-lib:meowdding-lib", version.ref = "meowdding-lib" }
 meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref = "meowdding-ktmodules" }
 meowdding-ktcodecs = { module = "me.owdding.ktcodecs:KtCodecs", version.ref = "meowdding-ktcodecs" }
+
+scoreboard-overhaul-api = { module = "me.jfenn.scoreboardoverhaul:api", version.ref = "scoreboard-overhaul-api" }
 
 mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "mixinconstraints" }
 
