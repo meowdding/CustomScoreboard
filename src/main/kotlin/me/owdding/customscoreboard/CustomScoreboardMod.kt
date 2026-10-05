@@ -26,17 +26,11 @@ import me.owdding.ktmodules.Module
 import me.owdding.lib.events.overlay.FinishOverlayEditingEvent
 import me.owdding.lib.overlays.EditOverlaysScreen
 import me.owdding.lib.overlays.Overlays
-import me.owdding.lib.utils.MeowddingLogger
 import me.owdding.lib.utils.MeowddingUpdateChecker
 import me.owdding.lib.utils.mod.MeowddingMod
-import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.resources.Identifier
-import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.ResourceManager
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.misc.RegisterCommandsEvent
@@ -48,7 +42,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
-object CustomScoreboardMod : MeowddingMod("customscoreboard") {
+object CustomScoreboardMod : MeowddingMod("customscoreboard"), ResourceManagerReloadListener {
 
     private val globalJob: Job = Job(null)
     val coroutineScope = CoroutineScope(CoroutineName("CustomScoreboard") + SupervisorJob(globalJob))
@@ -66,15 +60,7 @@ object CustomScoreboardMod : MeowddingMod("customscoreboard") {
         CustomScoreboardModules.init { SkyBlockAPI.eventBus.register(it) }
         CustomScoreboardScoreboardElements.init { allScoreboardElements.add(it as Element) }
 
-        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(
-            object : SimpleSynchronousResourceReloadListener {
-                override fun getFabricId(): Identifier = Identifier.fromNamespaceAndPath("customscoreboard", "reload")
-
-                override fun onResourceManagerReload(resourceManager: ResourceManager) {
-                    CustomScoreboardBackground.load()
-                }
-            },
-        )
+        McClient.registerClientReloadListener(id("reload"), this)
 
         MeowddingUpdateChecker("fpb5uaJt", SELF) { link, current, new ->
             if (!Config.updateNotification) return@MeowddingUpdateChecker
@@ -127,4 +113,8 @@ object CustomScoreboardMod : MeowddingMod("customscoreboard") {
     }
 
     override fun <T : Any> getCodec(clazz: Class<T>): Codec<T> = CustomScoreboardCodecs.getCodec(clazz).unsafeCast()
+
+    override fun onResourceManagerReload(resourceManager: ResourceManager) {
+        CustomScoreboardBackground.load()
+    }
 }
