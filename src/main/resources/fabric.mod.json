@@ -5,6 +5,7 @@
     "name": "Custom Scoreboard",
     "license": "",
     "icon": "assets/customscoreboard/icon.png",
+    "environment": "client",
     "mixins": [
         "customscoreboard.mixins.json"
     ],
