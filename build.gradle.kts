@@ -1,5 +1,3 @@
-import jdk.jfr.internal.JVM.include
-import org.codehaus.groovy.runtime.DefaultGroovyMethods.mixin
 import org.gradle.kotlin.dsl.compileOnly
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
