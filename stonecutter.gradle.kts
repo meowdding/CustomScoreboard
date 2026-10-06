@@ -9,9 +9,6 @@ stonecutter active "26.3"
 stonecutter parameters {
     swaps["mod_version"] = "\"" + property("version") + "\";"
     swaps["minecraft"] = "\"" + node.metadata.version + "\";"
-    stonecutter.versions.forEach { (_, v) ->
-        constants["scoreboard_overhaul"] = versionCatalogs.named("libs" + v.replace(".", "")).findLibrary("scoreboard.overhaul").isPresent
-    }
 
     filters.include("**/*.fsh", "**/*.vsh")
     Replacements.read(project).replacements.forEach { (name, replacement) ->

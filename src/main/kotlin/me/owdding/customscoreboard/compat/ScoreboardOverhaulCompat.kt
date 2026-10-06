@@ -6,7 +6,6 @@ import me.jfenn.scoreboardoverhaul.api.data.ScoreInfo
 import me.owdding.customscoreboard.config.category.ModCompatibilityConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
-import org.slf4j.LoggerFactory
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.api.profile.profile.ProfileAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
@@ -14,16 +13,7 @@ import tech.thatgravyboat.skyblockapi.helpers.McScreen
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 
-//? scoreboard_overhaul {
-import me.jfenn.scoreboardoverhaul.common.config.ConfigScreenBuilder
-import me.jfenn.scoreboardoverhaul.common.config.ConfigManager
-
-//?}
-
 object ScoreboardOverhaulCompat {
-    //? scoreboard_overhaul
-    private val log = LoggerFactory.getLogger(ScoreboardOverhaulCompat::class.java)
-
     val isInstalled = McClient.anyModInstalled("scoreboard-overhaul")
     val yaclInstalled = McClient.anyModInstalled("yet_another_config_lib_v3")
 
@@ -39,11 +29,9 @@ object ScoreboardOverhaulCompat {
             Text.of("Yacl is not installed!").sendWithPrefix()
             return
         }
-
-        //? scoreboard_overhaul {
         McClient.setScreenAsync {
-            ConfigScreenBuilder(ConfigManager(log), ConfigManager.instance ?: return@setScreenAsync null).create(McScreen.self ?: return@setScreenAsync null)
-        }//?}
+            ScoreboardApi.INSTANCE?.buildConfigScreen(McScreen.self ?: return@setScreenAsync null) ?: return@setScreenAsync null
+        }
     }
 
     fun updateApi() {

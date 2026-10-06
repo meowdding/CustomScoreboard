@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.core
 
 import me.owdding.customscoreboard.CustomScoreboardMod
+import me.owdding.customscoreboard.compat.ScoreboardOverhaulCompat
 import me.owdding.customscoreboard.compat.TablistCompat
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.category.BackgroundConfig
@@ -43,9 +44,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Instant
-
-//? scoreboard_overhaul
-import me.owdding.customscoreboard.compat.ScoreboardOverhaulCompat
 
 @Module
 object CustomScoreboardRenderer : Overlay {
@@ -211,7 +209,6 @@ object CustomScoreboardRenderer : Overlay {
         lines = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
         display = lines.takeUnless { it.isEmpty() }?.createColumn()
 
-        //? scoreboard_overhaul
         ScoreboardOverhaulCompat.updateApi()
     }
 

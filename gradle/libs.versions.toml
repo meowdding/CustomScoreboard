@@ -24,7 +24,7 @@ meowdding-auto-mixins = "1.0.5"
 
 fabric-loom = "1.17-SNAPSHOT"
 
-scoreboard-overhaul-api = "1.5.0"
+scoreboard-overhaul-api = "1.5.1"
 
 [libraries]
 
