@@ -28,5 +28,8 @@
         "meowdding-lib": ">=${mlib}",
         "resourcefulconfigkt": ">=${rconfigkt}",
         "resourcefulconfig": ">=${rconfig}"
+    },
+    "breaks": {
+        "scoreboard-overhaul": "<1.5.1"
     }
 }

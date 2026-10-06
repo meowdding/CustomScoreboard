@@ -27,7 +27,8 @@ repositories {
         "com.terraformersmc"
     )
     scopedMaven("https://maven.nucleoid.xyz/", "eu.pb4")
-    scopedMaven(url = "https://maven.shedaniel.me/", "me.shedaniel", "dev.architectury")
+    scopedMaven("https://maven.shedaniel.me/", "me.shedaniel", "dev.architectury")
+    scopedMaven("https://gitlab.com/api/v4/projects/53604381/packages/maven", "me.jfenn")
     mavenCentral()
     mavenLocal()
 }
@@ -164,10 +165,6 @@ dependencies {
     implementation(versionedCatalog["fabric.api"])
 
     runtimeOnly(versionedCatalog["placeholders"])
-    if (versionedCatalog.has("scoreboard.overhaul")) {
-        compileOnly(versionedCatalog["scoreboard.overhaul"])
-        runtimeOnly(versionedCatalog["scoreboard.overhaul"])
-    }
 
     api(versionedCatalog["skyblockapi"]) {
         capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
@@ -181,6 +178,8 @@ dependencies {
     include(versionedCatalog["meowdding.lib"]) {
         capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}") }
     }
+
+    implementation(versionedCatalog["scoreboard.overhaul.api"])
 
     compileOnlyKsp(project(":annotations"))
     compileOnlyKsp(versionedCatalog["meowdding.ktmodules"])

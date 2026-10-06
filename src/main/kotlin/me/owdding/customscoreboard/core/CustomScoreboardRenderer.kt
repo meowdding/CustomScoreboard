@@ -1,7 +1,7 @@
 package me.owdding.customscoreboard.core
 
 import me.owdding.customscoreboard.CustomScoreboardMod
-import me.owdding.customscoreboard.compat.ModCompat
+import me.owdding.customscoreboard.compat.ScoreboardOverhaulCompat
 import me.owdding.customscoreboard.compat.TablistCompat
 import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.config.category.BackgroundConfig
@@ -26,7 +26,6 @@ import net.minecraft.client.gui.layouts.LayoutElement
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.input.MouseButtonInfo
-import net.minecraft.commands.arguments.ComponentArgument.textComponent
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -209,6 +208,8 @@ object CustomScoreboardRenderer : Overlay {
         if (!isEnabled()) return
         lines = createDisplay().hideLeadingAndTrailingSeparators().condenseConsecutiveSeparators()
         display = lines.takeUnless { it.isEmpty() }?.createColumn()
+
+        ScoreboardOverhaulCompat.updateApi()
     }
 
     private fun createDisplay() = currentIslandElements.flatMap { it.getLines() }.takeIf { shouldUseCustomLines() } ?: ScoreboardLine.getVanillaLines()
@@ -326,5 +327,5 @@ object CustomScoreboardRenderer : Overlay {
     fun shouldUseCustomLines() = Config.customLines && LocationAPI.isOnSkyBlock
     private fun hideHypixelScoreboard() = isEnabled() && Config.hideHypixelScoreboard
     fun renderScoreboardOverhaul() =
-        LocationAPI.isOnSkyBlock && Config.enabled && ModCompatibilityConfig.scoreboardOverhaul && ModCompat.isScoreboardOverhaulEnabled()
+        LocationAPI.isOnSkyBlock && Config.enabled && ModCompatibilityConfig.scoreboardOverhaul && ScoreboardOverhaulCompat.isEnabled()
 }

@@ -7,6 +7,7 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.customscoreboard.CustomScoreboardMod
+import me.owdding.customscoreboard.compat.ScoreboardOverhaulCompat
 import me.owdding.customscoreboard.compat.SkyHanniOption.shPath
 import me.owdding.customscoreboard.config.category.BackgroundConfig
 import me.owdding.customscoreboard.config.category.CustomizationConfig
@@ -19,6 +20,7 @@ import me.owdding.customscoreboard.elements.SowdustElement
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.Utils.convertLegacyToPlaceholder
 import me.owdding.customscoreboard.utils.Utils.updateDisplay
+import me.owdding.lib.utils.config.observable
 import net.minecraft.util.ARGB
 import java.util.function.UnaryOperator
 import kotlin.math.pow
@@ -197,6 +199,8 @@ object Config : ConfigKt("customscoreboard/config") {
 
     var enabled by boolean(true) {
         this.translation = "enabled"
+    }.observable { _, new ->
+        if (!new) ScoreboardOverhaulCompat.resetApi()
     }
 
     val hideWhenTab by boolean(false) {

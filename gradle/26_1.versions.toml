@@ -10,8 +10,6 @@ resourceful-config = "4.0.0"
 olympus = "1.8.4"
 placeholders = "3.0.0-beta.2+26.1"
 
-scoreboard-overhaul = "1.5.0-mc26.1"
-
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 
@@ -21,5 +19,3 @@ resourceful-lib = { module = "com.teamresourceful.resourcefullib:resourcefullib-
 resourceful-config = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-26.1", version.ref = "resourceful-config" }
 olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.1", version.ref = "olympus" }
 placeholders = { module = "eu.pb4:placeholder-api", version.ref = "placeholders" }
-
-scoreboard-overhaul = { module = "maven.modrinth:scoreboard-overhaul", version.ref = "scoreboard-overhaul" }
