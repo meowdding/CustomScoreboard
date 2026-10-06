@@ -182,10 +182,6 @@ dependencies {
     }
 
     implementation(versionedCatalog["scoreboard.overhaul.api"])
-    if (versionedCatalog.has("scoreboard.overhaul")) {
-        compileOnly(versionedCatalog["scoreboard.overhaul"])
-        //runtimeOnly(versionedCatalog["scoreboard.overhaul"])
-    }
 
     compileOnlyKsp(project(":annotations"))
     compileOnlyKsp(versionedCatalog["meowdding.ktmodules"])
