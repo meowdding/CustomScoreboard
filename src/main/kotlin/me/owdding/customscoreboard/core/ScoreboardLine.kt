@@ -18,6 +18,7 @@ import net.minecraft.client.gui.layouts.Layout
 import net.minecraft.client.gui.layouts.LayoutSettings
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Util
+import net.minecraft.world.entity.EntityType.by
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -35,7 +36,7 @@ data class ScoreboardLine(
     constructor(component: Component, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(component.asTextWidget(), alignment, isBlank)
     constructor(string: String, alignment: Alignment = DEFAULT_ALIGNMENT, isBlank: Boolean = false) : this(string.asTextWidget(), alignment, isBlank)
 
-    val component: Component = (layout as? TextWidgetAccessor)?.text ?: "fail".toComponent()
+    val component: Component = Text.join(if (isIndented) " " else null, (layout as? TextWidgetAccessor)?.text ?: "fail")
 
     val widget: AbstractWidget by lazy {
         Widgets.button { button ->
