@@ -68,6 +68,7 @@ object ScoreboardOverhaulCompat {
     }
 
     fun resetApi() {
+        if (!isInstalled) return
         val api = ScoreboardApi.INSTANCE ?: return
         api.setScoreboard(null, null)
         api.setAutoTeamColor(null)
