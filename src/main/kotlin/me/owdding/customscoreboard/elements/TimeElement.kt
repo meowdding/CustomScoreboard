@@ -1,16 +1,20 @@
 package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.LinesConfig
+import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
-import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
-import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
+import tech.thatgravyboat.skyblockapi.api.environmental.DateTimeAPI
+import tech.thatgravyboat.skyblockapi.api.environmental.SkyBlockInstant
+import tech.thatgravyboat.skyblockapi.api.environmental.WeatherAPI
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
+import tech.thatgravyboat.skyblockapi.utils.text.CommonText
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import kotlin.time.Duration.Companion.seconds
@@ -46,6 +50,45 @@ object TimeElement : Element() {
             append(" ")
             append(it)
         }
+    }.withActions {
+        val event = WeatherAPI.currentEvent ?: return@withActions
+
+        hover(
+            Text.multiline(
+                buildList {
+                    add(event.type.component)
+                    add(Text.of("${event.intensity.displayName} Weather", TextColor.DARK_GRAY))
+                    add(CommonText.EMPTY)
+                    add(
+                        Text.of {
+                            append("During ", TextColor.GRAY)
+                            append(event.type.weatherName, event.type.color)
+                            append(":", TextColor.GRAY)
+                        },
+                    )
+
+                    event.bonuses.forEach { (stat, value) ->
+                        val formattedValue = if (value % 1.0 == 0.0) value.toInt().toString() else value.toString()
+                        add(
+                            Text.of {
+                                append(" • ", TextColor.DARK_GRAY)
+                                append("+$formattedValue ", TextColor.GREEN)
+                                append(stat.toString())
+                            },
+                        )
+                    }
+
+                    event.specialEffect?.let {
+                        add(
+                            Text.of {
+                                append(" • ", TextColor.DARK_GRAY)
+                                append(it)
+                            },
+                        )
+                    }
+                },
+            ),
+        )
     }
 
     override fun shouldIndent(): Boolean = LinesConfig.indentLocationTimeLines
