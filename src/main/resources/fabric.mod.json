@@ -3,12 +3,13 @@
     "id": "customscoreboard",
     "version": "${version}",
     "name": "Custom Scoreboard",
-    "license": "",
+    "license": "MIT",
     "icon": "assets/customscoreboard/icon.png",
     "environment": "client",
     "mixins": [
         "customscoreboard.mixins.json"
     ],
+    "accessWidener": "customscoreboard.accesswidener",
     "entrypoints": {
         "client": [
             {
