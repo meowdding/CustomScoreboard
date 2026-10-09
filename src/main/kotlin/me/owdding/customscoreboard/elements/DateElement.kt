@@ -5,19 +5,27 @@ import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.ordinal
-import tech.thatgravyboat.skyblockapi.api.datetime.DateTimeAPI
-import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockSeason
+import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.api.environmental.DateTimeAPI
+import tech.thatgravyboat.skyblockapi.api.environmental.SkyBlockSeason
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
+import kotlin.collections.find
 
 @ScoreboardElement
 object DateElement : Element() {
     override fun getDisplay() = Text.of("${DateTimeAPI.season} ${DateTimeAPI.day}${DateTimeAPI.day.ordinal()}") {
         color = seasonColors[DateTimeAPI.season]?.takeIf { LinesConfig.coloredMonth } ?: TextColor.WHITE
     }.withActions {
-        hover(atmosphericEffect.entries.find { DateTimeAPI.season in it.key }?.value)
+        val buff = atmosphericEffect.entries.find { DateTimeAPI.season in it.key }?.value ?: return@withActions
+        hover(
+            buildList<Component> {
+                add(Text.of("Atmospheric Filter Buff", TextColor.BLUE))
+                add(buff)
+            },
+        )
     }
 
     override fun showWhen() = DateTimeAPI.season != null
