@@ -21,7 +21,7 @@ object BitsElement : NumberTrackingElement(TextColor.AQUA) {
     fun line() = Text.of(CurrencyAPI.bits.format()) {
         if (LinesConfig.showBitsAvailable) {
             append("/", TextColor.GRAY)
-            append(CurrencyAPI.bits.format())
+            append(CommunityCenterAPI.bitsAvailable.format())
         }
     }
 
