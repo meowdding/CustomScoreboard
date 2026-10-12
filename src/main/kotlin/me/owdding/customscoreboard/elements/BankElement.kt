@@ -2,7 +2,6 @@ package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.CustomScoreboardMod
 import me.owdding.customscoreboard.config.category.CustomPrefix
-import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.config.storage.CoopBankStorage
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer

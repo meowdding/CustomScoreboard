@@ -1,7 +1,6 @@
 package me.owdding.customscoreboard.elements
 
 import me.owdding.customscoreboard.config.category.CustomPrefix
-import me.owdding.customscoreboard.config.category.CustomizationConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import tech.thatgravyboat.skyblockapi.api.area.mining.HollowsAPI

@@ -1,15 +1,15 @@
 package me.owdding.customscoreboard.core
 
-import com.mojang.renderpearl.api.pipeline.RenderPipeline
 import com.mojang.blaze3d.pipeline.RenderTarget
 import com.mojang.blaze3d.pipeline.TextureTarget
-import com.mojang.renderpearl.api.pipeline.UniformType
 import com.mojang.blaze3d.systems.RenderSystem
-import com.mojang.renderpearl.api.textures.FilterMode
-import com.mojang.renderpearl.api.textures.GpuTexture
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.VertexConsumer
+import com.mojang.renderpearl.api.pipeline.RenderPipeline
+import com.mojang.renderpearl.api.pipeline.UniformType
 import com.mojang.renderpearl.api.textures.AddressMode
+import com.mojang.renderpearl.api.textures.FilterMode
+import com.mojang.renderpearl.api.textures.GpuTexture
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform
 import me.owdding.customscoreboard.CustomScoreboardMod
 import net.minecraft.client.gui.GuiGraphicsExtractor

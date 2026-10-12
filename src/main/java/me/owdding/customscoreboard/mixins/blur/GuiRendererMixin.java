@@ -1,15 +1,10 @@
 package me.owdding.customscoreboard.mixins.blur;
 
-//? 26.1 {
-/*import com.mojang.renderpearl.api.buffers.GpuBuffer;
-import com.mojang.renderpearl.api.vertex.VertexFormat;
-import me.owdding.customscoreboard.hooks.CommandEncoderHook;
-*///?}
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import earth.terrarium.olympus.client.pipelines.uniforms.RoundedTextureUniform;
 import me.owdding.customscoreboard.core.BlurredBackground;
 import net.minecraft.client.Minecraft;
@@ -22,6 +17,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+//? 26.1 {
+/*import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.vertex.VertexFormat;
+import me.owdding.customscoreboard.hooks.CommandEncoderHook;
+*///?}
 
 // adapted from: https://github.com/wisp-forest/owo-lib/blob/braid-ui/src/main/java/io/wispforest/owo/mixin/ui/GuiRendererMixin.java#L52
 // licensed under MIT

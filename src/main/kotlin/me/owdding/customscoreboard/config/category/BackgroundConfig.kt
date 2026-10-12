@@ -25,7 +25,6 @@ import kotlin.jvm.optionals.getOrNull
 
 //? >= 26.3
 import com.mojang.blaze3d.Blaze3D
-
 //? 26.1
 //import me.owdding.customscoreboard.core.BlurredBackground
 //? < 26.3

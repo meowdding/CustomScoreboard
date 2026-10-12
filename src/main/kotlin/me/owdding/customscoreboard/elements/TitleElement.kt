@@ -5,7 +5,6 @@ import me.owdding.customscoreboard.config.category.CustomizationConfig.titleAlig
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.lib.rendering.text.serialization.TagComponentSerialization
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.text.Text
