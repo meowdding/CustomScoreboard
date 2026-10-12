@@ -3,6 +3,7 @@ package me.owdding.customscoreboard.core
 import com.mojang.blaze3d.platform.NativeImage
 import com.mojang.blaze3d.systems.RenderSystem
 import me.owdding.customscoreboard.CustomScoreboardMod
+import me.owdding.customscoreboard.config.category.BackgroundConfig
 import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.resources.Identifier
 import java.awt.image.BufferedImage
@@ -27,15 +28,17 @@ object CustomScoreboardAnimatedBackground {
     private var _frames = mutableListOf<Frame>()
 
     val frames: List<Frame> get() = _frames
-    val frame: Frame? get() {
-        val progress = (System.currentTimeMillis()) - frameStart
-        val duration = _frames.getOrNull(index)?.duration ?: return null
-        if (progress >= duration) {
-            frameStart = System.currentTimeMillis()
-            index = (index + 1) % _frames.size
+
+    val frame: Frame?
+        get() {
+            val progress = (System.currentTimeMillis()) - frameStart
+            val duration = _frames.getOrNull(index)?.duration ?: return null
+            if (progress >= duration) {
+                frameStart = System.currentTimeMillis()
+                index = (index + 1) % _frames.size
+            }
+            return _frames.getOrNull(index)
         }
-        return _frames.getOrNull(index)
-    }
 
     fun load(stream: InputStream) {
         index = 0
@@ -47,47 +50,56 @@ object CustomScoreboardAnimatedBackground {
             if (readers.hasNext()) {
                 val reader = readers.next().apply { this.setInput(it, false) }
                 if (reader.formatName.equals("gif", ignoreCase = true)) {
-                    val frames = reader.getNumImages(true)
+                    val totalFrames = reader.getNumImages(true)
 
-                    if (frames > MAX_FRAMES) {
-                        CustomScoreboardMod.warn("Animated background has $frames frames, but only $MAX_FRAMES can fit in a single texture. Some frames will be ignored.")
-                    } else {
-                        // Minecraft doesnt clear the buffer from previously closed images, so we need to do it ourselves to prevent artifacts from showing up in the first frame.
-                        val background = reader.createBackground()
-                        background.clear()
+                    val framesToLoad = if (totalFrames > MAX_FRAMES) {
+                        if (BackgroundConfig.unlimitedGifFrames) {
+                            CustomScoreboardMod.warn("Using unlimited frames with count $totalFrames.")
+                            totalFrames
+                        } else {
+                            CustomScoreboardMod.warn("Animated background has $totalFrames frames, but only $MAX_FRAMES can fit in a single texture. Some frames will be ignored.")
+                            MAX_FRAMES
+                        }
+                    } else totalFrames
 
-                        for (i in 0 until frames) {
-                            val metadata = reader.getImageMetadata(i)
+                    // Minecraft doesn't clear the buffer from previously closed images,
+                    // so we need to do it ourselves to prevent artifacts from showing up in the first frame.
+                    val background = reader.createBackground()
+                    background.clear()
 
-                            val node = metadata.getAsTree(metadata.nativeMetadataFormatName) as IIOMetadataNode
-                            val descriptor = node.getElementsByTagName("ImageDescriptor").item(0) as IIOMetadataNode
-                            val control = node.getElementsByTagName("GraphicControlExtension").item(0) as IIOMetadataNode
+                    for (i in 0 until framesToLoad) {
+                        val metadata = reader.getImageMetadata(i)
 
-                            val width = descriptor.getAttribute("imageWidth").toInt()
-                            val height = descriptor.getAttribute("imageHeight").toInt()
-                            val x = descriptor.getAttribute("imageLeftPosition").toInt()
-                            val y = descriptor.getAttribute("imageTopPosition").toInt()
+                        val node = metadata.getAsTree(metadata.nativeMetadataFormatName) as IIOMetadataNode
+                        val descriptor = node.getElementsByTagName("ImageDescriptor").item(0) as IIOMetadataNode
+                        val control = node.getElementsByTagName("GraphicControlExtension").item(0) as IIOMetadataNode
 
-                            val disposalMethod = control.getAttribute("disposalMethod")
+                        val width = descriptor.getAttribute("imageWidth").toInt()
+                        val height = descriptor.getAttribute("imageHeight").toInt()
+                        val x = descriptor.getAttribute("imageLeftPosition").toInt()
+                        val y = descriptor.getAttribute("imageTopPosition").toInt()
 
-                            val image = background.copy()
-                            reader.read(i).copyTo(image, x, y, width, height)
+                        val disposalMethod = control.getAttribute("disposalMethod")
 
-                            when (disposalMethod) {
-                                "restoreToBackgroundColor" -> background.clear()
-                                "restoreToPrevious" -> {} // Do nothing, keep the previous frame
-                                else -> background.copyFrom(image) // Keep the current frame for the next one
-                            }
+                        val image = background.copy()
+                        reader.read(i).copyTo(image, x, y, width, height)
 
-                            this._frames.add(Frame(
-                                sprite = Identifier.fromNamespaceAndPath("customscoreboard", "dynamic/scoreboard/$i"),
-                                image = image,
-                                duration = control.getAttribute("delayTime").toLongOrNull()?.times(10) ?: DEFAULT_FRAME_DELAY
-                            ))
+                        when (disposalMethod) {
+                            "restoreToBackgroundColor" -> background.clear()
+                            "restoreToPrevious" -> {} // Do nothing, keep the previous frame
+                            else -> background.copyFrom(image) // Keep the current frame for the next one
                         }
 
-                        background.close()
+                        this._frames.add(
+                            Frame(
+                                sprite = Identifier.fromNamespaceAndPath("customscoreboard", "dynamic/scoreboard/$i"),
+                                image = image,
+                                duration = control.getAttribute("delayTime").toLongOrNull()?.times(10) ?: DEFAULT_FRAME_DELAY,
+                            ),
+                        )
                     }
+
+                    background.close()
                 }
             }
         }
@@ -136,7 +148,7 @@ object CustomScoreboardAnimatedBackground {
 
         fun load(): DynamicTexture = DynamicTexture(
             { "Custom Scoreboard Animated Background Frame ${sprite.path}" },
-            image
+            image,
         )
     }
 }

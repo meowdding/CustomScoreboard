@@ -1,7 +1,5 @@
 package me.owdding.customscoreboard.config.category
 
-//? >= 26.3
-import com.mojang.blaze3d.Blaze3D
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigUI
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import earth.terrarium.olympus.client.components.Widgets
@@ -10,13 +8,9 @@ import earth.terrarium.olympus.client.layouts.Layouts
 import me.owdding.customscoreboard.compat.SkyHanniOption.shMapper
 import me.owdding.customscoreboard.compat.SkyHanniOption.shPath
 import me.owdding.customscoreboard.core.CustomScoreboardBackground
-//? 26.1
-//import me.owdding.customscoreboard.core.BlurredBackground
 import me.owdding.customscoreboard.utils.Utils.moulConfigColor
 import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import net.minecraft.client.gui.layouts.LayoutElement
-//? < 26.3
-//import net.minecraft.util.Util
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.platform.showTooltip
@@ -28,6 +22,14 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.underlined
 import kotlin.io.path.Path
 import kotlin.io.path.absolute
 import kotlin.jvm.optionals.getOrNull
+
+//? >= 26.3
+import com.mojang.blaze3d.Blaze3D
+
+//? 26.1
+//import me.owdding.customscoreboard.core.BlurredBackground
+//? < 26.3
+//import net.minecraft.util.Util
 
 object BackgroundConfig : CategoryKt("Background") {
 
@@ -136,15 +138,17 @@ object BackgroundConfig : CategoryKt("Background") {
         this.shPath = "background.useCustomBackgroundImage"
     }
 
+    val unlimitedGifFrames by boolean(false) {
+        this.translation = "unlimited_gif_frames"
+    }
+
     init {
         button {
             this.title = "website"
             this.description = "website.desc"
             this.text = "Open Website"
 
-            onClick {
-                McClient.openUri("https://meowdd.ing/scoreboard")
-            }
+            onClick { McClient.openUri("https://meowdd.ing/scoreboard") }
         }
 
         button {
@@ -152,9 +156,7 @@ object BackgroundConfig : CategoryKt("Background") {
             this.description = "editor.desc"
             this.text = "Open Editor"
 
-            onClick {
-                CustomBackgroundModal.open()
-            }
+            onClick { CustomBackgroundModal.open() }
         }
     }
 
@@ -178,7 +180,7 @@ object CustomBackgroundModal {
         return Widgets.button {
             it.withTexture(null)
             it.withRenderer { graphics, context, _ ->
-                val realWidth = (width * 1/3f).toInt()
+                val realWidth = (width * 1 / 3f).toInt()
                 graphics.drawTexture(
                     context.x + (context.width - realWidth) / 2, context.y,
                     realWidth, context.height,
@@ -201,6 +203,7 @@ object CustomBackgroundModal {
                     BackgroundConfig.customImageFile.isEmpty() -> Text.of("No file selected") {
                         this.color = TextColor.RED
                     }
+
                     hovered -> {
                         graphics.showTooltip(
                             Text.multiline(
@@ -219,6 +222,7 @@ object CustomBackgroundModal {
                             this.color = TextColor.WHITE
                         }
                     }
+
                     else -> Text.of("Hover to view file") {
                         this.color = TextColor.WHITE
                     }
@@ -246,21 +250,26 @@ object CustomBackgroundModal {
                 .withGap(PADDING)
                 .withChild(getDisplay(width, height))
                 .withChild(getFileDisplay(width))
-                .withChild(Layouts.row()
-                    .withGap(PADDING)
-                    .withChild(ResourcefulConfigUI.button(0, 0, buttonWidth, 20, Text.of("Select Image")) {
-                        OlympusDialogs.openFileSystemDialog(OlympusDialogs.FileSystemDialogType.OPEN_FILE, null, "*.png", "*.gif").thenAccept { files ->
-                            val file = files.getOrNull()?.firstOrNull() ?: return@thenAccept
-                            val path = file.toAbsolutePath().toString()
-                            BackgroundConfig.customImageFile = path
+                .withChild(
+                    Layouts.row()
+                        .withGap(PADDING)
+                        .withChild(
+                            ResourcefulConfigUI.button(0, 0, buttonWidth, 20, Text.of("Select Image")) {
+                                OlympusDialogs.openFileSystemDialog(OlympusDialogs.FileSystemDialogType.OPEN_FILE, null, "*.png", "*.gif").thenAccept { files ->
+                                    val file = files.getOrNull()?.firstOrNull() ?: return@thenAccept
+                                    val path = file.toAbsolutePath().toString()
+                                    BackgroundConfig.customImageFile = path
 
-                            CustomScoreboardBackground.load()
-                        }
-                    })
-                    .withChild(ResourcefulConfigUI.button(0, 0, buttonWidth, 20, Text.of("Remove Image")) {
-                        BackgroundConfig.customImageFile = ""
-                        CustomScoreboardBackground.load()
-                    })
+                                    CustomScoreboardBackground.load()
+                                }
+                            },
+                        )
+                        .withChild(
+                            ResourcefulConfigUI.button(0, 0, buttonWidth, 20, Text.of("Remove Image")) {
+                                BackgroundConfig.customImageFile = ""
+                                CustomScoreboardBackground.load()
+                            },
+                        ),
                 )
 
             ResourcefulConfigUI.container(x, y, width, height, layout)

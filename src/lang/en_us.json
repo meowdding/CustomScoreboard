@@ -282,6 +282,13 @@
                     "@value": "Custom Image Background",
                     "desc": "Use a custom image as the background.\nMake sure you have your texturepack enabled."
                 },
+                "unlimited_gif_frames": {
+                    "@value": "Unlimited GIF Frames",
+                    "desc": [
+                        "Removes the hard cap of 100 frames in GIFs.",
+                        "<red>Having too many frames in your GIF means it will eat away your memory and might even cause crashes, use this with care.</red>"
+                    ]
+                },
                 "transparency": {
                     "@value": "Transparency of the Background",
                     "desc": "Choose the transparency of the background."
