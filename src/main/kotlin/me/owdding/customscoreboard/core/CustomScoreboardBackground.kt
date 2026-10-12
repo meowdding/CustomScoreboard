@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.resources.Identifier
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import java.io.File
-import kotlin.io.path.relativeTo
 import kotlin.jvm.optionals.getOrNull
 
 object CustomScoreboardBackground {
@@ -32,7 +31,7 @@ object CustomScoreboardBackground {
 
             if (file != null && file.isFile) {
                 val isGif = file.extension.equals("gif", ignoreCase = true)
-                CustomScoreboardMod.info("Found background file: ${file.toPath().normalize().relativeTo(McClient.self.gameDirectory.toPath())} (GIF: $isGif)")
+                CustomScoreboardMod.info("Found background file: ${file.toPath()} (GIF: $isGif)")
 
                 file.inputStream().use { stream ->
                     if (isGif) {
