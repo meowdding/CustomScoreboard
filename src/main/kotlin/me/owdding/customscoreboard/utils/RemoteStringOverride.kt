@@ -83,13 +83,13 @@ object RemoteStrings : StringGroup {
     val stringOverwrites: MutableMap<String, String> = mutableMapOf()
 
     @Subscription(StartRepoLoadingEvent::class)
-    fun repoStartLoading() {
+    private fun repoStartLoading() {
         stringOverwrites.clear()
         list.forEach(CompletedElementDelegate<*>::update)
     }
 
     @Subscription(FinishRepoLoadingEvent::class)
-    fun repoLoaded() {
+    private fun repoLoaded() {
         val data = RemoteRepo.getFileContentAsJson("customscoreboard/strings.json") as? JsonObject ?: return
 
         val map = HashMap<String, String>()

@@ -66,7 +66,7 @@ object SlayerElement : Element() {
 
     @Subscription
     @OnlyWidget(TabWidget.SLAYER)
-    fun onTabWidget(event: TabWidgetChangeEvent) {
+    private fun onTabWidget(event: TabWidgetChangeEvent) {
         if (formattedLines.isNotEmpty()) return
         formattedLines = event.newComponents.sublistFromFirst(3, slayerQuestRegex::matches).map { it.trim() }
     }

@@ -20,7 +20,7 @@ object ModCompat {
     var isSkyhanniCustomScoreboardEnabled = false
 
     @Subscription
-    fun onProfile(event: ProfileChangeEvent) {
+    private fun onProfile(event: ProfileChangeEvent) {
         if (!isSkyhanniCustomScoreboardEnabled || !Config.enabled) return
 
         Text.of("Both Skyhanni's Custom Scoreboard and CustomScoreboard are enabled.") {
@@ -35,7 +35,7 @@ object ModCompat {
     }
 
     @Subscription
-    fun onCommand(event: RegisterCustomScoreboardCommandEvent) {
+    private fun onCommand(event: RegisterCustomScoreboardCommandEvent) {
         event.registerWithCallback("debug") {
             ComponentFactory.multiline {
                 string("Mod Compatibility Debug Info ${CustomScoreboardMod.VERSION}") {

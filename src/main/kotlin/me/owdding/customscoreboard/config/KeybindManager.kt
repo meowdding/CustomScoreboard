@@ -9,7 +9,7 @@ object KeybindManager {
     var toggleKeyHold = false
 
     @Subscription
-    fun onKeyClick(event: TickEvent) {
+    private fun onKeyClick(event: TickEvent) {
         if (CustomScoreboardKeybinds.TOGGLE_KEY.isDown) {
             if (toggleKeyHold) return
             toggleKeyHold = true

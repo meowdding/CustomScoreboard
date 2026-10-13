@@ -80,7 +80,7 @@ object BankElement : NumberTrackingElement(TextColor.GOLD) {
 
     @Subscription
     @InventoryTitle("Bank")
-    fun onContainer(event: InventoryChangeEvent) {
+    private fun onContainer(event: InventoryChangeEvent) {
         if (event.slot.index != 15 || event.item.isEmpty) return
         val state = event.item.cleanName == "Personal Bank Account"
         CustomScoreboardMod.info("Determined Profile as actually coop: $state")

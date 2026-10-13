@@ -70,7 +70,7 @@ abstract class NumberTrackingElement(val numberColor: Int) : Element() {
     }
 
     @Subscription(event = [ProfileChangeEvent::class], inherited = true)
-    fun onProfileSwitch() {
+    private fun onProfileSwitch() {
         previousAmount = -1
     }
 }

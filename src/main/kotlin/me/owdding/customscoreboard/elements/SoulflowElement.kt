@@ -45,7 +45,7 @@ object SoulflowElement : NumberTrackingElement(TextColor.DARK_AQUA) {
 
     @Subscription
     @OnlyWidget(TabWidget.PROFILE)
-    fun onTab(event: TabWidgetChangeEvent) {
+    private fun onTab(event: TabWidgetChangeEvent) {
         soulflowInTablist = soulflowRegex.anyMatch(event.new)
     }
 }

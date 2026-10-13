@@ -116,17 +116,17 @@ object CustomScoreboardRenderer : Overlay {
     }
 
     @Subscription(event = [TickEvent::class])
-    fun onTick() {
+    private fun onTick() {
         tryUpdate(Config.updateEveryTick)
     }
 
     @Subscription(event = [ScoreboardUpdateEvent::class])
-    fun onScoreboardUpdate() {
+    private fun onScoreboardUpdate() {
         tryUpdate(true)
     }
 
     @Subscription
-    fun onMouseClick(event: ScreenMouseClickEvent.Post) {
+    private fun onMouseClick(event: ScreenMouseClickEvent.Post) {
         if (!isAllowedScreen()) return
 
         display?.visitWidgets {
@@ -137,7 +137,7 @@ object CustomScoreboardRenderer : Overlay {
     }
 
     @Subscription
-    fun onRender(event: RenderHudEvent) {
+    private fun onRender(event: RenderHudEvent) {
         if (!isEnabled()) return
         if (renderScoreboardOverhaul()) return
         if (Config.hideWhenTab && TablistCompat.isAnyTabRendering) return
@@ -279,14 +279,14 @@ object CustomScoreboardRenderer : Overlay {
 
 
     @Subscription
-    fun onRenderHudElement(event: RenderHudElementEvent) {
+    private fun onRenderHudElement(event: RenderHudElementEvent) {
         if (event.element == HudElement.SCOREBOARD && hideHypixelScoreboard()) {
             event.cancel()
         }
     }
 
     @Subscription(event = [IslandChangeEvent::class])
-    fun onIslandChange() {
+    private fun onIslandChange() {
         updateIslandCache()
     }
 

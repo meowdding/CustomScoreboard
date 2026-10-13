@@ -29,12 +29,11 @@ object TabWidgetHelper {
     }
 
     @Subscription
-    fun onTabWidget(event: TabWidgetChangeEvent) {
+    private fun onTabWidget(event: TabWidgetChangeEvent) {
         tabWidgetCache[event.widget] = event.newComponents
     }
 
     @Subscription
-    fun onWorldSwitch(event: ServerChangeEvent) = tabWidgetCache.clear()
-
+    private fun onWorldSwitch(event: ServerChangeEvent) = tabWidgetCache.clear()
 
 }
