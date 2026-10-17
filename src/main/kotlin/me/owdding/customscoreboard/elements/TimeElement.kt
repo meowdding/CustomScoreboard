@@ -49,6 +49,13 @@ object TimeElement : Element() {
         currentWeather?.let {
             append(" ")
             append(it)
+        } ?: run {
+            val (symbol, color) = when {
+                DateTimeAPI.isDay -> "☀" to TextColor.YELLOW
+                else -> "☽" to TextColor.AQUA
+            }
+            append(" ")
+            append(symbol, color)
         }
     }.withActions {
         val event = WeatherAPI.currentEvent ?: return@withActions
