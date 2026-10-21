@@ -2,6 +2,8 @@
 
 > [!WARNING]
 > Pull requests suspected of being created, documented, or aided with AI/LLM usage will be closed without further discussion.
+>
+> This includes, but is not limited to, translations. We do not require all translations to be in all languages, and translations made with AI/translators will not be accepted.
 
 If you have questions, join our [Discord](https://meowdd.ing/discord).
 
@@ -50,3 +52,25 @@ If an API feature is missing:
 1. Implement it temporarily in your feature mod
 2. Test if it works
 3. Open a PR to the appropriate library
+
+## Custom Scoreboard Structure
+
+```
+├── src/
+│   ├── lang/                                   # Language Files
+│   └── main/                                   # Contains Checkstyle configurations
+│       ├── java                                # Java Code Like Mixins
+│       ├── kotlin                              # The main mod
+│       │   └── me.owdding.customscoreboard
+│       │       ├── compat                      # For Compatability with other Mods
+│       │       ├── config                      # The config of the Mod
+│       │       ├── core                        # Everything related to rendering etc.
+│       │       ├── elements                    # The main appearance of the scoreboard
+│       │       ├── events                      # The event specific lines
+│       │       ├── utils                       # Utilities needed for rendering etc.
+│       │       └── CustomScoreboardMod.kt      # The initializer of the mod
+│       └── resources                           # Assets etc.
+│
+│                                               # Version Specific Code
+└── versions/\[version]/src/main/kotlin/me/owdding/customscoreboard
+```
