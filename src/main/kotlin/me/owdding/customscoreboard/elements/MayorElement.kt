@@ -10,7 +10,7 @@ import tech.thatgravyboat.skyblockapi.api.data.MayorCandidate
 import tech.thatgravyboat.skyblockapi.api.data.MayorCandidates
 import tech.thatgravyboat.skyblockapi.api.data.MayorPerk
 import tech.thatgravyboat.skyblockapi.api.data.MayorPerks
-import tech.thatgravyboat.skyblockapi.api.datetime.SkyBlockInstant
+import tech.thatgravyboat.skyblockapi.api.environmental.SkyBlockInstant
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.extentions.until
 import tech.thatgravyboat.skyblockapi.utils.text.CommonText

@@ -88,10 +88,10 @@ object CustomScoreboardMod : MeowddingMod("customscoreboard"), ResourceManagerRe
     }
 
     @Subscription
-    fun onCommand(event: RegisterCommandsEvent) = RegisterCustomScoreboardCommandEvent(event).post(SkyBlockAPI.eventBus)
+    private fun onCommand(event: RegisterCommandsEvent) = RegisterCustomScoreboardCommandEvent(event).post(SkyBlockAPI.eventBus)
 
     @Subscription
-    fun onRegisterCommands(event: RegisterCustomScoreboardCommandEvent) {
+    private fun onRegisterCommands(event: RegisterCustomScoreboardCommandEvent) {
         event.registerBaseCallback {
             McClient.setScreenAsync { ResourcefulConfigScreen.getFactory("customscoreboard").apply(null) }
         }
@@ -106,7 +106,7 @@ object CustomScoreboardMod : MeowddingMod("customscoreboard"), ResourceManagerRe
     }
 
     @Subscription
-    fun finishEditing(event: FinishOverlayEditingEvent) {
+    private fun finishEditing(event: FinishOverlayEditingEvent) {
         if (event.modId == MOD_ID) {
             config.save()
         }

@@ -28,7 +28,7 @@ object BroodmotherEvent : Event() {
 
     @Subscription
     @OnlyWidget(TabWidget.AREA)
-    fun onTabWidgetUpdate(event: TabWidgetChangeEvent) {
+    private fun onTabWidgetUpdate(event: TabWidgetChangeEvent) {
         event.newComponents.find(broodmotherRegex::matches)?.let {
             stateString = it.trim()
         }
