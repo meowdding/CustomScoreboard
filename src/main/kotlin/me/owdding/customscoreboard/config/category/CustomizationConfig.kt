@@ -320,6 +320,7 @@ object CustomizationConfig : CategoryKt("customization") {
     val maxwellPowerPrefix by prefix(CustomPrefix.MAXWELL_POWER)
     val maxwellTuningPrefix by prefix(CustomPrefix.MAXWELL_TUNING)
     val playerCountPrefix by prefix(CustomPrefix.PLAYER_COUNT)
+    val flightDurationPrefix by prefix(CustomPrefix.FLIGHT_DURATION)
 }
 
 enum class CustomPrefix(val default: String, private val _prefix: () -> Component) {
@@ -342,6 +343,7 @@ enum class CustomPrefix(val default: String, private val _prefix: () -> Componen
     MAXWELL_POWER("Power:", CustomizationConfig::maxwellPowerPrefix),
     MAXWELL_TUNING("Tunings:", CustomizationConfig::maxwellTuningPrefix),
     PLAYER_COUNT("Players:", CustomizationConfig::playerCountPrefix),
+    FLIGHT_DURATION("Flight Duration: ", CustomizationConfig::flightDurationPrefix),
     ;
 
     val prefix get() = _prefix()

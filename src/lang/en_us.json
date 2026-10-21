@@ -497,6 +497,10 @@
                 "smooth_time": {
                     "@value": "Show SkyBlock Time Smoothly",
                     "desc": "Show the individual minutes of the current SkyBlock time instead of only updating every ~8 seconds.\nWill turn off if the smoothing is too inaccurate"
+                },
+                "flight_duration_format": {
+                    "@value": "Flight Duration Duration Format",
+                    "desc": "Formats how the flight duration time shows up."
                 }
             },
             "compatibility": {

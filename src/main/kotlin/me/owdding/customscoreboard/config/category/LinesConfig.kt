@@ -8,6 +8,7 @@ import me.owdding.customscoreboard.elements.BankElement
 import me.owdding.customscoreboard.elements.MayorElement
 import me.owdding.customscoreboard.elements.PowderElement
 import me.owdding.customscoreboard.elements.QuiverElement
+import me.owdding.customscoreboard.events.FlightDurationEvent
 import me.owdding.customscoreboard.utils.DateFormat
 import me.owdding.customscoreboard.utils.NumberFormatType
 import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
@@ -43,6 +44,10 @@ object LinesConfig : CategoryKt("line_modification") {
     val smoothTime by boolean(true) {
         this.translation = "smooth_time"
         this.shPath = "display.skyblockTimeExactMinutes"
+    }
+
+    val flightDurationFormat by enum(FlightDurationEvent.FlightDurationFormat.COLON) {
+        this.translation = "flight_duration_format"
     }
 
     val coloredMonth by boolean("colored_month", false) {
