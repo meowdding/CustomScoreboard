@@ -5,7 +5,9 @@ import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
@@ -32,4 +34,7 @@ object PurseElement : NumberTrackingElement(TextColor.GOLD) {
 
     override val configLine = "Purse"
     override val id = "PURSE"
+
+    private val purseRegex by RemoteStrings.resolve().regex("Purse: [\\d,.]+.*")
+    override val regexes = setOf(purseRegex)
 }

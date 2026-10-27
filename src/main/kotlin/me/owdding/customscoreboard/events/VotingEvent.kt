@@ -31,7 +31,7 @@ object VotingEvent : Event() {
     private val titleRegex by remote.componentRegex("Year \\d+ Votes")
     private val subtitleRegex by remote.componentRegex("Waiting for|your vote\\.\\.\\.")
     private val candidatesRegex by remote.componentRegex("\\|{15}.+")
-    private val regexes = listOf(titleRegex, subtitleRegex, candidatesRegex)
+    override val regexes = setOf(titleRegex, subtitleRegex, candidatesRegex)
 
     private val formattedLines = mutableListOf<Component>()
 

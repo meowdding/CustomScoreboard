@@ -23,10 +23,9 @@ object DamageEvent : Event() {
     private val hpRegex by remote.componentRegex("(?:Protector|Dragon) HP: [\\d,.]* .")
     private val damageRegex by remote.componentRegex("Your Damage: [\\d,.]+")
 
-    private val patterns = listOf(hpRegex, damageRegex)
-
+    override val regexes = setOf(hpRegex, damageRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

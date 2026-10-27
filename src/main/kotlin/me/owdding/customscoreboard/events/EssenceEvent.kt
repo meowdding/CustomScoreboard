@@ -16,6 +16,7 @@ object EssenceEvent : Event() {
     private var formattedLine: Component? = null
 
     private val essenceRegex by RemoteStrings.resolve().componentRegex(".*Essence: [\\d,.]+")
+    override val regexes = setOf(essenceRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLine = event.newComponents.find(essenceRegex::matches)

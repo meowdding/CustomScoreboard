@@ -29,10 +29,10 @@ object DojoEvent : Event() {
     private val pointsRegex by remote.componentRegex("Points: -?[\\w.]+.*")
     private val timeRegex by remote.componentRegex("Time: [\\w.]+.*")
 
-    private val patterns = listOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
+    override val regexes = setOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 
 }

@@ -2,6 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.hub.SpookyFestivalAPI
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
@@ -16,6 +18,8 @@ object SpookyEvent : Event() {
 
     override val configLine = "Spooky"
 
+    private val timeRegex by RemoteStrings.resolve().regex("Spooky Festival (\\d+:)?\\d{1,2}:\\d{2}")
+    override val regexes = setOf(timeRegex)
 
     private var formattedLines: List<Component> = emptyList()
 

@@ -39,6 +39,7 @@ object FlightDurationEvent : Event() {
     private var duration: Duration? = null
 
     private val flightRegex by RemoteStrings.resolve().regex("Flight Duration: (?<time>[\\d:]+)")
+    override val regexes = setOf(flightRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         val found = flightRegex.anyMatch(event.new, "time") { (time) ->

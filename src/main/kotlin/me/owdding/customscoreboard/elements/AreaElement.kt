@@ -51,4 +51,6 @@ object AreaElement : Element() {
             formattedVisiting = null
         }
     }
+
+    override val regexes = setOf(locationComponentRegex, gardenPlotComponentRegex, visitingComponentRegex)
 }

@@ -26,7 +26,7 @@ object ObjectiveElement : Element() {
     override val id = "OBJECTIVE"
 
 
-    private val objectiveTitleRegex by RemoteStrings.resolve().regex("^(?:Objective|Quest)")
+    val objectiveTitleRegex by RemoteStrings.resolve().regex("^(?:Objective|Quest).*")
 
     private val objectiveLines = mutableListOf<Component>()
 

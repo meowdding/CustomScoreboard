@@ -31,7 +31,7 @@ object DungeonsEvent : Event() {
     private val f3guardianRegex by remote.componentRegex(" - (?:Healthy|Reinforced|Laser|Chaos) [\\w,.]*.")
     private val spacerRegex by remote.componentRegex("\\s*")
 
-    private val patterns = listOf(
+    override val regexes = setOf(
         m7dragonsRegex,
         autoCloseRegex,
         startingInRegex,
@@ -46,7 +46,7 @@ object DungeonsEvent : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
 
         // Strip leading/trailing spacers
         while (formattedLines.isNotEmpty() && formattedLines.first().string.isBlank()) {

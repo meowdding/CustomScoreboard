@@ -106,6 +106,8 @@ object TimeElement : Element() {
 
     private val remote = RemoteStrings.resolve()
     private val weatherRegex by remote.componentRegex("\\s*\\d{1,2}:\\d{2}(?:am|pm) (?<weather>.+)")
+    private val timeRegex by remote.componentRegex("\\s*\\d{1,2}:\\d{2}(?:am|pm).*")
+    override val regexes = setOf(timeRegex)
 
     private var currentWeather: Component? = null
 

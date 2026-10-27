@@ -4,7 +4,9 @@ import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.rift.RiftAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -26,4 +28,7 @@ object MotesElement : NumberTrackingElement(TextColor.PINK) {
 
     override val configLine = "Motes"
     override val id = "MOTES"
+
+    private val motesRegex by RemoteStrings.resolve().regex("Motes: [\\d,.]+.*")
+    override val regexes = setOf(motesRegex)
 }

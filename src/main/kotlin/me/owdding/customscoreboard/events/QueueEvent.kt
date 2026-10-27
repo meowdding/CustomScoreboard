@@ -21,10 +21,10 @@ object QueueEvent : Event() {
     private val tierRegex by remote.componentRegex("Tier: .*")
     private val positionRegex by remote.componentRegex("Position: #\\d+ Since: .*")
 
-    private val patterns = listOf(titleRegex, tierRegex, positionRegex)
+    override val regexes = setOf(titleRegex, tierRegex, positionRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

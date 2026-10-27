@@ -25,6 +25,7 @@ object BroodmotherEvent : Event() {
     private var stateString: Component? = null
 
     private val broodmotherRegex by RemoteStrings.resolve().componentRegex(" Broodmother: (?<state>.*)")
+    override val regexes = setOf(broodmotherRegex)
 
     @Subscription
     @OnlyWidget(TabWidget.AREA)

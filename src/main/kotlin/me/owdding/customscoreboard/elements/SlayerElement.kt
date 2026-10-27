@@ -56,7 +56,7 @@ object SlayerElement : Element() {
 
     fun isInSlayerRegion(): Boolean = slayerLocations[SlayerAPI.type]?.inLocation() ?: slayerLocations.any { it.value.inLocation() }
 
-    private val slayerQuestRegex by RemoteStrings.resolve().componentRegex("Slayer(?::| Quest)")
+    val slayerQuestRegex by RemoteStrings.resolve().componentRegex("Slayer(?::| Quest)")
 
     private var formattedLines = emptyList<Component>()
 

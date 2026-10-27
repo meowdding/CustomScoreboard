@@ -30,11 +30,11 @@ object CarnivalEvent : Event() {
     private val accuracyRegex by remote.componentRegex("Accuracy: [\\d.,]+%")
     private val killsRegex by remote.componentRegex("Kills: \\d+")
 
-    private val patterns =
-        listOf(timeRegex, tokensRegex, taskRegex, timeLeftRegex, fruitsRegex, scoreRegex, catchStreakRegex, accuracyRegex, killsRegex)
+    override val regexes =
+        setOf(timeRegex, tokensRegex, taskRegex, timeLeftRegex, fruitsRegex, scoreRegex, catchStreakRegex, accuracyRegex, killsRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

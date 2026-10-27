@@ -40,6 +40,7 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
 import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
 import tech.thatgravyboat.skyblockapi.utils.extentions.isInPast
+import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import kotlin.time.Duration.Companion.milliseconds
@@ -54,6 +55,8 @@ object CustomScoreboardRenderer : Overlay {
     private var nextPlannedUpdate = Instant.DISTANT_FUTURE
     private var currentIslandElements = emptyList<Element>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
+        private set
+    var activeRegexes = emptyList<Regex>()
         private set
 
     override var bounds: Pair<Int, Int> = 0 to 0
@@ -202,6 +205,17 @@ object CustomScoreboardRenderer : Overlay {
     fun updateIslandCache() {
         currentIslandElements = CustomizationConfig.appearance.filter { it.showIsland() }
         currentIslandEvents = CustomizationConfig.events.filter { it.event.showIsland() }
+        activeRegexes = buildList {
+            addAll(CustomScoreboardMod.allPossibleScoreboardElements.filter { it.showIsland() }.flatMap { it.regexes })
+            addAll(ScoreboardEventEntry.entries.filter { it.event.showIsland() }.flatMap { it.event.regexes })
+        }.map {
+            when(it) {
+                is ComponentRegex -> it.regex()
+                is Regex -> it
+                is String -> Regex(it)
+                else -> error("Unknown Scoreboad Regex $it")
+            }
+        }
     }
 
     fun updateDisplay() {

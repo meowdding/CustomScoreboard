@@ -22,7 +22,9 @@ object TrapperEvent : Event() {
 
     private val remote = RemoteStrings.resolve()
     private val peltsRegex by remote.componentRegex("Pelts: [\\d,.]+.*")
-    private val mobLocationRegex by remote.componentRegex("Tracker Mob Location:")
+    val mobLocationRegex by remote.componentRegex("Tracker Mob Location:")
+
+    override val regexes = setOf(peltsRegex,)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {

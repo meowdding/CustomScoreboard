@@ -16,7 +16,7 @@ object JacobsContestEvent : Event() {
     override val configLine = "Jacob's Contest"
 
 
-    private val contestRegex by RemoteStrings.resolve().componentRegex("Jacob's Contest")
+    val contestRegex by RemoteStrings.resolve().componentRegex("Jacob's Contest")
 
     private var formattedLines = emptyList<Component>()
 

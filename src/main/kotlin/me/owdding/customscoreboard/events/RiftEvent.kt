@@ -27,9 +27,9 @@ object RiftEvent : Event() {
     private val barryProtestRegex by remote.componentRegex("First Up|Find and talk with Barry")
     private val protestorsHandledRegex by remote.componentRegex("Protestors handled: \\d+/\\d+")
 
-    private val patterns = listOf(effigiesRegex, hotdogContestRegex, aveikxRegex, cluesRegex, barryProtestRegex, protestorsHandledRegex)
+    override val regexes = setOf(effigiesRegex, hotdogContestRegex, aveikxRegex, cluesRegex, barryProtestRegex, protestorsHandledRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

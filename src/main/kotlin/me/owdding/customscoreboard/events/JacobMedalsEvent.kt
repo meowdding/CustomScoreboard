@@ -44,4 +44,5 @@ object JacobMedalsEvent : Event() {
     override val configLine = "Jacob Medals"
 
     private val medalRegex by RemoteStrings.resolve().componentRegex(".* medals: \\d+")
+    override val regexes = setOf(medalRegex)
 }

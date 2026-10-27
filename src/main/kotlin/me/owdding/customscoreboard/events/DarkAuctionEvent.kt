@@ -23,8 +23,9 @@ object DarkAuctionEvent : Event() {
     private val remote = RemoteStrings.resolve()
     private val startingInRegex by remote.componentRegex("Starting in: [\\w:,.\\s]+")
     private val timeLeftRegex by remote.componentRegex("Time Left: [\\w:,.\\s]+")
-    private val currentItemRegex by remote.componentRegex("Current Item:")
+    val currentItemRegex by remote.componentRegex("Current Item:")
 
+    override val regexes = setOf(startingInRegex, timeLeftRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {

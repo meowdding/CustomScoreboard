@@ -35,6 +35,8 @@ object LobbyElement : Element() {
 
 
     private val roomIdRegex by RemoteStrings.resolve().regex("\\d+/\\d+/\\d+ \\w+ (?<roomId>[\\w,-]+)")
+    private val lobbyCodeRegex by RemoteStrings.resolve().regex("\\d+/\\d+/\\d+ \\w+.*")
+    override val regexes = setOf(lobbyCodeRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         val found = roomIdRegex.anyFound(event.new, "roomId") { (roomId) ->

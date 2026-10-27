@@ -32,10 +32,10 @@ object MagmaBossEvent : Event() {
     private val healthBarRegex by remote.componentRegex("(?:\\d+(?:\\.\\d)?M|\\d+k)/10M.")
     private val barRegex by remote.componentRegex("▎+")
 
-    private val patterns = listOf(bossRegex, damageSoakedRegex, killMagmasRegex, formingRegex, healthRegex, healthBarRegex, barRegex)
+    override val regexes = setOf(bossRegex, damageSoakedRegex, killMagmasRegex, formingRegex, healthRegex, healthBarRegex, barRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

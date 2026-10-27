@@ -33,6 +33,7 @@ Features annotated with a ❇️ are new additions compared to the SkyHanni vers
 - Additional Custom Lines:
   - Active Mayor & Minister
   - ❇️ Active Pet
+  - Bank
   - Chunked Stats (Purse, etc. in one line)
   - Cookie Buff
   - Gems

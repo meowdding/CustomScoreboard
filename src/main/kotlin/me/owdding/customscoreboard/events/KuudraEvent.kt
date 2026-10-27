@@ -33,11 +33,11 @@ object KuudraEvent : Event() {
     private val tokensRegex by remote.componentRegex("Tokens: [\\w,]+")
     private val submergesRegex by remote.componentRegex("Submerges In: [\\w\\s?]+")
 
-    private val patterns =
-        listOf(autoCloseRegex, startingInRegex, timeElapsedRegex, instanceShutdownRegex, waveRegex, tokensRegex, submergesRegex)
+    override val regexes =
+        setOf(autoCloseRegex, startingInRegex, timeElapsedRegex, instanceShutdownRegex, waveRegex, tokensRegex, submergesRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

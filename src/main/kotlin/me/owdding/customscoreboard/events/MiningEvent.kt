@@ -44,12 +44,12 @@ object MiningEvent : Event() {
     private val compassRegex by remote.componentRegex("Wind Compass")
     private val compassArrowRegex by remote.componentRegex("\\s*[⋖⋗\uE060\uE061≈]+\\s*[⋖⋗\uE060\uE061≈]*\\s*")
 
-    private val patterns = listOf(
+    private val patterns = setOf(
         eventRegex, eventZoneRegex, raffleUselessRegex, raffleTicketsRegex, rafflePoolRegex, donUseless,
         donRemaining, donYourMithril, nearbyPlayers, goblinUseless, goblinRemaining, goblinYourKills, mineshaftNotStartedRegex,
         mineshaftFortunateFreezingRegex, fossilDustRegex, compassRegex,
     )
-
+    override val regexes = patterns + powderRegex
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {

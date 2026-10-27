@@ -23,7 +23,7 @@ object GardenEvent : Event() {
     private val pastingRegex by remote.componentRegex("\\s*(?:Barn )?Pasting: [\\d,.]+%?")
     private val cleanupRegex by remote.componentRegex("\\s*Cleanup: [\\d,.]*%?")
 
-    private val regexes = listOf(pastingRegex, cleanupRegex)
+    override val regexes = setOf(pastingRegex, cleanupRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWithMatches(event.newComponents, regexes)
