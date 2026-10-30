@@ -106,6 +106,10 @@ object LinesConfig : CategoryKt("line_modification") {
         this.translation = "piggy"
     }
 
+    val gemsCommunityCenter by boolean(false) {
+        this.translation = "gems_community_center"
+    }
+
     val hidePurseInDungeons by boolean(false) {
         this.translation = "hide_purse_dungeons"
     }
