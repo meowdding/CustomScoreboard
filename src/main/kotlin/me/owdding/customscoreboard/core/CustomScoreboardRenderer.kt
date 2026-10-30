@@ -188,7 +188,7 @@ object CustomScoreboardRenderer : Overlay {
         val x = currentX - contentOffsetX
         val y = currentY - contentOffsetY
 
-        if (BackgroundConfig.blurEnabled/*? < 26.2 {*/ /*&& !BlurredBackground.vulkanInstalled*//*?}*/) {
+        if (BackgroundConfig.blurEnabled) {
             BlurredBackground.render(event.graphics, x, y, backgroundWidth, backgroundHeight, BackgroundConfig.radius)
         }
 

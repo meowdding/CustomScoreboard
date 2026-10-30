@@ -17,17 +17,14 @@ public class CommandEncoderMixin implements CommandEncoderHook {
     @Shadow
     private CommandEncoderBackend backend;
 
-    //? >= 26.2 {
     @Shadow
     private boolean isInRenderPass;
-    //? }
 
     @Override
     public void cs$setInRenderPass(boolean inRenderPass) {
         if (this.backend instanceof CommandEncoderHook hook) {
             hook.cs$setInRenderPass(inRenderPass);
         }
-        //? >= 26.2
         this.isInRenderPass = inRenderPass;
     }
 }
