@@ -4,10 +4,10 @@ import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.LocationData
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.trim
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
 import me.owdding.ktmodules.Module
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import net.minecraft.world.phys.AABB
 import tech.thatgravyboat.skyblockapi.api.area.slayer.SlayerAPI

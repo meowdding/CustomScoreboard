@@ -5,8 +5,8 @@ import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.lib.extensions.ordinal
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.environmental.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.environmental.SkyBlockSeason
