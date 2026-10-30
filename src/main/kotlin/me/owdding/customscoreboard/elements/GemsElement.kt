@@ -7,6 +7,8 @@ import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.shorten
 import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
+import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -28,6 +30,7 @@ object GemsElement : NumberTrackingElement(TextColor.GREEN) {
     }
 
     override fun showIsland() = !SkyBlockIsland.inAnyIsland(SkyBlockIsland.THE_RIFT, SkyBlockIsland.THE_CATACOMBS, SkyBlockIsland.KUUDRA)
+    override fun showWhen(): Boolean = !LinesConfig.gemsCommunityCenter || SkyBlockAreas.COMMUNITY_CENTER.inArea()
     override fun isLineActive() = CurrencyAPI.gems > 0
 
     override val configLine = "Gems"
