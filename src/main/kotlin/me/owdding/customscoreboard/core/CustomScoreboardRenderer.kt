@@ -208,6 +208,7 @@ object CustomScoreboardRenderer : Overlay {
         activeRegexes = buildList {
             addAll(CustomScoreboardMod.allPossibleScoreboardElements.filter { it.showIsland() }.flatMap { it.regexes })
             addAll(ScoreboardEventEntry.entries.filter { it.event.showIsland() }.flatMap { it.event.regexes })
+            addAll(UnknownLinesHandler.brokenLinesRegexes)
         }.map {
             when(it) {
                 is ComponentRegex -> it.regex()

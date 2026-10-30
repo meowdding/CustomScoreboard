@@ -7,10 +7,12 @@ import me.owdding.customscoreboard.events.DarkAuctionEvent
 import me.owdding.customscoreboard.events.ForagingEvent
 import me.owdding.customscoreboard.events.JacobsContestEvent
 import me.owdding.customscoreboard.events.TrapperEvent
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.Utils.nextAfter
 import me.owdding.customscoreboard.utils.Utils.sendWithPrefix
 import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.removeIf
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -30,6 +32,8 @@ import kotlin.time.Instant
 
 @Module
 object UnknownLinesHandler {
+
+    val brokenLinesRegexes by RemoteStrings.resolve().regexes()
 
     private val allUnknownLines = mutableMapOf<String, Pair<Component, Instant>>()
     private var lastScoreboard = emptyList<Component>()
