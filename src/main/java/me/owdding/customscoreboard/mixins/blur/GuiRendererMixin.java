@@ -18,12 +18,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//? 26.1 {
-/*import com.mojang.renderpearl.api.buffers.GpuBuffer;
-import com.mojang.renderpearl.api.vertex.VertexFormat;
-import me.owdding.customscoreboard.hooks.CommandEncoderHook;
-*///?}
-
 // adapted from: https://github.com/wisp-forest/owo-lib/blob/braid-ui/src/main/java/io/wispforest/owo/mixin/ui/GuiRendererMixin.java#L52
 // licensed under MIT
 @Mixin(GuiRenderer.class)
@@ -33,7 +27,6 @@ public class GuiRendererMixin {
     @Nullable
     private TextureSetup previousTextureSetup;
 
-    //? >= 26.2 {
     @Inject(method = "draw", at = @At("HEAD"))
     private void copyBackgroundBeforePass(CallbackInfo ci) {
         if (BlurredBackground.getNeedsCopy()) {
@@ -66,38 +59,6 @@ public class GuiRendererMixin {
             }
         }
     }
-    //?} else {
-    /*@Inject(
-        method = "executeDraw(Lnet/minecraft/client/gui/render/GuiRenderer$Draw;Lcom/mojang/renderpearl/api/commands/RenderPass;Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/vertex/VertexFormat$IndexType;)V",
-        at = @At(value = "INVOKE", target = "Lcom/mojang/renderpearl/api/commands/RenderPass;setIndexBuffer(Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/vertex/VertexFormat$IndexType;)V")
-    )
-    private void copyBackground(GuiRenderer.Draw draw, RenderPass pass, GpuBuffer buffer, VertexFormat.IndexType indexType, CallbackInfo ci) {
-        if (draw.textureSetup() != BlurredBackground.getSetup()) return;
-
-        var encoder = RenderSystem.getDevice().createCommandEncoder();
-        var target = Minecraft.getInstance().getMainRenderTarget();
-        var uniform = BlurredBackground.getUniform();
-
-        if (!(encoder instanceof CommandEncoderHook hook)) return;
-
-        hook.cs$setInRenderPass(false);
-
-        encoder.copyTextureToTexture(
-            target.getColorTexture(),
-            BlurredBackground.getTexture(),
-            0,
-            0, 0,
-            0, 0,
-            target.width, target.height
-        );
-
-        var uniformBuffer = uniform != null ? RoundedTextureUniform.STORAGE.get().writeUniform(uniform) : null;
-        hook.cs$setInRenderPass(true);
-
-        if (uniformBuffer != null) {
-            pass.setUniform(RoundedTextureUniform.NAME, uniformBuffer);
-        }
-    }*///?}
 
     @WrapOperation(method = "addElementToMesh", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/render/GuiRenderer;scissorChanged(Lnet/minecraft/client/gui/navigation/ScreenRectangle;Lnet/minecraft/client/gui/navigation/ScreenRectangle;)Z"))
     private boolean forceMeshRecording(GuiRenderer instance, ScreenRectangle scissorArea, ScreenRectangle oldScissorArea, Operation<Boolean> original, @Local TextureSetup setup) {

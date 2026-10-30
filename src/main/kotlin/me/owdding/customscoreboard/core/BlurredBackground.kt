@@ -21,14 +21,11 @@ import org.joml.Matrix3x2f
 import org.joml.Vector2f
 import org.joml.Vector4f
 import tech.thatgravyboat.skyblockapi.helpers.McClient
-
-//? >= 26.2 {
 import net.minecraft.client.renderer.BindGroupLayouts
 import com.mojang.renderpearl.api.GpuFormat
 import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
 import com.mojang.renderpearl.api.pipeline.BindGroupLayout
-//?} else
-//import com.mojang.renderpearl.api.vertex.VertexFormat
+
 //? >= 26.3 {
 import com.mojang.renderpearl.api.pipeline.BlendFunction
 import com.mojang.renderpearl.api.pipeline.ColorTargetState
@@ -38,7 +35,6 @@ object BlurredBackground {
 
     private val pipeline: RenderPipeline = RenderPipeline.builder()
         .withLocation(CustomScoreboardMod.id("blurred_background"))
-        //? >= 26.2 {
         .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
         .withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
         .withBindGroupLayout(BindGroupLayouts.GLOBALS)
@@ -48,12 +44,6 @@ object BlurredBackground {
         .withPrimitiveTopology(PrimitiveTopology.QUADS)
         //? >= 26.3
         .withColorTargetState(ColorTargetState(BlendFunction.TRANSLUCENT))
-        //?} else {
-        /*.withSampler("Sampler0")
-        .withUniform("DynamicTransforms", UniformType.UNIFORM_BUFFER)
-        .withUniform("Projection", UniformType.UNIFORM_BUFFER)
-        .withUniform(RoundedTextureUniform.NAME, UniformType.UNIFORM_BUFFER)
-        .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)*///?}
         //? < 26.3
         //.withShaderDefine("NO_LAYOUT")
         .withFragmentShader(CustomScoreboardMod.id("core/blurred_background"))
@@ -62,9 +52,6 @@ object BlurredBackground {
 
     @JvmStatic
     var needsCopy = false
-
-    //? < 26.2
-    //val vulkanInstalled = net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("vulkanmod")
 
     init {
         RenderPipelines.register(pipeline)
@@ -87,17 +74,9 @@ object BlurredBackground {
 
     @JvmStatic
     fun init(width: Int, height: Int) {
-        //? < 26.2 {
-        /*if (vulkanInstalled) {
-            CustomScoreboardMod.warn("Vulkan mod detected, blurred background will not work!")
-            return
-        }*///?}
         if (target == null) {
-            //? >= 26.2 {
             //~ if >= 26.3 ', false, GpuFormat.RGBA8_UNORM' -> ', GpuFormat.RGBA8_UNORM, GpuFormat.RGBA8_UNORM'
             target = TextureTarget(null, width, height, GpuFormat.RGBA8_UNORM, GpuFormat.RGBA8_UNORM)
-            //?} else
-            //target = TextureTarget(null, width, height, false)
         } else {
             target!!.resize(width, height)
             setup.texure0?.close()
@@ -130,7 +109,7 @@ object BlurredBackground {
             )
             this.needsCopy = true
             graphics.guiRenderState.addGuiElement(
-                State(Matrix3x2f(graphics.pose()), ScreenRectangle(x, y, width, height), graphics.scissorStack.peek())
+                State(Matrix3x2f(graphics.pose()), ScreenRectangle(x, y, width, height), graphics.scissorStack.peek()),
             )
         }
     }

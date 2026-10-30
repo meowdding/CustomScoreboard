@@ -7,7 +7,6 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 
 object TablistCompat {
 
-    //~ if >= 26.2 'gui' -> 'hud'
     private val isVanillaTabRendering get() = McClient.hud.tabList.visible
 
     private val isSkyHanniTabRendering get() = KnownMods.SKYHANNI.installed && SkyHanniTabListRendererMixin.`customscoreboard$isTabToggled`()

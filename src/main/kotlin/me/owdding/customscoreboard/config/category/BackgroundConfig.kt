@@ -25,8 +25,6 @@ import kotlin.jvm.optionals.getOrNull
 
 //? >= 26.3
 import com.mojang.blaze3d.Blaze3D
-//? 26.1
-//import me.owdding.customscoreboard.core.BlurredBackground
 //? < 26.3
 //import net.minecraft.util.Util
 
@@ -68,10 +66,7 @@ object BackgroundConfig : CategoryKt("Background") {
     }
 
     val blurEnabled by boolean(false) {
-        //? >= 26.2 {
         this.translation = "blur"
-        //?} else
-        //this.translation = if (BlurredBackground.vulkanInstalled) "blur_vulk" else "blur"
     }
 
     val minWidth by int(0) {
