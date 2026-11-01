@@ -41,13 +41,11 @@ object MiningEvent : Event() {
     private val mineshaftNotStartedRegex by remote.componentRegex("Not started.*")
     private val mineshaftFortunateFreezingRegex by remote.componentRegex("Event Bonus: \\+\\d+.")
     private val fossilDustRegex by remote.componentRegex("Fossil Dust: [\\d.,]+.*")
-    private val compassRegex by remote.componentRegex("Wind Compass")
-    private val compassArrowRegex by remote.componentRegex("\\s*[⋖⋗\uE060\uE061≈]+\\s*[⋖⋗\uE060\uE061≈]*\\s*")
 
     private val patterns = setOf(
         eventRegex, eventZoneRegex, raffleUselessRegex, raffleTicketsRegex, rafflePoolRegex, donUseless,
         donRemaining, donYourMithril, nearbyPlayers, goblinUseless, goblinRemaining, goblinYourKills, mineshaftNotStartedRegex,
-        mineshaftFortunateFreezingRegex, fossilDustRegex, compassRegex,
+        mineshaftFortunateFreezingRegex, fossilDustRegex
     )
     override val regexes = patterns + powderRegex
 
@@ -62,10 +60,6 @@ object MiningEvent : Event() {
                     }
                     add(component)
                 }
-            }
-
-            event.newComponents.find(compassArrowRegex::matches)?.let {
-                add(it align Alignment.CENTER)
             }
         }
     }
