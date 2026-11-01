@@ -38,11 +38,14 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.send
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 
 @Module
 object CustomScoreboardMod : MeowddingMod("customscoreboard"), ResourceManagerReloadListener {
+
+    const val DISCORD = "https://meowdd.ing/discord"
 
     private val globalJob: Job = Job(null)
     val coroutineScope = CoroutineScope(CoroutineName("CustomScoreboard") + SupervisorJob(globalJob))
@@ -98,6 +101,13 @@ object CustomScoreboardMod : MeowddingMod("customscoreboard"), ResourceManagerRe
 
         event.registerWithCallback("version") {
             Text.of("Version: $VERSION").withColor(TextColor.GRAY).sendWithPrefix()
+        }
+
+        event.registerWithCallback("discord") {
+            Text.of("Join the Discord.") {
+                url = DISCORD
+                color = TextColor.BLUE
+            }.sendWithPrefix()
         }
 
         event.registerWithCallback("overlays") {

@@ -17,6 +17,7 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import me.owdding.lib.events.FinishRepoLoadingEvent
 import me.owdding.lib.overlays.EditableProperty
 import me.owdding.lib.overlays.Overlay
 import me.owdding.lib.overlays.OverlayAlignment
@@ -38,6 +39,7 @@ import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
+import tech.thatgravyboat.skyblockapi.impl.commands.RepoReloadCommand
 import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
 import tech.thatgravyboat.skyblockapi.utils.extentions.isInPast
 import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
@@ -300,7 +302,7 @@ object CustomScoreboardRenderer : Overlay {
         }
     }
 
-    @Subscription(event = [IslandChangeEvent::class])
+    @Subscription(IslandChangeEvent::class, FinishRepoLoadingEvent::class, priority = Subscription.LOW)
     private fun onIslandChange() {
         updateIslandCache()
     }

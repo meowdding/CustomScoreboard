@@ -1,6 +1,7 @@
 package me.owdding.customscoreboard.core
 
 import me.owdding.customscoreboard.CustomScoreboardMod
+import me.owdding.customscoreboard.config.Config
 import me.owdding.customscoreboard.elements.ObjectiveElement
 import me.owdding.customscoreboard.elements.SlayerElement
 import me.owdding.customscoreboard.events.DarkAuctionEvent
@@ -16,6 +17,7 @@ import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyOnSkyBlock
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
@@ -27,6 +29,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.clipboard
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
 
@@ -39,9 +42,10 @@ object UnknownLinesHandler {
     private var lastScoreboard = emptyList<Component>()
 
     @Subscription
+    @OnlyOnSkyBlock
     private fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         lastScoreboard = event.newComponents
-        val patternsToExclude = CustomScoreboardRenderer.activeRegexes.toMutableList()
+        val patternsToExclude = CustomScoreboardRenderer.activeRegexes
         val unknownLines: MutableMap<String, Component> = event.newComponents.filter { it.stripped.isNotBlank() }.associateBy { it.stripped }
             .filterNotTo(mutableMapOf()) { line ->
                 patternsToExclude.any { pattern -> pattern.matches(line.key) }
@@ -118,20 +122,27 @@ object UnknownLinesHandler {
 
     private fun warn(line: Component) {
         val data = buildString {
-            appendLine("Line: $line")
+            appendLine("Line: ${line.stripped}")
+            appendLine("Json: ${line.toJson(ComponentSerialization.CODEC)}")
             appendLine("Island: ${LocationAPI.island}")
             appendLine("Area: ${LocationAPI.area}")
             appendLine("Scoreboard: ${lastScoreboard.toJson(ComponentSerialization.CODEC.listOf())}")
         }
 
-        Text.of("Found unknown line ") {
-            color = TextColor.RED
+        if (Config.unknownLinesWarning) {
+            Text.of("Found unknown line ") {
+                color = TextColor.RED
 
-            append(line.stripped, TextColor.GREEN)
-            append(".")
+                append(line.stripped, TextColor.GREEN)
+                append(".")
+                append(" Report this on the Discord.") {
+                    color = TextColor.BLUE
+                    url = CustomScoreboardMod.DISCORD
+                }
 
-            clipboard = data
-        }.sendWithPrefix()
-        CustomScoreboardMod.warn("Found unknown line $line, $data")
+                clipboard = data
+            }.sendWithPrefix()
+        }
+        CustomScoreboardMod.warn("Found unknown line:\n$data")
     }
 }
