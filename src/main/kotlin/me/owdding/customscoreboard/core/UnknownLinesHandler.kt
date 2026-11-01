@@ -29,6 +29,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import tech.thatgravyboat.skyblockapi.utils.text.TextProperties.stripped
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.clipboard
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.url
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
@@ -132,15 +133,17 @@ object UnknownLinesHandler {
         if (Config.unknownLinesWarning) {
             Text.of("Found unknown line ") {
                 color = TextColor.RED
+                clipboard = data
+                hover = Text.of("Click to copy the Line.", TextColor.GREEN)
 
                 append(line.stripped, TextColor.GREEN)
                 append(".")
                 append(" Report this on the Discord.") {
                     color = TextColor.BLUE
                     url = CustomScoreboardMod.DISCORD
+                    hover = Text.of("Click to join the Discord.", TextColor.BLUE)
                 }
 
-                clipboard = data
             }.sendWithPrefix()
         }
         CustomScoreboardMod.warn("Found unknown line:\n$data")
