@@ -115,6 +115,7 @@ object UnknownLinesHandler {
         linesAfter: Int = 1,
     ) {
         val header = scoreboard.firstOrNull { regex.matches(it) } ?: return
+        unknownLines.remove(header)
 
         for (i in 1..linesAfter) {
             val lineToRemove = scoreboard.nextAfter(header, i) ?: continue
