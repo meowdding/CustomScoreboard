@@ -6,7 +6,9 @@ import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.community.CommunityCenterAPI
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
@@ -16,7 +18,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object BitsElement : NumberTrackingElement(TextColor.AQUA) {
-
     fun line() = Text.of(CurrencyAPI.bits.format()) {
         if (LinesConfig.showBitsAvailable) {
             append("/", TextColor.GRAY)
@@ -40,4 +41,7 @@ object BitsElement : NumberTrackingElement(TextColor.AQUA) {
 
     override val configLine = "Bits"
     override val id = "BITS"
+
+    private val bitsRegex by RemoteStrings.resolve().regex("Bits: [\\d,.]+.*")
+    override val regexes = setOf(bitsRegex)
 }

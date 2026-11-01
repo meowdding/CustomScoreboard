@@ -6,9 +6,9 @@ import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.anyMatch
 import me.owdding.ktmodules.Module
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget

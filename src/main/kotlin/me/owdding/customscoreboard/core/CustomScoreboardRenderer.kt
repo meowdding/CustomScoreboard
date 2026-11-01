@@ -17,6 +17,7 @@ import me.owdding.customscoreboard.utils.rendering.RenderUtils.drawTexture
 import me.owdding.customscoreboard.utils.rendering.alignment.HorizontalAlignment
 import me.owdding.customscoreboard.utils.rendering.alignment.VerticalAlignment
 import me.owdding.ktmodules.Module
+import me.owdding.lib.events.FinishRepoLoadingEvent
 import me.owdding.lib.overlays.EditableProperty
 import me.owdding.lib.overlays.Overlay
 import me.owdding.lib.overlays.OverlayAlignment
@@ -38,8 +39,10 @@ import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McScreen
+import tech.thatgravyboat.skyblockapi.impl.commands.RepoReloadCommand
 import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
 import tech.thatgravyboat.skyblockapi.utils.extentions.isInPast
+import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import kotlin.time.Duration.Companion.milliseconds
@@ -54,6 +57,8 @@ object CustomScoreboardRenderer : Overlay {
     private var nextPlannedUpdate = Instant.DISTANT_FUTURE
     private var currentIslandElements = emptyList<Element>()
     var currentIslandEvents = emptyList<ScoreboardEventEntry>()
+        private set
+    var activeRegexes = emptyList<Regex>()
         private set
 
     override var bounds: Pair<Int, Int> = 0 to 0
@@ -202,6 +207,18 @@ object CustomScoreboardRenderer : Overlay {
     fun updateIslandCache() {
         currentIslandElements = CustomizationConfig.appearance.filter { it.showIsland() }
         currentIslandEvents = CustomizationConfig.events.filter { it.event.showIsland() }
+        activeRegexes = buildList {
+            addAll(CustomScoreboardMod.allPossibleScoreboardElements.filter { it.showIsland() }.flatMap { it.regexes })
+            addAll(ScoreboardEventEntry.entries.filter { it.event.showIsland() }.flatMap { it.event.regexes })
+            addAll(UnknownLinesHandler.brokenLinesRegexes)
+        }.map {
+            when(it) {
+                is ComponentRegex -> it.regex()
+                is Regex -> it
+                is String -> Regex(it)
+                else -> error("Unknown Scoreboad Regex $it")
+            }
+        }
     }
 
     fun updateDisplay() {
@@ -285,7 +302,7 @@ object CustomScoreboardRenderer : Overlay {
         }
     }
 
-    @Subscription(event = [IslandChangeEvent::class])
+    @Subscription(IslandChangeEvent::class, FinishRepoLoadingEvent::class, priority = Subscription.LOW)
     private fun onIslandChange() {
         updateIslandCache()
     }

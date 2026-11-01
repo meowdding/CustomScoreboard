@@ -4,7 +4,9 @@ import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.data.MayorPerks
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -24,4 +26,7 @@ object KernelsElement : NumberTrackingElement(TextColor.YELLOW) {
 
     override val configLine = "Kernels"
     override val id = "KERNELS"
+
+    private val kernelsRegex by RemoteStrings.resolve().regex("Kernels: [\\d,.]+.*")
+    override val regexes = setOf(kernelsRegex)
 }

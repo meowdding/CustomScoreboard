@@ -2,8 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
@@ -29,10 +29,10 @@ object DojoEvent : Event() {
     private val pointsRegex by remote.componentRegex("Points: -?[\\w.]+.*")
     private val timeRegex by remote.componentRegex("Time: [\\w.]+.*")
 
-    private val patterns = listOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
+    override val regexes = setOf(challengeRegex, difficultyRegex, pointsRegex, timeRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 
 }

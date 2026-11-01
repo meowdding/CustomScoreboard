@@ -4,9 +4,9 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.lib.displays.Alignment
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -42,12 +42,12 @@ object MiningEvent : Event() {
     private val mineshaftFortunateFreezingRegex by remote.componentRegex("Event Bonus: \\+\\d+.")
     private val fossilDustRegex by remote.componentRegex("Fossil Dust: [\\d.,]+.*")
 
-    private val patterns = listOf(
+    private val patterns = setOf(
         eventRegex, eventZoneRegex, raffleUselessRegex, raffleTicketsRegex, rafflePoolRegex, donUseless,
         donRemaining, donYourMithril, nearbyPlayers, goblinUseless, goblinRemaining, goblinYourKills, mineshaftNotStartedRegex,
         mineshaftFortunateFreezingRegex, fossilDustRegex
     )
-
+    override val regexes = patterns + powderRegex
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {

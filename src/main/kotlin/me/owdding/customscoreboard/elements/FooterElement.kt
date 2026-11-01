@@ -6,7 +6,9 @@ import me.owdding.customscoreboard.config.category.CustomizationConfig.footerAli
 import me.owdding.customscoreboard.config.category.CustomizationConfig.footerText
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.align
 import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.location.LocationAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -24,6 +26,9 @@ object FooterElement : Element() {
     override val configLine = "§ewww.hypixel.net"
     override val id = "FOOTER"
     override val group = ElementGroup.FOOTER
+
+    private val footerRegex by RemoteStrings.resolve().regex("(?:www|alpha)\\.hypixel\\.net")
+    override val regexes = setOf(footerRegex)
 
     private fun footer() = (if (LocationAPI.onAlpha) alphaFooterText else footerText).map { it align footerAlignment }
 }
