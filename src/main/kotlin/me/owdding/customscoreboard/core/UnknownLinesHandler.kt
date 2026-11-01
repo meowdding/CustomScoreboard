@@ -127,7 +127,10 @@ object UnknownLinesHandler {
             appendLine("Json: ${line.toJson(ComponentSerialization.CODEC)}")
             appendLine("Island: ${LocationAPI.island}")
             appendLine("Area: ${LocationAPI.area}")
-            appendLine("Scoreboard: ${lastScoreboard.toJson(ComponentSerialization.CODEC.listOf())}")
+            appendLine("Scoreboard:")
+            lastScoreboard.forEach {
+                appendLine(" - ${it.toJson(ComponentSerialization.CODEC)}")
+            }
         }
 
         if (Config.unknownLinesWarning) {
