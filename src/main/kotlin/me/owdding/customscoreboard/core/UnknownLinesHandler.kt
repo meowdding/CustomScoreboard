@@ -45,6 +45,8 @@ object UnknownLinesHandler {
     @Subscription
     @OnlyOnSkyBlock
     private fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+        if (!Config.enabled || !CustomScoreboardRenderer.shouldUseCustomLines()) return
+
         lastScoreboard = event.newComponents
         val patternsToExclude = CustomScoreboardRenderer.activeRegexes
         val unknownLines: MutableMap<String, Component> = event.newComponents.filter { it.stripped.isNotBlank() }.associateBy { it.stripped }
