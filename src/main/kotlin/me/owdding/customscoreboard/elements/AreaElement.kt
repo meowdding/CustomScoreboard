@@ -7,9 +7,12 @@ import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.trim
 import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyMatch
+import tech.thatgravyboat.skyblockapi.utils.regex.component.ComponentRegex
 import tech.thatgravyboat.skyblockapi.utils.regex.component.anyMatch
+import kotlin.reflect.KMutableProperty0
 
 @ScoreboardElement
 object AreaElement : Element() {
@@ -26,29 +29,29 @@ object AreaElement : Element() {
     private val gardenPlotComponentRegex by remote.componentRegex("\\s*Plot -.+")
     private val visitingComponentRegex by remote.componentRegex("\\s*✌ \\(\\d+/\\d+\\)")
 
-    private val gardenPlotRegex = gardenPlotComponentRegex.regex()
-    private val visitingRegex = visitingComponentRegex.regex()
-
     private var formattedLocation: Component? = null
     private var formattedGardenPlot: Component? = null
     private var formattedVisiting: Component? = null
 
-    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        locationComponentRegex.anyMatch(event.addedComponents) {
-            this.formattedLocation = it.component.trim()
+    private fun ComponentRegex.matchAreaRegex(event: ScoreboardUpdateEvent, prop: KMutableProperty0<Component?>, transform: (Component) -> Component = { it }) {
+        val added = anyMatch(event.addedComponents) {
+            prop.set(transform(it.component))
         }
-        val addedGardenPlot = gardenPlotComponentRegex.anyMatch(event.addedComponents) {
-            this.formattedGardenPlot = it.component
+        // if the line hasn't been added in this event, and it has been removed, we set it to null
+        if (!added && prop.get() != null && regex().anyMatch(event.removed)) {
+            prop.set(null)
         }
-        val addedVisiting = visitingComponentRegex.anyMatch(event.addedComponents) {
-            this.formattedVisiting = it.component.trim()
-        }
+    }
 
-        if (!addedGardenPlot && formattedGardenPlot != null && gardenPlotRegex.anyMatch(event.removed)) {
-            formattedGardenPlot = null
-        }
-        if (!addedVisiting && formattedVisiting != null && visitingRegex.anyMatch(event.removed)) {
-            formattedVisiting = null
-        }
+    override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
+        locationComponentRegex.matchAreaRegex(event, ::formattedLocation) { it.trim() }
+        gardenPlotComponentRegex.matchAreaRegex(event, ::formattedGardenPlot)
+        visitingComponentRegex.matchAreaRegex(event, ::formattedVisiting) { it.trim() }
+    }
+
+    override fun onServerChange(event: ServerChangeEvent) {
+        formattedLocation = null
+        formattedGardenPlot = null
+        formattedVisiting = null
     }
 }
