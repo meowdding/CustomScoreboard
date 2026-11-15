@@ -13,9 +13,7 @@ fun plugin(provider: Provider<PluginDependency>): Provider<String> = provider.ma
 }
 
 dependencies {
-    implementation("net.peanuuutz.tomlkt:tomlkt:0.5.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.kotlin.gradle.plugin.api)
