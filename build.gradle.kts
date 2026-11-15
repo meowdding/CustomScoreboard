@@ -49,17 +49,13 @@ val mcVersion = stonecutter.current.version.replace(".", "")
 val accessWidenerFile = rootProject.file("src/customscoreboard.accesswidener")
 loom {
     runConfigs["client"].apply {
-        ideConfigGenerated(true)
-        runDir = "../../run"
-        vmArg("-Dfabric.modsFolder=${mcVersion}Mods")
+        generateRunConfig = true
+        runDirectory = project.file("../../run")
+        jvmArguments.addAll("-Dfabric.modsFolder=${mcVersion}Mods", "-XX:StackShadowPages=32")
     }
 
     if (accessWidenerFile.exists()) {
         accessWidenerPath.set(accessWidenerFile)
-    }
-
-    mixin {
-        defaultRefmapName = "customscoreboard-refmap.json"
     }
 }
 
@@ -88,7 +84,7 @@ tasks.withType<KotlinCompile>().configureEach {
 
 tasks.processResources {
     val range = if (versionedCatalog.versions.has("minecraft.range")) {
-        versionedCatalog.versions.get("minecraft.range").toString()
+        versionedCatalog.versions["minecraft.range"].toString()
     } else {
         val start = versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft")
         val end = versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft")
@@ -138,7 +134,6 @@ tasks.withType<ProcessResources>().configureEach {
     })
     with(copySpec {
         from(accessWidenerFile)
-        rename { it.replace(".obf", "") }
     })
 }
 

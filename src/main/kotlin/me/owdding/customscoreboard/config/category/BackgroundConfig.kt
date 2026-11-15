@@ -23,9 +23,9 @@ import kotlin.io.path.Path
 import kotlin.io.path.absolute
 import kotlin.jvm.optionals.getOrNull
 
-//? >= 26.3
+//? if >= 26.3
 import com.mojang.blaze3d.Blaze3D
-//? < 26.3
+//? else
 //import net.minecraft.util.Util
 
 object BackgroundConfig : CategoryKt("Background") {
@@ -229,7 +229,7 @@ object CustomBackgroundModal {
                     Path(BackgroundConfig.customImageFile)
                         .absolute()
                         .parent
-                        //~if >= 26.3 'Util.getPlatform()' -> 'Blaze3D'
+                        //~ if >= 26.3 'Util.getPlatform()' -> 'Blaze3D'
                         ?.let(Blaze3D::openPath)
                 }
             }
