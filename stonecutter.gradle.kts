@@ -1,3 +1,4 @@
+import com.github.javaparser.printer.concretesyntaxmodel.CsmElement.string
 import dev.kikugie.stonecutter.build.config.ReplacementContainer
 
 plugins {
@@ -10,8 +11,6 @@ stonecutter active "26.3"
 stonecutter parameters {
     swaps["mod_version"] = "\"" + property("version") + "\";"
     swaps["minecraft"] = "\"" + node.metadata.version + "\";"
-
-    filters.include("**/*.fsh", "**/*.vsh")
 
     fun ReplacementContainer.StringReplacementSpec.rename(
         from: String,
