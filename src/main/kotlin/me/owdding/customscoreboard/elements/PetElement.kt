@@ -28,7 +28,12 @@ object PetElement : Element() {
             add(Text.of(" MAX", TextColor.GREEN))
         }
         if (!PetsAPI.isMaxLevel) {
-            add(Text.of(" Lvl. ${PetsAPI.level} (${String.format("%.1f", ((PetsAPI.xp / PetsAPI.xpToNextLevel) * 100))}%)", TextColor.YELLOW))
+            add(
+                Text.of(" Lvl. ${PetsAPI.level}") {
+                    color = TextColor.YELLOW
+                    if (PetsAPI.xpToNextLevel != 0.0) append(" (${String.format("%.1f", ((PetsAPI.xp / PetsAPI.xpToNextLevel) * 100))}%)")
+                },
+            )
         }
     }.map {
         it.withActions {

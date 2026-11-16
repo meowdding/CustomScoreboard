@@ -7,6 +7,8 @@ import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.hub.SpookyFestivalAPI
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
+import tech.thatgravyboat.skyblockapi.utils.extentions.isInFuture
+import tech.thatgravyboat.skyblockapi.utils.extentions.until
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -24,7 +26,7 @@ object SpookyEvent : Event() {
     private var formattedLines: List<Component> = emptyList()
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        if (SpookyFestivalAPI.onGoing) {
+        if (SpookyFestivalAPI.onGoing && SpookyFestivalAPI.estimatedEnd.isInFuture()) {
             formattedLines = listOf(
                 Text.of("Spooky Festival ") {
                     color = TextColor.ORANGE
@@ -36,7 +38,7 @@ object SpookyEvent : Event() {
         } else formattedLines = emptyList()
     }
 
-    private fun getTime(): String = SpookyFestivalAPI.duration.toComponents { hours, minutes, seconds, _ ->
+    private fun getTime(): String = SpookyFestivalAPI.estimatedEnd.until().toComponents { hours, minutes, seconds, _ ->
         if (hours > 0) {
             "%d:%02d:%02d".format(hours, minutes, seconds)
         } else {
