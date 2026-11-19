@@ -18,6 +18,8 @@ Using /customscoreboard, or /cs for short, you can open the config and start cus
 
 Features annotated with a ❇️ are new additions compared to the SkyHanni version.
 
+Not everything is mentioned here, just the more important features.
+
 <details>
 <summary>Main Config</summary>
 
