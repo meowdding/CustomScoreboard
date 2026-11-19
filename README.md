@@ -20,7 +20,7 @@ Features annotated with a ❇️ are new additions compared to the SkyHanni vers
 
 Not everything is mentioned here, just the more important features.
 
-<details>
+<details open>
 <summary>Main Config</summary>
 
 - ❇️ Hiding when Chat/F3/Tab is open.
@@ -28,7 +28,7 @@ Not everything is mentioned here, just the more important features.
 
 </details>
 
-<details>
+<details open>
 <summary>Appearance Config</summary>
 
 - All Basic SkyBlock Lines.
@@ -57,7 +57,7 @@ Not everything is mentioned here, just the more important features.
 
 </details>
 
-<details>
+<details open>
 <summary>Background Config</summary>
 
 - Background Color
@@ -70,7 +70,7 @@ Not everything is mentioned here, just the more important features.
 
 </details>
 
-<details>
+<details open>
 <summary>Lines Config</summary>
 
 - Date Formatting and Lobby Code
@@ -89,7 +89,7 @@ Not everything is mentioned here, just the more important features.
 
 </details>
 
-<details>
+<details open>
 <summary>Mod Compatibility</summary>
 
 - ❇️ Custom Lines in [Scoreboard Overhaul](https://modrinth.com/mod/scoreboard-overhaul)
