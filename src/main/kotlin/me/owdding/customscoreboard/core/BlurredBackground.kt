@@ -5,6 +5,9 @@ import com.mojang.blaze3d.pipeline.TextureTarget
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.VertexConsumer
+import com.mojang.renderpearl.api.GpuFormat
+import com.mojang.renderpearl.api.pipeline.BindGroupLayout
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
 import com.mojang.renderpearl.api.pipeline.RenderPipeline
 import com.mojang.renderpearl.api.pipeline.UniformType
 import com.mojang.renderpearl.api.textures.AddressMode
@@ -15,16 +18,13 @@ import me.owdding.customscoreboard.CustomScoreboardMod
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.navigation.ScreenRectangle
 import net.minecraft.client.gui.render.TextureSetup
+import net.minecraft.client.renderer.BindGroupLayouts
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.state.gui.GuiElementRenderState
 import org.joml.Matrix3x2f
 import org.joml.Vector2f
 import org.joml.Vector4f
 import tech.thatgravyboat.skyblockapi.helpers.McClient
-import net.minecraft.client.renderer.BindGroupLayouts
-import com.mojang.renderpearl.api.GpuFormat
-import com.mojang.renderpearl.api.pipeline.PrimitiveTopology
-import com.mojang.renderpearl.api.pipeline.BindGroupLayout
 
 //? >= 26.3 {
 import com.mojang.renderpearl.api.pipeline.BlendFunction

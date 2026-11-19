@@ -2,8 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -30,11 +30,11 @@ object CarnivalEvent : Event() {
     private val accuracyRegex by remote.componentRegex("Accuracy: [\\d.,]+%")
     private val killsRegex by remote.componentRegex("Kills: \\d+")
 
-    private val patterns =
-        listOf(timeRegex, tokensRegex, taskRegex, timeLeftRegex, fruitsRegex, scoreRegex, catchStreakRegex, accuracyRegex, killsRegex)
+    override val regexes =
+        setOf(timeRegex, tokensRegex, taskRegex, timeLeftRegex, fruitsRegex, scoreRegex, catchStreakRegex, accuracyRegex, killsRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 }

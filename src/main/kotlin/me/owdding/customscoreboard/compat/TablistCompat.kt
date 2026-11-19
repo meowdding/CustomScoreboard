@@ -2,7 +2,6 @@ package me.owdding.customscoreboard.compat
 
 import me.owdding.customscoreboard.mixins.compat.SkyHanniTabListRendererMixin
 import me.owdding.lib.utils.KnownMods
-import net.minecraft.client.Minecraft
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 
 object TablistCompat {

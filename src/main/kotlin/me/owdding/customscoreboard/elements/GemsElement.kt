@@ -4,10 +4,11 @@ import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.shorten
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
-import tech.thatgravyboat.skyblockapi.api.location.SkyBlockArea
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
@@ -16,6 +17,9 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 
 @ScoreboardElement
 object GemsElement : NumberTrackingElement(TextColor.GREEN) {
+
+    private val gemsRegex by RemoteStrings.resolve().regex("Gems: [\\d,.]+.*")
+    override val regexes = setOf(gemsRegex)
 
     override fun format(number: Number): String {
         return if (LinesConfig.gemsAlwaysCompact) number.shorten()

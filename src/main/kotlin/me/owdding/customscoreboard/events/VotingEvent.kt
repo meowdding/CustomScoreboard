@@ -2,8 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockAreas
@@ -31,7 +31,7 @@ object VotingEvent : Event() {
     private val titleRegex by remote.componentRegex("Year \\d+ Votes")
     private val subtitleRegex by remote.componentRegex("Waiting for|your vote\\.\\.\\.")
     private val candidatesRegex by remote.componentRegex("\\|{15}.+")
-    private val regexes = listOf(titleRegex, subtitleRegex, candidatesRegex)
+    override val regexes = setOf(titleRegex, subtitleRegex, candidatesRegex)
 
     private val formattedLines = mutableListOf<Component>()
 

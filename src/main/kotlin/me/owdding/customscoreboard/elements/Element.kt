@@ -38,6 +38,8 @@ abstract class Element : BaseElement {
      */
     open fun shouldIndent(): Boolean = false
 
+    open val regexes = emptySet<Any>()
+
     abstract val configLine: String
     override fun toString() = configLine
 

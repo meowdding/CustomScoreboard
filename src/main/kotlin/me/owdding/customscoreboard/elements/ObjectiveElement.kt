@@ -4,8 +4,8 @@ import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.CommonRegexes
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.isBlank
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.contains
@@ -26,7 +26,7 @@ object ObjectiveElement : Element() {
     override val id = "OBJECTIVE"
 
 
-    private val objectiveTitleRegex by RemoteStrings.resolve().regex("^(?:Objective|Quest)")
+    val objectiveTitleRegex by RemoteStrings.resolve().regex("^(?:Objective|Quest).*")
 
     private val objectiveLines = mutableListOf<Component>()
 

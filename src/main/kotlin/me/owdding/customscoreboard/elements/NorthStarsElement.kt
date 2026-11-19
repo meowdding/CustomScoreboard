@@ -4,7 +4,9 @@ import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
@@ -26,4 +28,7 @@ object NorthStarsElement : NumberTrackingElement(TextColor.PINK) {
 
     override val configLine = "North Stars"
     override val id = "NORTH_STARS"
+
+    private val northStarsRegex by RemoteStrings.resolve().regex("North Stars: [\\d,.]+.*")
+    override val regexes = setOf(northStarsRegex)
 }

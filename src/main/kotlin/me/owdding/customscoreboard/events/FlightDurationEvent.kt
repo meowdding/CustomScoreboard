@@ -5,8 +5,8 @@ import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.toFormatYears
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.extentions.parseColonDuration
@@ -39,6 +39,7 @@ object FlightDurationEvent : Event() {
     private var duration: Duration? = null
 
     private val flightRegex by RemoteStrings.resolve().regex("Flight Duration: (?<time>[\\d:]+)")
+    override val regexes = setOf(flightRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         val found = flightRegex.anyMatch(event.new, "time") { (time) ->

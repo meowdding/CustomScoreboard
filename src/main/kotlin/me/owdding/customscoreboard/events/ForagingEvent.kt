@@ -4,9 +4,9 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.CommonRegexes
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -23,8 +23,10 @@ object ForagingEvent : Event() {
     private val remote = RemoteStrings.resolve()
     private val whisperRegex by remote.componentRegex(".*Whispers: [\\w,.]+.*")
     private val hotfRegex by remote.componentRegex("\\s*HOTF: [\\w,.]+.*")
-    private val contestRegex by remote.componentRegex("(?:Agatha|Miria)'s Contest.*")
+    val contestRegex by remote.componentRegex("(?:Agatha|Miria)'s Contest.*")
     private val capturedMobsRegex by remote.componentRegex("Captured Mobs: [\\d,.]+")
+
+    override val regexes = setOf(whisperRegex, hotfRegex, capturedMobsRegex)
 
     private val formattedLines = mutableListOf<Component>()
 

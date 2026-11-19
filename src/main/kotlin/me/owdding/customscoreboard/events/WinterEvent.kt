@@ -2,8 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -27,11 +27,11 @@ object WinterEvent : Event() {
     private val totalDamageRegex by remote.componentRegex("Your Total Damage: [\\d+,.]+.*")
     private val cubeDamageRegex by remote.componentRegex("Your Cube Damage: [\\d+,.]+")
 
-    private val patterns = listOf(startRegex, nextWaveRegex, waveRegex, magmaLeftRegex, totalDamageRegex, cubeDamageRegex)
+    override val regexes = setOf(startRegex, nextWaveRegex, waveRegex, magmaLeftRegex, totalDamageRegex, cubeDamageRegex)
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
     }
 
 }

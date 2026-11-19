@@ -61,6 +61,10 @@
                 "update_notification": {
                     "@value": "Update Notification",
                     "desc": "Enable the update notification."
+                },
+                "unknown_lines_warning": {
+                    "@value": "Unknown Lines Warning",
+                    "desc": "Sends a Chat message when Unknown Lines are detected. Please report them in the Discord."
                 }
             },
             "customization": {

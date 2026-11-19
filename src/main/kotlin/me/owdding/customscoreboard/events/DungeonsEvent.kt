@@ -2,8 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWithMatches
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -31,7 +31,7 @@ object DungeonsEvent : Event() {
     private val f3guardianRegex by remote.componentRegex(" - (?:Healthy|Reinforced|Laser|Chaos) [\\w,.]*.")
     private val spacerRegex by remote.componentRegex("\\s*")
 
-    private val patterns = listOf(
+    override val regexes = setOf(
         m7dragonsRegex,
         autoCloseRegex,
         startingInRegex,
@@ -46,7 +46,7 @@ object DungeonsEvent : Event() {
 
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
-        formattedLines.replaceWithMatches(event.newComponents, patterns)
+        formattedLines.replaceWithMatches(event.newComponents, regexes)
 
         // Strip leading/trailing spacers
         while (formattedLines.isNotEmpty() && formattedLines.first().string.isBlank()) {

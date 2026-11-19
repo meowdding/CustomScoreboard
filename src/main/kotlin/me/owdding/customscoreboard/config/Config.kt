@@ -17,6 +17,7 @@ import me.owdding.customscoreboard.elements.CopperElement
 import me.owdding.customscoreboard.elements.KernelsElement
 import me.owdding.customscoreboard.elements.MayorElement
 import me.owdding.customscoreboard.elements.SowdustElement
+import me.owdding.customscoreboard.elements.UnknownLineElement
 import me.owdding.customscoreboard.generated.ScoreboardEventEntry
 import me.owdding.customscoreboard.utils.Utils.convertLegacyToPlaceholder
 import me.owdding.customscoreboard.utils.Utils.updateDisplay
@@ -183,6 +184,18 @@ object Config : ConfigKt("customscoreboard/config") {
             }
             json
         },
+        11 to UnaryOperator { json ->
+            val items = json.getAsJsonObject("customization").getAsJsonArray("appearance").toMutableList()
+            val newArray = JsonArray()
+            items.forEachIndexed { index, element ->
+                newArray.add(element)
+                if (index == items.size - 1) {
+                    newArray.add(UnknownLineElement.id)
+                }
+            }
+            json.getAsJsonObject("customization").add("appearance", newArray)
+            json
+        }
     )
 
     override val version = patches.maxOf { it.key } + 1
@@ -243,6 +256,10 @@ object Config : ConfigKt("customscoreboard/config") {
 
     val updateNotification by boolean("update_notification", true) {
         this.translation = "update_notification"
+    }
+
+    val unknownLinesWarning by boolean(true) {
+        this.translation = "unknown_lines_warning"
     }
 
 }

@@ -4,7 +4,7 @@ import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.utils.ElementGroup
 import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyFound
@@ -35,6 +35,8 @@ object LobbyElement : Element() {
 
 
     private val roomIdRegex by RemoteStrings.resolve().regex("\\d+/\\d+/\\d+ \\w+ (?<roomId>[\\w,-]+)")
+    private val lobbyCodeRegex by RemoteStrings.resolve().regex("\\d+/\\d+/\\d+ \\w+.*")
+    override val regexes = setOf(lobbyCodeRegex)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         val found = roomIdRegex.anyFound(event.new, "roomId") { (roomId) ->

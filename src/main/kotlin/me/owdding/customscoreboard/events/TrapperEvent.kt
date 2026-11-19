@@ -2,9 +2,9 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.Utils.replaceWith
 import me.owdding.customscoreboard.utils.Utils.sublistFromFirst
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -22,7 +22,9 @@ object TrapperEvent : Event() {
 
     private val remote = RemoteStrings.resolve()
     private val peltsRegex by remote.componentRegex("Pelts: [\\d,.]+.*")
-    private val mobLocationRegex by remote.componentRegex("Tracker Mob Location:")
+    val mobLocationRegex by remote.componentRegex("Tracker Mob Location:")
+
+    override val regexes = setOf(peltsRegex,)
 
     override fun onScoreboardUpdate(event: ScoreboardUpdateEvent) {
         formattedLines.replaceWith {

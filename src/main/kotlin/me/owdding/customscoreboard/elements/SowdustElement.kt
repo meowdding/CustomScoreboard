@@ -4,7 +4,9 @@ import me.owdding.customscoreboard.config.category.CustomPrefix
 import me.owdding.customscoreboard.core.CustomScoreboardRenderer
 import me.owdding.customscoreboard.core.NumberTrackingElement
 import me.owdding.customscoreboard.utils.NumberUtils.format
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.api.profile.currency.CurrencyAPI
 import tech.thatgravyboat.skyblockapi.utils.text.Text
@@ -24,4 +26,7 @@ object SowdustElement : NumberTrackingElement(TextColor.DARK_GREEN) {
 
     override val configLine = "Sowdust"
     override val id = "SOWDUST"
+
+    private val sowdustRegex by RemoteStrings.resolve().regex("Sowdust: [\\d,.]+.*")
+    override val regexes = setOf(sowdustRegex)
 }

@@ -3,8 +3,10 @@ package me.owdding.customscoreboard.elements
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.ScoreboardLine.Companion.withActions
 import me.owdding.customscoreboard.utils.ElementGroup
+import me.owdding.customscoreboard.utils.RemoteStrings
 import me.owdding.customscoreboard.utils.ScoreboardElement
 import me.owdding.lib.extensions.ordinal
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.environmental.DateTimeAPI
 import tech.thatgravyboat.skyblockapi.api.environmental.SkyBlockSeason
@@ -34,6 +36,8 @@ object DateElement : Element() {
     override val id = "DATE"
     override val group = ElementGroup.HEADER
 
+    private val dateRegex by RemoteStrings.resolve().regex("\\s*(?:Late|Early)? ?(?:Spring|Summer|Autumn|Winter) \\d+(?:st|nd|rd|th)?.*")
+    override val regexes = setOf(dateRegex)
 
     private val seasonColors = mapOf(
         SkyBlockSeason.EARLY_SPRING to TextColor.GREEN,

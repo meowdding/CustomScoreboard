@@ -2,8 +2,8 @@ package me.owdding.customscoreboard.events
 
 import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.lib.builder.ComponentFactory
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.area.hub.FarmhouseAPI
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McClient
@@ -44,4 +44,5 @@ object JacobMedalsEvent : Event() {
     override val configLine = "Jacob Medals"
 
     private val medalRegex by RemoteStrings.resolve().componentRegex(".* medals: \\d+")
+    override val regexes = setOf(medalRegex)
 }

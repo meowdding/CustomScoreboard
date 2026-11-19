@@ -4,8 +4,8 @@ import me.owdding.customscoreboard.AutoElement
 import me.owdding.customscoreboard.config.category.LinesConfig
 import me.owdding.customscoreboard.core.TabWidgetHelper
 import me.owdding.customscoreboard.utils.RemoteStrings
-import me.owdding.customscoreboard.utils.StringGroup.Companion.resolve
 import me.owdding.customscoreboard.utils.TextUtils.removePrefix
+import me.owdding.lib.utils.strings.StringGroup.Companion.resolve
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.utils.text.Text
